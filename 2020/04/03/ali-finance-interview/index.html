@@ -1,0 +1,157 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="王星星"><title>阿里企业金融实习面试 · 王星星的魔灯</title><meta name="description" content="面试流程是p7 -&amp;gt; p8 -&amp;gt; p9 -&amp;gt; p9（交叉）-&amp;gt; HR最终还是选择了这个BU去实习，希望能有一个 好结果
+
+
+
+
+
+
+一面Java1. HashMap和ConcurrentHashMap
+ConcurrentHashMap如何保证并发
+
+2. 线程进程和协程3."><meta name="keywords" content="王星星的魔灯，王星星，博客，zilong，stonee"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><script src="/js/jquery.js"></script><meta name="generator" content="Hexo 5.2.0"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo@2x.png" style="width:127px;"><h3 title=""><a href="/">王星星的魔灯</a></h3><div class="description"><p>勇士斗恶龙<br>Love & Conscientiousness & Regularity & Persistence.</p></div></div></div><ul class="social-links"><li><a target="_blank" rel="noopener" href="https://github.com/wxxlamp"><i class="fa fa-github"></i></a></li><li><a href="mailto:stalern2000@163.com"><i class="fa fa-envelope"></i></a></li><li><a target="_blank" rel="noopener" href="http://sighttp.qq.com/authd?IDKEY=2305450070"><i class="fa fa-qq"></i></a></li><li><a target="_blank" rel="noopener" href="https://www.zhihu.com/people/xiao-ming-91-8-39"><i class="fa fa-mortar-board"></i></a></li></ul><div class="footer"><div class="p"> <span>© 2018 - 2021 </span><i class="fa fa-star"></i><span> 王星星</span></div><div class="by_farbox"><span>Powered by </span><a href="https://hexo.io/zh-cn/" target="_blank">Hexo </a><span> & </span><a href="https://github.com/mrcore/hexo-theme-Anatole-Core" target="_blank">Anatole-Core  </a></div><div class="beian"><a href="http://www.beian.miit.gov.cn/" target="_blank">豫ICP备20004458号</a><span style="height:10px;margin-left: 10px;">|</span><img src="/images/gongan.png" style="height:10px;margin-left: 10px;position: relative;top: 1px;"><span style="margin-left: 2px;">豫公网安备 44030402003967号</span></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首页</a></li><li><a href="/archives">归档</a></li><li><a href="/tags">标签</a></li><li><a href="/about">关于</a></li><li><a href="/guestbook">留言</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>阿里企业金融实习面试</a></h3></div><div class="post-content"><p>面试流程是p7 -&gt; p8 -&gt; p9 -&gt; p9（交叉）-&gt; HR<br>最终还是选择了这个BU去实习，希望能有一个 好结果</p>
+<a id="more"></a>
+
+
+
+
+
+<h2 id="一面"><a href="#一面" class="headerlink" title="一面"></a>一面</h2><h3 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h3><h4 id="1-HashMap和ConcurrentHashMap"><a href="#1-HashMap和ConcurrentHashMap" class="headerlink" title="1. HashMap和ConcurrentHashMap"></a>1. HashMap和ConcurrentHashMap</h4><blockquote>
+<p>ConcurrentHashMap如何保证并发</p>
+</blockquote>
+<h4 id="2-线程进程和协程"><a href="#2-线程进程和协程" class="headerlink" title="2. 线程进程和协程"></a>2. 线程进程和协程</h4><h4 id="3-线程通信方式"><a href="#3-线程通信方式" class="headerlink" title="3. 线程通信方式"></a>3. 线程通信方式</h4><p>semphore，wait/notify，condition</p>
+<h4 id="4-BIO，NIO，AIO"><a href="#4-BIO，NIO，AIO" class="headerlink" title="4. BIO，NIO，AIO"></a>4. BIO，NIO，AIO</h4><blockquote>
+<p>NIO的几种实现方式</p>
+</blockquote>
+<h4 id="5-Jvm结构和GC"><a href="#5-Jvm结构和GC" class="headerlink" title="5. Jvm结构和GC"></a>5. Jvm结构和GC</h4><h4 id="6-OOM"><a href="#6-OOM" class="headerlink" title="6. OOM"></a>6. OOM</h4><h2 id="框架"><a href="#框架" class="headerlink" title="框架"></a>框架</h2><h4 id="7-Spring对bean的管理"><a href="#7-Spring对bean的管理" class="headerlink" title="7. Spring对bean的管理"></a>7. Spring对bean的管理</h4><ul>
+<li><p>采用工厂模式的IOC容器</p>
+</li>
+<li><p>两个接口ApplicationContext和BeanFactory</p>
+<ul>
+<li><p>BeanFactory采取的懒加载的方式,在获取对象时才会实例化</p>
+</li>
+<li><p>ApplicationContext会在工厂初始化时立即实例化对象</p>
+</li>
+<li><p>BeanFactory作为顶级接口主要面向于Spring框架本身,仅提供了基础基本的容器功能如DI</p>
+</li>
+<li><p>ApplicationContext,是BeanFactory的子接口,意味着功能比BeanFactory更多,诸如国际化,注解配置,XML配置等等,因此ApplicationContext使用更多</p>
+<ul>
+<li><p>ApplicationContext的两个实现类区别:</p>
+</li>
+<li><p>ClassPath表示从类路径中获取配置文件;</p>
+</li>
+<li><p>FileSystem表示从文件系统获取配置文件</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>SpringBean的生命周期</p>
+</li>
+<li><p>Bean的依赖注入等等</p>
+</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/yangyuanhu/p/12164380.html">Bean管理</a></p>
+<h4 id="8-Spring-AOP"><a href="#8-Spring-AOP" class="headerlink" title="8. Spring AOP"></a>8. Spring AOP</h4><p>面向切面编程</p>
+<h4 id="9-动态代理和Cglib的区别"><a href="#9-动态代理和Cglib的区别" class="headerlink" title="9. 动态代理和Cglib的区别"></a>9. 动态代理和Cglib的区别</h4><p>平行和继承</p>
+<h3 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h3><h4 id="10-观察者模式"><a href="#10-观察者模式" class="headerlink" title="10. 观察者模式"></a>10. 观察者模式</h4><p>这个题大概是说实现一个售票系统，要求出一个人之后才能进一个人。我刚开始说的是阻塞队列，即生产者消费者模式。然后面试官让我说一个设计模式，这就肯定是观察者模式了</p>
+<h3 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h3><h4 id="11-ACID"><a href="#11-ACID" class="headerlink" title="11. ACID"></a>11. ACID</h4><h4 id="12-隔离级别"><a href="#12-隔离级别" class="headerlink" title="12. 隔离级别"></a>12. 隔离级别</h4><h4 id="13-索引设计，组合索引"><a href="#13-索引设计，组合索引" class="headerlink" title="13. 索引设计，组合索引"></a>13. 索引设计，组合索引</h4><h4 id="14-Redis的主从复制和哨兵机制"><a href="#14-Redis的主从复制和哨兵机制" class="headerlink" title="14. Redis的主从复制和哨兵机制"></a>14. Redis的主从复制和哨兵机制</h4><p>在主从复制模式中，主机宕机后salve会立刻补上（人工），复制是基于rdb的。主要用于读写分离和容灾备份。如果master恢复，则投票选取</p>
+<p>哨兵模式中，从机会定时向master发送ping命令</p>
+<h3 id="项目"><a href="#项目" class="headerlink" title="项目"></a>项目</h3><h4 id="15-博客系统如何做到实时评论"><a href="#15-博客系统如何做到实时评论" class="headerlink" title="15. 博客系统如何做到实时评论"></a>15. 博客系统如何做到实时评论</h4><p>有三种实现方式，短轮询，长轮询和长连接</p>
+<h4 id="16-项目的难点在哪里"><a href="#16-项目的难点在哪里" class="headerlink" title="16. 项目的难点在哪里"></a>16. 项目的难点在哪里</h4><p>这种题说简单也简单，因为可以有我们自己去引导面试官，但是说难也难，因为可能不知不觉中我们就给自己挖坑了。</p>
+<h4 id="17-Consumer接收到消息后没来得及消费MQ挂掉怎么办"><a href="#17-Consumer接收到消息后没来得及消费MQ挂掉怎么办" class="headerlink" title="17. Consumer接收到消息后没来得及消费MQ挂掉怎么办"></a>17. Consumer接收到消息后没来得及消费MQ挂掉怎么办</h4><p>Consumer自身维护一个持久化的offset（对应MessageQueue里面的min offset），标记已经成功消费或者已经成功发回到broker的消息下标，因为offset是持久化的，所以挂掉之后也没有影响</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/yueloveme/article/details/98208486">挂掉怎么办</a></p>
+<h4 id="18-Redis挂掉怎么办"><a href="#18-Redis挂掉怎么办" class="headerlink" title="18. Redis挂掉怎么办"></a>18. Redis挂掉怎么办</h4><p>在对redis操作时，要check redis是否可用，如果不可用直接抛异常，如果</p>
+<h3 id="算法题"><a href="#算法题" class="headerlink" title="算法题"></a>算法题</h3><h4 id="19-LeetCode-58"><a href="#19-LeetCode-58" class="headerlink" title="19. LeetCode 58"></a>19. LeetCode 58</h4><p>这个是easy级别的，有两种方式，第一种通过split切分，然后逆序输出，第二种翻转所有字符串，然后再翻转每个单词</p>
+<h2 id="二面"><a href="#二面" class="headerlink" title="二面"></a>二面</h2><h3 id="Java-1"><a href="#Java-1" class="headerlink" title="Java"></a>Java</h3><p>这次竟然没有一个Java基础相关的。。。。</p>
+<p>我极度怀疑面试官看了我博客，故意避开我会的。。。</p>
+<h3 id="框架-1"><a href="#框架-1" class="headerlink" title="框架"></a>框架</h3><h4 id="1-bean的作用"><a href="#1-bean的作用" class="headerlink" title="1. @bean的作用"></a>1. @bean的作用</h4><p>声明该返回值是一个bean</p>
+<p><strong>运行还是编译</strong> 运行</p>
+<p><strong>bean如何起作用</strong> </p>
+<p>通过@ComponentScan对包进行扫描</p>
+<p><strong>通过什么查看注解</strong></p>
+<p>反射有个查看annotation方法</p>
+<h4 id="2-为什么-Before可以AOP"><a href="#2-为什么-Before可以AOP" class="headerlink" title="2. 为什么@Before可以AOP"></a>2. 为什么@Before可以AOP</h4><p>在spring的生命周期的后置方法中，先查找实现了pointcutAdvisor的切面类，该类包含了Pointcut和Advice对象，检查在Pointcut中的表达式能否匹配到当前的bean类，如果匹配则对bean进行织如</p>
+<p><strong>代理类没有接口怎么办</strong> cglib</p>
+<p><strong>如何代理final</strong> 通过aspectJ或者动态代理</p>
+<h4 id="3-SpringBoot的-SpringBootApplication"><a href="#3-SpringBoot的-SpringBootApplication" class="headerlink" title="3. SpringBoot的@SpringBootApplication"></a>3. SpringBoot的@SpringBootApplication</h4><p>有三个nb注解@EnableAutoConfiguration，@ComponentScan和@SpringBootConfiguration，第一个里面会有一个@Import注解，导入一个Select.class，该class会通过拿到每一个starter里面的resources/META-INF的文件</p>
+<p><strong>如何写一个starter</strong></p>
+<p>在自定义的starter里面增加一个spring.proprites文件用来通知SpringBoot配置类的位置，然后在配置类中注入bean，如果需要映射参数的时候，可以通过@ConfigurationProperties注解</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/yuansc/p/9088212.html">SpringBootStarter</a></p>
+<h3 id="DB"><a href="#DB" class="headerlink" title="DB"></a>DB</h3><h4 id="4-为什么索引用B-树"><a href="#4-为什么索引用B-树" class="headerlink" title="4. 为什么索引用B+树"></a>4. 为什么索引用B+树</h4><p>深度浅，每个节点的key值更多</p>
+<h4 id="5-为什么只有右模糊查询走索引"><a href="#5-为什么只有右模糊查询走索引" class="headerlink" title="5. 为什么只有右模糊查询走索引"></a>5. 为什么只有右模糊查询走索引</h4><p>用B+树来解释，MySQL的B+树索引是按照从左向右的原则进行匹配的，如果其他模糊效率将是index</p>
+<h3 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h3><h4 id="6-面试时语音走得所有协议"><a href="#6-面试时语音走得所有协议" class="headerlink" title="6. 面试时语音走得所有协议"></a>6. 面试时语音走得所有协议</h4><p><strong>语音如何通过网络传输</strong></p>
+<p><strong>微信文字的传输</strong></p>
+<p><strong>微信发文字和图片传输的区别</strong></p>
+<p>反正没有回答到点上，有知道的logo可以发消息给我</p>
+<h3 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h3><h4 id="7-了解哪些数据结构和算法"><a href="#7-了解哪些数据结构和算法" class="headerlink" title="7. 了解哪些数据结构和算法"></a>7. 了解哪些数据结构和算法</h4><p>dp，贪心，dfs，bfs，prime，kruskal，树，栈，图，链表，数组，字符串</p>
+<p><strong>堆排序是稳定的吗</strong> 不稳定</p>
+<p><strong>堆排序的最终结果集是平衡二叉树吗</strong> 不是</p>
+<p><strong>Arrays.sort()源码</strong></p>
+<p>有三种排序方式：双轴快排，并发归并，以及修改的归并</p>
+<p>主要是修改的归并：如果长度小于7的话会使用插入排序（即将删除）</p>
+<p>另外一种修改的归并排序是TimSort：</p>
+<ol>
+<li><p>扫描数组，确定其中的单调上升段和严格单调下降段，将严格下降段反转；</p>
+</li>
+<li><p>定义最小基本片段长度，短于此的单调片段通过插入排序集中为长于此的段；</p>
+</li>
+<li><p>反复归并一些相邻片段，过程中避免归并长度相差很大的片段，直至整个排序完成，所用分段选择策略可以保证O(n log n)时间复杂性。 </p>
+</li>
+</ol>
+<p>可以看到，原则上TimSort是归并排序，但小片段的合并中用了插入排序。TimSort的最好复杂度是O(N),但是普通规并是O(nlogn)</p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/892ebd063ad9">TimSort</a></p>
+<h3 id="OS"><a href="#OS" class="headerlink" title="OS"></a>OS</h3><h4 id="8-java文件如何被OS执行"><a href="#8-java文件如何被OS执行" class="headerlink" title="8. .java文件如何被OS执行"></a>8. .java文件如何被OS执行</h4><p>我回答的是虚拟机的那一块</p>
+<h3 id="项目-1"><a href="#项目-1" class="headerlink" title="项目"></a>项目</h3><h4 id="9-如何提高并发量"><a href="#9-如何提高并发量" class="headerlink" title="9. 如何提高并发量"></a>9. 如何提高并发量</h4><p>集群，缓存，数据库</p>
+<h4 id="10-如何保证数据一致性"><a href="#10-如何保证数据一致性" class="headerlink" title="10. 如何保证数据一致性"></a>10. 如何保证数据一致性</h4><p>加锁，双删，MQ</p>
+<h3 id="做题"><a href="#做题" class="headerlink" title="做题"></a>做题</h3><p>面试官说给我个不常见的题，我吐。。。</p>
+<h4 id="11-请用JAVA代码完成以下功能，要求使用多线程"><a href="#11-请用JAVA代码完成以下功能，要求使用多线程" class="headerlink" title="11. 请用JAVA代码完成以下功能，要求使用多线程"></a>11. 请用JAVA代码完成以下功能，要求使用多线程</h4><p><code>cat /home/admin/logs/*.log | grep &quot;Login&quot;| sort -nr | uniq -c</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 读取 这个文件夹下 以.log结尾的文件</span></span><br><span class="line"><span class="comment"> * 匹配包含Login的字符串</span></span><br><span class="line"><span class="comment"> * 并将字符串逆序排列相同的字符串合在一起</span></span><br><span class="line"><span class="comment"> * 并在左侧标出重复出现的次数</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> wxxlamp</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2020/03/11~14:53</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Ali</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> String dir = <span class="string">&quot;/home/admin/logs/&quot;</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> String target = <span class="string">&quot;Login&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> <span class="keyword">throws</span> ExecutionException, InterruptedException </span>&#123;</span><br><span class="line">        Tree tree = <span class="keyword">new</span> Tree();</span><br><span class="line">        List&lt;String&gt; stringList = getMultiFile(dir);</span><br><span class="line">        <span class="keyword">for</span> (String s : stringList) &#123;</span><br><span class="line">            tree.add(s);</span><br><span class="line">        &#125;</span><br><span class="line">        tree.print();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> List&lt;String&gt; <span class="title">getMultiFile</span><span class="params">(String dir)</span> <span class="keyword">throws</span> ExecutionException, InterruptedException </span>&#123;</span><br><span class="line">        File fileDir = <span class="keyword">new</span> File(dir);</span><br><span class="line">        File[] files = fileDir.listFiles();</span><br><span class="line">        List&lt;String&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">assert</span> files != <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">for</span> (File file : files) &#123;</span><br><span class="line">            <span class="keyword">if</span> (file.getName().matches(<span class="string">&quot;^((?!log).*).log$&quot;</span>)) &#123;</span><br><span class="line">                FutureTask&lt;List&lt;String&gt;&gt; futureTask = <span class="keyword">new</span> FutureTask&lt;&gt;(<span class="keyword">new</span> Worker(file));</span><br><span class="line">                <span class="keyword">new</span> Thread(futureTask).start();</span><br><span class="line">                list.addAll(futureTask.get());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> list;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> List&lt;String&gt; <span class="title">getTargetStringLine</span><span class="params">(File file)</span> </span>&#123;</span><br><span class="line">        Charset charset = StandardCharsets.UTF_8;</span><br><span class="line">        StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        <span class="keyword">try</span>(FileChannel fin = <span class="keyword">new</span> FileInputStream(file).getChannel()) &#123;</span><br><span class="line">            ByteBuffer buffer = ByteBuffer.allocate(<span class="number">1024</span>);</span><br><span class="line">            <span class="keyword">while</span> (fin.read(buffer) != -<span class="number">1</span>) &#123;</span><br><span class="line">                buffer.flip();</span><br><span class="line">                sb.append(charset.decode(buffer));</span><br><span class="line">                buffer.clear();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        String[] ss = sb.toString().split(<span class="string">&quot;\\r&quot;</span>);</span><br><span class="line">        List&lt;String&gt; stringList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (String s : ss) &#123;</span><br><span class="line">            <span class="keyword">if</span> (s.contains(target)) &#123;</span><br><span class="line">                stringList.add(s);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> stringList;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">Worker</span> <span class="keyword">implements</span> <span class="title">Callable</span>&lt;<span class="title">List</span>&lt;<span class="title">String</span>&gt;&gt; </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> File file;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Worker</span> <span class="params">(File file)</span></span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.file = file;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">call</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> getTargetStringLine(file);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Tree</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> Map&lt;String,Integer&gt; map = <span class="keyword">new</span> TreeMap&lt;&gt;(</span><br><span class="line">                Comparator.reverseOrder());</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(String str)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(!map.containsKey(str)) &#123;</span><br><span class="line">                map.put(str,<span class="number">1</span>);</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            Integer num = map.get(str);</span><br><span class="line">            map.put(str, ++num);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            print(map);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">(Map&lt;String, Integer&gt; map)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">for</span> (Map.Entry&lt;String, Integer&gt; entry : map.entrySet()) &#123;</span><br><span class="line">                System.out.println(entry.getKey() + <span class="string">&quot; : &quot;</span> + entry.getValue());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="12-LeetCode打家劫舍"><a href="#12-LeetCode打家劫舍" class="headerlink" title="12. LeetCode打家劫舍"></a>12. LeetCode打家劫舍</h4><h4 id="13-写一个黑名单过滤系统"><a href="#13-写一个黑名单过滤系统" class="headerlink" title="13. 写一个黑名单过滤系统"></a>13. 写一个黑名单过滤系统</h4><blockquote>
+<p>这两个算法题是淘宝一面后的笔试题，不是本次面试题</p>
+</blockquote>
+<h3 id="复盘"><a href="#复盘" class="headerlink" title="复盘"></a>复盘</h3><p>以前都是听说阿里越往后项目越多，为什么这次全是基础啊QAQ</p>
+<p>突然发现面试官会看我CSDN，我在考虑要不要把我的面经设为私人可见，因为最近发现面试官问的问题基本刚好撇开了我整理的</p>
+<p>这次的面试官和往常的大不一样，完全不走常规路，就像是和我讨论问题一样，一点一点问，完全问到我不会。还有一个就是写第一个场景题的时候，我多线程写完没来得及提交就到时间了，淦。这个场景题据我所知会成为最终评级考核的参考之一，我伤心555</p>
+<p>面试官夸说我在本科生中还不错，对我印象挺好，但是还是要多实践。幸好二面险过。</p>
+<h2 id="三面"><a href="#三面" class="headerlink" title="三面"></a>三面</h2><h3 id="Java-2"><a href="#Java-2" class="headerlink" title="Java"></a>Java</h3><h4 id="1-接触Java多久"><a href="#1-接触Java多久" class="headerlink" title="1. 接触Java多久"></a>1. 接触Java多久</h4><h4 id="2-Java的学习方法"><a href="#2-Java的学习方法" class="headerlink" title="2. Java的学习方法"></a>2. Java的学习方法</h4><p>老师-视频-博客-文档-官方技术号</p>
+<h3 id="设计模式-1"><a href="#设计模式-1" class="headerlink" title="设计模式"></a>设计模式</h3><h4 id="3-熟悉哪些常用的设计模式"><a href="#3-熟悉哪些常用的设计模式" class="headerlink" title="3. 熟悉哪些常用的设计模式"></a>3. 熟悉哪些常用的设计模式</h4><h3 id="DB-1"><a href="#DB-1" class="headerlink" title="DB"></a>DB</h3><h4 id="4-MySQL的性能调优"><a href="#4-MySQL的性能调优" class="headerlink" title="4. MySQL的性能调优"></a>4. MySQL的性能调优</h4><p>redo log buffer加大，数据库连接池，索引优化相关</p>
+<h3 id="项目-2"><a href="#项目-2" class="headerlink" title="项目"></a>项目</h3><h4 id="5-项目的性能优化"><a href="#5-项目的性能优化" class="headerlink" title="5. 项目的性能优化"></a>5. 项目的性能优化</h4><p>堆缓存和MQ</p>
+<h4 id="6-秒杀系统的超买怎么解决"><a href="#6-秒杀系统的超买怎么解决" class="headerlink" title="6. 秒杀系统的超买怎么解决"></a>6. 秒杀系统的超买怎么解决</h4><p><strong>有没有参考成熟的技术方案</strong></p>
+<p>推荐美团和阿里的技术博客</p>
+<h4 id="7-秒杀系统的分工如何"><a href="#7-秒杀系统的分工如何" class="headerlink" title="7. 秒杀系统的分工如何"></a>7. 秒杀系统的分工如何</h4><p><strong>如何处理和同伴的技术争论</strong></p>
+<h4 id="8-整个项目做了多少时间"><a href="#8-整个项目做了多少时间" class="headerlink" title="8. 整个项目做了多少时间"></a>8. 整个项目做了多少时间</h4><h4 id="9-项目优化的空间"><a href="#9-项目优化的空间" class="headerlink" title="9. 项目优化的空间"></a>9. 项目优化的空间</h4><p>CDN，微服务</p>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><h4 id="10-如何安排自己的学习时间"><a href="#10-如何安排自己的学习时间" class="headerlink" title="10. 如何安排自己的学习时间"></a>10. 如何安排自己的学习时间</h4><h4 id="11-为什么要在CSDN写博客"><a href="#11-为什么要在CSDN写博客" class="headerlink" title="11. 为什么要在CSDN写博客"></a>11. 为什么要在CSDN写博客</h4><h4 id="12-一般分享什么文章"><a href="#12-一般分享什么文章" class="headerlink" title="12. 一般分享什么文章"></a>12. 一般分享什么文章</h4><h4 id="13-有没有了解过新技术"><a href="#13-有没有了解过新技术" class="headerlink" title="13. 有没有了解过新技术"></a>13. 有没有了解过新技术</h4><p>docker，k8s，severless，severMesh，JDK8~14</p>
+<h4 id="14-个人的技术方向"><a href="#14-个人的技术方向" class="headerlink" title="14. 个人的技术方向"></a>14. 个人的技术方向</h4><h4 id="15-对业务方面有什么需求"><a href="#15-对业务方面有什么需求" class="headerlink" title="15. 对业务方面有什么需求"></a>15. 对业务方面有什么需求</h4><h4 id="16-对前面几轮面试回答不好问题的反思"><a href="#16-对前面几轮面试回答不好问题的反思" class="headerlink" title="16. 对前面几轮面试回答不好问题的反思"></a>16. 对前面几轮面试回答不好问题的反思</h4><h2 id="四面"><a href="#四面" class="headerlink" title="四面"></a>四面</h2><ol>
+<li>缓存一致性</li>
+<li>mq的事物一致性</li>
+<li>mq的两阶段提交</li>
+<li>mq消息有序发送</li>
+<li>为什么这样保证？</li>
+<li>GC机制</li>
+<li>可达性分析</li>
+<li>RPC</li>
+<li>线程的状态</li>
+<li>线程阻塞和等待的区别</li>
+<li>NIO</li>
+<li>AOP如何实现</li>
+<li>代理模式？实现方式？</li>
+<li>比赛情况</li>
+</ol>
+<h2 id="HR"><a href="#HR" class="headerlink" title="HR"></a>HR</h2><ol>
+<li>项目如果商用的话有哪些改进的点</li>
+<li>其他的忘了</li>
+</ol>
+</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2020-04-03</span><i class="fa fa-tag"></i><a class="tag" href="/tags/Interview/" title="Interview">Interview </a><a class="tag" href="/tags/Java/" title="Java">Java </a><a class="tag" href="/tags/Internships/" title="Internships">Internships </a><span class="leancloud_visitors"></span></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="" onclick="javascript:join_favorite()" ref="sidebar"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" target="_blank" rel="noopener" href="http://twitter.com/home?status=,http://wxxlamp.cn/2020/04/03/ali-finance-interview/,王星星的魔灯,阿里企业金融实习面试,;"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/2020/04/10/not-only-an-interview/" title="这可能不仅仅是篇面经">上一篇</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/2020/04/01/alipay-interview/" title="蚂蚁实习面试">下一篇</a></li></ul></div><script src="/js/visitors.js"></script><a id="comments"></a><div id="vcomments" style="margin:0 30px;"></div><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="//cdn.jsdelivr.net/gh/xcss/valine@latest/dist/Valine.min.js"></script><script>var valine = new Valine({
+  el:'#vcomments',
+  notify:false || false, 
+  verify:false|| false, 
+  app_id:'',
+  app_key:'',
+  placeholder:'念念不忘，必有回响...',
+  path: window.location.pathname,
+  serverURLs: '',
+  visitor:true,
+  recordIP:true,
+  avatar:'mp'
+})</script></div></div></div></div><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script><script src="/js/add-bookmark.js"></script><script src="/js/baidu-tongji.js"></script></body></html>

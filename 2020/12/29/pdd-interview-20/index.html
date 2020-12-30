@@ -47,21 +47,33 @@
 <p>谁的性能好，为什么？</p>
 </li>
 <li><p>优化调用方式 有一个调用链路，从服务A到服务B，其中B被拆分为B1,B2和B3，然后服务B再调到服务C，其中C是数据库服务，请问调用链路中如何优化？</p>
+<ul>
+<li>如果B1，B2，B3是无序的，则可以通过多线程的方式调用</li>
+<li>如果在B服务中的子服务需要用到前面的服务，则可以通过协程来操作</li>
+<li>对于服务C的DB操作中，可以通过异步回调的方式，来提高IO的性能</li>
+</ul>
 </li>
 <li><p>CAS的性能如何，它有什么缺点</p>
+<ul>
+<li>CAS的全称是campare and swap，即比较交换，它的本质是一个乐观锁，在并发度低的场景中，乐观锁的性能是要优于悲观锁的</li>
+</ul>
 </li>
 <li><p>CAS和悲观锁的比较</p>
 </li>
 <li><p>并发和QPS有什么区别</p>
+<ul>
+<li>并发指的线程或者进程交替占用CPU的调度方式</li>
+<li>而QPS则是query per second，表示每秒的查询次数</li>
+</ul>
 </li>
 <li><p>算法题 ：无序数组找到波峰</p>
-<ol>
+<ul>
 <li><p>这个题的暴力解法，就是On遍历一遍，找到最大值</p>
 </li>
 <li><p>但是面试官显然想要找到时间复杂度小于On的解法，其实这是排序的一个简单变种，这里我们可以尝试分治法，这样时间复杂度就会被降到Ologn：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getMax</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> left, <span class="keyword">int</span> right)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(left == right) &#123;</span><br><span class="line">        <span class="keyword">return</span> nums[left];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> mid = (left + right) / <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">return</span> Math.max(getMax(nums, left, mid), getMax(nums, mid + <span class="number">1</span>, right));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
-</ol>
+</ul>
 </li>
 <li><p>自己的优点</p>
 <p>如果连自己的优点都不知道，那还如何说服面试官呢</p>
@@ -104,7 +116,7 @@
 <h3 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h3><p>其实拼多多的问题感觉还好很基础，同时拼多多的面试感觉也很好，面试官一直在引导，给了我不错的面试体验。同时，一面面试官是阿里的8跳过去的，感觉问的虽然基础但是有深度，能给人一种探索技术的感觉，而不是单纯的八股文。</p>
 <p>其实有一个尴尬的事情，拼多多二面的时候，面试官问我RPC的时候，我顺嘴提了一句阿里的RPC框架，当时说的是“High Speed Framework”，然后被面试官直接拆穿：“不就是好舒服（HSF）吗？”，当时尴尬一笑，原来拼多多二面面试官也是阿里的。。。</p>
 <p>果然每年向社会输送7000人才不是乱说的，阿里巴巴，yyds</p>
-</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2020-12-29</span><i class="fa fa-tag"></i><a class="tag" href="/categories/面试经验/" title="面试经验">面试经验 </a><a class="tag" href="/tags/Java/" title="Java">Java </a><a class="tag" href="/tags/Campus-Recruitment/" title="Campus Recruitment">Campus Recruitment </a><span class="leancloud_visitors"></span></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="" onclick="javascript:join_favorite()" ref="sidebar"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" target="_blank" rel="noopener" href="http://twitter.com/home?status=,http://wxxlamp.cn/2020/12/29/pdd-interview-20/,王星星的魔灯,拼多多两轮游,;"></a></div></div><div class="pagination"><ul class="clearfix"><li class="next pagbuttons"><a class="btn" role="navigation" href="/2020/12/24/kotlin-learn/" title="Kotlin学习笔记">下一篇</a></li></ul></div><script src="/js/visitors.js"></script><a id="comments"></a><div id="vcomments" style="margin:0 30px;"></div><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="//cdn.jsdelivr.net/gh/xcss/valine@latest/dist/Valine.min.js"></script><script>var valine = new Valine({
+</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2020-12-29</span><i class="fa fa-tag"></i><a class="tag" href="/categories/面试经验/" title="面试经验">面试经验 </a><a class="tag" href="/tags/Java/" title="Java">Java </a><a class="tag" href="/tags/Campus-Recruitment/" title="Campus Recruitment">Campus Recruitment </a><span class="leancloud_visitors"></span></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="" onclick="javascript:join_favorite()" ref="sidebar"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" target="_blank" rel="noopener" href="http://twitter.com/home?status=,http://wxxlamp.cn/2020/12/29/pdd-interview-20/,王星星的魔灯,拼多多两轮游,;"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/2020/12/30/reduce-loop/" title="拆循环的骚操作">上一篇</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/2020/12/24/kotlin-learn/" title="Kotlin学习笔记">下一篇</a></li></ul></div><script src="/js/visitors.js"></script><a id="comments"></a><div id="vcomments" style="margin:0 30px;"></div><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="//cdn.jsdelivr.net/gh/xcss/valine@latest/dist/Valine.min.js"></script><script>var valine = new Valine({
   el:'#vcomments',
   notify:false || false, 
   verify:false|| false, 

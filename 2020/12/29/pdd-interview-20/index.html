@@ -143,7 +143,7 @@ cour"><meta name="keywords" content="王星星的魔灯,博客,王星星"><meta 
 <ul>
 <li>代理模式就是给某一个对象创建一个代理对象，而由这个代理对象控制对原对象的引用，而创建这个代理对象就是可以在调用原对象时增加一些额外的操作，分为动态代理和静态代理。在Spring的AOP中最为常用。</li>
 <li>对于Java来说，静态代理是编译期实现，而动态代理是运行期实现。对于Spring来说，有两种实现方式：<ol>
-<li>JDK的动态代理需要实现一个公共的接口（通过接口找到代理的方法），动态代理生成的反射类<img src="https://g.yuque.com/gr/latex?Proxy%E6%98%AF%E5%85%B7%E4%BD%93%E7%9A%84%E4%BB%A3%E7%90%86%EF%BC%8C%E6%88%91%E4%BB%AC%E5%9C%A8%E5%AE%9E%E7%8E%B0%E4%BA%86InvocationHandler%E4%B9%8B%E5%90%8E%E7%9A%84invoke%E4%B8%AD%E7%9A%84%E6%96%B9%E6%B3%95%E4%BC%9A%E8%BF%9B%E5%85%A5" alt="img">Proxy(<em>继承了Proxy，实现了接口</em>)的方法中</li>
+<li>JDK的动态代理需要实现一个公共的接口（通过接口找到代理的方法），动态代理生成的反射类Proxy是具体的代理，我们在实现了InvocationHandler之后的invoke中的方法会进入Proxy(<em>继承了Proxy，实现了接口</em>)的方法中</li>
 <li>CGLib采用的是用创建一个继承实现类的子类，用asm库动态修改子类的代码来实现的，所以可以用传入的类引用执行代理类</li>
 </ol>
 </li>

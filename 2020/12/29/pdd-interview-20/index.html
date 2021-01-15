@@ -109,23 +109,17 @@ cour"><meta name="keywords" content="王星星的魔灯,博客,王星星"><meta 
 <p>如果连自己的优点都不知道，那还如何说服面试官呢</p>
 </li>
 <li><p>最近在看什么书</p>
-<p>这个主要搜狐面试官想考察你的持续学习力，我最近在看Netty和Mybatis相关的书哈哈哈</p>
+<p>这个主要面试官想考察你的持续学习力，我最近在看Netty和Mybatis相关的书哈哈哈</p>
 </li>
 </ol>
 <h3 id="二面"><a href="#二面" class="headerlink" title="二面"></a>二面</h3><ol>
 <li><p>RPC的序列化方式和原理</p>
 <ul>
 <li>对于RPC来说，其全称是Remote Produce Call，即远程过程调用，说白了，就是把远程的方法当做本地的方法来调。它的核心是帮助使用者更简单的调用网络中的接口或者方法。RPC只是一种调用方式，它可以用HTTP实现，可以用TCP实现。很多时候面试官会拿RPC和HTTP作比较，其实他俩完全不一样，如果真的要比较，只能说RPC调用起来更方便，同时如果用TCP实现的话，效率也更高，但是RPC的移植性和易用性不是很好。对于HTTP来说，不同语言之间都可以使用HTTP来进行调用</li>
-</ul>
-</li>
-</ol>
-<ul>
-<li>常见的PRC序列化方式有Java自带的序列化，需要继承Serializable，也有xml，json，或者是protobuf等等<ul>
+<li>常见的PRC序列化方式有Java自带的序列化，需要继承Serializable，也有xml，json，或者是protobuf等等</li>
 <li>RPC的序列化方式要考虑安全性，通用性，兼容性，性能和空间</li>
 </ul>
 </li>
-</ul>
-<ol start="2">
 <li><p>TCP的脏连接</p>
 <ul>
 <li>TCP的脏连接发生在TCP的握手的时候，假如第一次请求超时，client会重复发送请求，这时，如果只有两次握手的话，就会产生一个脏连接</li>

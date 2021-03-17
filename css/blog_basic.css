@@ -531,3 +531,26 @@ dl dt {
 .leancloud-visitors-count{
   margin-left: 5px;
 }
+
+/*增加分类css*/
+.category-list{
+  position: relative;
+  width: 80%;
+  margin-top: 15%;
+  margin-left: 7.2%;
+}
+.category-list-item{
+  position: relative;
+  width: 80%;
+  margin-top: 1.5%;
+  margin-left: 15%;
+}
+.category-list-link{
+
+}
+.category-list-count{
+  position: relative;
+  width: 80%;
+  margin-top: 1%;
+  margin-left: 40%;
+}

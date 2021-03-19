@@ -536,21 +536,35 @@ dl dt {
 .category-list{
   position: relative;
   width: 80%;
-  margin-top: 15%;
-  margin-left: 7.2%;
+  /*margin-top: 15%;*/
+  /*margin-left: 7.2%;*/
+  margin: 15% auto;
+  writing-mode:vertical-lr;
+  /*兼容ie*/
+  writing-mode: tb-lr;
 }
 .category-list-item{
   position: relative;
-  width: 80%;
-  margin-top: 1.5%;
+  width: 10%;
+  margin-bottom: -100%;
   margin-left: 15%;
 }
 .category-list-link{
-
 }
+
 .category-list-count{
-  position: relative;
-  width: 80%;
-  margin-top: 1%;
-  margin-left: 40%;
+  /*margin-top: 20%;*/
+  display: inline-block;
+  margin-top: 25%;
+  transform: rotate(-90deg);
+}
+
+.category-list .category-list-item:nth-child(3n) {
+  margin-top: 10%;
+}
+.category-list .category-list-item:nth-child(3n + 1) {
+  margin-top: 30%;
+}
+.category-list .category-list-item:nth-child(3n + 2) {
+  margin-top: 50%;
 }

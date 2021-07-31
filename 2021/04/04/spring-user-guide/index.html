@@ -43,7 +43,7 @@
 </li>
 <li><p>执行所有Bean初始化的前置处理</p>
 <ul>
-<li><p><code>BeanPostProcessors#postProcessBeforeInitialization</code></p>
+<li><p><code>BeanPostProcessor#postProcessBeforeInitialization</code></p>
 <p><em>@Autowired通过该方式实现</em></p>
 </li>
 </ul>
@@ -56,7 +56,9 @@
 </li>
 <li><p>执行Bean初始化的后置处理</p>
 <ul>
-<li><code>BeanPostProcessors#postProcessAfterInitialization</code></li>
+<li><p><code>BeanPostProcessor#postProcessAfterInitialization</code></p>
+<p><em>aop通过它实现</em></p>
+</li>
 </ul>
 </li>
 </ol>
@@ -77,12 +79,10 @@
 </li>
 </ol>
 <p><strong>在bean的生命周期中，我们可以通过Spring提供给我们的自定义接口和钩子来增强各个bean之间的联系，丰富特定bean的功能，从而达到我们的业务目的</strong>。而这，就是SpringIOC提供给我们的重要的功能之一</p>
-<h4 id="2-其他扩展接口"><a href="#2-其他扩展接口" class="headerlink" title="2. 其他扩展接口"></a>2. 其他扩展接口</h4><p>但是，我们知道，对Bean之间的关系和能力的增强只满足了我们大部分业务需求，但是，我们并不能决定Bean在初始化之前和初始化之后的事情，为了解决这个问题，Spring给我们提供了<code>BeanFactoryPostProcessor</code>接口，该类有两个方法：</p>
+<p>对于<code>BeanPostProcessor</code>这个牛逼接口来说，它会在工厂初始化的时候，检查所有未实例化的bean，如果实现了该接口，则加入缓存。同时，它也有其他实现，有的实现会用于bean的实例化而不是初始化</p>
+<h4 id="2-其他扩展接口"><a href="#2-其他扩展接口" class="headerlink" title="2. 其他扩展接口"></a>2. 其他扩展接口</h4><p>但是，我们知道，对Bean之间的关系和能力的增强只满足了我们大部分业务需求，但是，我们并不能决定Bean在初始化之前和初始化之后的事情，为了解决这个问题，Spring给我们提供了<code>BeanFactoryPostProcessor</code>接口，该类的主要方法是：</p>
 <ol>
-<li><p>一个是<code>BeanFactoryPostProcessor#postProcessBeforeInitialization</code>，它发生在Bean初始化之前，主要用于与<code>BeanDefinition</code>和<code>BeanFactory</code>进行交互并对其进行修改。</p>
-</li>
-<li><p>第二个方法是<code>BeanFactoryPostProcessor#postProcessAfterInitialization</code>，它发生在bean初始化之后，Spring的AOP特性就是通过该方法对初始化后的bean进行代理从而丰富Bean的能力。</p>
-</li>
+<li>一个是<code>BeanFactoryPostProcessor#postProcessBeanFactory</code>，它发生在Bean初始化之前，主要用于与<code>BeanDefinition</code>和<code>BeanFactory</code>进行交互并对其进行修改</li>
 </ol>
 <p>其实，除了这些扩展方式外，Spring还留给了我们其他的扩展方式，但是这些扩展方式太过偏僻（如主要用于bean实例化时的<code>BeanPostProcessor</code>的一些实现类。<strong>Spring在bean的整个加载到使用的过程都对bean和beanFactory提供了扩展接口，你甚至可以通过这些接口在运行时自定义一个bean或者在运行时对一个bean的配置进行修改，或者你可以停止一个bean的实例和初始化等等</strong>），是用于处理特殊的情况，跟本文的高效Spring开发主题不匹配，暂且不表。</p>
 <p>这篇博客当需要的时候可以翻翻：<a target="_blank" rel="noopener" href="https://blog.csdn.net/woshilijiuyi/article/details/85396492">Spring的扩展文档</a></p>
@@ -99,7 +99,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ARouter</span> <span class="keyword">implements</span> <span class="title">Router</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">route</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// doSomething</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Factory</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> Map&lt;String, Router&gt; routerMap;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">getRouter</span><span class="params">(String key)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> routerMap.get(key);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h5 id="策略模式"><a href="#策略模式" class="headerlink" title="* 策略模式"></a>* 策略模式</h5><p>其实策略模式也是优雅路由的一个延伸，因为找到不同的策略实现类就是通过路由完成的</p>
-<h5 id="特征发现"><a href="#特征发现" class="headerlink" title="* 特征发现"></a>* 特征发现</h5><p>我们可以实现<code>BeanPostProcessors</code>接口，然后在bean初始化时发现该bean的某些特征，如该bean是否是某个类的子类，是否包括某注解，然后对该bean做进一步处理</p>
+<h5 id="特征发现"><a href="#特征发现" class="headerlink" title="* 特征发现"></a>* 特征发现</h5><p>我们可以实现<code>BeanPostProcessor</code>接口，然后在bean初始化时发现该bean的某些特征，如该bean是否是某个类的子类，是否包括某注解，然后对该bean做进一步处理</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> <span class="keyword">implements</span> <span class="title">BeanPostProcessor</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">postProcessAfterInitialization</span><span class="params">(Object bean, String beanName)</span> <span class="keyword">throws</span> BeansException </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (bean.getClass().isAnnotationPresent(RestController.class)) &#123;</span><br><span class="line">            <span class="comment">// 相应处理</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> bean;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h5 id="获得Bean"><a href="#获得Bean" class="headerlink" title="* 获得Bean"></a>* 获得Bean</h5><p>我们可以通过各种织如接口来完成和Spring上下文的交互，譬如获得容器中的Bean</p>

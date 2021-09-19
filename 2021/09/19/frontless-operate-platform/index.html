@@ -27,52 +27,46 @@
 </ol>
 <p>同时，对于操作类型的注册也有几个方案：</p>
 <ol>
-<li><p>通过系统接口，使用户必须返回某一操作的操作类型</p>
-</li>
-<li><p>通过文件配置，使用户显示的写入操作类型</p>
-</li>
-<li><p>通过注解，使用户将操作类型配置在对应的操作Handler中 ✅</p>
-<h4 id="2-获取操作要输入的字段"><a href="#2-获取操作要输入的字段" class="headerlink" title="2. 获取操作要输入的字段"></a>2. 获取操作要输入的字段</h4><p>这里有一个问题，就是每种操作的入参都是不一样的，系统如何拿到不同操作的不同入参字段以及他们的属性呢？</p>
-</li>
-<li><p>定义接口，使用户必须返回入参的属性（如字段是否必传，对客展示信息），然后系统初始化解析并在执行时返回给前端</p>
-</li>
-<li><p>使用文件配置，将操作对应的输入字段的属性配置在文件中</p>
-</li>
-<li><p>定义注解，使用户在字段类型的注解完成对子段属性的配置 ✅</p>
-<h4 id="3-执行操作"><a href="#3-执行操作" class="headerlink" title="3. 执行操作"></a>3. 执行操作</h4><p>在执行操作的过程中，有几个问题，</p>
-</li>
+<li>通过系统接口，使用户必须返回某一操作的操作类型</li>
+<li>通过文件配置，使用户显示的写入操作类型</li>
+<li>通过注解，使用户将操作类型配置在对应的操作Handler中 ✅</li>
 </ol>
-<p><strong>第一是如何将前端的无类型结构转换为Java的强类型？</strong></p>
+<h4 id="2-获取操作要输入的字段"><a href="#2-获取操作要输入的字段" class="headerlink" title="2. 获取操作要输入的字段"></a>2. 获取操作要输入的字段</h4><p>这里有一个问题，就是每种操作的入参都是不一样的，系统如何拿到不同操作的不同入参字段以及他们的属性呢？</p>
+<ol>
+<li>定义接口，使用户必须返回入参的属性（如字段是否必传，对客展示信息），然后系统初始化解析并在执行时返回给前端</li>
+<li>使用文件配置，将操作对应的输入字段的属性配置在文件中</li>
+<li>定义注解，使用户在字段类型的注解完成对子段属性的配置 ✅</li>
+</ol>
+<h4 id="3-执行操作"><a href="#3-执行操作" class="headerlink" title="3. 执行操作"></a>3. 执行操作</h4><p>在执行操作的过程中，有几个问题，<br><strong>第一是如何将前端的无类型结构转换为Java的强类型？</strong></p>
 <ol>
 <li>前端传入map即可</li>
 <li>后端因为可以通过接口或者范型拿到入参的class信息，直接反射new，然后赋值填充</li>
 </ol>
 <p><strong>第二是如何将用户的自定义出参转化为系统可以识别的出参？</strong></p>
 <ol>
-<li><p>通过反射拿到系统对应字段的已有值</p>
-</li>
-<li><p>然后结合用户配置的注解和已有的系统出参结构进行填充</p>
-<h4 id="4-如何规范用户的自定义处理器"><a href="#4-如何规范用户的自定义处理器" class="headerlink" title="4. 如何规范用户的自定义处理器"></a>4. 如何规范用户的自定义处理器</h4></li>
-<li><p>通过接口进行限制 ✅</p>
-</li>
-<li><p>通过方法级注解标明处理方法</p>
+<li>通过反射拿到系统对应字段的已有值</li>
+<li>然后结合用户配置的注解和已有的系统出参结构进行填充</li>
+</ol>
+<h4 id="4-如何规范用户的自定义处理器"><a href="#4-如何规范用户的自定义处理器" class="headerlink" title="4. 如何规范用户的自定义处理器"></a>4. 如何规范用户的自定义处理器</h4><ol>
+<li>通过接口进行限制 ✅</li>
+<li>通过方法级注解标明处理方法</li>
+</ol>
 <h3 id="流程实现"><a href="#流程实现" class="headerlink" title="流程实现"></a>流程实现</h3><h4 id="1-系统初始工作"><a href="#1-系统初始工作" class="headerlink" title="1. 系统初始工作"></a>1. 系统初始工作</h4><h5 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h5><p>在每个配置bean初始化后，都会去解析这个bean的入参和出参配置</p>
-</li>
-<li><p>通过范型获取入参和出参的真实类型</p>
-</li>
-<li><p>将用户通过注解配置的出/入参解析为系统内部定义的出入参数据结构</p>
-</li>
-<li><p>获取每个配置类通过注解配置的对应<code>OperationType</code></p>
-</li>
-<li><p>对出入参的注解进行校验，约束用户行为</p>
+<ol>
+<li>通过范型获取入参和出参的真实类型</li>
+<li>将用户通过注解配置的出/入参解析为系统内部定义的出入参数据结构</li>
+<li>获取每个配置类通过注解配置的对应<code>OperationType</code></li>
+<li>对出入参的注解进行校验，约束用户行为</li>
+</ol>
 <h5 id="注册"><a href="#注册" class="headerlink" title="注册"></a>注册</h5><p>采用策略模式，利用Spring的能力，将Bean在Spring初始化的后置就注册在系统的map中</p>
-</li>
-<li><p>如果bean的类型为<code>OperationConfig</code>，系统则会去查找该类的<code>OperationType</code>，</p>
-</li>
-<li><p>将ope作为key，config作为value，注册到map中</p>
-<h4 id="2-系统执行流程"><a href="#2-系统执行流程" class="headerlink" title="2. 系统执行流程"></a>2. 系统执行流程</h4><h5 id="获取操作类型"><a href="#获取操作类型" class="headerlink" title="获取操作类型"></a>获取操作类型</h5></li>
-<li><p>通过之前注册的<code>OperationType</code>，直接获取</p>
-<h5 id="获取请求参数"><a href="#获取请求参数" class="headerlink" title="获取请求参数"></a>获取请求参数</h5></li>
+<ol>
+<li>如果bean的类型为<code>OperationConfig</code>，系统则会去查找该类的<code>OperationType</code>，</li>
+<li>将ope作为key，config作为value，注册到map中</li>
+</ol>
+<h4 id="2-系统执行流程"><a href="#2-系统执行流程" class="headerlink" title="2. 系统执行流程"></a>2. 系统执行流程</h4><h5 id="获取操作类型"><a href="#获取操作类型" class="headerlink" title="获取操作类型"></a>获取操作类型</h5><ol>
+<li>通过之前注册的<code>OperationType</code>，直接获取</li>
+</ol>
+<h5 id="获取请求参数"><a href="#获取请求参数" class="headerlink" title="获取请求参数"></a>获取请求参数</h5><ol>
 <li><p>通过之前解析的入参数据结构直接获取</p>
 <h5 id="执行操作"><a href="#执行操作" class="headerlink" title="执行操作"></a>执行操作</h5></li>
 <li><p>将前端传来的参数转为用户自定义的入参实例<strong>「重点」</strong></p>

@@ -1,0 +1,121 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="王星星"><title>无前端运营方案 · 王星星的魔灯</title><meta name="description" content="前言当一个业务在野蛮生长，从0-1的过程中，很多对应的运营工具会跟不上业务进步的步伐，可能前端/后端会没有资源去投入这样一个对于前期的ROI不高的地方去。但是，很多非频繁场景又需要这样一个平台去承接，譬如：
+
+查看某用户的状态
+查看某订单的状态
+查看某产品当前的具体链路
+当产生客诉问题时，快速定位客"><meta name="keywords" content="王星星的魔灯,博客,王星星"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><!-- 增加网站logo--><link rel="shortcut icon" href="/assets/img/favicon.ico" type="image/x-icon"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><script src="/js/jquery.js"></script><meta name="generator" content="Hexo 5.2.0"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo@2x.png" style="width:127px;"><h3 title=""><a href="/">王星星的魔灯</a></h3><div class="description"><p>勇士斗恶龙 <br> Love & Seriousness & Regularity & Persistence</p></div></div></div><ul class="social-links"><li><a target="_blank" rel="noopener" href="https://github.com/wxxlamp"><i class="fa fa-github"></i></a></li><li><a href="mailto:wxxlamp@foxmail.com"><i class="fa fa-envelope"></i></a></li><li><a target="_blank" rel="noopener" href="http://wpa.qq.com/msgrd?v=3&amp;uin=2305450070&amp;site=qq&amp;menu=yes"><i class="fa fa-qq"></i></a></li><li><a target="_blank" rel="noopener" href="https://blog.csdn.net/coder_what"><i class="fa fa-mortar-board"></i></a></li></ul><div class="footer"><div class="p"><span>© 2018 - 2021</span><i class="fa fa-star"></i><span> 王星星</span><!--span.leancloud_visitors--></div><div class="by_farbox"><span>Powered by</span><a href="https://hexo.io/zh-cn/" target="_blank">Hexo</a><span> &</span><a href="https://github.com/wxxlamp/anatole-core-wxx" target="_blank">Anatole-Wxx</a></div><div class="beian"><a href="http://www.beian.miit.gov.cn/" target="_blank">豫ICP备20004458号-1</a><span style="height:10px;margin-left: 10px;">|</span><img src="/images/gongan.png" style="height:10px;margin-left: 10px;position: relative;top: 1px;"><span style="margin-left: 2px;">豫公网安备 44030400004458号</span></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首页</a></li><li><a href="/archives">归档</a></li><li><a href="/categories">分类</a></li><li><a href="/tags">标签</a></li><li><a href="/about">关于</a></li><li><a href="/links">友链</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"></a></li></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>无前端运营方案</a></h3></div><div class="post-content"><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>当一个业务在野蛮生长，从0-1的过程中，很多对应的运营工具会跟不上业务进步的步伐，可能前端/后端会没有资源去投入这样一个对于前期的ROI不高的地方去。但是，很多非频繁场景又需要这样一个平台去承接，譬如：</p>
+<ol>
+<li>查看某用户的状态</li>
+<li>查看某订单的状态</li>
+<li>查看某产品当前的具体链路</li>
+<li>当产生客诉问题时，快速定位客户问题，等等</li>
+</ol>
+<p>上面的几个例子，都需要开发者通过人肉数据库的方式去查询，所以问题来了，能否用最少的资源，去快速搭建一个这样的平台呢？因为笔者是后端开发，所以希望有一个不需要关心前端页面，只开发后端代码即可——这就是无前端运营方案诞生的目的。</p>
+<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>为什么说是无前端运营平台呢？因为真的不需要前端的代码进行操作。<br>根据我对大部分运营平台的抽象，大部分运维平台都是一次性的操作，即用户不像业务系统一样，需要操作很多流程，而运营平台的用户大多数只会操作一次（如查询某个客户的信息，订正某条数据.etc）。所以可以把一次运维的生命周期理解为一次操作，而一次操作，则包含了<strong>操作类型：操作入参：操作方法：操作出参</strong>，四种一一对应的逻辑。<br>所以我对运维平台进行了抽象，抽象出了四个操作：</p>
+<ol>
+<li>获取操作类型</li>
+<li>根据操作类型获取要输入的字段</li>
+<li>执行操作</li>
+<li>获取该操作对应的输出</li>
+</ol>
+<p>这四个步骤一旦在前端固定下来，用户就只需要再后端定义这四种操作即可完成对应的运维逻辑。</p>
+<h3 id="问题和方案"><a href="#问题和方案" class="headerlink" title="问题和方案"></a>问题和方案</h3><p>前面说到，需要四个步骤可以完成运维逻辑，那么问题就变成，如何将用户的逻辑通过编程语言表现出来。对于上面四个步骤来说，都有着或大或小的挑战</p>
+<h4 id="1-获取操作类型"><a href="#1-获取操作类型" class="headerlink" title="1. 获取操作类型"></a>1. 获取操作类型</h4><p>关于操作类型的存储结构有两个方案：</p>
+<ol>
+<li>将用户定义的操作类型放到List数组中</li>
+<li>将用户定义的操作类型和对应操作Handler放到Map中 ✅</li>
+</ol>
+<p>同时，对于操作类型的注册也有几个方案：</p>
+<ol>
+<li><p>通过系统接口，使用户必须返回某一操作的操作类型</p>
+</li>
+<li><p>通过文件配置，使用户显示的写入操作类型</p>
+</li>
+<li><p>通过注解，使用户将操作类型配置在对应的操作Handler中 ✅</p>
+<h4 id="2-获取操作要输入的字段"><a href="#2-获取操作要输入的字段" class="headerlink" title="2. 获取操作要输入的字段"></a>2. 获取操作要输入的字段</h4><p>这里有一个问题，就是每种操作的入参都是不一样的，系统如何拿到不同操作的不同入参字段以及他们的属性呢？</p>
+</li>
+<li><p>定义接口，使用户必须返回入参的属性（如字段是否必传，对客展示信息），然后系统初始化解析并在执行时返回给前端</p>
+</li>
+<li><p>使用文件配置，将操作对应的输入字段的属性配置在文件中</p>
+</li>
+<li><p>定义注解，使用户在字段类型的注解完成对子段属性的配置 ✅</p>
+<h4 id="3-执行操作"><a href="#3-执行操作" class="headerlink" title="3. 执行操作"></a>3. 执行操作</h4><p>在执行操作的过程中，有几个问题，</p>
+</li>
+</ol>
+<p><strong>第一是如何将前端的无类型结构转换为Java的强类型？</strong></p>
+<ol>
+<li>前端传入map即可</li>
+<li>后端因为可以通过接口或者范型拿到入参的class信息，直接反射new，然后赋值填充</li>
+</ol>
+<p><strong>第二是如何将用户的自定义出参转化为系统可以识别的出参？</strong></p>
+<ol>
+<li><p>通过反射拿到系统对应字段的已有值</p>
+</li>
+<li><p>然后结合用户配置的注解和已有的系统出参结构进行填充</p>
+<h4 id="4-如何规范用户的自定义处理器"><a href="#4-如何规范用户的自定义处理器" class="headerlink" title="4. 如何规范用户的自定义处理器"></a>4. 如何规范用户的自定义处理器</h4></li>
+<li><p>通过接口进行限制 ✅</p>
+</li>
+<li><p>通过方法级注解标明处理方法</p>
+<h3 id="流程实现"><a href="#流程实现" class="headerlink" title="流程实现"></a>流程实现</h3><h4 id="1-系统初始工作"><a href="#1-系统初始工作" class="headerlink" title="1. 系统初始工作"></a>1. 系统初始工作</h4><h5 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h5><p>在每个配置bean初始化后，都会去解析这个bean的入参和出参配置</p>
+</li>
+<li><p>通过范型获取入参和出参的真实类型</p>
+</li>
+<li><p>将用户通过注解配置的出/入参解析为系统内部定义的出入参数据结构</p>
+</li>
+<li><p>获取每个配置类通过注解配置的对应<code>OperationType</code></p>
+</li>
+<li><p>对出入参的注解进行校验，约束用户行为</p>
+<h5 id="注册"><a href="#注册" class="headerlink" title="注册"></a>注册</h5><p>采用策略模式，利用Spring的能力，将Bean在Spring初始化的后置就注册在系统的map中</p>
+</li>
+<li><p>如果bean的类型为<code>OperationConfig</code>，系统则会去查找该类的<code>OperationType</code>，</p>
+</li>
+<li><p>将ope作为key，config作为value，注册到map中</p>
+<h4 id="2-系统执行流程"><a href="#2-系统执行流程" class="headerlink" title="2. 系统执行流程"></a>2. 系统执行流程</h4><h5 id="获取操作类型"><a href="#获取操作类型" class="headerlink" title="获取操作类型"></a>获取操作类型</h5></li>
+<li><p>通过之前注册的<code>OperationType</code>，直接获取</p>
+<h5 id="获取请求参数"><a href="#获取请求参数" class="headerlink" title="获取请求参数"></a>获取请求参数</h5></li>
+<li><p>通过之前解析的入参数据结构直接获取</p>
+<h5 id="执行操作"><a href="#执行操作" class="headerlink" title="执行操作"></a>执行操作</h5></li>
+<li><p>将前端传来的参数转为用户自定义的入参实例<strong>「重点」</strong></p>
+</li>
+<li><p>通过接口调用用户自己的业务处理操作</p>
+</li>
+<li><p>将用户的自定义出参转为系统内部的出参结构<strong>「重点」</strong></p>
+</li>
+<li><p>将填充完成的系统内部出参结构封装诚响应传到前端</p>
+</li>
+<li><p>前端对对应的格式化响应进行渲染</p>
+<h4 id="3-系统流程图"><a href="#3-系统流程图" class="headerlink" title="3. 系统流程图"></a>3. 系统流程图</h4><p>系统从编译期到运行期完成了数据结构的加载，解析和渲染。</p>
+<blockquote>
+<p>这里多插一句，诸如Spring或者Mybatis这些中间件它们的普遍流程，都有以下几步：</p>
+<ol>
+<li>先规范用户自定义的数据结构（如Spring和Mybatis都需要用户定义xml或者注解）</li>
+<li>程序启动时加载并识别用户的数据结构，同时转为中间件自己的数据结构（如Spring的BeanDefinition)</li>
+<li>程序启动后运行时，结合用户的不同请求和自己已有的数据结构，进行计算（该计算即是完成了中间件的主要功能）</li>
+</ol>
+</blockquote>
+</li>
+</ol>
+<p>从用户自定义数据结构，到系统将用户的自定义数据结构渲染为前端的页面，大概经过如下几个步骤：</p>
+<img src="/assets/post/frontless-operate-platform.jpg" align="middle" />
+
+<h3 id="其他操作"><a href="#其他操作" class="headerlink" title="其他操作"></a>其他操作</h3><h4 id="1-缓存"><a href="#1-缓存" class="headerlink" title="1. 缓存"></a>1. 缓存</h4><p>由于反射比较浪费性能，所以就多定义了几个字段去存储反射的元信息。【空间换时间】</p>
+<h4 id="2-组合优于继承"><a href="#2-组合优于继承" class="headerlink" title="2. 组合优于继承"></a>2. 组合优于继承</h4><p>通过组合的形式，来限制用户的操作空间，增强系统的健壮性。</p>
+<h4 id="3-强类型和弱类型的转换"><a href="#3-强类型和弱类型的转换" class="headerlink" title="3. 强类型和弱类型的转换"></a>3. 强类型和弱类型的转换</h4><p>弱类型到强类型：</p>
+<ol>
+<li>map-&gt;反射</li>
+<li>json-反序列化</li>
+</ol>
+<p>强类型到弱类型：（无）</p>
+</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2021-09-19</span><i class="fa fa-tag"></i><a class="tag" href="/tags/Java/" title="Java">Java </a><a class="tag" href="/tags/Spring/" title="Spring">Spring </a><i class="fa fa-star"></i><a class="tag" href="/categories/场景实践/" title="场景实践">场景实践 </a><span class="leancloud_visitors"></span></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="" onclick="javascript:join_favorite()" ref="sidebar"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" target="_blank" rel="noopener" href="http://twitter.com/home?status=,http://wxxlamp.cn/2021/09/19/frontless-operate-platform/,王星星的魔灯,无前端运营方案,;"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/2021/09/21/app-learning-quick-start/" title="新人快速上手应用">上一篇</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/2021/08/22/java-8-lambda/" title="Java8的函数式编程">下一篇</a></li></ul></div><script src="/js/visitors.js"></script><a id="comments"></a><div id="vcomments" style="margin:0 30px;"></div><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="//cdn.jsdelivr.net/gh/xcss/valine@latest/dist/Valine.min.js"></script><script>var valine = new Valine({
+  el:'#vcomments',
+  notify:false || false,
+  verify:false|| false,
+  app_id:'VzGOJC7bFNXeYUEicbM4nOT2-gzGzoHsz',
+  app_key:'T3VwGNzVqiWepoUHUQMnh8tP',
+  placeholder:'念念不忘，必有回响...',
+  path: window.location.pathname,
+  serverURLs: '',
+  visitor:true,
+  recordIP:true,
+  avatar:'mp'
+})</script></div></div></div></div><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script><script src="/js/add-bookmark.js"></script><script src="/js/baidu-tongji.js"></script></body></html>

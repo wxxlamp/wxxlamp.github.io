@@ -63,21 +63,19 @@
 <li>如果bean的类型为<code>OperationConfig</code>，系统则会去查找该类的<code>OperationType</code>，</li>
 <li>将ope作为key，config作为value，注册到map中</li>
 </ol>
-<h4 id="2-系统执行流程"><a href="#2-系统执行流程" class="headerlink" title="2. 系统执行流程"></a>2. 系统执行流程</h4><h5 id="获取操作类型"><a href="#获取操作类型" class="headerlink" title="获取操作类型"></a>获取操作类型</h5><ol>
+<h4 id="2-系统执行流程"><a href="#2-系统执行流程" class="headerlink" title="2. 系统执行流程"></a>2. 系统执行流程</h4><h5 id="获取操作类型"><a href="#获取操作类型" class="headerlink" title="获取操作类型"></a>获取操作类型</h5><ul>
 <li>通过之前注册的<code>OperationType</code>，直接获取</li>
+</ul>
+<h5 id="获取请求参数"><a href="#获取请求参数" class="headerlink" title="获取请求参数"></a>获取请求参数</h5><ul>
+<li>通过之前解析的入参数据结构直接获取</li>
+</ul>
+<h5 id="执行操作"><a href="#执行操作" class="headerlink" title="执行操作"></a>执行操作</h5><ol>
+<li>将前端传来的参数转为用户自定义的入参实例<strong>「重点」</strong></li>
+<li>通过接口调用用户自己的业务处理操作</li>
+<li>将用户的自定义出参转为系统内部的出参结构<strong>「重点」</strong></li>
+<li>将填充完成的系统内部出参结构封装诚响应传到前端</li>
+<li>前端对对应的格式化响应进行渲染</li>
 </ol>
-<h5 id="获取请求参数"><a href="#获取请求参数" class="headerlink" title="获取请求参数"></a>获取请求参数</h5><ol>
-<li><p>通过之前解析的入参数据结构直接获取</p>
-<h5 id="执行操作"><a href="#执行操作" class="headerlink" title="执行操作"></a>执行操作</h5></li>
-<li><p>将前端传来的参数转为用户自定义的入参实例<strong>「重点」</strong></p>
-</li>
-<li><p>通过接口调用用户自己的业务处理操作</p>
-</li>
-<li><p>将用户的自定义出参转为系统内部的出参结构<strong>「重点」</strong></p>
-</li>
-<li><p>将填充完成的系统内部出参结构封装诚响应传到前端</p>
-</li>
-<li><p>前端对对应的格式化响应进行渲染</p>
 <h4 id="3-系统流程图"><a href="#3-系统流程图" class="headerlink" title="3. 系统流程图"></a>3. 系统流程图</h4><p>系统从编译期到运行期完成了数据结构的加载，解析和渲染。</p>
 <blockquote>
 <p>这里多插一句，诸如Spring或者Mybatis这些中间件它们的普遍流程，都有以下几步：</p>
@@ -87,8 +85,6 @@
 <li>程序启动后运行时，结合用户的不同请求和自己已有的数据结构，进行计算（该计算即是完成了中间件的主要功能）</li>
 </ol>
 </blockquote>
-</li>
-</ol>
 <p>从用户自定义数据结构，到系统将用户的自定义数据结构渲染为前端的页面，大概经过如下几个步骤：</p>
 <img src="/assets/post/frontless-operate-platform.jpg" align="middle" />
 

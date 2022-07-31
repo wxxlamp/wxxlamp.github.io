@@ -1,0 +1,67 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="王星星"><title>漫谈JavaFX · 王星星的魔灯</title><meta name="description" content="从接触软件工程到现在，我依次使用过C/Cpp/Java/Php/Python/JavaScript等编程语言，也使用过它们的一些工程化的框架，如Java系的Spring，Js系的Vue和React。因为机缘巧合，我对Java接触的更多一点，用Spring写过Web，用Jsoup写过爬虫，用Swing"><meta name="keywords" content="王星星的魔灯,博客,王星星"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><!-- 增加网站logo--><link rel="shortcut icon" href="/assets/img/favicon.ico" type="image/x-icon"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><script src="/js/jquery.js"></script><meta name="generator" content="Hexo 5.2.0"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo@2x.png" style="width:127px;"><h3 title=""><a href="/">王星星的魔灯</a></h3><div class="description"><p>勇士斗恶龙 <br> Love & Seriousness & Regularity & Persistence</p></div></div></div><ul class="social-links"><li><a target="_blank" rel="noopener" href="https://github.com/wxxlamp"><i class="fa fa-github"></i></a></li><li><a href="mailto:wxxlamp@foxmail.com"><i class="fa fa-envelope"></i></a></li><li><a target="_blank" rel="noopener" href="http://wpa.qq.com/msgrd?v=3&amp;uin=2305450070&amp;site=qq&amp;menu=yes"><i class="fa fa-qq"></i></a></li><li><a target="_blank" rel="noopener" href="https://blog.csdn.net/coder_what"><i class="fa fa-mortar-board"></i></a></li></ul><div class="footer"><div class="p"><span>© 2018 - 2022</span><i class="fa fa-star"></i><span> 王星星</span><!--span.leancloud_visitors--></div><div class="by_farbox"><span>Powered by</span><a href="https://hexo.io/zh-cn/" target="_blank">Hexo</a><span> &</span><a href="https://github.com/wxxlamp/anatole-core-wxx" target="_blank">Anatole-Wxx</a></div><div class="beian"><a href="http://www.beian.miit.gov.cn/" target="_blank">豫ICP备20004458号-1</a><span style="height:10px;margin-left: 10px;">|</span><img src="/images/gongan.png" style="height:10px;margin-left: 10px;position: relative;top: 1px;"><span style="margin-left: 2px;">豫公网安备 44030400004458号</span></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首页</a></li><li><a href="/archives">归档</a></li><li><a href="/categories">分类</a></li><li><a href="/tags">标签</a></li><li><a href="/about">关于</a></li><li><a href="/links">友链</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"></a></li></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>漫谈JavaFX</a></h3></div><div class="post-content"><p>从接触软件工程到现在，我依次使用过C/Cpp/Java/Php/Python/JavaScript等编程语言，也使用过它们的一些工程化的框架，如Java系的Spring，Js系的Vue和React。因为机缘巧合，我对Java接触的更多一点，用Spring写过Web，用Jsoup写过爬虫，用Swing写过桌面，用Netty写过IM，恰好最近有一个开发桌面端工具的小需求，所以就试用了一把号称<code>next generation client application platform for desktop, mobile and embedded systems based on JavaSE</code> 的JavaFX</p>
+<p>本文会着重说明JavaFx针对于使用者的设计思路，同时也会用少量的笔墨比较下和前端生态的不同 : )</p>
+<h3 id="JavaFX简介"><a href="#JavaFX简介" class="headerlink" title="JavaFX简介"></a>JavaFX简介</h3><h4 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h4><ol>
+<li>采用Fxml进行UI界面的搭建（类似于Html）</li>
+<li>采用CSS对组件进行样式填充（当然也可以通过硬编码）</li>
+<li>可以通过WebView运行JavaScript代码</li>
+<li>丰富的内置组件，如HtmlEditor，TreeView等等，同时也可以自定义组件</li>
+<li>支持数据绑定，UI线程刷新界面的时候可以直接获取到最新的数据</li>
+<li>Native Compiling，意味着不用再要求客户安装JRE了</li>
+</ol>
+<h4 id="设计模型"><a href="#设计模型" class="headerlink" title="设计模型"></a>设计模型</h4><p>对于JavaFx来说，有几个重要的组件。如Stage，Scene，Nodes。Stage对应着窗口，主界面是一个Stage，提示弹窗也是一个Stage。Scene指的是页面，在一个Stage中，可以有多个Scene。Nodes指的是组件，node可以根据不同的布局嵌入到scene中</p>
+<p>对于Nodes来说，有以下三种类型：</p>
+<ul>
+<li>Root Node：第一个场景视图</li>
+<li>Branch Node：具有子节点的节点，主要有Group，Region(Pane/Control)，WebView</li>
+<li>Leaf Node：没有子节点的节点，如Button，ImageView</li>
+</ul>
+<center><img src="/assets/post/javafx.png" alt="JavaFX" style="zoom: 67%;"/></center>
+
+<h3 id="快速上手"><a href="#快速上手" class="headerlink" title="快速上手"></a>快速上手</h3><p>那么，要编写一个简单的桌面应用，并且需要利用JavaFx的各种牛逼特性，需要几步呢？</p>
+<ol>
+<li>通过IDE新建一个JavaFX项目</li>
+<li>使用SenceBuilder配置组件布局并生成Fxml文件</li>
+<li>使用CSS对组件样式进行填充</li>
+<li>将Controller和Fxml中的组件关联起来，在Controller中配置组件的属性，以及组件相关事件的响应逻辑</li>
+<li>在Controller中完成对应业务逻辑的处理</li>
+<li>通过IDEA的打包工具对JavaFX项目进行Native Compiling，声称对应的客户端文件(exe/dmg)</li>
+</ol>
+<p>具体的步骤可以参考<a target="_blank" rel="noopener" href="https://code.makery.ch/zh-cn/library/javafx-tutorial/part1/">JavaFx教程</a></p>
+<p><strong>【注意】因为从JDK9开始，FX项目就从JDK自带的类库中移除，所以新手建议使用JDK8，如果使用JDK9+则需要进行相关的模块化配置，并且引入JavaFX的Jar包</strong></p>
+<h3 id="工程化"><a href="#工程化" class="headerlink" title="工程化"></a>工程化</h3><h4 id="窗体缩放"><a href="#窗体缩放" class="headerlink" title="窗体缩放"></a>窗体缩放</h4><p>客户端的窗体往往需要缩放，那么，设计者就必须考虑窗体在缩放时，组件的大小变化，以及组件相对位置和绝对位置的变化，针对于这些问题，我们可以通过布局和双向绑定来解决</p>
+<ol>
+<li>通过<code>AnchorPane</code> 固定组件在窗体中的位置，这样组件就会对窗体的Width&amp;Height变化无感知</li>
+<li>通过组件的数据绑定功能，将组件的大小以及相对距离与窗体的Width&amp;Height绑定到一起，然后当窗体变化的时候，组件被绑定的相关信息也会变化</li>
+</ol>
+<h4 id="现有问题"><a href="#现有问题" class="headerlink" title="现有问题"></a>现有问题</h4><p>JavaFx作为Demo来用是完全合格的，但是它想称霸桌面开发，我觉得从工程化的层面上来讲，还有很多的问题，尤其是跟当前的前端生态相比，还差了许多。下面简单列举一下我在开发JavaFx的过程中遇到的一些问题</p>
+<ol>
+<li>组件化建设很落后，意味着很难复用，并且组件通信是一个大问题。当然，这不是说JavaFX不能进行组件通信，我只是说JavaFX的组件通信需要用户自己完善，很难支持大型项目开发。举个例子，假设sence中的button接收到了click event后，需要读取其他Sence中各个组件的信息，这对于JavaFX就很难搞，如果有很多类似需求，那么将会很快的腐蚀掉已有的代码</li>
+<li>简单的界面和逻辑分离，没办法动态加载组件。JavaFX当前的FXML编程模型，只能跟20年前使用HTML+CSS+JavaScript编写网页的状态一样。一个简单的栗子：有一个boolean变量a，假如用户希望a=true的时候当前界面渲染button，反之，当前界面渲染textArea。这个需求很简单，也很常见，JavaScript生态中的各个框架(Vue/React/…)都能很简单的实现，但是，对于JavaFX来说，如果你是用Fxml进行页面渲染，这将需要更多的代码量才能完成</li>
+<li>生态太弱，需要一些基础能力都需要自己造轮子。JavaFX跟JavaScript的生态相比，差的不是一点两点，需要数十年才能赶平，当然，我觉得JavaFX是没希望了追上JavaScript的生态了，毕竟用JavaFX的人少，生态也很难好好发展起来</li>
+</ol>
+<p><strong>【当然，这都是我一家之言，也可能JavaFX在lastest version中已经完善，要是有人有解决方案可以留言】</strong></p>
+<h3 id="漫谈大前端"><a href="#漫谈大前端" class="headerlink" title="漫谈大前端"></a>漫谈大前端</h3><p>如今的大前端百花齐放，先梳理下各个平台用到的开发工具：</p>
+<ul>
+<li>Web和H5领域：主要是JavaScrpit和TypeScript，使用的框架一般是Vue/React/Angular</li>
+<li>IOS领域：主要用Swift/Object-C</li>
+<li>Android领域：主要是Java/Kotlin</li>
+<li>PC领域:：如果是Windows的话可以用C#，如果是Mac的话可以用Swift</li>
+<li>跨平台领域：有JavaScript(Electron)，Java(FX)，Dart(Flutter)，Cpp(QT)</li>
+</ul>
+<p>什么是前端，我理解的前端就是直接跟用户交互的平台，抽象来说，就是界面+逻辑</p>
+<p>如果要编写一个界面，我们需要定义这个界面的骨架和布局，即我们需要规定好当前界面或模块中，每个组件的排列方式，常见的布局方式有浮动布局，绝对定位布局，网格布局，弹性布局等等。有了布局之后，我们就需要将组件放在布局上，常见的组件有form，button，table等等。通过布局+组件的结合，就形成了基本的用户界面。但是，这样还远远不够，因为组件没有样式，如果想要红的button，绿的form，紫的table，就需要再进行样式填充，给予组件五彩斑斓的黑</p>
+<p>对于前端来讲，仅仅编写完界面只是是第一步，更重要的是逻辑的编写。譬如组件展示的时机，触发组件后的反馈效果，路由能力的编写等等。随着前后端分离的热潮，前端越来越重要，不仅包含一些业务逻辑，也有各种抽象和逻辑服用，这会使得逻辑代码的编写更加复杂</p>
+<p>所以，无论是H5还是客户端，对于前端来讲，编写一个界面需要布局+组件+样式，其中用到的语言工具无非是HTML/XML/FXML+CSS。然后我们再通过编程语言（JavaScript/Java/Cpp/…）来赋予界面行为和业务逻辑，便可以构建五彩缤纷的前端世界</p>
+</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2021-10-31</span><i class="fa fa-tag"></i><a class="tag" href="/tags/Java/" title="Java">Java </a><a class="tag" href="/tags/JavaFX/" title="JavaFX">JavaFX </a><i class="fa fa-star"></i><a class="tag" href="/categories/基础夯实/" title="基础夯实">基础夯实 </a><span class="leancloud_visitors"></span></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="" onclick="javascript:join_favorite()" ref="sidebar"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" target="_blank" rel="noopener" href="http://twitter.com/home?status=,http://wxxlamp.cn/2021/10/31/talk-about-javafx/,王星星的魔灯,漫谈JavaFX,;"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/2021/12/12/cve-2021-44228-log4j/" title="开发眼中的Log4J远程代码执行漏洞">上一篇</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/2021/09/21/app-learning-quick-start/" title="新人快速上手应用指北">下一篇</a></li></ul></div><script src="/js/visitors.js"></script><a id="comments"></a><div id="vcomments" style="margin:0 30px;"></div><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="//cdn.jsdelivr.net/gh/xcss/valine@latest/dist/Valine.min.js"></script><script>var valine = new Valine({
+  el:'#vcomments',
+  notify:false || false,
+  verify:false|| false,
+  app_id:'VzGOJC7bFNXeYUEicbM4nOT2-gzGzoHsz',
+  app_key:'T3VwGNzVqiWepoUHUQMnh8tP',
+  placeholder:'念念不忘，必有回响...',
+  path: window.location.pathname,
+  serverURLs: '',
+  visitor:true,
+  recordIP:true,
+  avatar:'mp'
+})</script></div></div></div></div><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script><script src="/js/add-bookmark.js"></script><script src="/js/baidu-tongji.js"></script></body></html>

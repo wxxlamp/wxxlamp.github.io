@@ -1,3 +1,4 @@
+/*基本没动scss*/
 html {
 	background-color: #fff;
 	-webkit-font-smoothing: antialiased;
@@ -128,12 +129,14 @@ a:hover, a:active {
 .content {
 	height: auto;
 	float: right;
-	width: 70%;
+	/* 原来的是70% */
+	width: 75%;
 	margin-top:60px;
 }
 
 .page-top{
-	width: 70%;
+	/* 原来的是70% */
+	width: 75%;
 	position: fixed;
 	right: 0;
 	z-index: 3;

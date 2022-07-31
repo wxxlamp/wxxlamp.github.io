@@ -111,11 +111,13 @@ a:hover, a:active {
 .content {
   height: auto;
   float: right;
+  /* 原来的是70% */
   width: 75%;
   margin-top: 60px;
 }
 
 .page-top {
+  /* 原来的是70% */
   width: 75%;
   position: fixed;
   right: 0;

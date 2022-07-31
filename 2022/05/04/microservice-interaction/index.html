@@ -1,0 +1,46 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="王星星"><title>微服务基本的交互 · 王星星的魔灯</title><meta name="description" content="计算机在互联网中的应用，主要就是对于业务数据的存储，加工，以及展示。存储对应着大数据，加工对应着Web服务，至于展示则对应着包括H5，PC，iPhone&amp;amp;Android在内的各端开发
+就单单针对于Web服务来说，它是复杂业务的主要承担者，因为互联网的飞快发展，所以Web服务也发展的很快，从单"><meta name="keywords" content="王星星的魔灯,博客,王星星"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><!-- 增加网站logo--><link rel="shortcut icon" href="/assets/img/favicon.ico" type="image/x-icon"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><script src="/js/jquery.js"></script><meta name="generator" content="Hexo 5.2.0"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo@2x.png" style="width:127px;"><h3 title=""><a href="/">王星星的魔灯</a></h3><div class="description"><p>勇士斗恶龙 <br> Love & Seriousness & Regularity & Persistence</p></div></div></div><ul class="social-links"><li><a target="_blank" rel="noopener" href="https://github.com/wxxlamp"><i class="fa fa-github"></i></a></li><li><a href="mailto:wxxlamp@foxmail.com"><i class="fa fa-envelope"></i></a></li><li><a target="_blank" rel="noopener" href="http://wpa.qq.com/msgrd?v=3&amp;uin=2305450070&amp;site=qq&amp;menu=yes"><i class="fa fa-qq"></i></a></li><li><a target="_blank" rel="noopener" href="https://blog.csdn.net/coder_what"><i class="fa fa-mortar-board"></i></a></li></ul><div class="footer"><div class="p"><span>© 2018 - 2022</span><i class="fa fa-star"></i><span> 王星星</span><!--span.leancloud_visitors--></div><div class="by_farbox"><span>Powered by</span><a href="https://hexo.io/zh-cn/" target="_blank">Hexo</a><span> &</span><a href="https://github.com/wxxlamp/anatole-core-wxx" target="_blank">Anatole-Wxx</a></div><div class="beian"><a href="http://www.beian.miit.gov.cn/" target="_blank">豫ICP备20004458号-1</a><span style="height:10px;margin-left: 10px;">|</span><img src="/images/gongan.png" style="height:10px;margin-left: 10px;position: relative;top: 1px;"><span style="margin-left: 2px;">豫公网安备 44030400004458号</span></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首页</a></li><li><a href="/archives">归档</a></li><li><a href="/categories">分类</a></li><li><a href="/tags">标签</a></li><li><a href="/about">关于</a></li><li><a href="/links">友链</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"></a></li></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>微服务基本的交互</a></h3></div><div class="post-content"><p>计算机在互联网中的应用，主要就是对于业务数据的存储，加工，以及展示。存储对应着大数据，加工对应着Web服务，至于展示则对应着包括H5，PC，iPhone&amp;Android在内的各端开发</p>
+<p>就单单针对于Web服务来说，它是复杂业务的主要承担者，因为互联网的飞快发展，所以Web服务也发展的很快，从单点到集群到Microservices再到ServerLess和ServerMesh。但无论怎么发展，都离不开单一职责——将服务按照业务职责细分，每个服务对应一个业务节点，从而实现解耦合的能力</p>
+<p>那么，对于Microservice中的一个节点，它在完成对应的业务逻辑的过程中，从技术的层面讲，它的一个重要的作用就是承上启下，而承上启下的核心，则是与上下游之间的交互</p>
+<h3 id="一-协议和约定"><a href="#一-协议和约定" class="headerlink" title="一. 协议和约定"></a>一. 协议和约定</h3><p>在交互过程中，首先就需要对交互的规范进行确定，譬如交互协议，状态码，返回值等case</p>
+<h4 id="异常约定"><a href="#异常约定" class="headerlink" title="异常约定"></a>异常约定</h4><p>理论上来讲，下游的服务提供方是不能给上游的消费者抛出异常的，这样会不仅会使得消费者付出额外的代价去捕获异常，同时还需要额外约定各种异常case，增加交互和沟通成本</p>
+<p>但是在RPC调用中，消费者却必须关于超时异常，这种异常是服务提供方难以干预和阻止的问题。所以，在RPC调用的过程中，消费者只需要捕获超时异常，然后进行重试。而其他问题，则一律通过返回值来约定并解决</p>
+<h4 id="返回值约定"><a href="#返回值约定" class="headerlink" title="返回值约定"></a>返回值约定</h4><p>一般来说，交互的返回值会设置四个字段，分别是：success, code, msg，data</p>
+<ol>
+<li>success：标志着本次交互是否成功，一般会有true和false两种结果</li>
+<li>code：标志着本次交互的响应码，一般在success=false的时候起作用。常见的code范围有：非法参数，状态异常，并发异常，系统异常等</li>
+<li>msg：标志着本次交互的解释，一般在success=false时候起作用，用于对code详情的解释说明</li>
+<li>data：标志着本次交互的具体数据</li>
+</ol>
+<h4 id="幂等约定"><a href="#幂等约定" class="headerlink" title="幂等约定"></a>幂等约定</h4><p>幂等的概念来源于数学，指的是在其他条件不变下，无论消费者请求多少次，对下游服务造成的影响以及获得的服务结果都保持不变。</p>
+<p><em>如：对于HTTP的Restful协议来说，get方法应该实现幂等</em></p>
+<p>对于修改或者创建操作来说，一定要保证provider的系统数据不会因为消费者的多次请求而改变，同时返回值也尽量和第一次保持相同（具体是否相同可以根据双方协定）。一般来说，有以下两种情况：</p>
+<ol>
+<li>本次交互导致provider开始创建单据。如果第一次交互使得单据创建成功，那么第二次同样的请求过来，provider应该不做任何处理，直接返回</li>
+<li>本次交互推进了provider之前创建单据的状态。那么当第二次同样的请求过来是，provider应该检查本地单据的状态，如果单据状态已经流转，也应该不做任何处理，直接返回</li>
+</ol>
+<h4 id="重试约定"><a href="#重试约定" class="headerlink" title="重试约定"></a>重试约定</h4><p>在交互的过程中，当发生异常或者下游提供方出问题时，会导致本次交互不能生效，那么就需要有定时任务来进行重试，一般的重试case如下：</p>
+<ol>
+<li>下游抛出超时异常</li>
+<li>下游发生并发且本次请求被丢弃</li>
+<li>下游服务不可用</li>
+</ol>
+<h3 id="二-调度方案"><a href="#二-调度方案" class="headerlink" title="二. 调度方案"></a>二. 调度方案</h3><p>交互的调度也是比较重要的。在基础的微服务操作中，常见的调度有两种，一种是实时的同步调度，一种是非实时的异步消息调度</p>
+<h4 id="同步与异步"><a href="#同步与异步" class="headerlink" title="同步与异步"></a>同步与异步</h4><p>这里的同步交互跟我们平时说的同步异步，阻塞非阻塞，还是有些区别的。在本文中，同步交互是对于provider来说的，当provider收到一个请求之后，它会立刻处理，之后立刻返回结果给调用者。常见的同步交互一般是RPC，当然，HTTP也属于同步交互的一种（不包括长链接）</p>
+<p>而异步交互指的是基于MQ的、以消息驱动的交互模型。常见的交互链路通常是：上游服务给MQ发送一条消息，然后MQ再将消息转发给下游，下游进行处理，处理完毕后，下游可以选择发送一条消息给MQ，MQ再将消息转发给消费该条消息的其他服务。可以看出，基于MQ的异步交互将上下游完全解耦，这种交互相比于同步交互，它的时延是比较高的，一般用来推动上下游状态机的运转</p>
+<h4 id="实时与定时"><a href="#实时与定时" class="headerlink" title="实时与定时"></a>实时与定时</h4><p>所谓的实时交互，是和定时交互相对来说的。实时交互就是即刻发生的，而定时交互则是给定一个时间点或者时间短，才会去触发一次交互。定时交互通常会使用cron表达式来表明定时执行的时间点</p>
+<p>在日常的业务场景中，会经常用到定时调度。譬如，定时重试失败的调度，定时进行文件的更新，定时刷新缓存等等</p>
+<p>PS：没有说到docker和k8s，也没有讲到大数据和存储（Hadoop，Flink，Spark，Hbase）相关的东西，同时对各个部分也剖析的不够深刻，不断更新中….</p>
+</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2022-05-04</span><i class="fa fa-tag"></i><a class="tag" href="/tags/Micro-Service/" title="Micro-Service">Micro-Service </a><i class="fa fa-star"></i><a class="tag" href="/categories/基础夯实/" title="基础夯实">基础夯实 </a><span class="leancloud_visitors"></span></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="" onclick="javascript:join_favorite()" ref="sidebar"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" target="_blank" rel="noopener" href="http://twitter.com/home?status=,http://wxxlamp.cn/2022/05/04/microservice-interaction/,王星星的魔灯,微服务基本的交互,;"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/2022/05/14/alive-die-tired-review/" title="生死疲劳读后感">上一篇</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/2022/03/22/java-effective/" title="Java编程技巧">下一篇</a></li></ul></div><script src="/js/visitors.js"></script><a id="comments"></a><div id="vcomments" style="margin:0 30px;"></div><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="//cdn.jsdelivr.net/gh/xcss/valine@latest/dist/Valine.min.js"></script><script>var valine = new Valine({
+  el:'#vcomments',
+  notify:false || false,
+  verify:false|| false,
+  app_id:'VzGOJC7bFNXeYUEicbM4nOT2-gzGzoHsz',
+  app_key:'T3VwGNzVqiWepoUHUQMnh8tP',
+  placeholder:'念念不忘，必有回响...',
+  path: window.location.pathname,
+  serverURLs: '',
+  visitor:true,
+  recordIP:true,
+  avatar:'mp'
+})</script></div></div></div></div><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script><script src="/js/add-bookmark.js"></script><script src="/js/baidu-tongji.js"></script></body></html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="王星星"><title>万字长文，从零科普比特币 · 王星星的魔灯</title><meta name="description" content="本文面向技术和小白用户，从去中心化、区块链，再到比特币的原理，从科普和问题的视角，尽可能帮助大家弄懂去中心货币的本质和技术原理。
+中心化和去中心化从概念上理解，所谓中心化和去中心化，代表着数据存储和逻辑执行的两种方式。中心化，即数据（如资产记录）在某一个地方或者机构存放，且逻辑执行（如交易）由某个单"><meta name="keywords" content="王星星的魔灯,博客,王星星"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><!-- 增加网站logo--><link rel="shortcut icon" href="/assets/img/favicon.ico" type="image/x-icon"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><script src="/js/jquery.js"></script><meta name="generator" content="Hexo 5.2.0"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo@2x.png" style="width:127px;"><h3 title=""><a href="/">王星星的魔灯</a></h3><div class="description"><p>勇士斗恶龙 <br> Love & Seriousness & Regularity & Persistence</p></div></div></div><ul class="social-links"><li><a target="_blank" rel="noopener" href="https://github.com/wxxlamp"><i class="fa fa-github"></i></a></li><li><a href="mailto:wxxlamp@foxmail.com"><i class="fa fa-envelope"></i></a></li><li><a target="_blank" rel="noopener" href="http://wpa.qq.com/msgrd?v=3&amp;uin=2305450070&amp;site=qq&amp;menu=yes"><i class="fa fa-qq"></i></a></li><li><a target="_blank" rel="noopener" href="https://blog.csdn.net/coder_what"><i class="fa fa-mortar-board"></i></a></li></ul><div class="footer"><div class="p"><span>© 2018 - 2024</span><i class="fa fa-star"></i><span> 王星星</span><!--span.leancloud_visitors--></div><div class="by_farbox"><span>Powered by</span><a href="https://hexo.io/zh-cn/" target="_blank">Hexo</a><span> &</span><a href="https://github.com/wxxlamp/anatole-core-wxx" target="_blank">Anatole-Wxx</a></div><div class="beian"><a href="http://www.beian.miit.gov.cn/" target="_blank">豫ICP备20004458号-1</a><span style="height:10px;margin-left: 10px;">|</span><img src="/images/gongan.png" style="height:10px;margin-left: 10px;position: relative;top: 1px;"><span style="margin-left: 2px;">豫公网安备 44030400004458号</span></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首页</a></li><li><a href="/archives">归档</a></li><li><a href="/categories">分类</a></li><li><a href="/tags">标签</a></li><li><a href="/about">关于</a></li><li><a href="/links">友链</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"></a></li></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>万字长文，从零科普比特币</a></h3></div><div class="post-content"><p>本文面向技术和小白用户，从去中心化、区块链，再到比特币的原理，从科普和问题的视角，尽可能帮助大家弄懂去中心货币的本质和技术原理。</p>
+<h1 id="中心化和去中心化"><a href="#中心化和去中心化" class="headerlink" title="中心化和去中心化"></a>中心化和去中心化</h1><p>从概念上理解，所谓中心化和去中心化，代表着数据存储和逻辑执行的两种方式。中心化，即数据（如资产记录）在某一个地方或者机构存放，且逻辑执行（如交易）由某个单一的系统独立完成；而去中心化，也叫分布式（decentralization），即数据（如资产信息）在多个对等的节点存放，且执行逻辑（如交易）必须被所有的节点认可才算有效。</p>
+<h2 id="中心化货币的优劣"><a href="#中心化货币的优劣" class="headerlink" title="中心化货币的优劣"></a>中心化货币的优劣</h2><p>在区块链出现以前，几乎所有的系统都是中心化的（注意，虽然有分布式系统，但是这个分布式系统一般也是由单一的组织管控，无法随意扩展到任何一个组织或个人，所以诸如OceanBase这样的分布式数据库也是中心化的）。</p>
+<p>典型的中心化应用是中心化货币，它们基于国家信用，是由各国央行发行的衡量财富以及交易的凭证，具有无限法偿性。中心化货币具有两个优点：</p>
+<ol>
+<li><strong>稳定性</strong>。拿美联储发行的美元举例，美元的价值受到美联储调控，价值相对稳定，<strong>不会出现大幅的波动</strong>，人们通过美元进行交易，货物的价值会一直稳定在一个范围内。同时，中心化货币由国家信用背书，只要国家稳定，货币就有了流通的可能。</li>
+<li><strong>抗风险</strong>。如果货币因为各种意外交易被盗窃，基于国家信用的中心化货币可以通过追缴等各种形式，帮助用户追回丢失金额。</li>
+</ol>
+<p>但是，中心化有一个很大的问题就是容易单点故障，如果单点的央行歇菜，那么基于国家信用的中心化货币也就成为了无源之水，持有人的货币就会直接清零，与之对应的财富也将同样烟消云散。除此之外，中心化货币的劣势还包含：</p>
+<ol>
+<li><strong>单点控制</strong>。因为货币受到中心化的央行管控，所以人们持有的这些货币将随时随地都有可能被<strong>央行冻结</strong>。譬如俄罗斯被美国制裁后，俄罗斯相关公司在美国及其关联国家储备的美元被毫无理由的无限期冻结</li>
+<li><strong>央行失信</strong>。货币的发行是由央行自主决定的，如果央行太挫，错误的决策导致<strong>货币超发</strong>，那么与之而来的通货膨胀将会导致人们手中的财富大幅缩水。譬如已经废弃的津巴布韦币，就是因为超发导致货币功能直接失效</li>
+<li><strong>隐私性差</strong>。在使用中心化的货币交易时，人们的每一笔交易流水（小额纸笔交易除外），都会在央行有记录，这说明人们的支付隐私数据对于中心化机构来说是公开的。譬如早上通过支付宝买了一个包子，那么只要央行愿意，是一定能把这笔交易和你的身份证关联起来。</li>
+<li><strong>跨境效率低</strong>。中心化货币在基于swift协议的跨境交易的中，效率尤其底下。这是因为不同国家有不同的央行，每个央行都会发行自己的货币，不同主体的中心化货币在一次交易中，会通过多家跨国银行进行清算。因为参与者变多，会导致跨境汇款的效率奇低，手续费奇高。</li>
+</ol>
+<h2 id="去中心化货币的机遇与挑战"><a href="#去中心化货币的机遇与挑战" class="headerlink" title="去中心化货币的机遇与挑战"></a>去中心化货币的机遇与挑战</h2><p>中心化货币对于政府信用极高的国家，其实是满足99%人的需求的。但是世界上总有另外1%的人，不满足于现状，希望通过去中心化的思路，来解决中心化货币的各种弊端。</p>
+<p>所谓去中心化货币，就是货币的发行和交易，都不是由单一的主体一家独断的，而是由使用这个货币的所有节点来共同决定。在去中心化货币中，没有央行，但所有人都是央行。如果货币的发行和交易需要得到社区多数节点的同意，那么，最少解决了下面几个问题：</p>
+<ol>
+<li>货币可以在全球所有的节点上运行，即使某一个节点宕机，仍然不会影响货币的基本运行</li>
+<li>货币的发行不再单一机构或者组织控制，减少了单一主体滥发的风险。货币的发行量必须要社区大多数节点同意，每个人都有参与权</li>
+<li>货币的交易不再受到单一机构管控，在没有社区多数节点的同意下，没有任何的交易会被拒绝或者冻结</li>
+<li>货币交易在全球所有节点上运行，本国交易和跨国交易本质一样，跨境支付效率会比目前的swift体系更高。（注意，非跨境场景下，中心化货币的效率更高）</li>
+</ol>
+<p>从上面解决的问题来看，对于大多数人来讲，去中心化的货币交易，未免太“自由”了。央行无法管控，这对于任何一个主权国家是无法接受的。无法管控货币发行，意味着如果有重大性经济危机，无法通过增发或者减发货币来调整市场经济（如08年金融危机）；无法管控货币交易，意味着大量的灰黑产交易更加猖獗。</p>
+<p>同时，因为是去中心化的货币，所以就意味着所有的交易数据必须要要在社区每一个全节点中存储。随着交易的膨胀，数据量越来越多，去中心化货币对社区成员的存储和计算要求也会越来越高。</p>
+<h1 id="区块链是什么"><a href="#区块链是什么" class="headerlink" title="区块链是什么"></a>区块链是什么</h1><p>区块链是实现去中心化货币的一种方式。同时，结合非对称加密等加密算法，就可以实现出来去中心化的加密货币。所以这里有一些误区需要澄清，即：加密货币不一定是去中心的，去中心的，也不一定是加密货币。譬如，黄金就是典型的去中心化的、非加密货币。不过，对于现代的数字货币来说，如果不加密就可能导致A冒充B的情况，所以像我们常说的比特币、以特朗普为 IP 的迷因币等既是加密货币，又是去中心化货币。</p>
+<p>区块链是由一个一个区块组成，每个区块分为两部分，一部分是区块头，记录一些基本信息，另一部分是区块体，主要记录一些交易的数据。这些交易分为两种，一种是铸币交易，即凭空发行了一些货币，并且把该货币转账给某个账户；另一种是普通转账交易，即账户A把钱转给了账户B。要注意的是，社区中每个全节点都会维护一整条区块链。</p>
+<h2 id="从宏观上看区块链"><a href="#从宏观上看区块链" class="headerlink" title="从宏观上看区块链"></a>从宏观上看区块链</h2><p>从技术的角度讲，区块链本质也是一个链表。传统的链表一般是上一个区块会通过指针下一个区块，如下图所示：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/719664/1757236562304-d7fe30aa-5fa9-458a-bd83-55f46d2a84a6.png"></p>
+<p>不过，区块链特殊的地方在于，区块链链中的下一个区块会指向上一个区块。而且它不是通过传统的指针地址指向上一个区块，而是通过Hash指针。</p>
+<p>所谓的hash指针，其实本质上就是一个hash值。有计算机基础的朋友都知道，hash算法即是将某个值X，映射成另一个值Y，且这个过程是不可逆。常见的hash算法，如SHA-256，会将一个无轮多大的X，映射成一个固定长度256位的新值Y</p>
+<p>区块链中的下一个区块b指向上一个区块a，本质就是区块b，记录了区块a的hash值。如下图所示：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/719664/1757237268940-97882008-50d4-4754-9d1d-194ac9745c48.png"></p>
+<p>这样做的一个好处就是，如果a区块的内容发生改变，b区块记录的hash值就会发生改变，那么b区块就会认为a区块非法，整个链就会断掉。要想链不断掉，保存该区块链的节点不仅需要修改区块 a，还需重新计算区块 a 之后所有区块的哈希值（因为每个区块的哈希都依赖前一个区块）—— 这个过程需要消耗大量算力（如 PoW 机制下需重新完成‘挖矿’验证），技术成本极高。更关键的是，即使完成修改，该节点还需控制全网超过 51% 的算力（PoW）或质押资产（PoS），才能迫使其他节点放弃原有的合法链条、接受篡改后的版本。这种51% 攻击的成本远超篡改能获得的收益，因此基本杜绝了篡改可能。</p>
+<p>所以，通过区块链的这个特性，保证了链上的每一个区块都是<strong>不可篡改</strong>的。其实这个就是区块链的全部内容，没有任何复杂的东西在，一句话来说，<strong>区块链**</strong><font style="color:rgba(0, 0, 0, 0.85);">是一个由去中心化节点共同维护的不可变数据库</font>**<font style="color:rgba(0, 0, 0, 0.85);">（这种“不可变”并非绝对，理论上需无限算力才能篡改，但在现实中，足以保证链上交易记录的真实性和安全性）</font></p>
+<h2 id="去中心化货币为什么需要区块链"><a href="#去中心化货币为什么需要区块链" class="headerlink" title="去中心化货币为什么需要区块链"></a>去中心化货币为什么需要区块链</h2><p>在聊区块链之前，我们先思考为什么去中心化货币需要区块链。又因为区块链的一大特性就是不变性，所以，话题就变成了：为什么去中心化货币需要不可变。</p>
+<p>中心化货币的信任来自央行背书：比如人们相信央行不会赖账、银行会如实记录存款，哪怕银行系统数据被篡改，央行也能通过权威力量追溯修正。<br>但去中心化货币没有任何中央权威，每一个节点的权利都是一样的。它的 “信任” 只能来自技术层面的 “数据真实性” —— 如果区块中的交易记录可以被随意篡改（比如A转出去的 100 元，能偷偷改回自己账户；或者A伪造一笔交易转走B的钱），整个货币体系的 “价值锚点” 会瞬间崩塌。</p>
+<p>所以，如果去中心化的交易从技术上讲是不可变的，那么存在于区块中的数据就是100%可以信任的（注意：这种信任不是基于中心化货币对央行的信任，而是基于技术上不可修改的信任）</p>
+<h2 id="比特币、区块链、以太坊的关系"><a href="#比特币、区块链、以太坊的关系" class="headerlink" title="比特币、区块链、以太坊的关系"></a>比特币、区块链、以太坊的关系</h2><p>相信很多人或多或少都听说过比特币、区块链和以太坊，但是究竟他们有什么其他区别呢？</p>
+<p>简单来讲，比特币和以太坊都是基于区块链的、具有去中心化货币的属性。不过以太坊虽然有价值存储和交易的货币属性，但是更重要是，以太坊支持Smart Contract。</p>
+<p>以太坊的存在，使得基于Smart Contract的App变成了分布式的。DApp的核心逻辑（如交易规则、资产确权）可以通过Smart Contract可以被打包在区块上，进而flooding sync到全球所有的以太坊节点中（前端资源仍然可以部署到中心化机器中）。这种操作使得应用不再像Web2时代一样存在于某一家机构的单点服务器中，受到App厂商的绝对控制，而是存在于所有的节点机器，不可变的Smart Contract使得即使是App的厂商也没有中途修改、操作数据的权利——这就是Web3。</p>
+<h1 id="基于区块链账本的比特币"><a href="#基于区块链账本的比特币" class="headerlink" title="基于区块链账本的比特币"></a>基于区块链账本的比特币</h1><p>区块链保证了数据的不可篡改性，在这种特性的基础上，比特币作为货币，运行比特币的节点还要具备货币发行、支持合法交易、拒绝非法交易（如A账上只有10块，却要给B转账100块）的能力。</p>
+<p>但是，全球有数以万计的比特币节点，这些节点的权利是相同的，本节主要探究比特币通过区块链以及其他特殊的数据结构来保障交易和区块的合法性。</p>
+<h2 id="非对称加密"><a href="#非对称加密" class="headerlink" title="非对称加密"></a>非对称加密</h2><blockquote>
+<p>前文已经说过，比特币是一种加密货币。所以，我们首先了解下比特币涉及到的部分加密算法。我们之前已经简单聊过Hash算法，所以，本章简单讲述下非对称加密算法。</p>
+</blockquote>
+<p>区块链的每个区块中都会记录一定数量的转账交易。假如说区块上其中一笔交易是Alice将10BTC转给Bob，从密码学的角度来讲，我们需要做哪些加密工作呢？</p>
+<p>考虑如果Alice通过支付宝转账给Bob的场景，在扫码支付前，Alice需要输入密码验证当前支付宝账户确实是她自己的。这其中有两个步骤，第一个步骤是转账前需要在中心化的支付宝中设置密码，第二步是转账中输入密码被中心化的支付宝验证通过。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/719664/1757468995454-8d5c3686-5c69-4b85-8361-f4b66688c6b6.png"></p>
+<p>同样的，在区块链上的一笔交易，发起交易的人也需要证明她就是Alice。所以，第一步，Alice应该先对这笔交易设置密码，在区块链中，我们把设置密码这个动作叫做签名（信用卡的账单也叫签名）。当这笔交易准备被打包到区块中的时候，区块进行第二步操作，即验证签名的真实性。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/719664/1757683369346-38f248b3-c947-472b-a5c4-77155e73d087.png"></p>
+<p>因为比特币是去中心化的，每个节点不可能存储账户的密码（节点存储账户的密码，所有账户的密码都会泄露）。在没有密码情况下的签名和验证，就可以通过非对称加密在不泄露密码的问题来验证用户。</p>
+<blockquote>
+<p>非对称加密分为公钥和私钥，计算机相关专业的朋友们应该都知道，HTTPS就是基于非对称加密的。简要的流程是：1）client将server的公钥作为key对内容进行非对称加密后，传输给server；2）server使用自己的私钥对内容进行非对称解密。</p>
+</blockquote>
+<p>从HTTPS的流程中，我们可以发现，非对称加密的核心是“公钥（公开）与私钥（保密）一一对应”，分两种核心场景：1. 加密场景：公钥加密数据 → 仅私钥能解密（如 HTTPS 传输）；2. 签名场景：私钥对数据（如交易信息）加密生成“签名” ——任何人可用公钥解密签名，验证数据是否来自私钥持有者。这两种场景共同支撑了比特币的交易安全性。</p>
+<h2 id="比特币账户"><a href="#比特币账户" class="headerlink" title="比特币账户"></a>比特币账户</h2><p>基于非对称加密的特性，在Alice给Bob转账的交易中，Alice除了1）写下交易信息之外；还要2）通过私钥对自己的交易签名；3）写下自己的公钥信息，供节点打包到区块时对交易的签名进行验证。</p>
+<p>所以，我们可以很容易的得出来如何唯一定位比特币中的一个账户，即比特币中的账户号码（类似于银行卡的账号和密码）是一个符<strong>合非对称加密的公私钥对</strong>。公钥对外公布，用于收款和展示自己的身份。私钥由用户自己保管，用于交易的签名验证。从上面一段可以看出来，如果私钥，被别人窃取，那么自己账户的钱就会很容易被被人转走。因为不是中心化，所以即使钱被别人转走，也不可能有机构帮失主把钱追缴回来的。</p>
+<p>那么问题来了，我们是如何知道比特币某个账户的余额呢？</p>
+<p>在中心化的银行系统中，可以通过关系型数据库（Oracle，MySQL）等来存储账户和余额的映射关系。一旦用户发生交易，中心化系统只需要执行简单的update语句更新数据即可。但是，在去中心化的系统中，怎么保证每个节点都去更新区块中交易影响到的账户呢？又怎么保证每个节点的账户数据都是一致的呢？</p>
+<p>这其实是很难的，而且我们知道，基于区块链不可变的特性，数据一旦插入，就不能更新，所以在比特币的区块链中，账户的余额是不能更新的，那该怎么表示呢？</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/719664/1757741620959-e3f62177-1ec6-4f60-a4c1-82fb84eeacfc.png"></p>
+<p>如上图所示，我们可以使用交易账本计算，因为区块链会记录每一笔交易的信息（包含BTC转出方和接受方），通过对交易流水的数据进行累加，即可得出账户的余额——这就是本节的标题，为什么比特币是基于区块链<strong>账本</strong>的加密货币。（以太坊是基于账户的，通过MPT设计更加复杂，本篇不表）</p>
+<h2 id="区块链、节点、账户"><a href="#区块链、节点、账户" class="headerlink" title="区块链、节点、账户"></a>区块链、节点、账户</h2><p>上一节中，我们引入了比特币账户的概念。初学者可能会有点混淆，是否发起交易的账户是否和节点是等价的？每个节点必须要维护一个区块链么？</p>
+<p>必须要澄清的一点是，账户和节点没有必然关系。节点是用来运行区块链的机器，每个节点都是等价的，运行着一个相同的区块链。区块链中的区块打包的是账户之间交易的信息。一个没有任何账户的人，也可以运行一个区块链节点（只不过没有任何收益，所以不会有人这么干）</p>
+<p>举个例子，Alice有一个账户，账户包含公钥PublicA和私钥PrivateA。Alice拥有一台包含整条区块链的机器，这个机器就是比特币中的一个节点。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/719664/1757684078576-03a407b3-4081-4d71-b815-8e7e615fddab.png"></p>
+<p>这里有一个问题：随着区块链中交易的增多，整条链需要的存储空间也就越大。如果每个节点都存储整条链的所有信息的话，意味着每个节点都需要有一个超大存储空间的机器，这样比特币的使用门槛就会变得非常高。所以，为了让手机也可以成为一个区块链节点（人人可用），比特币协议把节点分为全节点和轻节点。</p>
+<p>全节点存储区块链所有的信息，负责验证所有交易和区块的合法性。其中，部分全节点会参与打包区块（即挖矿），这类参与挖矿的全节点被称为“矿工”。轻节点不存储交易的明细，只存储区块链中每个区块头，轻节点只能从全节点中同步合法区块，不负责交易的写入。</p>
+<h1 id="比特币的数据结构"><a href="#比特币的数据结构" class="headerlink" title="比特币的数据结构"></a>比特币的数据结构</h1><h2 id="单个区块的数据结构"><a href="#单个区块的数据结构" class="headerlink" title="单个区块的数据结构"></a>单个区块的数据结构</h2><p>现在我们了解到，轻节点只有区块链中的区块head，全节点既有区块head存储metadata，也有区块body存储所有的交易信息。如下所示（具体的区块内容可以访问<a target="_blank" rel="noopener" href="https://www.oklink.com/zh-hans/bitcoin/block/914370">oklink</a>查询最近真实的区块）：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/719664/1757685244885-8cce19d0-27f9-4477-9fa4-45b29203e8ff.png"></p>
+<p>这里我们需要强调一些更细节的东西，之前讲到的hash指针，其实不是对上一个区块的所有数据取hash。假如说区块b的上一个区块是区块a，那么区块b获取区块a的hash值流程应该是：</p>
+<ol>
+<li>区块 a 生成时，先将自身所有交易通过 Merkle Tree（下文会讲）计算出所有交易的最终 Hash 结果（Merkle root），并将其写入自己的区块头</li>
+<li>区块 a 再对自身的完整区块头（包含交易hash、前一区块 Hash 等）计算 Hash，得到“区块 a 的区块头 Hash”</li>
+<li>区块 b 生成时，将“区块 a 的区块头 Hash”直接写入自己的区块头，形成链式关联</li>
+</ol>
+<h2 id="区块中交易的数据结构"><a href="#区块中交易的数据结构" class="headerlink" title="区块中交易的数据结构"></a>区块中交易的数据结构</h2><p>那么除了基于区块链之外，比特币是否还有其他特殊的数据结构？</p>
+<p>答案是肯定的。假如说Alice给Bob转了10BTC，Bob是怎么知道钱已经转到自己的账户里面了呢？在中心化货币场景中，Bob可以去银行查询。在BTC这种去中心化场景中，如果Bob拥有一个全节点，则可以遍历所有节点检查是否有一笔“Alice给Bob转了10BTC”的交易。但是如果Bob拥有的是一个轻节点呢？（轻节点只有每个区块的head，没有任何的交易信息）</p>
+<p>此时，Bob的轻节点就只能向P2P网络中的任意一个全节点求证，是否有一笔“Alice给Bob转了10BTC”的交易。但是，因为比特币是去中心化货币，所以理论上任何一个节点都是不可信的，假如Bob的轻节点请求到了Alice的全节点，Alice的全节点直接回复Bob有这笔交易（但其实没有），那么Bob就约等于被欺骗了。</p>
+<p>如何解决这个问题呢？——通过Merkle Tree来维护整个交易的结构。</p>
+<h3 id="Merkle-Tree"><a href="#Merkle-Tree" class="headerlink" title="Merkle Tree"></a>Merkle Tree</h3><p>Merkle Tree是指所有的交易通过两两取hash，再对hash值两两取hash，最后一直递归，获取一个根hash值（叫做Merkle根）。所有的交易，和这个过程中产生的hash，就会构成一颗Merkle Tree，如下所示：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/719664/1757685477416-21aba0b3-801e-4ec5-83e8-800db44f41db.png"></p>
+<p>从图中我们可以发现，如果要修改某个交易的hash，随着修改传递，Merkle根也会随之改变，因为Merkle根被包含在区块header中，所以Merkle根的修改会导致区块头的hash指针修改，进而影响到所有的后继节点，所以这几乎是一个不可能完成的事情。</p>
+<p>Merkle Tree有一个特性，即给出部分Hash值（即Merkle路径），就可以验证某一笔交易是否存在。基于上图我们可以举个例子，如果一个轻节点要验证TX1交易是否存在，全节点只需要给出TX2、H(2)和H(34)的hash值，轻节点就可以计算出Merkle根hash，然后将这个hash与轻节点自己区块头的hash做对比，如果相等，则说明TX1这个交易确实存在。</p>
+<p>从实际出发，如果Bob的轻节点希望验证交易TX是否已经被打包到全节点中，此时验证流程如下：</p>
+<ol>
+<li>Bob的轻节点向P2P网络中的任意一个全节点请求验证交易TX。然后</li>
+<li>这个节点会给Bob返回TX交易的Merkle路径。然后</li>
+<li>Bob 的轻节点用“TX 的 Hash + Merkle 路径”自行计算出“默克尔根”，<strong>并与自身区块头中存储的默克尔根对比</strong> —— 若一致，说明 TX 确实存在于该区块中；若不一致，则全节点返回的路径无效</li>
+</ol>
+<p>因为轻节点只是不会维护交易信息，他们仍然会保存区块链上的每个区块头，区块头中包含Merkle根。轻节点校验的本质就是用自己区块中正确的Merkle根和通过（交易+Merkle路径）计算出来的Merkle根作比较。</p>
+<h2 id="比特币数据结构概览"><a href="#比特币数据结构概览" class="headerlink" title="比特币数据结构概览"></a>比特币数据结构概览</h2><p>比特币中，每一个全节点究竟是什么样的？它们是如何组织各个区块的？Merkle Tree究竟会被存储到哪里？</p>
+<p>一张图来揭露每个全节点中的数据结构：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/719664/1757685765173-6648406c-889a-45d0-990c-6a9c8604c973.png"></p>
+<p>（注意，每个全节点的区块链中的区块数据都是一致的）</p>
+<h1 id="比特币的共识机制"><a href="#比特币的共识机制" class="headerlink" title="比特币的共识机制"></a>比特币的共识机制</h1><p>在分析比特币的交易详情之前，我们首先要思考比特币作为去中心化货币的元老级货币，它如何1）让每个节点达成共识、保证每个节点的区块链数据是一致的？2）防止恶意节点将非法交易散播到其他正常的节点中？</p>
+<p>这些技术问题我们需要通过交易指针、UTXO以及多节点的共识协议来解决。</p>
+<h2 id="工作量证明（PoW）"><a href="#工作量证明（PoW）" class="headerlink" title="工作量证明（PoW）"></a>工作量证明（PoW）</h2><p>因为比特币是去中心化货币，每个节点都维护着一个区块链。前文中提到，每个节点区块链中所有的区块以及区块中的交易数据都应该是一致的。但是每个节点都是独立的，所以比特币就必须要<strong>通过一个机制来让所有节点认可某一个节点中区块的数据</strong>（即当某一个节点A的下一个区块形成后，其他所有节点都要follow这个决策，并且放弃打包自己的区块，将节点A的这个区块作为自己区块链中的下一个区块）。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/719664/1757686283887-a936d766-1246-43d4-a379-2a47566211c3.png"></p>
+<p>当交易很多的时候，可能A节点打包了a,b,c三个交易在自己的区块，同时B节点也打包了b,d,f三个交易在自己的区块，这种情况下，其他节点以A、B两个区块的哪个区块为准呢？在比特币中，工作量证明就是为了解决某个节点新打包的区块，被其他所有节点认可的问题。</p>
+<p>在比特币的世界中，程序在节点新生成区块的时候，会设置一个难度值X，每个节点打包新区块时，需对“区块头”（包含前一区块哈希、默克尔根、时间戳、难度目标、nonce 等）计算哈希，得到的哈希值Y需满足难度 X 的具体要求。由于哈希值不可预测，节点只能通过不断调整 nonce等方式，反复尝试计算，直到得到符合难度X的哈希值Y。 当Y符合X的要求的时候，节点打包的新区块才会被认为是合法区块，广播出去后才有可能被其他节点接收——<strong>这种通过尝试不同nonce计算Y以符合X的证明过程就叫做工作量证明（PoW）</strong>。</p>
+<p>比特币系统每经历2016个区块会根据所有节点的算力动态调整难度值X，以保证节点打包区块的平均时间在10分钟左右，即每次交易被发布到区块链上大概需要十分钟（确认交易需要等待后续6个区块生成，大概一小时），这与支付宝动辄十万级别的TPS根本无法比较。节点们计算Y来打包区块的过程就被称作是挖矿，这些挖矿的节点，也被叫做矿工。</p>
+<h3 id="为什么要基于PoW"><a href="#为什么要基于PoW" class="headerlink" title="为什么要基于PoW"></a>为什么要基于PoW</h3><p>可能有人会问，所有矿工通过PoW这种无效计算的方法，来抢夺发布区块的权利，简直就是白白浪费算力和电力，就算是雅鲁藏布江水坝建好可能也经不起这么造。</p>
+<p>为什么不使用时间呢？谁发布区块早就听谁的不行么？</p>
+<p>当然不行，原因有二：</p>
+<ol>
+<li>每个节点可以理解成一个独立的计算机，单靠本地时钟的话，不同计算机的时间是可能有偏差的（甚至某个节点可以估计把自己的本地时钟调早）。这就会导致不同节点理解的最新时间不一样。</li>
+<li>如果基于时间打包区块，同一时间段会有大量不同的节点被发布到网络上，这样会造成区块链的大量分叉，但是<strong>我们只能以最长的那一条为合法链</strong>，这样就会导致发布的大量区块其实是无效的，白白浪费算力，影响比特币社区。</li>
+</ol>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/719664/1757688958556-d15681fe-c863-4745-9704-e70eb13d0b3d.png"></p>
+<p>当然，随着区块链社区的发展，以太坊已经发展出了不需要浪费算力的投票机制（权益证明PoS），本文主要讲比特币，所以PoS也暂且不表。</p>
+<h3 id="矿工为什么要挖矿"><a href="#矿工为什么要挖矿" class="headerlink" title="矿工为什么要挖矿"></a>矿工为什么要挖矿</h3><p>矿工为什么要浪费大量的算力去挖矿呢？难道是geek心爆棚，无偿帮助社区所有的交易打包到区块？显然不是。为了维护社区的繁荣，当矿工打包交易到区块中，系统会奖励第一个计算出符合难度要求的nonce的矿工，不只是允许这个矿工把交易打包成区块发布到区块链上，更重要的是，还会给这些矿工发放BTC奖励。</p>
+<p>这种奖励和转账交易不一样，它没有输入，<strong>而是“凭空”生成新的比特币</strong>——这也就是我们常说的<strong>铸币交易</strong>。通过这种铸币交易，比特币也就具备了货币发行的特性。</p>
+<p>比特币平均每 10 分钟发放一次区块奖励，每 4 年（210,000 个区块）奖励减半一次，目前奖励为 3.125 BTC/区块，按照现在比特币的<a target="_blank" rel="noopener" href="https://www.oklink.com/zh-hans/bitcoin">价格</a>（11万 USD/枚），发布一次区块，矿工可以获得36万 USD，这是一个普通人一辈子都赚不到的钱。</p>
+<h2 id="交易合法"><a href="#交易合法" class="headerlink" title="交易合法"></a>交易合法</h2><p>之前我们提到过，在一次交易中，假如Alice给Bob转账 10 BTC，Alice必须要对这次交易使用私钥签名。当其他节点使用Alice的公钥对该交易进行验证，如果符合预期才说明交易合法。</p>
+<p>但是，因为比特币是基于账本，没有账户的概念，如果我们只是通过非对称加密验证了交易发起人的真实性，却没有验证交易发起方余额是否充足。此时有两种情况需要注意：</p>
+<ol>
+<li><u>假如Alice之前因为挖矿获得了 10 BTC的出块奖励，它要转给Bob 20 BTC，区块如何拒绝该交易？</u></li>
+<li><u>假如Alice之前因为挖矿获得了 10 BTC的出块奖励，之前已经转给了Bob 10 BTC，过了一段时候后又转给了Bob 10 BTC，区块该如何拒</u>绝？</li>
+</ol>
+<h3 id="交易指针"><a href="#交易指针" class="headerlink" title="交易指针"></a>交易指针</h3><p>办法很简单，比特币要求，转账人在发布交易的时候，需要通过hash指针的方法，将交易指向发送者获之前获得比特币的交易。如图所示：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/719664/1757691123865-2ec86672-659d-4a46-83c6-f6a64362b38a.png"></p>
+<p>这样一来，打包该交易的节点就可以通过hash指针轻松的找到Alice获取BTC的那一笔交易用来验证。“Alice转账20BTC给Bob，但是Alice之前只获得了10BTC”，有问题，验证失败，问题一解决。</p>
+<p>但是，问题二还没解决。假如TX1完成后，Alice紧接着创建了一笔TX2，又给Bob转了10BTC（如下所示），这种情况单靠交易指针是验证不出来这种“双花交易”的。这种时候，我们就需要在节点中维护一个状态，记录每一笔交易输出的BTC是否被花出。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/719664/1757691502973-79624676-88ae-4d74-9001-76088ea761e0.png"></p>
+<h3 id="UTXO"><a href="#UTXO" class="headerlink" title="UTXO"></a>UTXO</h3><p>这种记录交易输出是否被花出的数据结构叫做Unspend Transaction Output（UTXO）。</p>
+<p>UTXO可以理解成是以交易和收款人为key的map，value是当前交易的输出是否被其他交易花掉。以上图举例，TX0给了Alice 10 BTC的出块奖励，那么包含TX0区块的UTXO就是<code>&#123;&#39;TX0:Alice&#39;: false&#125;</code>，代表TX0交易的输出未被花掉。当TX1被打包到区块中后，那么包含TX0区块的UTXO就会变成<code>&#123;&#39;TX0:Alice&#39;: true&#125;</code>，代表TX0交易的输出已经被花掉。之后，如果TX2再指向TX0，节点验证时发现TX0的输出已经被花掉了，就会判断TX2是笔非法交易，不会把TX2打包到区块中。</p>
+<p>与区块链不可变性质不同的是，这个UTXO是可以被改变的，它不属于区块链的一部分（也不参与hash的计算）。每个节点<strong>不会</strong>通过网络把自己区块的UTXO同步给其他节点，而是需要节点在更新区块的时候自行本地构建UTXO。随着新增区块的增加，UTXO会根据区块链中交易的情况进行动态改变。</p>
+<p>UTXO的产生是为了帮助节点更快的验证交易的合法性。假如没有UTXO，节点为了防止“双花交易”，就需要从后往前遍历每个区块的每个交易，按照现在91万个区块数量来算，遍历一次也是一笔不小的计算开销。</p>
+<h2 id="区块合法"><a href="#区块合法" class="headerlink" title="区块合法"></a>区块合法</h2><p>通过交易指针和UTXO，使得区块在打包交易的时候，能够精准地识别出交易是否正确。如果交易正确，节点才会把交易打包到区块中。如果有一个异常节点打包的区块中包含一笔不正确的交易，网络中的其他节点是不会认可的。</p>
+<p>那么，是否区块中所有的交易正确，节点打包的区块就会被网络上的其他节点接收呢？当然不是，交易合法只是区块的一个必要条件，验证区块合法，还需要之前提到的PoW。</p>
+<h3 id="如何验证区块合法"><a href="#如何验证区块合法" class="headerlink" title="如何验证区块合法"></a>如何验证区块合法</h3><p>当节点把区块发布到网络上后，其他节点会对这个区块进行PoW验证（即对区块头的nonce，pre hash，Merkle root等计算hash值，判断是否符合挖矿难度）。如果工作量证明符合要求，会对该新区块的每个交易通过交易指针和UTXO进行验证，当区块中的所有交易都合法的时候，其他节点才会承认该区块是合法的。</p>
+<p>但是，区块合法不代表其他节点一定会接收这个新区块。</p>
+<p>考虑一种情况，节点新产生了一个合法区块A（区块中的交易也是合法的），但是这个合法区块A中的pre hash是一个几年前的区块hash（如下所示），这个区块会被其他节点接收么？</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/719664/1757742276374-365d4cbd-3aac-4436-bca7-72a822655932.png"></p>
+<p>答案是不会的，比特币中的区块链可能会有多个分叉，因为无法保证每个分叉中交易的不同，所以不可能多个分支都是有效的。在比特币中只有唯一一条区块链是有效的，它就是最长（累计工作量最大）的那条。所以当一个指向很久以前的区块A被发布到网络中的时候，其他节点会把该区块在区块链中的工作难度和自己本地链的工作难度之和做比较，如果没自己链难的话，区块A是会被无情抛弃的，这样区块A中的交易也无法被比特币网络达成共识，产生区块A的节点也就白挖矿了。</p>
+<p>所以要避免这种情况，就是每个矿工在发现网络中有比自己长的区块链时，立刻修改打包区块的pre hash，重新计算nonce等参数完成PoW。</p>
+<h3 id="同时产生合法区块怎么办"><a href="#同时产生合法区块怎么办" class="headerlink" title="同时产生合法区块怎么办"></a>同时产生合法区块怎么办</h3><p>但是，因为挖矿是不确定的，所以有可能会出现两个节点同时挖出来了相同工作量的合法区块，如下所示：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/719664/1757742528914-38576d2d-25b5-47ea-9fd7-5631babf27f5.png"></p>
+<p>此时其他节点会接收A和B两个区块（因为他们的工作量一样大），但是，因为网络的不确定性，一定有一些节点是从BLOCK A 开始挖，有些节点是从 BLOCK B开始挖。假如BLOCK A后面先挖到了一个新区块，那么其他节点就认为以BLOCK A的那条链是最长合法链，从而丢弃BLOCK B。BLOCK B被丢弃后，它里面发放给对应账户的铸币交易也会失效。</p>
+<p>为了防止两个节点同时出现不知道以哪个节点交易为准的情况发生，在现实真实的支付场景中，比特币规定，只有BLOCK A后面新增六个区块后，才会认为BLOCK A中的交易是有效的。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/719664/1757744992062-16dacb16-44f5-4a1a-87f6-ce437d57e60e.png"></p>
+<p>所以，<strong>比特币是一个靠社区所有节点决定的共识游戏，而不是由某一个中心机构决策的主权游戏</strong>。这或许就是去中心化魅力吧。</p>
+<h1 id="一笔比特币交易的产生过程"><a href="#一笔比特币交易的产生过程" class="headerlink" title="一笔比特币交易的产生过程"></a>一笔比特币交易的产生过程</h1><p>通过本文讲述的共识机制和比特币数据结构，我们来尝试复原一下，当“Alice给Bob转账10 BTC”时，比特币网络中的所有节点，是如何变化的：</p>
+<p><img src="https://cdn.nlark.com/yuque/__puml/093120dfebb8d07583b501eead4008d0.svg"></p>
+</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2025-09-07</span><i class="fa fa-tag"></i><a class="tag" href="/tags/Blockchain/" title="Blockchain">Blockchain </a><i class="fa fa-star"></i><a class="tag" href="/categories/区块链/" title="区块链">区块链 </a><span class="leancloud_visitors"></span></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="" onclick="javascript:join_favorite()" ref="sidebar"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" target="_blank" rel="noopener" href="http://twitter.com/home?status=,http://wxxlamp.cn/2025/09/07/what-is-bitcion-and-blockchain/,王星星的魔灯,万字长文，从零科普比特币,;"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/2025/09/17/what-is-digtal-rmb/" title="有了在线支付，为什么需要数字人民币">上一篇</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/2025/03/07/my-2024/" title="我的2024">下一篇</a></li></ul></div><script src="/js/visitors.js"></script><a id="comments"></a><div id="vcomments" style="margin:0 30px;"></div><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="//cdn.jsdelivr.net/gh/xcss/valine@latest/dist/Valine.min.js"></script><script>var valine = new Valine({
+  el:'#vcomments',
+  notify:false || false,
+  verify:false|| false,
+  app_id:'VzGOJC7bFNXeYUEicbM4nOT2-gzGzoHsz',
+  app_key:'T3VwGNzVqiWepoUHUQMnh8tP',
+  placeholder:'念念不忘，必有回响...',
+  path: window.location.pathname,
+  serverURLs: '',
+  visitor:true,
+  recordIP:true,
+  avatar:'mp'
+})</script></div></div></div></div><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script><script src="/js/add-bookmark.js"></script><script src="/js/baidu-tongji.js"></script></body></html>

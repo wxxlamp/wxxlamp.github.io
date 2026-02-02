@@ -393,7 +393,7 @@
     <div class="section-title">项目经历</div>
     <div class="item">
       <div class="item-header">
-        <span><strong>全球卖 · 供应链商家技术负责人</strong></span>
+        <span><strong>全球卖 · 商家结算技术负责人</strong></span>
         <span class="item-date"><strong>2024.08 – 至今</strong></span>
       </div>
       <div class="project-description">项目描述：为了应对中国商家外贸业务的潜在风险、扩大平台的特色供给，国际站支持全球商家入驻平台并完成交易履约（全球卖）。目前支持东南亚、北美、欧洲等<strong>15个国家站点</strong>，入驻商家数<strong>超5000</strong>，累计提现金额<strong>千万美金</strong>。</div>
@@ -402,7 +402,7 @@
           <li><strong>【全链路】</strong>基于大盘（中国商家）已有的基础能力，<strong>独立支持各个海外国家的商户入驻、交易、保障、支付、结算、网关的全链路开发和租户定制，一杆到底</strong>。作为技术负责人负责<strong>日本站项目全链路</strong>的上线；</li>
           <li><strong>【准入提现】</strong><strong>负责全球商家准入和提现能力建设，搭建统一的准入、资产、提现流程</strong>。基于底层对接的iPay、易宝、渣打等<strong>多资金渠道</strong>，构建<strong>渠道路由、渠道编排、渠道状态</strong>管理能力，支撑多国商家的KYC、资金调拨和出金需求；</li>
           <li><strong>【租户架构】</strong><strong>牵头供应链商家侧的多租户架构工作</strong>，通过<strong>统一流量入口和视图表达、独立模块和应用、租户日志监控、租户线程缓存和租户配置文件</strong>等形式对商家侧业务进行租户升级，<strong>解决了不同国家因租户差异导致的研发效能（新接站点提效50%）、监控噪音和租户隔离问题</strong>；</li>
-          <li><strong>【大模型】</strong><strong>负责LLM全球卖场景的应用，从0-1搭建LLM任务平台</strong>，推动产品和业务引入编排型大模型用于<strong>KYC流程的OCR和日常运营</strong>。降低商户入驻门槛，提高业务运营效率；</li>
+          <li><strong>【大模型】</strong><strong>负责LLM全球卖场景的应用，从0-1搭建LLM任务平台</strong>，推动产品和业务引入编排型大模型（基于RAG、MCP）用于<strong>KYC流程的OCR和日常技术运维</strong>。降低商户入驻门槛，提高业务运营效率；</li>
           <li><strong>【组织管理】</strong><strong>负责商户和提现域的技术规划与管理（虚线 Lead 3人）</strong>。主导制定<strong>交易商家开发规范与代码评审标准</strong>，作为 Mentor 成功辅导 <strong>2 名社招 P6 并转正</strong>。</li>
         </ul>
       </div>
@@ -445,10 +445,10 @@
     <div class="section-title">专业技术</div>
     <div class="item-content">
       <ul>
+        <li><strong>了解LLM和Agent，具备基于LlamaFactory和HuggingFace的SFT和Inference经验</strong>；</li>
         <li><strong>熟悉Java语法、多线程</strong>，了解JVM、操作系统，MySQL数据库、计网和常用的算法及数据结构；<strong>掌握基于Java生态（Spring、Mybatis框架）的研发流程</strong>；</li>
         <li><strong>理解DDD和TDD思想，熟悉常用的设计模式</strong>，了解流程引擎和常见的微服务架构及组件；了解Redis和MetaQ等常用中间件；</li>
-        <li><strong>掌握跨境交易和资金结算全链路</strong>；学习能力强，热爱写作和总结、有一定抗压能力，<strong>能辅导新人工作、PM中大型技术项目（100人日+）</strong>；</li>
-        <li><strong>了解LLM和Agent，具备基于LlamaFactory和HuggingFace的SFT和Inference经验</strong>。</li>
+        <li><strong>掌握跨境交易和资金结算全链路</strong>；学习能力强，热爱写作和总结、有一定抗压能力，<strong>能辅导新人工作、PM中大型技术项目（100人日+）</strong>。</li>
       </ul>
     </div>
   </div>
@@ -476,7 +476,6 @@
       button.disabled = true;
       button.textContent = '验证中...';
 
-      // Simulate network request delay
       setTimeout(() => {
         try {
           // Complex validation logic to obscure the password generation

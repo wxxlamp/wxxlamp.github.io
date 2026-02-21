@@ -228,6 +228,49 @@ npm install -g broken-link-checker
 blc http://localhost:4000 -ro
 ```
 
+## Automated Page Validation
+
+The skill includes an automatic validator that checks your site without manual browser interaction.
+
+### Quick Auto-Validation
+
+```bash
+# Run automated validation (requires server running)
+python3 .claude/skills/local-validator/auto-validate.py
+```
+
+This script automatically:
+1. Waits for Hexo server to be ready
+2. Fetches and validates key pages:
+   - Homepage (`/`)
+   - Archives (`/archives`)
+   - Tags (`/tags`)
+3. Checks for:
+   - Title presence
+   - CSS/JS loading
+   - Navigation menu
+   - Post content
+   - Footer
+4. Generates a pass/fail report
+
+### Full Auto-Validation Workflow
+
+```bash
+# 1. Clean and start server in background
+hexo clean && hexo server &
+SERVER_PID=$!
+
+# 2. Run auto-validation
+python3 .claude/skills/local-validator/auto-validate.py
+VALIDATION_RESULT=$?
+
+# 3. Stop server
+kill $SERVER_PID 2>/dev/null
+
+# 4. Exit with validation result
+exit $VALIDATION_RESULT
+```
+
 ## Complete Validation Script
 
 Use the provided script: [`validate-theme.sh`](validate-theme.sh)

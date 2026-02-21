@@ -1,0 +1,5 @@
+{
+  "_comment": "DO NOT commit this file to Git! It contains sensitive API credentials.",
+  "default_provider": "imgur",
+  "imgur_client_id": "chv_IFVK_d4db51c4521cb137fb6fb4e6b61c0312d892101636ccc07ed286198c97953183_c91f0ee08bdab110612aa17d789ef217c429174e70c8dfc2a415b308c9575f3f"
+}

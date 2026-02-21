@@ -1,0 +1,15 @@
+{
+  "_comment": "Copy this file to config.json and fill in your tokens",
+  "default_provider": "imgur",
+
+  "imgur_client_id": "YOUR_IMGUR_CLIENT_ID",
+
+  "smms_token": "YOUR_SMMS_API_TOKEN",
+
+  "github_token": "YOUR_GITHUB_TOKEN",
+  "github_owner": "YOUR_GITHUB_USERNAME",
+  "github_repo": "YOUR_IMAGE_REPO_NAME",
+  "github_path": "images",
+  "github_branch": "main",
+  "github_cdn": "jsdelivr"
+}

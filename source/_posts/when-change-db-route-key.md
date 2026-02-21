@@ -7,6 +7,14 @@ categories:
   - 采坑记录
 ---
 
+<!-- Original images found in this article:
+  - /assets/post/when-change-db-route-key-1.png
+  - /assets/post/when-change-db-route-key-2.png
+  - /assets/post/when-change-db-route-key-3.png
+  - /assets/post/when-change-db-route-key-4.png
+  - /assets/post/when-change-db-route-key-5.png
+-->
+
 # 问题背景
 
 因为代码bug，导致某项业务流程不符合预期，为了紧急修复工单用户，需要把数据表（分库分表）的user_id（bigint类型）从主账号改为子账号，但是在物理库订正之后，发现业务代码依据修改后的子账号查询不到了，如下所示：
@@ -19,9 +27,9 @@ categories:
 
 联想下订正前后，订正前不带引号也是可以查到的，所以又重新做了一个测试，即使用正常的数据（非订正）重新做一次查询。如下所示：
 
-这说明什么呢？就是只有我订正的那条数据是有问题的。同时在使用其他账号查询的过程中，发现如果使用bigint类型进行查询，则会非常快，如果使用str类型作为key值进行查询，则会变得很慢，会遍历所有的物理库寻找对应值。
+这说明什么呢？就是只有我订正的那条数据是有问题的。同时在使用其他账号查询的过程中，**发现如果使用bigint类型进行查询，则会非常快，如果使用str类型作为key值进行查询，则会变得很慢，会遍历所有的物理库寻找对应值。**
 
-然后看了下该数据库的分库分表键，果然，我查询和订正的user_id正是当前表的分库分表键
+**然后看了下该数据库的分库分表键，果然，我查询和订正的user_id正是当前表的分库分表键**
 
 问题原因就呼之欲出了：
 

@@ -19,6 +19,7 @@ rss: default
 menu:
   Archives: /archives
   About: /about
+  Resume: /resume
 
 # ===========================================
 # Widget Settings

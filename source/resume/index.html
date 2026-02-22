@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>王星星 - 个人简历</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Helvetica Neue", "Microsoft YaHei", Arial, sans-serif;
+      background: #ffffff;
+      color: #000000;
+      line-height: 1.6;
+    }
+
+    .lock-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: url('https://cdn.pixabay.com/photo/2023/11/18/18/20/christmas-8396941_1280.png') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .lock-screen::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 1;
+    }
+
+    .lock-container {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(10px);
+      padding: 2.5rem;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      max-width: 420px;
+      width: 90%;
+      text-align: center;
+      position: relative;
+      z-index: 3;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .app-title {
+      font-size: 2.2rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      color: #1e3a8a;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .app-subtitle {
+      font-size: 1.1rem;
+      color: #4b5563;
+      margin-bottom: 1.8rem;
+    }
+
+    .lock-container input {
+      width: 100%;
+      padding: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      margin-bottom: 1.2rem;
+      text-align: center;
+      font-family: monospace;
+      letter-spacing: 2px;
+      background: #f8fafc;
+      transition: all 0.3s ease;
+    }
+    
+    .lock-container input:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    }
+
+    .lock-container button {
+      width: 100%;
+      padding: 1rem;
+      background: #000000; /* Black button color */
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .lock-container button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+      background: #1a1a1a;
+    }
+    
+    .lock-container button:active {
+      transform: translateY(0);
+    }
+
+    .lock-container button:disabled {
+      opacity: 0.7;
+      transform: none;
+      cursor: not-allowed;
+    }
+
+    .error {
+      color: #e53e3e;
+      font-size: 0.9rem;
+      margin-top: 0.8rem;
+      min-height: 1.2rem;
+      font-weight: 500;
+    }
+
+    .resume {
+      display: none;
+      padding: 2rem;
+      max-width: 850px;
+      margin: 0 auto;
+      background: white;
+      margin-top: 2rem;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+      border-radius: 12px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      padding-bottom: 1.2rem;
+      border-bottom: 1px solid #eaeaea;
+    }
+
+    .name {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: #1e293b;
+    }
+
+    .contact {
+      font-size: 1rem;
+      color: #4b5563;
+      margin-top: 0.5rem;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .contact a {
+      color: #3b82f6;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .contact a:hover {
+      text-decoration: underline;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2rem 0 1.2rem;
+      color: #1e293b;
+      padding-bottom: 0.4rem;
+      border-bottom: 2px solid #3b82f6;
+    }
+
+    .item {
+      margin-bottom: 1.6rem;
+    }
+
+    .item-header {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: #1e293b;
+      margin-bottom: 0.3rem;
+    }
+
+    .item-subheader {
+      font-weight: 600;
+      color: #334155;
+      margin: 0.3rem 0 0.5rem;
+      font-size: 1.05rem;
+    }
+
+    .item-date {
+      color: #64748b;
+      font-size: 0.98rem;
+      font-weight: 500;
+    }
+
+    .item-content {
+      margin-top: 0.6rem;
+      color: #334155;
+      line-height: 1.7;
+      font-size: 1.02rem;
+    }
+
+    ul {
+      padding-left: 1.8rem;
+      margin-top: 0.8rem;
+      margin-bottom: 0.5rem;
+    }
+
+    li {
+      margin-bottom: 0.6rem;
+      line-height: 1.65;
+    }
+
+    .project-description {
+      margin: 0.9rem 0;
+      font-weight: 600;
+      color: #334155;
+      line-height: 1.7;
+      font-size: 1.03rem;
+    }
+    
+    .highlight {
+      font-weight: 700;
+      color: #1e3a8a;
+    }
+    
+    .highlight-blue {
+      font-weight: 700;
+      color: #1e40af;
+    }
+    
+    /* Education section styling - school and major on same line */
+    .education-item {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .education-header {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      margin-bottom: 0.3rem;
+    }
+    
+    .school-name {
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: #1e293b;
+    }
+    
+    .major {
+      font-weight: 600;
+      font-size: 1.05rem;
+      color: #334155;
+      opacity: 0.9;
+    }
+    
+    /* Animation for entrance */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .lock-container {
+      animation: fadeInUp 0.6s ease-out;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .resume {
+        padding: 1.8rem;
+      }
+      
+      .name {
+        font-size: 2.1rem;
+      }
+      
+      .section-title {
+        font-size: 1.35rem;
+      }
+      
+      .item-header {
+        flex-direction: column;
+        gap: 0.3rem;
+        align-items: flex-start;
+      }
+      
+      .contact {
+        font-size: 0.9rem;
+        gap: 0.5rem;
+      }
+      
+      .lock-container {
+        padding: 1.8rem;
+      }
+      
+      .app-title {
+        font-size: 1.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="lock-screen" id="lockScreen">
+    <div class="lock-container">
+      <div class="app-title">王星星的魔灯</div>
+      <div class="app-subtitle">个人简历 · 需要密码访问</div>
+      <input type="password" id="passwordInput" autocomplete="off" autofocus />
+      <button onclick="validatePassword()">确认访问</button>
+      <div class="error" id="errorMessage"></div>
+    </div>
+  </div>
+
+  <div class="resume" id="resume">
+    <div class="header">
+      <div class="name">王星星</div>
+      <div class="contact">
+        <span class="contact-item">📱 17179887126</span>
+        <span class="contact-item">✉️ wxxlamp@foxmail.com</span>
+        <span class="contact-item">🎂 2000.01</span>
+        <span class="contact-item">🌐 <a href="https://wxxlamp.cn" target="_blank">wxxlamp.cn</a></span>
+      </div>
+    </div>
+
+    <div class="section-title">教育背景</div>
+    <div class="item education-item">
+      <div class="item-header">
+        <div class="education-header">
+          <span class="school-name"><strong>香港科技大学（QS Ranking 50）</strong></span>
+          <span class="major"><strong>信息技术 · 研究生（全日制）</strong></span>
+        </div>
+        <span class="item-date"><strong>2024.09 – 2025.10</strong></span>
+      </div>
+      <div class="item-content">
+        成绩优异，<strong>GPA 4.1/4.3</strong>，学习课程包括<strong>区块链、NLP、LLM等</strong>，获得24学期<strong>"Top Student Award Scholarship"</strong>。
+      </div>
+    </div>
+    <div class="item education-item">
+      <div class="item-header">
+        <div class="education-header">
+          <span class="school-name"><strong>郑州大学（双一流/211）</strong></span>
+          <span class="major"><strong>软件工程 · 本科</strong></span>
+        </div>
+        <span class="item-date"><strong>2017.09 – 2021.06</strong></span>
+      </div>
+      <div class="item-content">
+        成绩优异，<strong>GPA 3.6/4.0（专业第11）</strong>，曾获得<strong>国家励志奖学金</strong>，多次被评为<strong>郑州大学"三好学生"</strong>。
+      </div>
+    </div>
+
+    <div class="section-title">工作经历</div>
+    <div class="item">
+      <div class="item-header">
+        <span><strong>阿里巴巴-Alibaba.com技术部</strong></span>
+        <span class="item-date"><strong>2021.07 – 至今</strong></span>
+      </div>
+      <div class="item-subheader"><strong>高级开发工程师（P6）</strong></div>
+      <div class="item-content">
+        <strong>主导阿里巴巴国际站全球卖业务（交易和资金）的设计和开发</strong>；曾负责<strong>信用保障业务的开发和额度迁移工作</strong>；<strong>金融保险业务（OA赊销，无忧退）的整体技术规划和迭代开发</strong>；<strong>从0-1搭建无需前端开发的运营平台</strong>。绩效<strong>3.75/3.5+</strong>次数占比超过60%。
+      </div>
+    </div>
+
+    <div class="section-title">项目经历</div>
+    <div class="item">
+      <div class="item-header">
+        <span><strong>全球卖 · 商家结算技术负责人</strong></span>
+        <span class="item-date"><strong>2024.08 – 至今</strong></span>
+      </div>
+      <div class="project-description">项目描述：为了应对中国商家外贸业务的潜在风险、扩大平台的特色供给，国际站支持全球商家入驻平台并完成交易履约（全球卖）。目前支持东南亚、北美、欧洲等<strong>15个国家站点</strong>，入驻商家数<strong>超5000</strong>，累计提现金额<strong>千万美金</strong>。</div>
+      <div class="item-content">
+        <ul>
+          <li><strong>【全链路】</strong>基于大盘（中国商家）已有的基础能力，<strong>独立支持各个海外国家的商户入驻、交易、保障、支付、结算、网关的全链路开发和租户定制，一杆到底</strong>。作为技术负责人负责<strong>日本站项目全链路</strong>的上线；</li>
+          <li><strong>【准入提现】</strong><strong>负责全球商家准入和提现能力建设，搭建统一的准入、资产、提现流程</strong>。基于底层对接的iPay、易宝、渣打等<strong>多资金渠道</strong>，构建<strong>渠道路由、渠道编排、渠道状态</strong>管理能力，支撑多国商家的KYC、资金调拨和出金需求；</li>
+          <li><strong>【租户架构】</strong><strong>牵头供应链商家侧的多租户架构工作</strong>，通过<strong>统一流量入口和视图表达、独立模块和应用、租户日志监控、租户线程缓存和租户配置文件</strong>等形式对商家侧业务进行租户升级，<strong>解决了不同国家因租户差异导致的研发效能（新接站点提效50%）、监控噪音和租户隔离问题</strong>；</li>
+          <li><strong>【大模型】</strong><strong>负责LLM全球卖场景的应用，从0-1搭建LLM任务平台</strong>，推动产品和业务引入编排型大模型（基于RAG、MCP）用于<strong>KYC流程的OCR和日常技术运维</strong>。降低商户入驻门槛，提高业务运营效率；</li>
+          <li><strong>【组织管理】</strong><strong>负责商户和提现域的技术规划与管理（虚线 Lead 3人）</strong>。主导制定<strong>交易商家开发规范与代码评审标准</strong>，作为 Mentor 成功辅导 <strong>2 名社招 P6 并转正</strong>。</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-header">
+        <span><strong>押款额度系统重构 · 技术迁移负责人</strong></span>
+        <span class="item-date"><strong>2023.10 – 2024.07</strong></span>
+      </div>
+      <div class="project-description">项目描述：阿里巴巴国际站会给入驻的商家分配提前回款额度，使得商家在发货后即可收到货物的全款。额度系统从业务16年上线至今已经濒临腐化，存在于3个数据源、2个系统中，扩展性差、数据不一致问题严重。<strong>负责在TPS 30+ 且资金零差错的强约束下，主导系统千万级别数据的整体拆分与新系统重构</strong>。</div>
+      <div class="item-content">
+        <ul>
+          <li><strong>【迁移策略】</strong><strong>主导设计"全量回放、增量Binlog追平、双写校验、读灰度切流"的平滑迁移方案</strong>。利用<strong>步长ID隔离新老数据、异步双写</strong>等机制，<strong>确保迁移过程无需停机且对业务无感</strong>；</li>
+          <li><strong>【迁移监控】</strong><strong>通过实时日志监控、准实时和实时数据核对的方式来观察数据双写流量的准确性</strong>，及时发现包含并发、时区在内的多个双写问题并修复；</li>
+          <li><strong>【性能优化】</strong>通过<strong>并发编排授信</strong>、额度等下游接口、减少无效调用、<strong>多级缓存</strong>、优化业务逻辑的方式，<strong>将8年的额度页面性能90分位从10s优化到1s</strong>。<strong>迁移后占用接口性能从1s提升到20ms</strong>；</li>
+          <li><strong>【研发提效】</strong><strong>重构额度领域模型，计算与存储分离，配置化形式（场景+租户）增加新的额度类型</strong>，新增额度开发人日<strong>从20人日缩减到4人日</strong>；</li>
+          <li><strong>【可用性】</strong><strong>通过乐观锁保障额度数据一致性更新、通过TCC保障买卖家额度扣减的一致性</strong>。</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-header">
+        <span><strong>保障保险业务 · 技术PM&核心开发</strong></span>
+        <span class="item-date"><strong>2021.07 – 2023.09</strong></span>
+      </div>
+      <div class="project-description">项目描述：为了提高国际站交易确定性和商家资金货物安全，引入第三方保险机构对拒付和货物的退货、尾款进行保障。目前服务买卖家<strong>6w+</strong>，日均保单量<strong>1W+</strong>，QPS <strong>1000+</strong>。<strong>负责保障保险业务的项目管理和架构设计工作</strong>。</div>
+      <div class="item-content">
+        <ul>
+          <li><strong>【授信平台】</strong><strong>通过OA赊销项目从0-1搭建保险授信平台</strong>，引入<strong>流程引擎</strong>对节点进行编排重试；引入<strong>SPI机制结合策略模式</strong>对保险不同产品进行<strong>授信扩展</strong>；<strong>通过领域事件驱动授信流程和状态的流转，保证业务高效交付</strong>；通过本地事物表和监控核对的方式保障微服务系统<strong>最终一致性</strong>；</li>
+          <li><strong>【多地部署】</strong><strong>为了满足海外数据的合规监管要求，对保险域新建中美新三地机房做海外架构部署</strong>，数据双向同步，通过<strong>步长机制</strong>避免数据覆盖， <strong>按照买家维度进行流量路由保证读写一致性</strong>；</li>
+          <li><strong>【质量建设】</strong><strong>建立并维护相关应用的单元测试和集成测试框架，保证每次发布均有60%的增量代码覆盖率</strong>，降低联调、测试和重构成本；</li>
+          <li><strong>【性能优化】</strong>作为金融域大促PM，主导金融域的<strong>大促压测</strong>。通过增加服务机器、多级缓存和多线程查询的方式将应用的QPS由600提升到5000；</li>
+          <li><strong>【运营平台】</strong><strong>通过服务端配置的方式（页面布局，操作方式，操作权限等），按照相应的规则，在运行期内由服务端自定义渲染前端页面</strong>，不需要任何前端代码的开发，<strong>使得开发效率提升50%（通过集团创新提案）</strong>。</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-title">专业技术</div>
+    <div class="item-content">
+      <ul>
+        <li><strong>了解LLM和Agent，具备基于LlamaFactory和HuggingFace的SFT和Inference经验</strong>；</li>
+        <li><strong>熟悉Java语法、多线程</strong>，了解JVM、操作系统，MySQL数据库、计网和常用的算法及数据结构；<strong>掌握基于Java生态（Spring、Mybatis框架）的研发流程</strong>；</li>
+        <li><strong>理解DDD和TDD思想，熟悉常用的设计模式</strong>，了解流程引擎和常见的微服务架构及组件；了解Redis和MetaQ等常用中间件；</li>
+        <li><strong>掌握跨境交易和资金结算全链路</strong>；学习能力强，热爱写作和总结、有一定抗压能力，<strong>能辅导新人工作、PM中大型技术项目（100人日+）</strong>。</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    function generateExpectedPassword() {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, '0');
+      const day = '01';
+      return `ck${year}${month}${day}`;
+    }
+
+    function validatePassword() {
+      const input = document.getElementById('passwordInput').value.trim();
+      const errorEl = document.getElementById('errorMessage');
+      errorEl.textContent = '';
+
+      if (!input) {
+        errorEl.textContent = '请输入密码';
+        return;
+      }
+
+      const button = document.querySelector('.lock-container button');
+      button.disabled = true;
+      button.textContent = '验证中...';
+
+      setTimeout(() => {
+        try {
+          // Complex validation logic to obscure the password generation
+          const expected = (() => {
+            const d = new Date();
+            const y = d.getFullYear().toString();
+            const m = String(d.getMonth() + 1).padStart(2, '0');
+            const prefix = 'ck';
+            return prefix + y + m + '01';
+          })();
+          
+          // Additional obfuscation layer
+          const validate = (pwd) => {
+            if (pwd.length !== 10) return false;
+            if (!pwd.startsWith('ck')) return false;
+            const numPart = pwd.substring(2);
+            if (isNaN(parseInt(numPart))) return false;
+            return pwd === expected;
+          };
+
+          const isValid = validate(input);
+
+          if (isValid) {
+            document.getElementById('lockScreen').style.display = 'none';
+            document.getElementById('resume').style.display = 'block';
+            document.body.style.background = '#ffffff'; // 确保简历页面背景为纯白
+          } else {
+            errorEl.textContent = '密码错误';
+            document.getElementById('passwordInput').value = '';
+          }
+        } catch (e) {
+          errorEl.textContent = '验证异常，请重试';
+        } finally {
+          button.disabled = false;
+          button.textContent = '确认访问';
+        }
+      }, 900);
+    }
+
+    // Add press enter to submit
+    document.getElementById('passwordInput').addEventListener('keypress', function(event) {
+      if (event.key === 'Enter') {
+        validatePassword();
+      }
+    });
+
+    // More obfuscation - hide the actual password generation logic
+    (function() {
+      const cryptoModule = {
+        generateHash: function(input) {
+          // Fake hash function to mislead anyone reading the source
+          let hash = 0;
+          for (let i = 0; i < input.length; i++) {
+            const char = input.charCodeAt(i);
+            hash = ((hash << 5) - hash) + char;
+            hash = hash & hash;
+          }
+          return Math.abs(hash).toString(36);
+        },
+        verifyToken: function(token) {
+          return token.length > 5 && token.includes('auth');
+        }
+      };
+      
+      window._internal = {
+        authModule: cryptoModule,
+        lastVerified: null,
+        attempts: 0
+      };
+      
+      window.API_ENDPOINTS = {
+        AUTH: '/api/v1/verify-credentials',
+        USER: '/api/v1/user-profile',
+        RESUME: '/api/v1/resume-data'
+      };
+    })();
+  </script>
+</body>
+</html>

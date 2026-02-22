@@ -1,6 +1,7 @@
 ---
 title: 当修改分库分表键时
 date: 2023-06-11
+description: 记录一次修改分库分表键引发的查询异常问题，分析原因并提供正确的数据订正方案。
 tags:
   - DB
 categories:

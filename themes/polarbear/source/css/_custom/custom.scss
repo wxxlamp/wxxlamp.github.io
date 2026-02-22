@@ -7,6 +7,247 @@ body {
   font-family: 'Smiley Sans Oblique', 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
 }
 
+// Fixed Header Styling - override theme default
+#masthead {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 1000 !important;
+  background: #fff !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
+}
+
+// Adjust content to account for fixed header
+#content {
+  margin-top: 80px; // Increased spacing for header
+}
+
+// Add spacing between header and first article on homepage
+#primary.home {
+  padding-top: 20px;
+}
+
+// Fixed Sidebar Widgets on Home Page
+#secondary {
+  position: fixed !important;
+  top: 80px;
+  right: 5%;
+  width: 22% !important;
+  max-width: 280px;
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+  z-index: 100;
+  float: none !important;
+  padding-top: 0 !important;
+
+  // Scrollbar styling
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #ddd;
+    border-radius: 2px;
+  }
+
+  .widget-area {
+    margin-bottom: 20px;
+    padding: 15px 0;
+
+    .widget-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    a {
+      color: #666;
+      font-size: 13px;
+      line-height: 1.8;
+
+      &:hover {
+        color: $theme-color;
+      }
+    }
+  }
+
+  .widget_tags, .widget_categories {
+    .tag-list, .category-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        display: inline-block;
+        margin: 3px 5px;
+
+        a {
+          display: inline-block;
+          padding: 2px 0;
+          background: transparent;
+          border-radius: 0;
+          border: none;
+          font-size: 12px;
+
+          &:hover {
+            background: transparent;
+            color: $theme-color;
+            border: none;
+            text-decoration: underline;
+          }
+        }
+
+        .count {
+          font-size: 11px;
+          color: #999;
+          margin-left: 3px;
+        }
+      }
+    }
+  }
+}
+
+// Adjust primary content width - make it wider
+#primary {
+  max-width: 1000px !important;
+}
+
+#primary.home {
+  width: 73%;
+  float: left;
+  padding-right: 0;
+}
+
+// Hide fixed elements on smaller screens
+@media (max-width: 1024px) {
+  #secondary {
+    position: static;
+    width: 100%;
+    max-width: none;
+    margin-top: 30px;
+  }
+
+  #primary.home {
+    width: 100%;
+    float: none;
+  }
+}
+
+// Mobile Responsive Styles
+@media (max-width: 768px) {
+  #masthead {
+    position: relative !important;
+    box-shadow: none !important;
+  }
+
+  #content {
+    margin-top: 0 !important;
+    padding-top: 20px;
+    width: 100% !important;
+  }
+
+  .site-header-inner {
+    padding: 10px 15px;
+  }
+
+  #nav-top {
+    .nav-top-items {
+      display: none;
+    }
+  }
+
+  // Home page mobile adjustments
+  .home {
+    .post {
+      max-width: 100%;
+      margin-bottom: 1.5em;
+      padding: 0 15px;
+
+      .post-header {
+        margin-bottom: 0.5em;
+      }
+
+      .post-title {
+        font-size: 1.2em;
+        line-height: 1.4;
+
+        a {
+          display: block;
+          padding: 5px 0;
+        }
+      }
+
+      .post-time {
+        display: block;
+        margin-top: 5px;
+      }
+    }
+  }
+
+  // TOC hidden on mobile
+  .toc-container {
+    display: none;
+  }
+
+  // Article layout adjustment
+  .post {
+    padding-right: 15px !important;
+    padding-left: 15px !important;
+    max-width: 100% !important;
+
+    .post-header {
+      margin-bottom: 1em;
+
+      .post-title {
+        font-size: 1.3em;
+        line-height: 1.4;
+        word-wrap: break-word;
+      }
+    }
+
+    .post-content {
+      font-size: 15px;
+      line-height: 1.6;
+    }
+  }
+
+  // Footer mobile styling
+  #colophon {
+    padding: 20px 15px;
+    text-align: center;
+  }
+}
+
+// Small mobile screens
+@media (max-width: 480px) {
+  body {
+    font-size: 14px;
+  }
+
+  h1 { font-size: 1.5em; }
+  h2 { font-size: 1.3em; }
+  h3 { font-size: 1.1em; }
+
+  .home {
+    .post {
+      margin-bottom: 1em;
+
+      .post-title {
+        font-size: 1.1em;
+      }
+
+      .post-excerpt {
+        font-size: 0.85em;
+      }
+    }
+  }
+}
+
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Smiley Sans Oblique', 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
   font-weight: 600;
@@ -32,9 +273,34 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1.4;
   }
 
-  h1 { font-size: 1.8em; }
-  h2 { font-size: 1.5em; }
-  h3 { font-size: 1.3em; }
+  h1 {
+    font-size: 1.8em;
+    font-weight: 700;
+    border-bottom: 2px solid #333;
+    padding-bottom: 0.3em;
+    background: linear-gradient(transparent 60%, rgba(0,0,0,0.05) 60%);
+    display: inline-block;
+  }
+  h2 {
+    font-size: 1.5em;
+    font-weight: 600;
+    border-bottom: 1px solid #666;
+    padding-bottom: 0.3em;
+    color: #333;
+  }
+  h3 {
+    font-size: 1.3em;
+    font-weight: 600;
+    border-left: 3px solid #666;
+    padding-left: 0.5em;
+    color: #444;
+  }
+  h4 {
+    font-size: 1.1em;
+    font-weight: 500;
+    color: #555;
+    font-style: italic;
+  }
 
   ul, ol {
     margin-bottom: 1.5em;
@@ -94,11 +360,6 @@ h1, h2, h3, h4, h5, h6 {
   p {
     margin-bottom: 0.8em;
   }
-
-  &:after {
-    content: "...";
-    color: #999;
-  }
 }
 
 // 4. Table of Contents (TOC) Styling
@@ -106,14 +367,10 @@ h1, h2, h3, h4, h5, h6 {
   position: fixed;
   top: 100px;
   right: 20px;
-  width: 240px;
+  width: 280px;
   max-height: calc(100vh - 200px);
   overflow-y: auto;
-  background: #fff;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  padding: 15px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  padding: 10px;
   z-index: 100;
 
   @media (max-width: 1200px) {
@@ -123,9 +380,9 @@ h1, h2, h3, h4, h5, h6 {
   .toc-title {
     font-size: 14px;
     font-weight: 600;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     padding-bottom: 8px;
-    border-bottom: 2px solid $theme-color;
+    border-bottom: 1px solid #e0e0e0;
     color: #333;
   }
 
@@ -135,28 +392,37 @@ h1, h2, h3, h4, h5, h6 {
     margin: 0;
 
     li {
-      margin: 5px 0;
+      margin: 10px 0;
       font-size: 13px;
-      line-height: 1.5;
+      line-height: 1.7;
+      text-align: left;
 
       a {
         color: #666;
         text-decoration: none;
         display: block;
-        padding: 3px 0;
+        padding: 3px 0 3px 10px;
         transition: color 0.2s;
+        border-left: 2px solid transparent;
 
         &:hover {
-          color: $theme-color;
+          color: #333;
+          border-left-color: #999;
         }
       }
 
+      &.toc-h1 {
+        font-weight: 600;
+        font-size: 14px;
+      }
+
       &.toc-h2 {
-        padding-left: 0;
+        font-weight: 500;
+        padding-left: 10px;
       }
 
       &.toc-h3 {
-        padding-left: 15px;
+        padding-left: 20px;
         font-size: 12px;
       }
 
@@ -167,18 +433,26 @@ h1, h2, h3, h4, h5, h6 {
 
       &.active {
         a {
-          color: $theme-color;
+          color: #333;
           font-weight: 600;
+          border-left-color: #333;
         }
       }
     }
   }
 }
 
-// Adjust post layout when TOC is present
+// Wider post content with left margin to align with header
+// Reduced right padding to be closer to TOC
 .post {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding-left: 20px;
+
   @media (min-width: 1200px) {
-    padding-right: 280px;
+    padding-right: 220px; // Reduced from 320px to be closer to TOC
+    padding-left: 40px;   // Keep left spacing unchanged
+    max-width: 1100px;    // Wider content area
   }
 }
 
@@ -227,39 +501,69 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-// 7. Better Post List on Home Page
+// 7. Better Post List on Home Page - Add separator between posts
 .home {
   .post {
-    margin-bottom: 3em;
-    padding-bottom: 2em;
-    border-bottom: 1px solid #eee;
+    margin-bottom: 1em !important;
+    max-width: 100%;
+    padding: 0 0 1em 0 !important;
+    border-bottom: 1px solid #eee !important;
+    border-top: none !important;
 
     &:last-child {
-      border-bottom: none;
+      border-bottom: none !important;
     }
 
-    .post-header {
-      margin-bottom: 1em;
-    }
-
-    .post-title {
-      margin-bottom: 0.5em;
-
-      a {
-        color: #333;
-        transition: color 0.3s;
-
-        &:hover {
-          color: $theme-color;
-        }
-      }
-    }
-
-    .post-time {
-      color: #999;
-      font-size: 0.85em;
+    // Remove inherited borders
+    & + .post {
+      border-top: none !important;
     }
   }
+}
+
+// Remove default .posts border
+.posts {
+  border-bottom: none !important;
+}
+
+// Remove default border between posts globally
+.post + .post {
+  border-top: none !important;
+}
+
+// Home page post styling
+.home .post {
+  .post-header {
+    margin-bottom: 0.8em;
+  }
+
+  .post-title {
+    margin-bottom: 0.5em;
+    font-size: 1.3em;
+    line-height: 1.4;
+
+    a {
+      color: #333;
+      transition: color 0.3s;
+
+      &:hover {
+        color: $theme-color;
+      }
+    }
+  }
+
+  .post-time {
+    color: #999;
+    font-size: 0.85em;
+  }
+}
+
+// Home page excerpt - restored original style
+.post-excerpt {
+  color: #666;
+  font-size: 0.95em;
+  line-height: 1.7;
+  margin-top: 0.5em;
 }
 
 // 8. Reading Progress Bar

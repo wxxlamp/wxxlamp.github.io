@@ -1,6 +1,7 @@
 ---
 title: Hello World
 date: 2024-01-01
+description: 欢迎使用Hexo！这是博客的第一篇文章，介绍Hexo的基本使用方法。
 tags:
   - test
   - hexo

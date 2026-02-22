@@ -17,18 +17,9 @@
 
 
     {% if is_home() %}
-        <div class="post-excerpt post-content">
-            {% set excerpt = "" %}
-            {% if post.description %}
-              {% set excerpt = post.description %}
-            {% elif post.excerpt %}
-              {% set excerpt = post.excerpt %}
-            {% endif %}
-
-            {% if excerpt %}
-              {{ excerpt }}
+        <div class="post-excerpt">
+            {% if post.description %}{{ post.description }}{% endif %}
         </div>
-            {% endif %}
           {% else %}
             <div class="post-content">
             {{ post.content }}

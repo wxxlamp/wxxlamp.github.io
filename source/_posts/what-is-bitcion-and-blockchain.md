@@ -1,6 +1,7 @@
 ---
 title: 万字长文，从零科普比特币
 date: 2025-09-07
+description: 从零开始科普比特币和区块链技术，深入讲解去中心化、区块链数据结构、非对称加密、PoW共识机制等核心概念。
 tags:
   - Blockchain
 categories:

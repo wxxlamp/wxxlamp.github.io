@@ -1,6 +1,7 @@
 ---
 title: 如何解决消息幂等问题
 date: 2023-05-07
+description: 详解消息队列幂等问题的四种解决方案：分布式锁、唯一索引、特殊SQL语句和事务排他锁。
 tags:
   - DB
 categories:

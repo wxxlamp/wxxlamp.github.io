@@ -1,5 +1,5 @@
 ---
-name: image-uploader
+name: img-uploader
 description: Uploads images to image hosting services (supports Imgur, sm.ms, and GitHub + jsDelivr CDN). Imgur is the recommended and default provider.
 license: Apache-2.0
 metadata:

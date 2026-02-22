@@ -1,6 +1,7 @@
 ---
 title: 有了在线支付，为什么需要数字人民币
 date: 2025-09-17
+description: 从传统在线支付的底层逻辑出发，深入解析数字人民币的战略价值、区块链底层原理及智能合约应用场景。
 tags:
   - Blockchain
 categories:

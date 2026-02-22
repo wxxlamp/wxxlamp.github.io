@@ -1,6 +1,7 @@
 ---
 title: 泛型通配符和扩展字段
 date: 2023-08-04
+description: 探讨Java泛型通配符的使用技巧，以及扩展字段的最佳实践，通过泛型解决Map类型转换问题。
 tags:
   - Java
 categories:

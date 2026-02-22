@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   if (!content || !tocList) return;
 
-  const headings = content.querySelectorAll('h2, h3, h4');
+  const headings = content.querySelectorAll('h1, h2, h3, h4');
 
   if (headings.length < 2) {
     document.getElementById('toc-container').style.display = 'none';

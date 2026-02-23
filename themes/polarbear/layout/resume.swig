@@ -311,42 +311,183 @@
     }
 
     @media (max-width: 768px) {
-      .resume-container {
-        padding: 1.8rem;
-      }
-
-      .resume-name {
-        font-size: 2.1rem;
-      }
-
-      .section-title {
-        font-size: 1.35rem;
-      }
-
-      .item-header {
-        flex-direction: column;
-        gap: 0.3rem;
-        align-items: flex-start;
-      }
-
-      .contact {
-        font-size: 0.9rem;
-        gap: 0.5rem;
+      /* Password page mobile */
+      .password-page #content {
+        padding: 1rem;
+        min-height: calc(100vh - 120px);
       }
 
       .lock-container {
-        padding: 1.8rem;
+        padding: 2rem 1.5rem;
+        margin: 0 auto;
+        max-width: 100%;
       }
 
       .app-title {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
+        margin-bottom: 0.4rem;
+      }
+
+      .app-subtitle {
+        font-size: 0.95rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .lock-container input {
+        width: 180px;
+        padding: 0.7rem;
+        font-size: 0.95rem;
+      }
+
+      .lock-container button {
+        padding: 0.9rem;
+        font-size: 1rem;
+      }
+
+      /* Resume page mobile */
+      .resume-page {
+        padding-top: 50px;
       }
 
       .resume-page .pdf-export-btn {
         top: 10px;
         right: 10px;
-        padding: 8px 16px;
+        padding: 8px 14px;
         font-size: 12px;
+        border-radius: 4px;
+      }
+
+      .resume-container {
+        padding: 1.2rem;
+        margin-top: 0;
+        box-shadow: none;
+      }
+
+      .resume-name {
+        font-size: 1.6rem;
+        margin-bottom: 0.3rem;
+      }
+
+      .contact {
+        font-size: 0.8rem;
+        gap: 0.4rem;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .contact-item {
+        gap: 0.2rem;
+      }
+
+      .resume-header {
+        margin-bottom: 1.2rem;
+        padding-bottom: 0.8rem;
+      }
+
+      .section-title {
+        font-size: 1.1rem;
+        margin: 1.2rem 0 0.6rem;
+        padding-bottom: 0.3rem;
+      }
+
+      .item {
+        margin-bottom: 1rem;
+      }
+
+      .item-header {
+        flex-direction: column;
+        gap: 0.2rem;
+        align-items: flex-start;
+        font-size: 0.95rem;
+        margin-bottom: 0.2rem;
+      }
+
+      .item-subheader {
+        font-size: 0.85rem;
+        margin: 0.1rem 0 0.2rem;
+      }
+
+      .item-date {
+        font-size: 0.8rem;
+        color: #888;
+      }
+
+      .item-content {
+        font-size: 0.85rem;
+        line-height: 1.5;
+        margin-top: 0.3rem;
+      }
+
+      .project-description {
+        font-size: 0.82rem;
+        margin: 0.4rem 0;
+        line-height: 1.5;
+      }
+
+      ul {
+        padding-left: 1.2rem;
+        margin-top: 0.3rem;
+        margin-bottom: 0.3rem;
+      }
+
+      li {
+        margin-bottom: 0.3rem;
+        line-height: 1.45;
+        font-size: 0.8rem;
+      }
+
+      .education-header {
+        flex-direction: column;
+        gap: 0.2rem;
+        margin-bottom: 0.2rem;
+      }
+
+      .school-name {
+        font-size: 0.95rem;
+      }
+
+      .major {
+        font-size: 0.85rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .lock-container {
+        padding: 1.5rem 1rem;
+      }
+
+      .app-title {
+        font-size: 1.4rem;
+      }
+
+      .app-subtitle {
+        font-size: 0.85rem;
+      }
+
+      .resume-container {
+        padding: 1rem;
+      }
+
+      .resume-name {
+        font-size: 1.4rem;
+      }
+
+      .contact {
+        font-size: 0.75rem;
+        gap: 0.3rem;
+      }
+
+      .section-title {
+        font-size: 1rem;
+      }
+
+      .item-header {
+        font-size: 0.85rem;
+      }
+
+      .resume-page .pdf-export-btn {
+        padding: 6px 12px;
+        font-size: 11px;
       }
     }
 

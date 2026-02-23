@@ -5,7 +5,7 @@
 
     {% if theme.disqus_shortname %}
     <div style="text-align:center;">
-        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+        <button class="btn" id="load-disqus" onclick="disqus.load();">Load Disqus Comments</button>
     </div>
       <div id="disqus_thread">
         <noscript>

@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>{{ page.name }} - 个人简历</title>
+  <title>{{ page.name }} - Resume</title>
   {% include '_partial/head.swig' %}
   <style>
     * {
@@ -453,10 +453,10 @@
 
     <div id="content">
       <div class="lock-container">
-        <div class="app-title">王星星的魔灯</div>
-        <div class="app-subtitle">个人简历 · 需要密码访问</div>
+        <div class="app-title">Wxx's Lamp</div>
+        <div class="app-subtitle">Resume · Password Required</div>
         <input type="password" id="passwordInput" autocomplete="off" autofocus />
-        <button onclick="validatePassword()">确认访问</button>
+        <button onclick="validatePassword()">Access</button>
         <div class="error" id="errorMessage"></div>
       </div>
     </div>
@@ -472,7 +472,7 @@
 
   <!-- Resume Page (Step 2) -->
   <div class="resume-page" id="resumePage">
-    <button class="pdf-export-btn" onclick="exportToPDF()">导出 PDF</button>
+    <button class="pdf-export-btn" onclick="exportToPDF()">Export PDF</button>
     <div class="resume-container" id="resumeContent">
       <div class="resume-header">
         <div class="resume-name">{{ page.name }}</div>
@@ -484,7 +484,7 @@
         </div>
       </div>
 
-      <div class="section-title">教育背景</div>
+      <div class="section-title">Education</div>
       {% for edu in page.education %}
       <div class="item education-item">
         <div class="item-header">
@@ -498,7 +498,7 @@
       </div>
       {% endfor %}
 
-      <div class="section-title">工作经历</div>
+      <div class="section-title">Work Experience</div>
       <div class="item">
         <div class="item-header">
           <span><strong>{{ page.experience[0].company }}</strong></span>
@@ -508,14 +508,14 @@
         <div class="item-content">{{ page.experience[0].description }}</div>
       </div>
 
-      <div class="section-title">项目经历</div>
+      <div class="section-title">Projects</div>
       {% for project in page.projects %}
       <div class="item">
         <div class="item-header">
           <span><strong>{{ project.name }}</strong></span>
           <span class="item-date"><strong>{{ project.date }}</strong></span>
         </div>
-        <div class="project-description">项目描述：{{ project.summary }}</div>
+        <div class="project-description">Project: {{ project.summary }}</div>
         <div class="item-content">
           <ul>
             {% for highlight in project.highlights %}
@@ -526,7 +526,7 @@
       </div>
       {% endfor %}
 
-      <div class="section-title">专业技术</div>
+      <div class="section-title">Skills</div>
       <div class="item-content">
         <ul>
           {% for skill in page.skills %}
@@ -555,13 +555,13 @@
       errorEl.textContent = '';
 
       if (!input) {
-        errorEl.textContent = '请输入密码';
+        errorEl.textContent = 'Please enter password';
         return;
       }
 
       const button = document.querySelector('.lock-container button');
       button.disabled = true;
-      button.textContent = '验证中...';
+      button.textContent = 'Verifying...';
 
       setTimeout(() => {
         try {
@@ -587,14 +587,14 @@
             document.getElementById('passwordPage').style.display = 'none';
             document.getElementById('resumePage').style.display = 'block';
           } else {
-            errorEl.textContent = '密码错误';
+            errorEl.textContent = 'Incorrect password';
             document.getElementById('passwordInput').value = '';
           }
         } catch (e) {
-          errorEl.textContent = '验证异常，请重试';
+          errorEl.textContent = 'Verification error, please retry';
         } finally {
           button.disabled = false;
-          button.textContent = '确认访问';
+          button.textContent = 'Access';
         }
       }, 900);
     }

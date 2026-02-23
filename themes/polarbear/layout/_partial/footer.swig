@@ -11,7 +11,7 @@
     </span>
 </span>
 <span class="site-stats" style="display: block; margin-top: 8px; font-size: 0.85rem; color: #666;">
-    累计访问 <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> 次 ·
-    累计有 <span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span> 人访问
+    Total Visits: <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> ·
+    Unique Visitors: <span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>
 </span>
 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>

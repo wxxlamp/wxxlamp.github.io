@@ -351,8 +351,12 @@
     }
 
     @media print {
+      @page {
+        margin: 0.8cm 1cm;
+      }
+
       .resume-container {
-        padding: 0.5cm 1cm;
+        padding: 0;
         max-width: 100%;
         box-shadow: none;
       }
@@ -429,7 +433,7 @@
         font-size: 0.9rem;
       }
 
-      /* 避免分页时切断内容 */
+      /* Prevent content from being split across pages */
       .item {
         page-break-inside: avoid;
       }

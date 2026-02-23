@@ -127,7 +127,7 @@
     .resume-page .pdf-export-btn {
       position: fixed;
       top: 20px;
-      left: 20px;
+      right: 20px;
       z-index: 100;
       padding: 10px 20px;
       background: #1e3a8a;
@@ -344,7 +344,7 @@
 
       .resume-page .pdf-export-btn {
         top: 10px;
-        left: 10px;
+        right: 10px;
         padding: 8px 16px;
         font-size: 12px;
       }
@@ -352,9 +352,90 @@
 
     @media print {
       .resume-container {
-        padding: 0;
+        padding: 0.5cm 1cm;
         max-width: 100%;
         box-shadow: none;
+      }
+
+      .resume-name {
+        font-size: 1.8rem;
+        margin-bottom: 0.3rem;
+      }
+
+      .contact {
+        font-size: 0.85rem;
+        gap: 0.5rem;
+        margin-top: 0.3rem;
+      }
+
+      .resume-header {
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+      }
+
+      .section-title {
+        font-size: 1.1rem;
+        margin: 0.6rem 0 0.4rem;
+        padding-bottom: 0.2rem;
+      }
+
+      .item {
+        margin-bottom: 0.5rem;
+      }
+
+      .item-header {
+        font-size: 0.95rem;
+        margin-bottom: 0.1rem;
+      }
+
+      .item-subheader {
+        font-size: 0.9rem;
+        margin: 0.1rem 0 0.2rem;
+      }
+
+      .item-date {
+        font-size: 0.85rem;
+      }
+
+      .item-content {
+        font-size: 0.85rem;
+        line-height: 1.4;
+        margin-top: 0.2rem;
+      }
+
+      .project-description {
+        font-size: 0.85rem;
+        margin: 0.3rem 0;
+        line-height: 1.4;
+      }
+
+      ul {
+        padding-left: 1.2rem;
+        margin-top: 0.2rem;
+        margin-bottom: 0.2rem;
+      }
+
+      li {
+        margin-bottom: 0.2rem;
+        line-height: 1.35;
+        font-size: 0.82rem;
+      }
+
+      .school-name {
+        font-size: 0.95rem;
+      }
+
+      .major {
+        font-size: 0.9rem;
+      }
+
+      /* 避免分页时切断内容 */
+      .item {
+        page-break-inside: avoid;
+      }
+
+      .section-title {
+        page-break-after: avoid;
       }
     }
   </style>

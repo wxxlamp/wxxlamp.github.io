@@ -453,7 +453,7 @@
 
     <div id="content">
       <div class="lock-container">
-        <div class="app-title">Wxx's Lamp</div>
+        <div class="app-title">王星星的魔灯</div>
         <div class="app-subtitle">Resume · Password Required</div>
         <input type="password" id="passwordInput" autocomplete="off" autofocus />
         <button onclick="validatePassword()">Access</button>

@@ -157,15 +157,13 @@ body {
   }
 
   .site-header-inner {
-    padding: 12px 15px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    padding: 10px 15px;
+    display: block;
 
     .site-title {
-      font-size: 1.2em;
-      margin: 0;
+      font-size: 1.3em;
+      margin: 0 0 8px 0;
+      text-align: center;
 
       a {
         color: #333;
@@ -174,22 +172,26 @@ body {
   }
 
   #nav-top {
+    width: 100%;
+
     .nav-top-items {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
+      justify-content: center;
+      gap: 5px;
       margin: 0;
       padding: 0;
       list-style: none;
 
       .menu-item {
         a {
-          padding: 5px 10px;
+          padding: 4px 10px;
           font-size: 13px;
           color: #666;
           text-decoration: none;
           border-radius: 4px;
           transition: all 0.2s;
+          white-space: nowrap;
 
           &:hover, &:active {
             color: $theme-color;

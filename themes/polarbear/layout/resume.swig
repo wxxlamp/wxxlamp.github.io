@@ -1,4 +1,4 @@
-{# Resume layout with password protection - extends main layout structure #}
+{# Resume layout with password protection #}
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -20,18 +20,19 @@
       line-height: 1.6;
     }
 
-    /* Lock screen overlay */
-    .lock-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: #ffffff;
+    /* Password page styles */
+    .password-page {
+      min-height: 100vh;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+    }
+
+    .password-page #content {
+      flex: 1;
+      display: flex;
       align-items: center;
-      z-index: 1000;
+      justify-content: center;
+      padding: 2rem;
     }
 
     .lock-container {
@@ -42,8 +43,6 @@
       max-width: 420px;
       width: 90%;
       text-align: center;
-      position: relative;
-      margin-top: -60px;
     }
 
     .app-title {
@@ -118,16 +117,46 @@
       font-weight: 500;
     }
 
-    /* Resume content styles */
-    .resume {
+    /* Resume page styles (hidden by default) */
+    .resume-page {
       display: none;
+      background: #ffffff;
+      min-height: 100vh;
+    }
+
+    .resume-page .pdf-export-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 100;
+      padding: 10px 20px;
+      background: #1e3a8a;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      transition: all 0.3s ease;
+    }
+
+    .resume-page .pdf-export-btn:hover {
+      background: #1e40af;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    @media print {
+      .resume-page .pdf-export-btn {
+        display: none !important;
+      }
+    }
+
+    .resume-container {
       padding: 2rem;
       max-width: 850px;
       margin: 0 auto;
       background: white;
-      margin-top: 2rem;
-      box-shadow: 0 5px 25px rgba(0,0,0,0.08);
-      border-radius: 12px;
     }
 
     .resume-header {
@@ -282,7 +311,7 @@
     }
 
     @media (max-width: 768px) {
-      .resume {
+      .resume-container {
         padding: 1.8rem;
       }
 
@@ -307,24 +336,37 @@
 
       .lock-container {
         padding: 1.8rem;
-        margin-top: -40px;
       }
 
       .app-title {
         font-size: 1.8rem;
       }
+
+      .resume-page .pdf-export-btn {
+        top: 10px;
+        left: 10px;
+        padding: 8px 16px;
+        font-size: 12px;
+      }
+    }
+
+    @media print {
+      .resume-container {
+        padding: 0;
+        max-width: 100%;
+        box-shadow: none;
+      }
     }
   </style>
 </head>
 <body>
-  <div id="page">
-    <!-- Site Header -->
+  <!-- Password Page (Step 1) -->
+  <div class="password-page" id="passwordPage">
     <header id="masthead">
       {%- include '_partial/header.swig' %}
     </header>
 
-    <!-- Password Lock Overlay -->
-    <div class="lock-overlay" id="lockOverlay">
+    <div id="content">
       <div class="lock-container">
         <div class="app-title">王星星的魔灯</div>
         <div class="app-subtitle">个人简历 · 需要密码访问</div>
@@ -334,78 +376,79 @@
       </div>
     </div>
 
-    <!-- Resume Content -->
-    <div id="content">
-      <div class="resume" id="resume">
-        <div class="resume-header">
-          <div class="resume-name">{{ page.name }}</div>
-          <div class="contact">
-            <span class="contact-item">📱 {{ page.contact.phone }}</span>
-            <span class="contact-item">✉️ {{ page.contact.email }}</span>
-            <span class="contact-item">🎂 {{ page.contact.birth }}</span>
-            <span class="contact-item">🌐 <a href="{{ page.contact.website }}" target="_blank">wxxlamp.cn</a></span>
-          </div>
-        </div>
-
-        <div class="section-title">教育背景</div>
-        {% for edu in page.education %}
-        <div class="item education-item">
-          <div class="item-header">
-            <div class="education-header">
-              <span class="school-name"><strong>{{ edu.school }}</strong></span>
-              <span class="major"><strong>{{ edu.major }}</strong></span>
-            </div>
-            <span class="item-date"><strong>{{ edu.date }}</strong></span>
-          </div>
-          <div class="item-content">{{ edu.description }}</div>
-        </div>
-        {% endfor %}
-
-        <div class="section-title">工作经历</div>
-        <div class="item">
-          <div class="item-header">
-            <span><strong>{{ page.experience[0].company }}</strong></span>
-            <span class="item-date"><strong>{{ page.experience[0].date }}</strong></span>
-          </div>
-          <div class="item-subheader"><strong>{{ page.experience[0].title }}</strong></div>
-          <div class="item-content">{{ page.experience[0].description }}</div>
-        </div>
-
-        <div class="section-title">项目经历</div>
-        {% for project in page.projects %}
-        <div class="item">
-          <div class="item-header">
-            <span><strong>{{ project.name }}</strong></span>
-            <span class="item-date"><strong>{{ project.date }}</strong></span>
-          </div>
-          <div class="project-description">项目描述：{{ project.summary }}</div>
-          <div class="item-content">
-            <ul>
-              {% for highlight in project.highlights %}
-              <li>{{ highlight }}</li>
-              {% endfor %}
-            </ul>
-          </div>
-        </div>
-        {% endfor %}
-
-        <div class="section-title">专业技术</div>
-        <div class="item-content">
-          <ul>
-            {% for skill in page.skills %}
-            <li>{{ skill }}</li>
-            {% endfor %}
-          </ul>
-        </div>
-      </div>
-    </div>
-
     <footer id="colophon">
       {%- include '_partial/footer.swig' %}
     </footer>
 
     <div class="back-to-top" id="back-to-top">
       <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+
+  <!-- Resume Page (Step 2) -->
+  <div class="resume-page" id="resumePage">
+    <button class="pdf-export-btn" onclick="exportToPDF()">导出 PDF</button>
+    <div class="resume-container" id="resumeContent">
+      <div class="resume-header">
+        <div class="resume-name">{{ page.name }}</div>
+        <div class="contact">
+          <span class="contact-item">📱 {{ page.contact.phone }}</span>
+          <span class="contact-item">✉️ {{ page.contact.email }}</span>
+          <span class="contact-item">🎂 {{ page.contact.birth }}</span>
+          <span class="contact-item">🌐 <a href="{{ page.contact.website }}" target="_blank">wxxlamp.cn</a></span>
+        </div>
+      </div>
+
+      <div class="section-title">教育背景</div>
+      {% for edu in page.education %}
+      <div class="item education-item">
+        <div class="item-header">
+          <div class="education-header">
+            <span class="school-name"><strong>{{ edu.school }}</strong></span>
+            <span class="major"><strong>{{ edu.major }}</strong></span>
+          </div>
+          <span class="item-date"><strong>{{ edu.date }}</strong></span>
+        </div>
+        <div class="item-content">{{ edu.description }}</div>
+      </div>
+      {% endfor %}
+
+      <div class="section-title">工作经历</div>
+      <div class="item">
+        <div class="item-header">
+          <span><strong>{{ page.experience[0].company }}</strong></span>
+          <span class="item-date"><strong>{{ page.experience[0].date }}</strong></span>
+        </div>
+        <div class="item-subheader"><strong>{{ page.experience[0].title }}</strong></div>
+        <div class="item-content">{{ page.experience[0].description }}</div>
+      </div>
+
+      <div class="section-title">项目经历</div>
+      {% for project in page.projects %}
+      <div class="item">
+        <div class="item-header">
+          <span><strong>{{ project.name }}</strong></span>
+          <span class="item-date"><strong>{{ project.date }}</strong></span>
+        </div>
+        <div class="project-description">项目描述：{{ project.summary }}</div>
+        <div class="item-content">
+          <ul>
+            {% for highlight in project.highlights %}
+            <li>{{ highlight }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      {% endfor %}
+
+      <div class="section-title">专业技术</div>
+      <div class="item-content">
+        <ul>
+          {% for skill in page.skills %}
+          <li>{{ skill }}</li>
+          {% endfor %}
+        </ul>
+      </div>
     </div>
   </div>
 
@@ -456,8 +499,8 @@
           const isValid = validate(input);
 
           if (isValid) {
-            document.getElementById('lockOverlay').style.display = 'none';
-            document.getElementById('resume').style.display = 'block';
+            document.getElementById('passwordPage').style.display = 'none';
+            document.getElementById('resumePage').style.display = 'block';
           } else {
             errorEl.textContent = '密码错误';
             document.getElementById('passwordInput').value = '';
@@ -469,6 +512,20 @@
           button.textContent = '确认访问';
         }
       }, 900);
+    }
+
+    function exportToPDF() {
+      // Hide the export button before printing
+      const exportBtn = document.querySelector('.pdf-export-btn');
+      exportBtn.style.display = 'none';
+
+      // Trigger browser print dialog
+      window.print();
+
+      // Show the button again after print dialog closes
+      setTimeout(() => {
+        exportBtn.style.display = 'block';
+      }, 1000);
     }
 
     document.getElementById('passwordInput').addEventListener('keypress', function(event) {

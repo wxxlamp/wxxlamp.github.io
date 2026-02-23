@@ -25,39 +25,23 @@
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: url('https://cdn.pixabay.com/photo/2023/11/18/18/20/christmas-8396941_1280.png') no-repeat center center fixed;
-      background-size: cover;
+      background: #f5f5f5;
       display: flex;
       justify-content: center;
       align-items: center;
       z-index: 9999;
       overflow: hidden;
-      position: relative;
-    }
-
-    .lock-screen::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.4);
-      z-index: 1;
     }
 
     .lock-container {
-      background: rgba(255, 255, 255, 0.92);
-      backdrop-filter: blur(10px);
+      background: #ffffff;
       padding: 2.5rem;
       border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
       max-width: 420px;
       width: 90%;
       text-align: center;
       position: relative;
-      z-index: 3;
-      border: 1px solid rgba(255,255,255,0.2);
     }
 
     .app-title {

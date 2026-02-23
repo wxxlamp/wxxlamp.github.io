@@ -1,10 +1,11 @@
-{# Resume layout with password protection #}
+{# Resume layout with password protection - extends main layout structure #}
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>{{ page.name }} - 个人简历</title>
+  {% include '_partial/head.swig' %}
   <style>
     * {
       margin: 0;
@@ -19,18 +20,18 @@
       line-height: 1.6;
     }
 
-    .lock-screen {
+    /* Lock screen overlay */
+    .lock-overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: #f5f5f5;
+      background: #ffffff;
       display: flex;
       justify-content: center;
       align-items: center;
-      z-index: 9999;
-      overflow: hidden;
+      z-index: 1000;
     }
 
     .lock-container {
@@ -42,6 +43,7 @@
       width: 90%;
       text-align: center;
       position: relative;
+      margin-top: -60px;
     }
 
     .app-title {
@@ -116,6 +118,7 @@
       font-weight: 500;
     }
 
+    /* Resume content styles */
     .resume {
       display: none;
       padding: 2rem;
@@ -127,14 +130,14 @@
       border-radius: 12px;
     }
 
-    .header {
+    .resume-header {
       text-align: center;
       margin-bottom: 2.5rem;
       padding-bottom: 1.2rem;
       border-bottom: 1px solid #eaeaea;
     }
 
-    .name {
+    .resume-name {
       font-size: 2.5rem;
       font-weight: 700;
       margin-bottom: 0.5rem;
@@ -283,7 +286,7 @@
         padding: 1.8rem;
       }
 
-      .name {
+      .resume-name {
         font-size: 2.1rem;
       }
 
@@ -304,6 +307,7 @@
 
       .lock-container {
         padding: 1.8rem;
+        margin-top: -40px;
       }
 
       .app-title {
@@ -313,78 +317,100 @@
   </style>
 </head>
 <body>
-  <div class="lock-screen" id="lockScreen">
-    <div class="lock-container">
-      <div class="app-title">王星星的魔灯</div>
-      <div class="app-subtitle">个人简历 · 需要密码访问</div>
-      <input type="password" id="passwordInput" autocomplete="off" autofocus />
-      <button onclick="validatePassword()">确认访问</button>
-      <div class="error" id="errorMessage"></div>
-    </div>
-  </div>
+  <div id="page">
+    <!-- Site Header -->
+    <header id="masthead">
+      {%- include '_partial/header.swig' %}
+    </header>
 
-  <div class="resume" id="resume">
-    <div class="header">
-      <div class="name">{{ page.name }}</div>
-      <div class="contact">
-        <span class="contact-item">📱 {{ page.contact.phone }}</span>
-        <span class="contact-item">✉️ {{ page.contact.email }}</span>
-        <span class="contact-item">🎂 {{ page.contact.birth }}</span>
-        <span class="contact-item">🌐 <a href="{{ page.contact.website }}" target="_blank">wxxlamp.cn</a></span>
+    <!-- Password Lock Overlay -->
+    <div class="lock-overlay" id="lockOverlay">
+      <div class="lock-container">
+        <div class="app-title">王星星的魔灯</div>
+        <div class="app-subtitle">个人简历 · 需要密码访问</div>
+        <input type="password" id="passwordInput" autocomplete="off" autofocus />
+        <button onclick="validatePassword()">确认访问</button>
+        <div class="error" id="errorMessage"></div>
       </div>
     </div>
 
-    <div class="section-title">教育背景</div>
-    {% for edu in page.education %}
-    <div class="item education-item">
-      <div class="item-header">
-        <div class="education-header">
-          <span class="school-name"><strong>{{ edu.school }}</strong></span>
-          <span class="major"><strong>{{ edu.major }}</strong></span>
+    <!-- Resume Content -->
+    <div id="content">
+      <div class="resume" id="resume">
+        <div class="resume-header">
+          <div class="resume-name">{{ page.name }}</div>
+          <div class="contact">
+            <span class="contact-item">📱 {{ page.contact.phone }}</span>
+            <span class="contact-item">✉️ {{ page.contact.email }}</span>
+            <span class="contact-item">🎂 {{ page.contact.birth }}</span>
+            <span class="contact-item">🌐 <a href="{{ page.contact.website }}" target="_blank">wxxlamp.cn</a></span>
+          </div>
         </div>
-        <span class="item-date"><strong>{{ edu.date }}</strong></span>
-      </div>
-      <div class="item-content">{{ edu.description }}</div>
-    </div>
-    {% endfor %}
 
-    <div class="section-title">工作经历</div>
-    <div class="item">
-      <div class="item-header">
-        <span><strong>{{ page.experience[0].company }}</strong></span>
-        <span class="item-date"><strong>{{ page.experience[0].date }}</strong></span>
-      </div>
-      <div class="item-subheader"><strong>{{ page.experience[0].title }}</strong></div>
-      <div class="item-content">{{ page.experience[0].description }}</div>
-    </div>
-
-    <div class="section-title">项目经历</div>
-    {% for project in page.projects %}
-    <div class="item">
-      <div class="item-header">
-        <span><strong>{{ project.name }}</strong></span>
-        <span class="item-date"><strong>{{ project.date }}</strong></span>
-      </div>
-      <div class="project-description">项目描述：{{ project.summary }}</div>
-      <div class="item-content">
-        <ul>
-          {% for highlight in project.highlights %}
-          <li>{{ highlight }}</li>
-          {% endfor %}
-        </ul>
-      </div>
-    </div>
-    {% endfor %}
-
-    <div class="section-title">专业技术</div>
-    <div class="item-content">
-      <ul>
-        {% for skill in page.skills %}
-        <li>{{ skill }}</li>
+        <div class="section-title">教育背景</div>
+        {% for edu in page.education %}
+        <div class="item education-item">
+          <div class="item-header">
+            <div class="education-header">
+              <span class="school-name"><strong>{{ edu.school }}</strong></span>
+              <span class="major"><strong>{{ edu.major }}</strong></span>
+            </div>
+            <span class="item-date"><strong>{{ edu.date }}</strong></span>
+          </div>
+          <div class="item-content">{{ edu.description }}</div>
+        </div>
         {% endfor %}
-      </ul>
+
+        <div class="section-title">工作经历</div>
+        <div class="item">
+          <div class="item-header">
+            <span><strong>{{ page.experience[0].company }}</strong></span>
+            <span class="item-date"><strong>{{ page.experience[0].date }}</strong></span>
+          </div>
+          <div class="item-subheader"><strong>{{ page.experience[0].title }}</strong></div>
+          <div class="item-content">{{ page.experience[0].description }}</div>
+        </div>
+
+        <div class="section-title">项目经历</div>
+        {% for project in page.projects %}
+        <div class="item">
+          <div class="item-header">
+            <span><strong>{{ project.name }}</strong></span>
+            <span class="item-date"><strong>{{ project.date }}</strong></span>
+          </div>
+          <div class="project-description">项目描述：{{ project.summary }}</div>
+          <div class="item-content">
+            <ul>
+              {% for highlight in project.highlights %}
+              <li>{{ highlight }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+        {% endfor %}
+
+        <div class="section-title">专业技术</div>
+        <div class="item-content">
+          <ul>
+            {% for skill in page.skills %}
+            <li>{{ skill }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <footer id="colophon">
+      {%- include '_partial/footer.swig' %}
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
     </div>
   </div>
+
+  {% include '_script/libs.swig' %}
+  {% include '_script/theme.swig' %}
 
   <script>
     function generateExpectedPassword() {
@@ -430,9 +456,8 @@
           const isValid = validate(input);
 
           if (isValid) {
-            document.getElementById('lockScreen').style.display = 'none';
+            document.getElementById('lockOverlay').style.display = 'none';
             document.getElementById('resume').style.display = 'block';
-            document.body.style.background = '#ffffff';
           } else {
             errorEl.textContent = '密码错误';
             document.getElementById('passwordInput').value = '';

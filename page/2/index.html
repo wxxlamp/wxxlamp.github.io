@@ -1,19 +1,222 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="王星星"><title>王星星的魔灯</title><meta name="description" content="勇士斗恶龙 &lt;br&gt; Love &amp; Seriousness &amp; Regularity &amp; Persistence"><meta name="keywords" content="王星星的魔灯,博客,王星星"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><!-- 增加网站logo--><link rel="shortcut icon" href="/assets/img/favicon.ico" type="image/x-icon"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><script src="/js/jquery.js"></script><meta name="generator" content="Hexo 5.2.0"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo@2x.png" style="width:127px;"><h3 title=""><a href="/">王星星的魔灯</a></h3><div class="description"><p>勇士斗恶龙 <br> Love & Seriousness & Regularity & Persistence</p></div></div></div><ul class="social-links"><li><a target="_blank" rel="noopener" href="https://github.com/wxxlamp"><i class="fa fa-github"></i></a></li><li><a href="mailto:wxxlamp@foxmail.com"><i class="fa fa-envelope"></i></a></li><li><a target="_blank" rel="noopener" href="http://wpa.qq.com/msgrd?v=3&amp;uin=2305450070&amp;site=qq&amp;menu=yes"><i class="fa fa-qq"></i></a></li><li><a target="_blank" rel="noopener" href="https://blog.csdn.net/coder_what"><i class="fa fa-mortar-board"></i></a></li></ul><div class="footer"><div class="p"><span>© 2018 - 2024</span><i class="fa fa-star"></i><span> 王星星</span><!--span.leancloud_visitors--></div><div class="by_farbox"><span>Powered by</span><a href="https://hexo.io/zh-cn/" target="_blank">Hexo</a><span> &</span><a href="https://github.com/wxxlamp/anatole-core-wxx" target="_blank">Anatole-Wxx</a></div><div class="beian"><a href="http://www.beian.miit.gov.cn/" target="_blank">豫ICP备20004458号-1</a><span style="height:10px;margin-left: 10px;">|</span><img src="/images/gongan.png" style="height:10px;margin-left: 10px;position: relative;top: 1px;"><span style="margin-left: 2px;">豫公网安备 44030400004458号</span></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a class="current" href="/">首页</a></li><li><a href="/archives">归档</a></li><li><a href="/categories">分类</a></li><li><a href="/tags">标签</a></li><li><a href="/about">关于</a></li><li><a href="/links">友链</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)" style="display:none;"></a></li></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2023/06/11/when-change-db-route-key/">当修改分库分表键时</a></h3></div><div class="post-content"><p>问题背景因为代码bug，导致某项业务流程不符合预期，为了紧急修复工单用户，需要把数据表（分库分表）的user_id（bigint类型）从主账号改为子账号，但是在物理库订正之后，发现业务代码依据修改后的子账号查询不到了，如下所示：
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
 
 
-但是如果我把key改为str的格式，就可以查到：
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
-这就很诡异了，对于bigi...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-06-11</span><i class="fa fa-tag"></i><a class="tag" href="/tags/DB/" title="DB">DB </a><i class="fa fa-star"></i><a class="tag" href="/categories/采坑记录/" title="采坑记录">采坑记录 </a><span class="leancloud_visitors"></span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2023/05/07/how-to-deal-msg-reconsume/">如何解决消息幂等问题</a></h3></div><div class="post-content"><p>最近业务对接的时候，发现了一个问题：
 
-消费上游某业务的的消息的时候，因为上游的特殊情况，导致在同一时间内会发出多条消息（状态变更消息，同一时间内状态变更多次），又因为消费的consumer没有做好幂等工作，就会导致消费消息的时候，会消费多次，体现在本问题的现象就是，落了两条数据
+  <meta name="description" content="记录技术成长与生活感悟"/>
 
-怎么解决呢？其实非常简单，核心...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-05-07</span><i class="fa fa-tag"></i><a class="tag" href="/tags/DB/" title="DB">DB </a><i class="fa fa-star"></i><a class="tag" href="/categories/场景实践/" title="场景实践">场景实践 </a><span class="leancloud_visitors"></span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2023/05/05/juanjing-review/">捐精有感</a></h3></div><div class="post-content"><p>为什么要捐精标准回答随着环境越来越差，人们生活方式越来越不健康，不孕不育的家庭数目也在迅速增长，我国现在每8对育龄夫妇中就有一对有生育问题。其中有一部分是由于男性无法生成合格的精子，或者男性有遗传疾病不能生育下一代，他们需要接受其他健康男性的精子来帮助解决生育问题，于是捐精便有了极大的需求。这些家庭往往因为不能生...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-05-05</span><i class="fa fa-tag"></i><a class="tag" href="/tags/Life/" title="Life">Life </a><i class="fa fa-star"></i><a class="tag" href="/categories/生活感悟/" title="生活感悟">生活感悟 </a><span class="leancloud_visitors"></span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2023/04/25/metaq-consumer-heap-up/">MetaQ消费堆积问题排查</a></h3></div><div class="post-content"><p>
-备注：MetaQ是阿里的内部产品，对外开源后叫RocketMQ
 
-问题现象负责的业务中有一个应用因为特殊原因，需要修改消息配置（将Spring Cloud Stream 改为 MetaQ native），修改前和修改后的配置项如下：
-1234567891011121314spring.cloud.stream....</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-04-25</span><i class="fa fa-tag"></i><a class="tag" href="/tags/MQ/" title="MQ">MQ </a><i class="fa fa-star"></i><a class="tag" href="/categories/采坑记录/" title="采坑记录">采坑记录 </a><span class="leancloud_visitors"></span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2023/03/13/view-of-shanghai/">我对上海的印象</a></h3></div><div class="post-content"><p>我第一次出省，就去的上海，在那里，书上说的国际大都市才真正地震撼到了我的心灵。时隔五年，上周又去了趟上海，心境和阅历也都发生了变化，对上海的印象也改变了不少。还记得那是18年的暑假，为了能够当上18级新生的军训教官，我以学校国旗护卫队学徒的身份在学校训练。每天早上6点集合，晚上11点回宿舍，中间只有2小时的吃饭和...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-03-13</span><i class="fa fa-tag"></i><a class="tag" href="/tags/Life/" title="Life">Life </a><i class="fa fa-star"></i><a class="tag" href="/categories/生活感悟/" title="生活感悟">生活感悟 </a><span class="leancloud_visitors"></span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2023/02/18/test-in-spring-project/">Test In Spring Project</a></h3></div><div class="post-content"><p>概述系统的测试，从范围大致会分为单元测试，集成测试，回归测试等等。通常来说，真正由开发所负责的测试包含单元测试和集成测试。由于大家在实际的开发过程中，对各种测试的范围理解都不一样，就本文来讲，一般说的单元测试指（按照类维度/模块维度），集成测试是以接口维度对该接口下的整个业务逻辑进行的测试所谓单元测试，就是对某个...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-02-18</span><i class="fa fa-tag"></i><a class="tag" href="/tags/Spring/" title="Spring">Spring </a><i class="fa fa-star"></i><a class="tag" href="/categories/场景实践/" title="场景实践">场景实践 </a><span class="leancloud_visitors"></span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2023/02/07/zero-copy/">零拷贝</a></h3></div><div class="post-content"><p>因为是做Web开发，网络IO总是避不开的一个话题，而零拷贝又是网络IO中重要的一环，之前老是看各种博客，今天就特意总结一下。
-要想理解零拷贝，首先要了解操作系统的IO流程，因为有内核态和用户态的区别，为了保证安全性和缓存，普通的读写流程如下：（对于Java程序，还会多了一个堆外内存和堆内存之间的copy）
 
-整体...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-02-07</span><i class="fa fa-tag"></i><a class="tag" href="/tags/OS/" title="OS">OS </a><i class="fa fa-star"></i><a class="tag" href="/categories/基础夯实/" title="基础夯实">基础夯实 </a><span class="leancloud_visitors"></span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2023/01/31/spring-festival-log-1/">春节回家记</a></h3></div><div class="post-content"><p>我问过很多30岁左右的同事，都不喜欢过年，除了觉得没有什么意思之外，还会被面临着七大姑八大姨各种的盘问。确实，毕竟亲戚很久不见了，没有共同话题，只能从一些比较无聊的事情讲起。大家又都不是社牛，十有八九都聊不起来，所以才觉得没有什么意思。
-我其实是很盼望过年的，最少可以见到日益衰老的长辈和每年都在变化的晚辈。从上学...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-01-31</span><i class="fa fa-tag"></i><a class="tag" href="/tags/Life/" title="Life">Life </a><i class="fa fa-star"></i><a class="tag" href="/categories/生活感悟/" title="生活感悟">生活感悟 </a><span class="leancloud_visitors"></span></div></div></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/">上一页</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/page/3/">下一页</a></li></ul></div></div></div></div><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script><script src="/js/add-bookmark.js"></script><script src="/js/baidu-tongji.js"></script></body></html>
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="王星星的魔灯" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="https://wxxlamp.cn/page/2/"/>
+
+
+<meta name="description" content="记录技术成长与生活感悟">
+<meta property="og:type" content="website">
+<meta property="og:title" content="王星星的魔灯">
+<meta property="og:url" content="https://wxxlamp.cn/page/2/index.html">
+<meta property="og:site_name" content="王星星的魔灯">
+<meta property="og:description" content="记录技术成长与生活感悟">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="Wxx">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+
+<link href='https://cdn.jsdelivr.net/npm/@chinese-fonts/syst/dist/SmileySans-Oblique/result.css' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> 王星星的魔灯 - 记录技术成长与生活感悟</title>
+  <meta name="generator" content="Hexo 8.1.1"></head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">王星星的魔灯</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/resume">
+                            
+                            
+                                Resume
+                            
+                        </a>
+                    </li>
+                
+                <li class="menu-item">
+                    <a href="/atom.xml">RSS</a>
+                </li>
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary" class="home">
+        
+            
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          <a class="post-link" href="/2023/05/06/how-to-deal-msg-reconsume/">如何解决消息幂等问题</a>
+        
+      </h1>
+
+      <time class="post-time">
+          5月 07 2023
+      </time>
+    </header>
+
+
+
+    
+        <div class="post-excerpt">
+            详解消息队列幂等问题的四种解决方案：分布式锁、唯一索引、特殊SQL语句和事务排他锁。
+        </div>
+          
+
+    
+  </article>
+
+        
+        
+  <nav class="pagination">
+    
+      <a class="prev" href="/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text">Prev</span>
+      </a>
+    
+    
+  </nav>
+
+    </div>
+    <div id="secondary">
+    
+
+    
+
+    
+    <section id="tags" class="widget-area widget_tags">
+        <h3 class="widget-title">Tags</h3>
+        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Life/" rel="tag">Life</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DB/" rel="tag">DB</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/" rel="tag">test</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CACHE/" rel="tag">CACHE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blockchain/" rel="tag">Blockchain</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OS/" rel="tag">OS</a><span class="tag-list-count">1</span></li></ul>
+    </section>
+
+
+</div>
+
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2014 -
+    
+    2026
+    <span class="footer-author">Wxx.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> and <a class="theme-link" target="_blank" rel="noopener" href="https://github.com/frostfan/hexo-theme-polarbear">Polar Bear</a>
+    </span>
+</span>
+<span class="site-stats" style="display: block; margin-top: 8px; font-size: 0.85rem; color: #666;">
+    Total Visits: <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> ·
+    Unique Visitors: <span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>
+</span>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>

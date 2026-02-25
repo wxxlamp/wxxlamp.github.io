@@ -1,0 +1,1002 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>王星星 - Resume</title>
+  
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="王星星 - 个人简历"/>
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="王星星的魔灯" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="https://wxxlamp.cn/resume/"/>
+
+
+<meta name="description" content="记录技术成长与生活感悟">
+<meta property="og:type" content="website">
+<meta property="og:title" content="王星星 - 个人简历">
+<meta property="og:url" content="https://wxxlamp.cn/resume/index.html">
+<meta property="og:site_name" content="王星星的魔灯">
+<meta property="og:description" content="记录技术成长与生活感悟">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-02-25T11:57:31.817Z">
+<meta property="article:author" content="Wxx">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+
+<link href='https://cdn.jsdelivr.net/npm/@chinese-fonts/syst/dist/SmileySans-Oblique/result.css' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Helvetica Neue", "Microsoft YaHei", Arial, sans-serif;
+      background: #ffffff;
+      color: #000000;
+      line-height: 1.6;
+    }
+
+    /* Password page styles */
+    .password-page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .password-page #content {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .lock-container {
+      background: #ffffff;
+      padding: 2.5rem;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      max-width: 420px;
+      width: 90%;
+      text-align: center;
+    }
+
+    .app-title {
+      font-size: 2.2rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      color: #1e3a8a;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .app-subtitle {
+      font-size: 1.1rem;
+      color: #4b5563;
+      margin-bottom: 1.8rem;
+    }
+
+    .lock-container input {
+      width: 200px;
+      padding: 0.8rem;
+      border: 1px solid #ddd;
+      border-radius: 0;
+      font-size: 1rem;
+      margin-bottom: 1.2rem;
+      text-align: center;
+      font-family: monospace;
+      letter-spacing: 2px;
+      background: #f8fafc;
+      transition: all 0.3s ease;
+    }
+
+    .lock-container input:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    }
+
+    .lock-container button {
+      width: 100%;
+      padding: 1rem;
+      background: #000000;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .lock-container button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+      background: #1a1a1a;
+    }
+
+    .lock-container button:active {
+      transform: translateY(0);
+    }
+
+    .lock-container button:disabled {
+      opacity: 0.7;
+      transform: none;
+      cursor: not-allowed;
+    }
+
+    .error {
+      color: #e53e3e;
+      font-size: 0.9rem;
+      margin-top: 0.8rem;
+      min-height: 1.2rem;
+      font-weight: 500;
+    }
+
+    /* Resume page styles (hidden by default) */
+    .resume-page {
+      display: none;
+      background: #ffffff;
+      min-height: 100vh;
+    }
+
+    .resume-page .pdf-export-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 100;
+      padding: 10px 20px;
+      background: #1e3a8a;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      transition: all 0.3s ease;
+    }
+
+    .resume-page .pdf-export-btn:hover {
+      background: #1e40af;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    @media print {
+      .resume-page .pdf-export-btn {
+        display: none !important;
+      }
+    }
+
+    .resume-container {
+      padding: 2rem;
+      max-width: 850px;
+      margin: 0 auto;
+      background: white;
+    }
+
+    .resume-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      padding-bottom: 1.2rem;
+      border-bottom: 1px solid #eaeaea;
+    }
+
+    .resume-name {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: #1e293b;
+    }
+
+    .contact {
+      font-size: 1rem;
+      color: #4b5563;
+      margin-top: 0.5rem;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .contact a {
+      color: #3b82f6;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .contact a:hover {
+      text-decoration: underline;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2rem 0 1.2rem;
+      color: #1e293b;
+      padding-bottom: 0.4rem;
+      border-bottom: 2px solid #3b82f6;
+    }
+
+    .item {
+      margin-bottom: 1.6rem;
+    }
+
+    .item-header {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: #1e293b;
+      margin-bottom: 0.3rem;
+    }
+
+    .item-subheader {
+      font-weight: 600;
+      color: #334155;
+      margin: 0.3rem 0 0.5rem;
+      font-size: 1.05rem;
+    }
+
+    .item-date {
+      color: #64748b;
+      font-size: 0.98rem;
+      font-weight: 500;
+    }
+
+    .item-content {
+      margin-top: 0.6rem;
+      color: #334155;
+      line-height: 1.7;
+      font-size: 1.02rem;
+    }
+
+    ul {
+      padding-left: 1.8rem;
+      margin-top: 0.8rem;
+      margin-bottom: 0.5rem;
+    }
+
+    li {
+      margin-bottom: 0.6rem;
+      line-height: 1.65;
+    }
+
+    .project-description {
+      margin: 0.9rem 0;
+      font-weight: 600;
+      color: #334155;
+      line-height: 1.7;
+      font-size: 1.03rem;
+    }
+
+    .highlight {
+      font-weight: 700;
+      color: #1e3a8a;
+    }
+
+    .highlight-blue {
+      font-weight: 700;
+      color: #1e40af;
+    }
+
+    .education-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .education-header {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .school-name {
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: #1e293b;
+    }
+
+    .major {
+      font-weight: 600;
+      font-size: 1.05rem;
+      color: #334155;
+      opacity: 0.9;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .lock-container {
+      animation: fadeInUp 0.6s ease-out;
+    }
+
+    @media (max-width: 768px) {
+      /* Password page mobile */
+      .password-page #content {
+        padding: 1rem;
+        min-height: calc(100vh - 120px);
+      }
+
+      .lock-container {
+        padding: 2rem 1.5rem;
+        margin: 0 auto;
+        max-width: 100%;
+      }
+
+      .app-title {
+        font-size: 1.6rem;
+        margin-bottom: 0.4rem;
+      }
+
+      .app-subtitle {
+        font-size: 0.95rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .lock-container input {
+        width: 180px;
+        padding: 0.7rem;
+        font-size: 0.95rem;
+      }
+
+      .lock-container button {
+        padding: 0.9rem;
+        font-size: 1rem;
+      }
+
+      /* Resume page mobile */
+      .resume-page {
+        padding-top: 50px;
+      }
+
+      .resume-page .pdf-export-btn {
+        top: 10px;
+        right: 10px;
+        padding: 8px 14px;
+        font-size: 12px;
+        border-radius: 4px;
+      }
+
+      .resume-container {
+        padding: 1.2rem;
+        margin-top: 0;
+        box-shadow: none;
+      }
+
+      .resume-name {
+        font-size: 1.6rem;
+        margin-bottom: 0.3rem;
+      }
+
+      .contact {
+        font-size: 0.8rem;
+        gap: 0.4rem;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .contact-item {
+        gap: 0.2rem;
+      }
+
+      .resume-header {
+        margin-bottom: 1.2rem;
+        padding-bottom: 0.8rem;
+      }
+
+      .section-title {
+        font-size: 1.1rem;
+        margin: 1.2rem 0 0.6rem;
+        padding-bottom: 0.3rem;
+      }
+
+      .item {
+        margin-bottom: 1rem;
+      }
+
+      .item-header {
+        flex-direction: column;
+        gap: 0.2rem;
+        align-items: flex-start;
+        font-size: 0.95rem;
+        margin-bottom: 0.2rem;
+      }
+
+      .item-subheader {
+        font-size: 0.85rem;
+        margin: 0.1rem 0 0.2rem;
+      }
+
+      .item-date {
+        font-size: 0.8rem;
+        color: #888;
+      }
+
+      .item-content {
+        font-size: 0.85rem;
+        line-height: 1.5;
+        margin-top: 0.3rem;
+      }
+
+      .project-description {
+        font-size: 0.82rem;
+        margin: 0.4rem 0;
+        line-height: 1.5;
+      }
+
+      ul {
+        padding-left: 1.2rem;
+        margin-top: 0.3rem;
+        margin-bottom: 0.3rem;
+      }
+
+      li {
+        margin-bottom: 0.3rem;
+        line-height: 1.45;
+        font-size: 0.8rem;
+      }
+
+      .education-header {
+        flex-direction: column;
+        gap: 0.2rem;
+        margin-bottom: 0.2rem;
+      }
+
+      .school-name {
+        font-size: 0.95rem;
+      }
+
+      .major {
+        font-size: 0.85rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .lock-container {
+        padding: 1.5rem 1rem;
+      }
+
+      .app-title {
+        font-size: 1.4rem;
+      }
+
+      .app-subtitle {
+        font-size: 0.85rem;
+      }
+
+      .resume-container {
+        padding: 1rem;
+      }
+
+      .resume-name {
+        font-size: 1.4rem;
+      }
+
+      .contact {
+        font-size: 0.75rem;
+        gap: 0.3rem;
+      }
+
+      .section-title {
+        font-size: 1rem;
+      }
+
+      .item-header {
+        font-size: 0.85rem;
+      }
+
+      .resume-page .pdf-export-btn {
+        padding: 6px 12px;
+        font-size: 11px;
+      }
+    }
+
+    @media print {
+      @page {
+        margin: 0.8cm 1cm;
+      }
+
+      .resume-container {
+        padding: 0;
+        max-width: 100%;
+        box-shadow: none;
+      }
+
+      .resume-name {
+        font-size: 1.8rem;
+        margin-bottom: 0.3rem;
+      }
+
+      .contact {
+        font-size: 0.85rem;
+        gap: 0.5rem;
+        margin-top: 0.3rem;
+      }
+
+      .resume-header {
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+      }
+
+      .section-title {
+        font-size: 1.1rem;
+        margin: 0.6rem 0 0.4rem;
+        padding-bottom: 0.2rem;
+      }
+
+      .item {
+        margin-bottom: 0.5rem;
+      }
+
+      .item-header {
+        font-size: 0.95rem;
+        margin-bottom: 0.1rem;
+      }
+
+      .item-subheader {
+        font-size: 0.9rem;
+        margin: 0.1rem 0 0.2rem;
+      }
+
+      .item-date {
+        font-size: 0.85rem;
+      }
+
+      .item-content {
+        font-size: 0.85rem;
+        line-height: 1.4;
+        margin-top: 0.2rem;
+      }
+
+      .project-description {
+        font-size: 0.85rem;
+        margin: 0.3rem 0;
+        line-height: 1.4;
+      }
+
+      ul {
+        padding-left: 1.2rem;
+        margin-top: 0.2rem;
+        margin-bottom: 0.2rem;
+      }
+
+      li {
+        margin-bottom: 0.2rem;
+        line-height: 1.35;
+        font-size: 0.82rem;
+      }
+
+      .school-name {
+        font-size: 0.95rem;
+      }
+
+      .major {
+        font-size: 0.9rem;
+      }
+
+      /* Prevent content from being split across pages */
+      .item {
+        page-break-inside: avoid;
+      }
+
+      .section-title {
+        page-break-after: avoid;
+      }
+    }
+  </style>
+<meta name="generator" content="Hexo 8.1.1"></head>
+<body>
+  <!-- Password Page (Step 1) -->
+  <div class="password-page" id="passwordPage">
+    <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">王星星的魔灯</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/resume">
+                            
+                            
+                                Resume
+                            
+                        </a>
+                    </li>
+                
+                <li class="menu-item">
+                    <a href="/atom.xml">RSS</a>
+                </li>
+            </ul>
+        
+  </nav>
+</div>
+
+    </header>
+
+    <div id="content">
+      <div class="lock-container">
+        <div class="app-title">王星星的魔灯</div>
+        <div class="app-subtitle">Resume · Password Required</div>
+        <input type="password" id="passwordInput" autocomplete="off" autofocus />
+        <button onclick="validatePassword()">Access</button>
+        <div class="error" id="errorMessage"></div>
+      </div>
+    </div>
+
+    <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2014 -
+    
+    2026
+    <span class="footer-author">Wxx.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> and <a class="theme-link" target="_blank" rel="noopener" href="https://github.com/frostfan/hexo-theme-polarbear">Polar Bear</a>
+    </span>
+</span>
+<span class="site-stats" style="display: block; margin-top: 8px; font-size: 0.85rem; color: #666;">
+    Total Visits: <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> ·
+    Unique Visitors: <span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>
+</span>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+
+  <!-- Resume Page (Step 2) -->
+  <div class="resume-page" id="resumePage">
+    <button class="pdf-export-btn" onclick="exportToPDF()">Export PDF</button>
+    <div class="resume-container" id="resumeContent">
+      <div class="resume-header">
+        <div class="resume-name">王星星</div>
+        <div class="contact">
+          <span class="contact-item">📱 17179887126</span>
+          <span class="contact-item">✉️ wxxlamp@foxmail.com</span>
+          <span class="contact-item">🎂 2000.01</span>
+          <span class="contact-item">🌐 <a href="https://wxxlamp.cn" target="_blank">wxxlamp.cn</a></span>
+        </div>
+      </div>
+
+      <div class="section-title">Education</div>
+      
+      <div class="item education-item">
+        <div class="item-header">
+          <div class="education-header">
+            <span class="school-name"><strong>香港科技大学（QS Ranking 50）</strong></span>
+            <span class="major"><strong>信息技术 · 研究生（全日制）</strong></span>
+          </div>
+          <span class="item-date"><strong>2024.09 – 2025.10</strong></span>
+        </div>
+        <div class="item-content">成绩优异，GPA 4.1/4.3，学习课程包括区块链、NLP、LLM等，获得24学期 Top Student Award Scholarship。</div>
+      </div>
+      
+      <div class="item education-item">
+        <div class="item-header">
+          <div class="education-header">
+            <span class="school-name"><strong>郑州大学（双一流/211）</strong></span>
+            <span class="major"><strong>软件工程 · 本科</strong></span>
+          </div>
+          <span class="item-date"><strong>2017.09 – 2021.06</strong></span>
+        </div>
+        <div class="item-content">成绩优异，GPA 3.6/4.0（专业第11），曾获得国家励志奖学金，多次被评为郑州大学三好学生。</div>
+      </div>
+      
+
+      <div class="section-title">Work Experience</div>
+      <div class="item">
+        <div class="item-header">
+          <span><strong>阿里巴巴-Alibaba.com技术部</strong></span>
+          <span class="item-date"><strong>2021.07 – 至今</strong></span>
+        </div>
+        <div class="item-subheader"><strong>高级开发工程师（P6）</strong></div>
+        <div class="item-content">主导阿里巴巴国际站全球卖业务（交易和资金）的设计和开发；曾负责信用保障业务的开发和额度迁移工作；金融保险业务（OA赊销，无忧退）的整体技术规划和迭代开发；从0-1搭建无需前端开发的运营平台。绩效3.75/3.5+次数占比超过60%。</div>
+      </div>
+
+      <div class="section-title">Projects</div>
+      
+      <div class="item">
+        <div class="item-header">
+          <span><strong>全球卖 · 商家结算技术负责人</strong></span>
+          <span class="item-date"><strong>2024.08 – 至今</strong></span>
+        </div>
+        <div class="project-description">Project: 为了应对中国商家外贸业务的潜在风险、扩大平台的特色供给，国际站支持全球商家入驻平台并完成交易履约（全球卖）。目前支持东南亚、北美、欧洲等15个国家站点，入驻商家数超5000，累计提现金额千万美金。</div>
+        <div class="item-content">
+          <ul>
+            
+            <li>【全链路】基于大盘（中国商家）已有的基础能力，独立支持各个海外国家的商户入驻、交易、保障、支付、结算、网关的全链路开发和租户定制，一杆到底。作为技术负责人负责日本站项目全链路的上线；</li>
+            
+            <li>【准入提现】负责全球商家准入和提现能力建设，搭建统一的准入、资产、提现流程。基于底层对接的iPay、易宝、渣打等多资金渠道，构建渠道路由、渠道编排、渠道状态管理能力，支撑多国商家的KYC、资金调拨和出金需求；</li>
+            
+            <li>【租户架构】牵头供应链商家侧的多租户架构工作，通过统一流量入口和视图表达、独立模块和应用、租户日志监控、租户线程缓存和租户配置文件等形式对商家侧业务进行租户升级，解决了不同国家因租户差异导致的研发效能（新接站点提效50%）、监控噪音和租户隔离问题；</li>
+            
+            <li>【大模型】负责LLM全球卖场景的应用，从0-1搭建LLM任务平台，推动产品和业务引入编排型大模型（基于RAG、MCP）用于KYC流程的OCR和日常技术运维。降低商户入驻门槛，提高业务运营效率；</li>
+            
+            <li>【组织管理】负责商户和提现域的技术规划与管理（虚线 Lead 3人）。主导制定交易商家开发规范与代码评审标准，作为 Mentor 成功辅导 2 名社招 P6 并转正。</li>
+            
+          </ul>
+        </div>
+      </div>
+      
+      <div class="item">
+        <div class="item-header">
+          <span><strong>押款额度系统重构 · 技术迁移负责人</strong></span>
+          <span class="item-date"><strong>2023.10 – 2024.07</strong></span>
+        </div>
+        <div class="project-description">Project: 阿里巴巴国际站会给入驻的商家分配提前回款额度，使得商家在发货后即可收到货物的全款。额度系统从业务16年上线至今已经濒临腐化，存在于3个数据源、2个系统中，扩展性差、数据不一致问题严重。负责在TPS 30+ 且资金零差错的强约束下，主导系统千万级别数据的整体拆分与新系统重构。</div>
+        <div class="item-content">
+          <ul>
+            
+            <li>【迁移策略】主导设计全量回放、增量Binlog追平、双写校验、读灰度切流的平滑迁移方案。利用步长ID隔离新老数据、异步双写等机制，确保迁移过程无需停机且对业务无感；</li>
+            
+            <li>【迁移监控】通过实时日志监控、准实时和实时数据核对的方式来观察数据双写流量的准确性，及时发现包含并发、时区在内的多个双写问题并修复；</li>
+            
+            <li>【性能优化】通过并发编排授信、额度等下游接口、减少无效调用、多级缓存、优化业务逻辑的方式，将8年的额度页面性能90分位从10s优化到1s。迁移后占用接口性能从1s提升到20ms；</li>
+            
+            <li>【研发提效】重构额度领域模型，计算与存储分离，配置化形式（场景+租户）增加新的额度类型，新增额度开发人日从20人日缩减到4人日；</li>
+            
+            <li>【可用性】通过乐观锁保障额度数据一致性更新、通过TCC保障买卖家额度扣减的一致性。</li>
+            
+          </ul>
+        </div>
+      </div>
+      
+      <div class="item">
+        <div class="item-header">
+          <span><strong>保障保险业务 · 技术PM&核心开发</strong></span>
+          <span class="item-date"><strong>2021.07 – 2023.09</strong></span>
+        </div>
+        <div class="project-description">Project: 为了提高国际站交易确定性和商家资金货物安全，引入第三方保险机构对拒付和货物的退货、尾款进行保障。目前服务买卖家6w+，日均保单量1W+，QPS 1000+。负责保障保险业务的项目管理和架构设计工作。</div>
+        <div class="item-content">
+          <ul>
+            
+            <li>【授信平台】通过OA赊销项目从0-1搭建保险授信平台，引入流程引擎对节点进行编排重试；引入SPI机制结合策略模式对保险不同产品进行授信扩展；通过领域事件驱动授信流程和状态的流转，保证业务高效交付；通过本地事物表和监控核对的方式保障微服务系统最终一致性；</li>
+            
+            <li>【多地部署】为了满足海外数据的合规监管要求，对保险域新建中美新三地机房做海外架构部署，数据双向同步，通过步长机制避免数据覆盖，按照买家维度进行流量路由保证读写一致性；</li>
+            
+            <li>【质量建设】建立并维护相关应用的单元测试和集成测试框架，保证每次发布均有60%的增量代码覆盖率，降低联调、测试和重构成本；</li>
+            
+            <li>【性能优化】作为金融域大促PM，主导金融域的大促压测。通过增加服务机器、多级缓存和多线程查询的方式将应用的QPS由600提升到5000；</li>
+            
+            <li>【运营平台】通过服务端配置的方式（页面布局，操作方式，操作权限等），按照相应的规则，在运行期内由服务端自定义渲染前端页面，不需要任何前端代码的开发，使得开发效率提升50%（通过集团创新提案）。</li>
+            
+          </ul>
+        </div>
+      </div>
+      
+
+      <div class="section-title">Skills</div>
+      <div class="item-content">
+        <ul>
+          
+          <li>了解LLM和Agent，具备基于LlamaFactory和HuggingFace的SFT和Inference经验；</li>
+          
+          <li>熟悉Java语法、多线程，了解JVM、操作系统，MySQL数据库、计网和常用的算法及数据结构；掌握基于Java生态（Spring、Mybatis框架）的研发流程；</li>
+          
+          <li>理解DDD和TDD思想，熟悉常用的设计模式，了解流程引擎和常见的微服务架构及组件；了解Redis和MetaQ等常用中间件；</li>
+          
+          <li>掌握跨境交易和资金结算全链路；学习能力强，热爱写作和总结、有一定抗压能力，能辅导新人工作、PM中大型技术项目（100人日+）。</li>
+          
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+  <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+
+  <script>
+    function generateExpectedPassword() {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, '0');
+      const day = '01';
+      return `ck${year}${month}${day}`;
+    }
+
+    function validatePassword() {
+      const input = document.getElementById('passwordInput').value.trim();
+      const errorEl = document.getElementById('errorMessage');
+      errorEl.textContent = '';
+
+      if (!input) {
+        errorEl.textContent = 'Please enter password';
+        return;
+      }
+
+      const button = document.querySelector('.lock-container button');
+      button.disabled = true;
+      button.textContent = 'Verifying...';
+
+      setTimeout(() => {
+        try {
+          const expected = (() => {
+            const d = new Date();
+            const y = d.getFullYear().toString();
+            const m = String(d.getMonth() + 1).padStart(2, '0');
+            const prefix = 'ck';
+            return prefix + y + m + '01';
+          })();
+
+          const validate = (pwd) => {
+            if (pwd.length !== 10) return false;
+            if (!pwd.startsWith('ck')) return false;
+            const numPart = pwd.substring(2);
+            if (isNaN(parseInt(numPart))) return false;
+            return pwd === expected;
+          };
+
+          const isValid = validate(input);
+
+          if (isValid) {
+            document.getElementById('passwordPage').style.display = 'none';
+            document.getElementById('resumePage').style.display = 'block';
+          } else {
+            errorEl.textContent = 'Incorrect password';
+            document.getElementById('passwordInput').value = '';
+          }
+        } catch (e) {
+          errorEl.textContent = 'Verification error, please retry';
+        } finally {
+          button.disabled = false;
+          button.textContent = 'Access';
+        }
+      }, 900);
+    }
+
+    function exportToPDF() {
+      // Hide the export button before printing
+      const exportBtn = document.querySelector('.pdf-export-btn');
+      exportBtn.style.display = 'none';
+
+      // Trigger browser print dialog
+      window.print();
+
+      // Show the button again after print dialog closes
+      setTimeout(() => {
+        exportBtn.style.display = 'block';
+      }, 1000);
+    }
+
+    document.getElementById('passwordInput').addEventListener('keypress', function(event) {
+      if (event.key === 'Enter') {
+        validatePassword();
+      }
+    });
+
+    (function() {
+      const cryptoModule = {
+        generateHash: function(input) {
+          let hash = 0;
+          for (let i = 0; i < input.length; i++) {
+            const char = input.charCodeAt(i);
+            hash = ((hash << 5) - hash) + char;
+            hash = hash & hash;
+          }
+          return Math.abs(hash).toString(36);
+        },
+        verifyToken: function(token) {
+          return token.length > 5 && token.includes('auth');
+        }
+      };
+
+      window._internal = {
+        authModule: cryptoModule,
+        lastVerified: null,
+        attempts: 0
+      };
+
+      window.API_ENDPOINTS = {
+        AUTH: '/api/v1/verify-credentials',
+        USER: '/api/v1/user-profile',
+        RESUME: '/api/v1/resume-data'
+      };
+    })();
+  </script>
+</body>
+</html>

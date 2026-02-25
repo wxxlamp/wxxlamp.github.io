@@ -11,7 +11,7 @@
   <rights>All rights reserved 2026, Wxx</rights>
   <subtitle>记录技术成长与生活感悟</subtitle>
   <title>王星星的魔灯</title>
-  <updated>2026-02-25T11:57:31.816Z</updated>
+  <updated>2026-02-25T12:21:40.444Z</updated>
   <entry>
     <author>
       <name>Wxx</name>
@@ -23,7 +23,7 @@
     <published>2025-10-06T16:00:00.000Z</published>
     <summary>从一国两制、金融中心地位到教育体系，深入剖析香港与内地的差异，分享在港科大读硕士一年的真实体验与感悟。</summary>
     <title>为什么很多人都想去香港读书？</title>
-    <updated>2026-02-25T11:57:31.816Z</updated>
+    <updated>2026-02-25T12:21:40.444Z</updated>
   </entry>
   <entry>
     <author>
@@ -36,7 +36,7 @@
     <published>2025-09-16T16:00:00.000Z</published>
     <summary>从传统在线支付的底层逻辑出发，深入解析数字人民币的战略价值、区块链底层原理及智能合约应用场景。</summary>
     <title>有了在线支付，为什么需要数字人民币</title>
-    <updated>2026-02-25T11:57:31.816Z</updated>
+    <updated>2026-02-25T12:21:40.444Z</updated>
   </entry>
   <entry>
     <author>
@@ -49,7 +49,7 @@
     <published>2025-09-06T16:00:00.000Z</published>
     <summary>从零开始科普比特币和区块链技术，深入讲解去中心化、区块链数据结构、非对称加密、PoW共识机制等核心概念。</summary>
     <title>万字长文，从零科普比特币</title>
-    <updated>2026-02-25T11:57:31.816Z</updated>
+    <updated>2026-02-25T12:21:40.444Z</updated>
   </entry>
   <entry>
     <author>
@@ -62,7 +62,7 @@
     <published>2025-03-06T16:00:00.000Z</published>
     <summary>回顾2024年的收获与遗憾，分享入学港科大、转岗深圳、港深通勤的经历，以及新年目标的规划与思考。</summary>
     <title>我的2024</title>
-    <updated>2026-02-25T11:57:31.816Z</updated>
+    <updated>2026-02-25T12:21:40.443Z</updated>
   </entry>
   <entry>
     <author>
@@ -75,7 +75,7 @@
     <published>2025-02-15T16:00:00.000Z</published>
     <summary>阿里三年成长总结，从业务与技术的平衡、项目管理、沟通技巧到职场心态，分享校招生的成长心得与思考。</summary>
     <title>我在阿里这三年，聊点非技术的</title>
-    <updated>2026-02-25T11:57:31.816Z</updated>
+    <updated>2026-02-25T12:21:40.443Z</updated>
   </entry>
   <entry>
     <author>
@@ -88,7 +88,7 @@
     <published>2024-01-21T16:00:00.000Z</published>
     <summary>2023年度复盘，记录晋升、雅思备考、Java八股项目经历，分享在大厂工作两年的成长、迷茫与收获。</summary>
     <title>我的2023</title>
-    <updated>2026-02-25T11:57:31.816Z</updated>
+    <updated>2026-02-25T12:21:40.443Z</updated>
   </entry>
   <entry>
     <author>
@@ -102,7 +102,7 @@
     <published>2023-12-31T16:00:00.000Z</published>
     <summary>欢迎使用Hexo！这是博客的第一篇文章，介绍Hexo的基本使用方法。</summary>
     <title>Hello World</title>
-    <updated>2026-02-25T11:57:31.816Z</updated>
+    <updated>2026-02-25T12:21:40.443Z</updated>
   </entry>
   <entry>
     <author>
@@ -115,7 +115,7 @@
     <published>2023-08-03T16:00:00.000Z</published>
     <summary>探讨Java泛型通配符的使用技巧，以及扩展字段的最佳实践，通过泛型解决Map类型转换问题。</summary>
     <title>泛型通配符和扩展字段</title>
-    <updated>2026-02-25T11:57:31.816Z</updated>
+    <updated>2026-02-25T12:21:40.443Z</updated>
   </entry>
   <entry>
     <author>
@@ -129,7 +129,7 @@
     <published>2023-07-08T16:00:00.000Z</published>
     <summary>以秒杀场景为例，深入分析热点数据的查询与写入问题，探讨缓存一致性、多级缓存、库存扣减等解决方案。</summary>
     <title>如何处理热点数据问题</title>
-    <updated>2026-02-25T11:57:31.816Z</updated>
+    <updated>2026-02-25T12:21:40.443Z</updated>
   </entry>
   <entry>
     <author>
@@ -142,7 +142,7 @@
     <published>2023-06-10T16:00:00.000Z</published>
     <summary>记录一次修改分库分表键引发的查询异常问题，分析原因并提供正确的数据订正方案。</summary>
     <title>当修改分库分表键时</title>
-    <updated>2026-02-25T11:57:31.816Z</updated>
+    <updated>2026-02-25T12:21:40.444Z</updated>
   </entry>
   <entry>
     <author>
@@ -155,6 +155,6 @@
     <published>2023-05-06T16:00:00.000Z</published>
     <summary>详解消息队列幂等问题的四种解决方案：分布式锁、唯一索引、特殊SQL语句和事务排他锁。</summary>
     <title>如何解决消息幂等问题</title>
-    <updated>2026-02-25T11:57:31.816Z</updated>
+    <updated>2026-02-25T12:21:40.443Z</updated>
   </entry>
 </feed>

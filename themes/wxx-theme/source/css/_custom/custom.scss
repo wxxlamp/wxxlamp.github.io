@@ -21,11 +21,14 @@ body {
 // Adjust content to account for fixed header
 #content {
   margin-top: 80px; // Increased spacing for header
+  overflow: hidden; // Clearfix for floated children
 }
 
 // Add spacing between header and first article on homepage
 #primary.home {
   padding-top: 20px;
+  float: none; // Remove float for fixed sidebar layout
+  width: 73%;
 }
 
 // Fixed Sidebar Widgets on Home Page
@@ -119,7 +122,7 @@ body {
 
 #primary.home {
   width: 73%;
-  float: left;
+  float: none; // Remove float for fixed sidebar layout
   padding-right: 0;
 }
 

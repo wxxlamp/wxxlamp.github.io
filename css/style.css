@@ -1286,10 +1286,13 @@ body {
 
 #content {
   margin-top: 80px;
+  overflow: hidden;
 }
 
 #primary.home {
   padding-top: 20px;
+  float: none;
+  width: 73%;
 }
 
 #secondary {
@@ -1368,7 +1371,7 @@ body {
 
 #primary.home {
   width: 73%;
-  float: left;
+  float: none;
   padding-right: 0;
 }
 

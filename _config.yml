@@ -9,6 +9,7 @@ description: '记录技术成长与生活感悟'
 keywords:
 author: Wxx
 language: zh-CN
+favicon: /favicon.ico
 timezone: Asia/Shanghai
 
 # URL

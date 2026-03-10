@@ -1,135 +1,104 @@
 # WXX Theme
 
-A responsive Hexo theme optimized for both desktop and mobile, based on the Polar Bear theme with extensive mobile improvements.
+基于 [Polar Bear](https://github.com/frostfan/hexo-theme-polarbear) 深度定制的 Hexo 主题，针对移动端体验进行了大量优化。
 
-## Features
+## 特性
 
-### Core Features
-- **Responsive Design**: Fully optimized for desktop, tablet, and mobile devices
-- **Fixed Header**: Sticky navigation header for easy access to menu items
-- **Fixed Sidebar**: Right-side widget area on desktop that stays visible while scrolling
-- **Table of Contents (TOC)**: Auto-generated TOC for posts, fixed position on desktop
-- **Reading Progress Bar**: Visual indicator showing reading progress
-- **Back to Top Button**: Quick scroll-to-top functionality
-- **RSS Feed Support**: Built-in RSS link in navigation
+### 核心功能
+- **响应式布局**：完整适配桌面、平板、手机设备
+- **固定顶栏**：滚动时导航始终可见
+- **固定侧边栏**：桌面端侧边栏 Widget 区域跟随滚动
+- **文章目录（TOC）**：自动生成并固定在桌面端右侧
+- **阅读进度条**：顶部进度条实时显示阅读进度
+- **回到顶部**：一键滚回页面顶部
+- **RSS 支持**：导航栏内置 RSS 链接
 
-### Mobile Optimizations
+### 特殊页面
+- **简历页面**：密码保护 + PDF 导出
+- **关于页面**：简洁个人介绍布局
+- **归档页面**：按年份分组，标题带下划线样式
+- **分类/标签页**：按钮式标签云，支持悬停效果
 
-#### Header
-- Fixed header with reduced height for mobile (50px on mobile, 45px on small screens)
-- Centered logo and navigation menu
-- Touch-friendly navigation buttons with hover effects
+### 断点说明
 
-#### Typography & Spacing
-- **Line Height**: Optimized `1.85` line height for comfortable reading on mobile
-- **Paragraph Spacing**: `1.2em` margin between paragraphs
-- **Heading Styles**: Consistent with desktop (H1: bottom border 2px, H2: bottom border 1px, H3: left border 3px)
-- **List Spacing**: `0.5em` between list items with `1.7` line height
-- **Blockquotes**: Left border with background color matching theme
+| 范围 | 布局 |
+|------|------|
+| > 1200px | 显示 TOC 与固定侧边栏 |
+| 769px – 1024px | 流式布局，隐藏固定侧边栏 |
+| 480px – 768px | 移动端优化布局 |
+| 375px – 480px | 紧凑型布局 |
+| < 375px | 极简布局 |
 
-#### Layout Adjustments
-- Content margin-top: `75px` on mobile (accounts for fixed header)
-- Horizontal padding: `15px` on mobile, `12px` on small screens
-- Full-width layout with proper box-sizing
+### 移动端优化
 
-#### Component Optimizations
-- **Code Blocks**: Horizontal scroll with `-webkit-overflow-scrolling: touch`, rounded corners
-- **Images**: Full width with rounded corners, proper margins
-- **Tables**: Horizontal scroll for overflow content
-- **Archive Page**: Year headings with bottom border, improved post list spacing
-- **Categories/Tags**: Button-style tags with touch feedback
+- 固定顶栏，移动端高度 50px（小屏 45px）
+- 行高 `1.85`，段落间距 `1.2em`，适合长文阅读
+- 代码块支持横向滑动（`-webkit-overflow-scrolling: touch`）
+- 图片自适应全宽，表格支持横向溢出滚动
 
-### Typography
+### 字体
 
-#### Font Stack
-- Primary: `'Smiley Sans Oblique', 'Open Sans', 'Helvetica Neue', Arial, sans-serif`
-- Code: `'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace`
+- 正文：`'Smiley Sans Oblique', 'Open Sans', 'Helvetica Neue', Arial, sans-serif`
+- 代码：`'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace`
 
-#### Font Sizes (Mobile)
-- Body: `15px` (mobile), `14.5px` (small screens)
-- Article Title: `1.35em`
-- H1: `1.5em`
-- H2: `1.3em`
-- H3: `1.15em`
-- H4: `1.05em`
+## 安装
 
-### Breakpoints
-- Desktop: > 1200px (shows TOC and fixed sidebar)
-- Tablet: 769px - 1024px (fluid layout, no fixed sidebar)
-- Mobile: 480px - 768px (mobile optimizations)
-- Small Mobile: 375px - 480px (compact layout)
-- Extra Small: < 375px (minimal layout)
-
-### Special Pages
-- **Resume Page**: Password-protected resume layout with PDF export
-- **About Page**: Clean profile layout
-- **Archive Page**: Year-based organization with styled headings
-- **Categories/Tags**: Visual tag cloud with hover effects
-
-## Installation
-
-1. Clone or download this theme to your Hexo themes directory:
 ```bash
 git clone <repository-url> themes/wxx-theme
 ```
 
-2. Update your `_config.yml`:
+在 `_config.yml` 中启用：
+
 ```yaml
 theme: wxx-theme
 ```
 
-3. Install dependencies:
-```bash
-npm install
-```
+## 配置
 
-## Configuration
+主要配置项位于 `themes/wxx-theme/_config.yml`：
 
-### Site Configuration (_config.yml)
 ```yaml
-theme: wxx-theme
-
-# Theme-specific configuration in _config.wxx-theme.yml
-```
-
-### Theme Configuration (_config.wxx-theme.yml)
-```yaml
-# Menu navigation
+# 导航菜单
 menu:
   Archives: /archives
   About: /about
   Resume: /resume
 
-# Theme color
+# 主题配色（Default | Mint Green | Cobalt Blue | Hot Pink | Dark Violet）
 theme:
-  color: Default  # Options: Default, Mint Green, Cobalt Blue, Hot Pink, Dark Violet
+  color: Default
 
-# Social links
+# 侧边栏 Widget
+widget:
+  Tags: true
+  Categories: true
+  Custom: false
+
+# 社交链接
 social:
   github: your-github
-  twitter: your-twitter
 
-# Analytics (optional)
-google_analytics: GA_MEASUREMENT_ID
+# 统计（不蒜子）
+busuanzi: true
 ```
 
-## Customization
+## 自定义样式
 
-### Custom Styles
-Add custom SCSS to `source/css/_custom/custom.scss`
+自定义 SCSS 写入 `source/css/_custom/custom.scss`，该文件在构建时自动引入。
 
-### Color Scheme
-Edit `$theme-color-map` in `source/css/_variables.scss` to add custom colors.
+修改配色变量请编辑 `source/css/_variables.scss` 中的 `$theme-color-map`。
 
-## Browser Support
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
-- Mobile browsers (iOS Safari, Chrome for Android)
+## 浏览器支持
+
+- Chrome / Edge（最新版）
+- Firefox（最新版）
+- Safari（最新版）
+- iOS Safari / Chrome for Android
 
 ## Credits
-Based on the [Polar Bear](https://github.com/frostfan/hexo-theme-polarbear) theme by frostfan.
+
+基于 [Polar Bear](https://github.com/frostfan/hexo-theme-polarbear) by frostfan。
 
 ## License
+
 MIT

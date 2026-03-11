@@ -372,7 +372,7 @@
       @page { margin: 0.8cm 1cm; }
       .resume-container { padding: 0; max-width: 100%; box-shadow: none; }
       .resume-name { font-size: 1.8rem; margin-bottom: 0.3rem; }
-      .contact { font-size: 0.85rem; gap: 0.5rem; margin-top: 0.3rem; }
+      .contact { font-size: 0.85rem; gap: 0.5rem; margin-top: 0.3rem; flex-direction: row; flex-wrap: nowrap; justify-content: center; }
       .resume-header { margin-bottom: 1rem; padding-bottom: 0.5rem; }
       .section-title { font-size: 1.1rem; margin: 0.6rem 0 0.4rem; padding-bottom: 0.2rem; }
       .item { margin-bottom: 0.5rem; page-break-inside: avoid; }

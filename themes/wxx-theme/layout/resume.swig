@@ -511,6 +511,9 @@
         font-size: 0.85rem;
         gap: 0.5rem;
         margin-top: 0.3rem;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: center;
       }
 
       .resume-header {

@@ -2,6 +2,66 @@
 // Custom Theme Optimizations
 // ===========================================
 
+// Resume language dropdown
+.menu-item-resume {
+  position: relative;
+  cursor: pointer;
+
+  .resume-nav-label {
+    display: inline-block;
+    padding: 0;
+    cursor: pointer;
+    color: inherit;
+    font-size: inherit;
+
+    &::after {
+      content: ' ▾';
+      font-size: 0.7em;
+      opacity: 0.7;
+    }
+  }
+
+  .resume-lang-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    min-width: 130px;
+    padding: 4px 0;
+    z-index: 999;
+    list-style: none;
+    margin: 0;
+
+    li {
+      display: block;
+
+      a {
+        display: block;
+        padding: 8px 16px;
+        color: #333;
+        text-decoration: none;
+        white-space: nowrap;
+        font-size: 0.9em;
+
+        &:hover {
+          background: #f5f5f5;
+          color: $theme-color;
+        }
+      }
+    }
+  }
+
+  &:hover .resume-lang-dropdown,
+  &.active .resume-lang-dropdown {
+    display: block;
+  }
+}
+
 // 1. Smiley Sans Font Application
 body {
   font-family: 'Smiley Sans Oblique', 'Open Sans', 'Helvetica Neue', Arial, sans-serif;

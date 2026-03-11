@@ -1,10 +1,10 @@
-{# Resume layout with password protection #}
+{# English Resume layout with password protection #}
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>{{ page.name }} - 个人简历</title>
+  <title>{{ page.name }} - Resume</title>
   {% include '_partial/head.swig' %}
   <style>
     * {
@@ -14,7 +14,7 @@
     }
 
     body {
-      font-family: "Helvetica Neue", "Microsoft YaHei", Arial, sans-serif;
+      font-family: "Helvetica Neue", Arial, "Microsoft YaHei", sans-serif;
       background: #ffffff;
       color: #000000;
       line-height: 1.6;
@@ -265,11 +265,6 @@
       color: #1e3a8a;
     }
 
-    .highlight-blue {
-      font-weight: 700;
-      color: #1e40af;
-    }
-
     .education-item {
       display: flex;
       flex-direction: column;
@@ -296,14 +291,8 @@
     }
 
     @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
     .lock-container {
@@ -311,7 +300,6 @@
     }
 
     @media (max-width: 768px) {
-      /* Password page mobile */
       .password-page #content {
         padding: 1rem;
         min-height: calc(100vh - 120px);
@@ -319,19 +307,11 @@
 
       .lock-container {
         padding: 2rem 1.5rem;
-        margin: 0 auto;
         max-width: 100%;
       }
 
-      .app-title {
-        font-size: 1.6rem;
-        margin-bottom: 0.4rem;
-      }
-
-      .app-subtitle {
-        font-size: 0.95rem;
-        margin-bottom: 1.5rem;
-      }
+      .app-title { font-size: 1.6rem; margin-bottom: 0.4rem; }
+      .app-subtitle { font-size: 0.95rem; margin-bottom: 1.5rem; }
 
       .lock-container input {
         width: 180px;
@@ -339,249 +319,73 @@
         font-size: 0.95rem;
       }
 
-      .lock-container button {
-        padding: 0.9rem;
-        font-size: 1rem;
-      }
+      .lock-container button { padding: 0.9rem; font-size: 1rem; }
 
-      /* Resume page mobile */
-      .resume-page {
-        padding-top: 50px;
-      }
+      .resume-page { padding-top: 50px; }
 
       .resume-page .pdf-export-btn {
-        top: 10px;
-        right: 10px;
-        padding: 8px 14px;
-        font-size: 12px;
-        border-radius: 4px;
+        top: 10px; right: 10px;
+        padding: 8px 14px; font-size: 12px; border-radius: 4px;
       }
 
-      .resume-container {
-        padding: 1.2rem;
-        margin-top: 0;
-        box-shadow: none;
-      }
-
-      .resume-name {
-        font-size: 1.6rem;
-        margin-bottom: 0.3rem;
-      }
+      .resume-container { padding: 1.2rem; margin-top: 0; box-shadow: none; }
+      .resume-name { font-size: 1.6rem; margin-bottom: 0.3rem; }
 
       .contact {
-        font-size: 0.8rem;
-        gap: 0.4rem;
-        flex-direction: column;
-        align-items: center;
+        font-size: 0.8rem; gap: 0.4rem;
+        flex-direction: column; align-items: center;
       }
 
-      .contact-item {
-        gap: 0.2rem;
-      }
-
-      .resume-header {
-        margin-bottom: 1.2rem;
-        padding-bottom: 0.8rem;
-      }
-
-      .section-title {
-        font-size: 1.1rem;
-        margin: 1.2rem 0 0.6rem;
-        padding-bottom: 0.3rem;
-      }
-
-      .item {
-        margin-bottom: 1rem;
-      }
+      .resume-header { margin-bottom: 1.2rem; padding-bottom: 0.8rem; }
+      .section-title { font-size: 1.1rem; margin: 1.2rem 0 0.6rem; padding-bottom: 0.3rem; }
+      .item { margin-bottom: 1rem; }
 
       .item-header {
-        flex-direction: column;
-        gap: 0.2rem;
-        align-items: flex-start;
-        font-size: 0.95rem;
-        margin-bottom: 0.2rem;
+        flex-direction: column; gap: 0.2rem;
+        align-items: flex-start; font-size: 0.95rem; margin-bottom: 0.2rem;
       }
 
-      .item-subheader {
-        font-size: 0.85rem;
-        margin: 0.1rem 0 0.2rem;
-      }
-
-      .item-date {
-        font-size: 0.8rem;
-        color: #888;
-      }
-
-      .item-content {
-        font-size: 0.85rem;
-        line-height: 1.5;
-        margin-top: 0.3rem;
-      }
-
-      .project-description {
-        font-size: 0.82rem;
-        margin: 0.4rem 0;
-        line-height: 1.5;
-      }
-
-      ul {
-        padding-left: 1.2rem;
-        margin-top: 0.3rem;
-        margin-bottom: 0.3rem;
-      }
-
-      li {
-        margin-bottom: 0.3rem;
-        line-height: 1.45;
-        font-size: 0.8rem;
-      }
-
-      .education-header {
-        flex-direction: column;
-        gap: 0.2rem;
-        margin-bottom: 0.2rem;
-      }
-
-      .school-name {
-        font-size: 0.95rem;
-      }
-
-      .major {
-        font-size: 0.85rem;
-      }
+      .item-subheader { font-size: 0.85rem; margin: 0.1rem 0 0.2rem; }
+      .item-date { font-size: 0.8rem; color: #888; }
+      .item-content { font-size: 0.85rem; line-height: 1.5; margin-top: 0.3rem; }
+      .project-description { font-size: 0.82rem; margin: 0.4rem 0; line-height: 1.5; }
+      ul { padding-left: 1.2rem; margin-top: 0.3rem; margin-bottom: 0.3rem; }
+      li { margin-bottom: 0.3rem; line-height: 1.45; font-size: 0.8rem; }
+      .education-header { flex-direction: column; gap: 0.2rem; margin-bottom: 0.2rem; }
+      .school-name { font-size: 0.95rem; }
+      .major { font-size: 0.85rem; }
     }
 
     @media (max-width: 480px) {
-      .lock-container {
-        padding: 1.5rem 1rem;
-      }
-
-      .app-title {
-        font-size: 1.4rem;
-      }
-
-      .app-subtitle {
-        font-size: 0.85rem;
-      }
-
-      .resume-container {
-        padding: 1rem;
-      }
-
-      .resume-name {
-        font-size: 1.4rem;
-      }
-
-      .contact {
-        font-size: 0.75rem;
-        gap: 0.3rem;
-      }
-
-      .section-title {
-        font-size: 1rem;
-      }
-
-      .item-header {
-        font-size: 0.85rem;
-      }
-
-      .resume-page .pdf-export-btn {
-        padding: 6px 12px;
-        font-size: 11px;
-      }
+      .lock-container { padding: 1.5rem 1rem; }
+      .app-title { font-size: 1.4rem; }
+      .app-subtitle { font-size: 0.85rem; }
+      .resume-container { padding: 1rem; }
+      .resume-name { font-size: 1.4rem; }
+      .contact { font-size: 0.75rem; gap: 0.3rem; }
+      .section-title { font-size: 1rem; }
+      .item-header { font-size: 0.85rem; }
+      .resume-page .pdf-export-btn { padding: 6px 12px; font-size: 11px; }
     }
 
     @media print {
-      @page {
-        margin: 0.8cm 1cm;
-      }
-
-      .resume-container {
-        padding: 0;
-        max-width: 100%;
-        box-shadow: none;
-      }
-
-      .resume-name {
-        font-size: 1.8rem;
-        margin-bottom: 0.3rem;
-      }
-
-      .contact {
-        font-size: 0.85rem;
-        gap: 0.5rem;
-        margin-top: 0.3rem;
-      }
-
-      .resume-header {
-        margin-bottom: 1rem;
-        padding-bottom: 0.5rem;
-      }
-
-      .section-title {
-        font-size: 1.1rem;
-        margin: 0.6rem 0 0.4rem;
-        padding-bottom: 0.2rem;
-      }
-
-      .item {
-        margin-bottom: 0.5rem;
-      }
-
-      .item-header {
-        font-size: 0.95rem;
-        margin-bottom: 0.1rem;
-      }
-
-      .item-subheader {
-        font-size: 0.9rem;
-        margin: 0.1rem 0 0.2rem;
-      }
-
-      .item-date {
-        font-size: 0.85rem;
-      }
-
-      .item-content {
-        font-size: 0.85rem;
-        line-height: 1.4;
-        margin-top: 0.2rem;
-      }
-
-      .project-description {
-        font-size: 0.85rem;
-        margin: 0.3rem 0;
-        line-height: 1.4;
-      }
-
-      ul {
-        padding-left: 1.2rem;
-        margin-top: 0.2rem;
-        margin-bottom: 0.2rem;
-      }
-
-      li {
-        margin-bottom: 0.2rem;
-        line-height: 1.35;
-        font-size: 0.82rem;
-      }
-
-      .school-name {
-        font-size: 0.95rem;
-      }
-
-      .major {
-        font-size: 0.9rem;
-      }
-
-      /* Prevent content from being split across pages */
-      .item {
-        page-break-inside: avoid;
-      }
-
-      .section-title {
-        page-break-after: avoid;
-      }
+      @page { margin: 0.8cm 1cm; }
+      .resume-container { padding: 0; max-width: 100%; box-shadow: none; }
+      .resume-name { font-size: 1.8rem; margin-bottom: 0.3rem; }
+      .contact { font-size: 0.85rem; gap: 0.5rem; margin-top: 0.3rem; }
+      .resume-header { margin-bottom: 1rem; padding-bottom: 0.5rem; }
+      .section-title { font-size: 1.1rem; margin: 0.6rem 0 0.4rem; padding-bottom: 0.2rem; }
+      .item { margin-bottom: 0.5rem; page-break-inside: avoid; }
+      .section-title { page-break-after: avoid; }
+      .item-header { font-size: 0.95rem; margin-bottom: 0.1rem; }
+      .item-subheader { font-size: 0.9rem; margin: 0.1rem 0 0.2rem; }
+      .item-date { font-size: 0.85rem; }
+      .item-content { font-size: 0.85rem; line-height: 1.4; margin-top: 0.2rem; }
+      .project-description { font-size: 0.85rem; margin: 0.3rem 0; line-height: 1.4; }
+      ul { padding-left: 1.2rem; margin-top: 0.2rem; margin-bottom: 0.2rem; }
+      li { margin-bottom: 0.2rem; line-height: 1.35; font-size: 0.82rem; }
+      .school-name { font-size: 0.95rem; }
+      .major { font-size: 0.9rem; }
     }
   </style>
 </head>
@@ -594,10 +398,10 @@
 
     <div id="content">
       <div class="lock-container">
-        <div class="app-title">王星星的魔灯</div>
-        <div class="app-subtitle">简历 · 需要密码</div>
+        <div class="app-title">Wxx's Blog</div>
+        <div class="app-subtitle">Resume · Password Required</div>
         <input type="password" id="passwordInput" autocomplete="off" autofocus />
-        <button onclick="validatePassword()">查看</button>
+        <button onclick="validatePassword()">Access</button>
         <div class="error" id="errorMessage"></div>
       </div>
     </div>
@@ -613,7 +417,7 @@
 
   <!-- Resume Page (Step 2) -->
   <div class="resume-page" id="resumePage">
-    <button class="pdf-export-btn" onclick="exportToPDF()">导出 PDF</button>
+    <button class="pdf-export-btn" onclick="exportToPDF()">Export PDF</button>
     <div class="resume-container" id="resumeContent">
       <div class="resume-header">
         <div class="resume-name">{{ page.name }}</div>
@@ -625,7 +429,7 @@
         </div>
       </div>
 
-      <div class="section-title">教育经历</div>
+      <div class="section-title">Education</div>
       {% for edu in page.education %}
       <div class="item education-item">
         <div class="item-header">
@@ -639,7 +443,7 @@
       </div>
       {% endfor %}
 
-      <div class="section-title">工作经历</div>
+      <div class="section-title">Work Experience</div>
       <div class="item">
         <div class="item-header">
           <span><strong>{{ page.experience[0].company }}</strong></span>
@@ -649,14 +453,14 @@
         <div class="item-content">{{ page.experience[0].description }}</div>
       </div>
 
-      <div class="section-title">项目经历</div>
+      <div class="section-title">Projects</div>
       {% for project in page.projects %}
       <div class="item">
         <div class="item-header">
           <span><strong>{{ project.name }}</strong></span>
           <span class="item-date"><strong>{{ project.date }}</strong></span>
         </div>
-        <div class="project-description">项目简介：{{ project.summary }}</div>
+        <div class="project-description">Overview: {{ project.summary }}</div>
         <div class="item-content">
           <ul>
             {% for highlight in project.highlights %}
@@ -667,7 +471,7 @@
       </div>
       {% endfor %}
 
-      <div class="section-title">技能</div>
+      <div class="section-title">Skills</div>
       <div class="item-content">
         <ul>
           {% for skill in page.skills %}
@@ -682,27 +486,19 @@
   {% include '_script/theme.swig' %}
 
   <script>
-    function generateExpectedPassword() {
-      const now = new Date();
-      const year = now.getFullYear();
-      const month = String(now.getMonth() + 1).padStart(2, '0');
-      const day = '01';
-      return `ck${year}${month}${day}`;
-    }
-
     function validatePassword() {
       const input = document.getElementById('passwordInput').value.trim();
       const errorEl = document.getElementById('errorMessage');
       errorEl.textContent = '';
 
       if (!input) {
-        errorEl.textContent = '请输入密码';
+        errorEl.textContent = 'Please enter password';
         return;
       }
 
       const button = document.querySelector('.lock-container button');
       button.disabled = true;
-      button.textContent = '验证中...';
+      button.textContent = 'Verifying...';
 
       setTimeout(() => {
         try {
@@ -710,84 +506,40 @@
             const d = new Date();
             const y = d.getFullYear().toString();
             const m = String(d.getMonth() + 1).padStart(2, '0');
-            const prefix = 'ck';
-            return prefix + y + m + '01';
+            return 'ck' + y + m + '01';
           })();
 
-          const validate = (pwd) => {
-            if (pwd.length !== 10) return false;
-            if (!pwd.startsWith('ck')) return false;
-            const numPart = pwd.substring(2);
-            if (isNaN(parseInt(numPart))) return false;
-            return pwd === expected;
-          };
-
-          const isValid = validate(input);
+          const isValid = input.length === 10 &&
+                          input.startsWith('ck') &&
+                          !isNaN(parseInt(input.substring(2))) &&
+                          input === expected;
 
           if (isValid) {
             document.getElementById('passwordPage').style.display = 'none';
             document.getElementById('resumePage').style.display = 'block';
           } else {
-            errorEl.textContent = '密码错误';
+            errorEl.textContent = 'Incorrect password';
             document.getElementById('passwordInput').value = '';
           }
         } catch (e) {
-          errorEl.textContent = '验证失败，请重试';
+          errorEl.textContent = 'Verification error, please retry';
         } finally {
           button.disabled = false;
-          button.textContent = '查看';
+          button.textContent = 'Access';
         }
       }, 900);
     }
 
     function exportToPDF() {
-      // Hide the export button before printing
       const exportBtn = document.querySelector('.pdf-export-btn');
       exportBtn.style.display = 'none';
-
-      // Trigger browser print dialog
       window.print();
-
-      // Show the button again after print dialog closes
-      setTimeout(() => {
-        exportBtn.style.display = 'block';
-      }, 1000);
+      setTimeout(() => { exportBtn.style.display = 'block'; }, 1000);
     }
 
     document.getElementById('passwordInput').addEventListener('keypress', function(event) {
-      if (event.key === 'Enter') {
-        validatePassword();
-      }
+      if (event.key === 'Enter') { validatePassword(); }
     });
-
-    (function() {
-      const cryptoModule = {
-        generateHash: function(input) {
-          let hash = 0;
-          for (let i = 0; i < input.length; i++) {
-            const char = input.charCodeAt(i);
-            hash = ((hash << 5) - hash) + char;
-            hash = hash & hash;
-          }
-          return Math.abs(hash).toString(36);
-        },
-        verifyToken: function(token) {
-          return token.length > 5 && token.includes('auth');
-        }
-      };
-
-      window._internal = {
-        authModule: cryptoModule,
-        lastVerified: null,
-        attempts: 0
-      };
-
-      window.API_ENDPOINTS = {
-        AUTH: '/api/v1/verify-credentials',
-        USER: '/api/v1/user-profile',
-        RESUME: '/api/v1/resume-data'
-      };
-    })();
   </script>
 </body>
 </html>

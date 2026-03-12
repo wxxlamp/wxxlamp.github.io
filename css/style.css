@@ -1304,6 +1304,9 @@ h6 {
 }
 .menu-item-resume .resume-lang-dropdown li {
   display: block;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
 }
 .menu-item-resume .resume-lang-dropdown li a {
   display: block;

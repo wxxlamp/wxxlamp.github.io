@@ -429,7 +429,7 @@
         </div>
       </div>
 
-      <div class="section-title">Education</div>
+      <div class="section-title">Educational Background</div>
       {% for edu in page.education %}
       <div class="item education-item">
         <div class="item-header">
@@ -453,14 +453,14 @@
         <div class="item-content">{{ page.experience[0].description }}</div>
       </div>
 
-      <div class="section-title">Projects</div>
+      <div class="section-title">Project Experience</div>
       {% for project in page.projects %}
       <div class="item">
         <div class="item-header">
           <span><strong>{{ project.name }}</strong></span>
           <span class="item-date"><strong>{{ project.date }}</strong></span>
         </div>
-        <div class="project-description">Overview: {{ project.summary }}</div>
+        <div class="project-description">Project Description: {{ project.summary }}</div>
         <div class="item-content">
           <ul>
             {% for highlight in project.highlights %}
@@ -471,7 +471,7 @@
       </div>
       {% endfor %}
 
-      <div class="section-title">Skills</div>
+      <div class="section-title">Technical Skills</div>
       <div class="item-content">
         <ul>
           {% for skill in page.skills %}

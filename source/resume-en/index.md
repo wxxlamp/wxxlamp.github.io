@@ -1,59 +1,59 @@
 ---
-title: Xingxing Wang - Resume
+title: Wang Xingxing - Resume
 layout: resume-en
 date: 2024-01-01
 password: dynamic
-name: Xingxing Wang
+name: Wang Xingxing
 contact:
-  phone: "17179887126"
+  phone: "+86 17179887126"
   email: "wxxlamp@foxmail.com"
   birth: "Jan 2000"
   website: "https://wxxlamp.cn"
 education:
-  - school: Hong Kong University of Science and Technology (QS Top 50)
-    major: Information Technology · Master's (Full-time)
+  - school: The Hong Kong University of Science and Technology (QS Ranking 50)
+    major: Master of Science in Information Technology (Full-time)
     date: Sep 2024 – Oct 2025
-    description: Outstanding academic performance, GPA 4.1/4.3. Courses include Blockchain, NLP, LLM, etc. Received Top Student Award Scholarship in Semester 24.
-  - school: Zhengzhou University (Double First-Class / 211)
-    major: Software Engineering · Bachelor's
+    description: "Achieved an outstanding academic performance with GPA 4.1/4.3. Coursework includes Blockchain, NLP, LLM, etc. Awarded the \"Top Student Award Scholarship\" for the 2024 semester."
+  - school: Zhengzhou University (Double First-Class / Project 211)
+    major: Bachelor of Engineering in Software Engineering
     date: Sep 2017 – Jun 2021
-    description: Outstanding academic performance, GPA 3.6/4.0 (Top 11 in major). Received National Encouragement Scholarship, recognized as "Three-Good Student" multiple times.
+    description: "Excelled academically with GPA 3.6/4.0 (Ranked 11th in major). Recipient of the National Encouragement Scholarship and repeatedly recognized as \"Merit Student\" of Zhengzhou University."
 experience:
-  - company: Alibaba - Alibaba.com Technology Department
-    title: Senior Software Engineer (P6)
+  - company: Alibaba Group - Alibaba.com Technology Department
+    title: Senior Development Engineer (P6)
     date: Jul 2021 – Present
-    description: Led design and development of Alibaba International's Global Seller business (merchant onboarding, settlement & AI). Previously responsible for credit guarantee development and limit migration; overall technical planning and iteration for financial insurance (OA credit sales, worry-free returns); built a zero-frontend operations platform from scratch. Performance rating of 3.75/3.5+ in over 60% of cycles.
+    description: "Led the design and development of the Global Seller Business (Transactions & Capital) on Alibaba International Station; Responsible for the development of Credit Guarantee Business and quota migration; Oversaw the overall technical planning and iterative development of Financial Insurance Business (OA, Free Return); Built an operation platform from scratch that requires no front-end development. Achieved a performance rating of GOOD in over 60% of review cycles."
 projects:
-  - name: Global Seller · Merchant Settlement Technical Lead
+  - name: Global Trade · Technical Lead of Merchant Settlement
     date: Aug 2024 – Present
-    summary: To address potential risks for Chinese merchants in cross-border trade and expand platform supply, Alibaba International supports global merchant onboarding and transaction fulfillment (Global Seller). Currently serves 15 country sites (SEA, North America, Europe, etc.), 5,000+ registered merchants, and cumulative withdrawals of tens of millions of USD.
+    summary: "To mitigate potential risks in Chinese merchants' foreign trade operations and expand the platform's differentiated supply, Alibaba.com supports global merchants to onboard and fulfill transactions (Global Trade). Currently covering 15 country sites (Southeast Asia, North America, Europe, etc.), with over 5,000 onboarded merchants and cumulative withdrawal amount exceeding 10 million US dollars."
     highlights:
-      - "【Full Chain】Based on existing capabilities of the main platform (Chinese merchants), independently built the full-chain: merchant onboarding, transactions, guarantees, payments, settlements, and gateway for each overseas country with tenant customization. Led the full-chain launch of Japan site as Technical Lead;"
-      - "【Access & Withdrawal】Built global merchant access and withdrawal capabilities with unified access, asset, and withdrawal workflows. Leveraging iPay, Yeepay, Standard Chartered and other fund channels, built channel routing, orchestration, and status management to support KYC, fund transfer, and withdrawal for multi-country merchants;"
-      - "【Tenant Architecture】Led multi-tenant architecture upgrade for the supply chain merchant side via unified traffic entry, independent modules/apps, tenant log monitoring, tenant thread cache, and tenant config files. Resolved R&D efficiency (50% improvement for new sites), monitoring noise, and tenant isolation issues across countries;"
-      - "【LLM】Built an LLM task platform from scratch, drove adoption of orchestrated LLMs (RAG, MCP) for OCR in KYC workflows and daily tech operations. Lowered merchant onboarding barriers and improved operational efficiency;"
-      - "【Team Management】Managed technical planning for merchant and withdrawal domains (dotted-line lead of 3). Led development standards and code review guidelines. As Mentor, coached 2 social-recruited P6 engineers through probation."
-  - name: Credit Limit System Refactoring · Technical Migration Lead
+      - "【LLM Application】Responsible for LLM application in Global Trade scenarios, building an LLM task platform from scratch, and driving the adoption of LLMs (based on RAG, MCP) for OCR in KYC processes and daily technical operations. Reduced merchant onboarding barriers and improved business operational efficiency;"
+      - "【Full Lifecycle】Based on the existing infrastructure for Chinese merchants, independently delivered end-to-end development and tenant customization for overseas merchant onboarding, transactions, assurance, payment, settlement, and gateway. As the technical lead, responsible for the full-lifecycle launch of the Japan site project;"
+      - "【Onboarding & Withdrawal】Responsible for building global merchant onboarding and withdrawal capabilities, and establishing unified onboarding, asset, and withdrawal processes. Based on the underlying integration with multiple payment channels (iPay, Yeepay, Standard Chartered, etc.), built channel routing, orchestration, and status management capabilities to support KYC, fund allocation, and withdrawal needs of merchants across multiple countries;"
+      - "【Multi-Tenant Architecture】Led the multi-tenant architecture upgrade for supply chain merchants, implementing tenant-level optimization through unified traffic entry/views, independent modules/applications, tenant-specific log monitoring, thread caching, and configuration files. Resolved R&D efficiency issues (50% improvement for new site onboarding), monitoring noise, and tenant isolation problems caused by cross-country tenant differences;"
+      - "【Team Management】Responsible for technical planning and management of merchant and withdrawal domains (dotted-line Lead of 3 team members). Led the formulation of development standards and code review criteria for transaction merchant systems; Successfully mentored 2 external hires to P6 level and completion of probation as a Mentor."
+  - name: Assurance Quota System Reconstruction · Technical Migration Lead
     date: Oct 2023 – Jul 2024
-    summary: Alibaba International allocates advance repayment limits to merchants so they receive full payment after shipping. The limit system (online since 2016) was near collapse—spanning 3 data sources and 2 systems—with poor extensibility and severe data inconsistency. Led the overall splitting and reconstruction of tens-of-millions of records under strict constraints of 30+ TPS and zero financial errors.
+    summary: "Alibaba.com allocates advance payment quotas to onboarded merchants, enabling them to receive full payment upon delivery. The quota system (launched in 2016) had severely deteriorated, with data scattered across 3 data sources and 2 systems, suffering from poor scalability and critical data inconsistency. Responsible for leading the full split of 10-million-level data and reconstruction of the new system under strict constraints of 30+ TPS and zero financial errors."
     highlights:
-      - "【Migration Strategy】Designed a smooth migration plan: full replay → incremental Binlog catch-up → dual-write verification → read traffic gray cut. Used step-size ID isolation and async dual-write to ensure zero-downtime, zero-impact migration;"
-      - "【Migration Monitoring】Monitored dual-write accuracy via real-time log monitoring and near-real-time/real-time data reconciliation, promptly identifying and fixing concurrency and timezone issues;"
-      - "【Performance Optimization】Optimized the 8-year-old credit page P90 from 10s to 1s via concurrent downstream calls, invalid-call reduction, multi-level caching, and business logic optimization. Post-migration interface latency improved from 1s to 20ms;"
-      - "【R&D Efficiency】Refactored the credit domain model with computation/storage separation and configurable limit types (scenario + tenant). New limit development time reduced from 20 to 4 person-days;"
-      - "【Availability】Ensured credit limit data consistency via optimistic locking and buyer-seller limit deduction consistency via TCC."
-  - name: Guarantee Insurance Business · Technical PM & Core Developer
+      - "【Migration Strategy】Led the design of a seamless migration plan: \"full data replay, incremental Binlog synchronization, dual-write verification, gray-scale read traffic switch\". Utilized mechanisms such as step ID for new/old data isolation and asynchronous dual-write to ensure zero downtime and business transparency during migration;"
+      - "【Migration Monitoring】Monitored the accuracy of dual-write traffic through real-time log monitoring and near-real-time data reconciliation, promptly identifying and fixing multiple dual-write issues including concurrency and time zone discrepancies;"
+      - "【Performance Optimization】Optimized the 8-year-old quota page performance (90th percentile response time reduced from 10s to 1s) by concurrently orchestrating downstream credit/quota APIs, reducing invalid calls, implementing multi-level caching, and optimizing business logic. Interface latency improved from 1s to 20ms post-migration;"
+      - "【R&D Efficiency】Reconstructed the quota domain model (separating computation and storage) and implemented configuration-driven (scenario + tenant) expansion for new quota types, reducing development effort for new quotas from 20 person-days to 4 person-days;"
+      - "【System Availability】Ensured consistent update of quota data via optimistic locking, and consistency of buyer/seller quota deduction via TCC pattern."
+  - name: Trade Insurance Business · Technical PM & Core Developer
     date: Jul 2021 – Sep 2023
-    summary: To improve Alibaba International's transaction certainty and merchant fund/goods security, introduced third-party insurers to cover chargebacks, returns, and tail payments. Currently serves 60,000+ buyers/sellers, with 10,000+ daily policies and 1,000+ QPS. Responsible for project management and architecture design.
+    summary: "To enhance transaction certainty and protect merchants' capital/goods safety on the International Station, third-party insurance institutions were integrated to cover chargebacks, returns, and final payments. Currently serving over 60,000 buyers/sellers, with daily policy volume exceeding 10,000 and QPS over 1,000. Responsible for project management and architecture design of the Trade Insurance Business."
     highlights:
-      - "【Credit Platform】Built an insurance credit platform from scratch: process engine for node orchestration and retry; SPI + strategy pattern for multi-product credit extension; domain events for state transitions; local transaction tables + monitoring reconciliation for eventual consistency;"
-      - "【Multi-region Deployment】Built three data centers (China, US, Singapore) to meet overseas compliance requirements, with bidirectional data sync, step-size mechanism to avoid data overwriting, and buyer-dimension traffic routing for read-write consistency;"
-      - "【Quality Building】Established unit and integration test frameworks, ensuring 60% incremental coverage per release, reducing joint-debugging, testing, and refactoring costs;"
-      - "【Performance Optimization】As Financial Domain Promotion PM, led stress testing. Scaled app QPS from 600 to 5,000 via additional machines, multi-level caching, and multi-threaded queries;"
-      - "【Operations Platform】Built a server-driven UI system (layout, actions, permissions) that dynamically renders frontend pages at runtime with zero frontend code, improving development efficiency by 50% (approved as a group innovation proposal)."
+      - "【Credit Platform】Built an insurance credit platform from scratch through the OA Trade Credit project; Introduced workflow engine for node orchestration and retry; Adopted SPI mechanism combined with strategy pattern for credit scalability of different insurance products; Drove credit process and status flow via domain events to ensure efficient business delivery; Ensured eventual consistency in microservices through local transaction tables and monitoring reconciliation;"
+      - "【Multi-Region Deployment】To comply with cross-border data regulatory requirements, deployed the insurance domain to new data centers in China, US, and Singapore for overseas architecture; Implemented bidirectional data synchronization, avoided data overwriting via step mechanism, and ensured read-write consistency through buyer-based traffic routing;"
+      - "【Quality Assurance】Established and maintained unit/integration testing frameworks for related applications, ensuring 60% incremental code coverage for each release, reducing integration, testing, and refactoring costs;"
+      - "【Performance Optimization】As the financial domain PM for peak promotions, led stress testing of the financial domain. Increased application QPS from 600 to 5,000 by scaling server capacity, implementing multi-level caching, and using multi-threaded queries;"
+      - "【Operation Platform】Implemented server-side configuration-driven dynamic rendering of front-end pages (layout, operations, permissions, etc.) at runtime, eliminating the need for front-end development and improving development efficiency by 50% (approved as Group Innovation Proposal)."
 skills:
-  - Familiar with LLM and Agent; experienced in SFT and Inference via LlamaFactory and HuggingFace; proficient in AI Coding;
-  - Proficient in Java, multithreading; familiar with JVM, OS, MySQL, networking, algorithms and data structures; experienced in Java ecosystem (Spring, MyBatis) development;
-  - Understands DDD and TDD; familiar with common design patterns, process engines, and mainstream microservice architectures and middleware (Redis, MetaQ, etc.);
-  - Proficient in cross-border transaction and fund settlement full chain; strong self-learner, enjoys writing and summarizing; capable of mentoring new engineers and PM-ing medium-to-large technical projects (100+ person-days).
+  - "Familiar with LLM and Agent technologies, with hands-on experience in SFT and Inference based on LlamaFactory and HuggingFace; proficient in AI Coding;"
+  - "Proficient in Java syntax and multi-threading; Knowledgeable in JVM, operating systems, MySQL databases, computer networks, common algorithms, and data structures; Mastered R&D processes based on Java ecosystem (Spring, MyBatis frameworks);"
+  - "Understand DDD and TDD concepts, and familiar with common design patterns; Knowledgeable in workflow engines, common microservice architectures/components, and middleware such as Redis and MetaQ;"
+  - "Proficient in the full lifecycle of cross-border transactions and fund settlement; Strong learning agility, passion for writing and summarization; Capable of mentoring new hires and managing medium-to-large technical projects (100+ person-days)."
 ---

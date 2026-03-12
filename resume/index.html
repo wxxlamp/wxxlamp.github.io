@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>王星星 - Resume</title>
+  <title>王星星 - 个人简历</title>
   
 <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -45,7 +45,7 @@
 <meta property="og:description" content="记录技术成长与生活感悟">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-12-31T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-02-28T14:05:39.110Z">
+<meta property="article:modified_time" content="2026-03-12T04:59:08.159Z">
 <meta property="article:author" content="Wxx">
 <meta name="twitter:card" content="summary">
 
@@ -579,6 +579,9 @@
         font-size: 0.85rem;
         gap: 0.5rem;
         margin-top: 0.3rem;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: center;
       }
 
       .resume-header {
@@ -665,6 +668,7 @@
         
             <ul id="menu-top" class="nav-top-items">
                 
+                    
                     <li class="menu-item">
                         <a href="/archives">
                             
@@ -673,7 +677,9 @@
                             
                         </a>
                     </li>
+                    
                 
+                    
                     <li class="menu-item">
                         <a href="/about">
                             
@@ -682,15 +688,17 @@
                             
                         </a>
                     </li>
+                    
                 
-                    <li class="menu-item">
-                        <a href="/resume">
-                            
-                            
-                                Resume
-                            
-                        </a>
+                    
+                    <li class="menu-item menu-item-resume">
+                        <span class="resume-nav-label">Resume</span>
+                        <ul class="resume-lang-dropdown">
+                            <li><a href="/resume">中文简历</a></li>
+                            <li><a href="/resume-en">English</a></li>
+                        </ul>
                     </li>
+                    
                 
                 <li class="menu-item">
                     <a href="/atom.xml">RSS</a>
@@ -705,9 +713,9 @@
     <div id="content">
       <div class="lock-container">
         <div class="app-title">王星星的魔灯</div>
-        <div class="app-subtitle">Resume · Password Required</div>
+        <div class="app-subtitle">简历 · 需要密码</div>
         <input type="password" id="passwordInput" autocomplete="off" autofocus />
-        <button onclick="validatePassword()">Access</button>
+        <button onclick="validatePassword()">查看</button>
         <div class="error" id="errorMessage"></div>
       </div>
     </div>
@@ -739,7 +747,7 @@
 
   <!-- Resume Page (Step 2) -->
   <div class="resume-page" id="resumePage">
-    <button class="pdf-export-btn" onclick="exportToPDF()">Export PDF</button>
+    <button class="pdf-export-btn" onclick="exportToPDF()">导出 PDF</button>
     <div class="resume-container" id="resumeContent">
       <div class="resume-header">
         <div class="resume-name">王星星</div>
@@ -751,7 +759,7 @@
         </div>
       </div>
 
-      <div class="section-title">Education</div>
+      <div class="section-title">教育经历</div>
       
       <div class="item education-item">
         <div class="item-header">
@@ -776,26 +784,28 @@
       </div>
       
 
-      <div class="section-title">Work Experience</div>
+      <div class="section-title">工作经历</div>
       <div class="item">
         <div class="item-header">
           <span><strong>阿里巴巴-Alibaba.com技术部</strong></span>
           <span class="item-date"><strong>2021.07 – 至今</strong></span>
         </div>
         <div class="item-subheader"><strong>高级开发工程师（P6）</strong></div>
-        <div class="item-content">主导阿里巴巴国际站全球卖业务（交易和资金）的设计和开发；曾负责信用保障业务的开发和额度迁移工作；金融保险业务（OA赊销，无忧退）的整体技术规划和迭代开发；从0-1搭建无需前端开发的运营平台。绩效3.75/3.5+次数占比超过60%。</div>
+        <div class="item-content">主导阿里巴巴国际站全球卖业务（商家入驻&结算&AI）的设计和开发；曾负责信用保障业务的开发和额度迁移工作；金融保险业务（OA赊销，无忧退）的整体技术规划和迭代开发；从0-1搭建无需前端开发的运营平台。绩效3.75/3.5+次数占比超过60%。</div>
       </div>
 
-      <div class="section-title">Projects</div>
+      <div class="section-title">项目经历</div>
       
       <div class="item">
         <div class="item-header">
           <span><strong>全球卖 · 商家结算技术负责人</strong></span>
           <span class="item-date"><strong>2024.08 – 至今</strong></span>
         </div>
-        <div class="project-description">Project: 为了应对中国商家外贸业务的潜在风险、扩大平台的特色供给，国际站支持全球商家入驻平台并完成交易履约（全球卖）。目前支持东南亚、北美、欧洲等15个国家站点，入驻商家数超5000，累计提现金额千万美金。</div>
+        <div class="project-description">项目简介：为了应对中国商家外贸业务的潜在风险、扩大平台的特色供给，国际站支持全球商家入驻平台并完成交易履约（全球卖）。目前支持东南亚、北美、欧洲等15个国家站点，入驻商家数超5000，累计提现金额千万美金。</div>
         <div class="item-content">
           <ul>
+            
+            <li>【大模型】负责LLM全球卖场景的应用，从0-1搭建LLM任务平台，推动产品和业务引入编排型大模型（基于RAG、MCP）用于KYC流程的OCR和日常技术运维。降低商户入驻门槛，提高业务运营效率；基于Claude Code完成日常70%的Coding工作并结合响应MCP实现AI分支、AI自动配置等功能；</li>
             
             <li>【全链路】基于大盘（中国商家）已有的基础能力，独立支持各个海外国家的商户入驻、交易、保障、支付、结算、网关的全链路开发和租户定制，一杆到底。作为技术负责人负责日本站项目全链路的上线；</li>
             
@@ -803,9 +813,7 @@
             
             <li>【租户架构】牵头供应链商家侧的多租户架构工作，通过统一流量入口和视图表达、独立模块和应用、租户日志监控、租户线程缓存和租户配置文件等形式对商家侧业务进行租户升级，解决了不同国家因租户差异导致的研发效能（新接站点提效50%）、监控噪音和租户隔离问题；</li>
             
-            <li>【大模型】负责LLM全球卖场景的应用，从0-1搭建LLM任务平台，推动产品和业务引入编排型大模型（基于RAG、MCP）用于KYC流程的OCR和日常技术运维。降低商户入驻门槛，提高业务运营效率；</li>
-            
-            <li>【组织管理】负责商户和提现域的技术规划与管理（虚线 Lead 3人）。主导制定交易商家开发规范与代码评审标准，作为 Mentor 成功辅导 2 名社招 P6 并转正。</li>
+            <li>【组织管理】负责商户和提现域的技术规划与管理（虚线 Lead 3人）。主导制定交易商家开发规范与代码评审标准，作为 Mentor 成功辅导2名社招P6、一名实习生并转正。</li>
             
           </ul>
         </div>
@@ -816,7 +824,7 @@
           <span><strong>押款额度系统重构 · 技术迁移负责人</strong></span>
           <span class="item-date"><strong>2023.10 – 2024.07</strong></span>
         </div>
-        <div class="project-description">Project: 阿里巴巴国际站会给入驻的商家分配提前回款额度，使得商家在发货后即可收到货物的全款。额度系统从业务16年上线至今已经濒临腐化，存在于3个数据源、2个系统中，扩展性差、数据不一致问题严重。负责在TPS 30+ 且资金零差错的强约束下，主导系统千万级别数据的整体拆分与新系统重构。</div>
+        <div class="project-description">项目简介：阿里巴巴国际站会给入驻的商家分配提前回款额度，使得商家在发货后即可收到货物的全款。额度系统从业务16年上线至今已经濒临腐化，存在于3个数据源、2个系统中，扩展性差、数据不一致问题严重。负责在TPS 30+ 且资金零差错的强约束下，主导系统千万级别数据的整体拆分与新系统重构。</div>
         <div class="item-content">
           <ul>
             
@@ -839,7 +847,7 @@
           <span><strong>保障保险业务 · 技术PM&核心开发</strong></span>
           <span class="item-date"><strong>2021.07 – 2023.09</strong></span>
         </div>
-        <div class="project-description">Project: 为了提高国际站交易确定性和商家资金货物安全，引入第三方保险机构对拒付和货物的退货、尾款进行保障。目前服务买卖家6w+，日均保单量1W+，QPS 1000+。负责保障保险业务的项目管理和架构设计工作。</div>
+        <div class="project-description">项目简介：为了提高国际站交易确定性和商家资金货物安全，引入第三方保险机构对拒付和货物的退货、尾款进行保障。目前服务买卖家6w+，日均保单量1W+，QPS 1000+。负责保障保险业务的项目管理和架构设计工作。</div>
         <div class="item-content">
           <ul>
             
@@ -858,11 +866,11 @@
       </div>
       
 
-      <div class="section-title">Skills</div>
+      <div class="section-title">技能</div>
       <div class="item-content">
         <ul>
           
-          <li>了解LLM和Agent，具备基于LlamaFactory和HuggingFace的SFT和Inference经验；</li>
+          <li>了解LLM和Agent，具备基于LlamaFactory和HuggingFace的SFT和Inference经验；对AI Coding掌握熟练；</li>
           
           <li>熟悉Java语法、多线程，了解JVM、操作系统，MySQL数据库、计网和常用的算法及数据结构；掌握基于Java生态（Spring、Mybatis框架）的研发流程；</li>
           
@@ -905,13 +913,13 @@
       errorEl.textContent = '';
 
       if (!input) {
-        errorEl.textContent = 'Please enter password';
+        errorEl.textContent = '请输入密码';
         return;
       }
 
       const button = document.querySelector('.lock-container button');
       button.disabled = true;
-      button.textContent = 'Verifying...';
+      button.textContent = '验证中...';
 
       setTimeout(() => {
         try {
@@ -937,14 +945,14 @@
             document.getElementById('passwordPage').style.display = 'none';
             document.getElementById('resumePage').style.display = 'block';
           } else {
-            errorEl.textContent = 'Incorrect password';
+            errorEl.textContent = '密码错误';
             document.getElementById('passwordInput').value = '';
           }
         } catch (e) {
-          errorEl.textContent = 'Verification error, please retry';
+          errorEl.textContent = '验证失败，请重试';
         } finally {
           button.disabled = false;
-          button.textContent = 'Access';
+          button.textContent = '查看';
         }
       }, 900);
     }

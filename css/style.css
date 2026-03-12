@@ -1270,6 +1270,57 @@ h6 {
     display: none !important;
   }
 }
+.menu-item-resume {
+  position: relative;
+  cursor: pointer;
+}
+.menu-item-resume .resume-nav-label {
+  display: inline-block;
+  padding: 0;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.6);
+  font-size: inherit;
+}
+.menu-item-resume .resume-nav-label::after {
+  content: " ▾";
+  font-size: 0.65em;
+  opacity: 0.6;
+}
+.menu-item-resume .resume-lang-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  border: 1px solid #e8e8e8;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  min-width: 90px;
+  padding: 2px 0;
+  z-index: 999;
+  list-style: none;
+  margin: 0;
+}
+.menu-item-resume .resume-lang-dropdown li {
+  display: block;
+}
+.menu-item-resume .resume-lang-dropdown li a {
+  display: block;
+  padding: 5px 12px;
+  color: rgba(0, 0, 0, 0.6);
+  text-decoration: none;
+  white-space: nowrap;
+  font-size: 0.82em;
+}
+.menu-item-resume .resume-lang-dropdown li a:hover {
+  background: #f5f5f5;
+  color: #4D89FB;
+}
+.menu-item-resume:hover .resume-lang-dropdown, .menu-item-resume.active .resume-lang-dropdown {
+  display: block;
+}
+
 body {
   font-family: "Smiley Sans Oblique", "Open Sans", "Helvetica Neue", Arial, sans-serif;
 }
@@ -2373,7 +2424,7 @@ h1, h2, h3, h4, h5, h6 {
   left: 0;
   width: 0%;
   height: 3px;
-  background: linear-gradient(90deg, #4D89FB, rgb(176.7582417582, 203.1318681319, 253.2417582418));
+  background: linear-gradient(90deg, #4D89FB, rgb(148.2, 184.2, 252.6));
   z-index: 9999;
   transition: width 0.1s;
 }

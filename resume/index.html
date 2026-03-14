@@ -45,7 +45,7 @@
 <meta property="og:description" content="记录技术成长与生活感悟">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-12-31T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-03-14T09:37:51.855Z">
+<meta property="article:modified_time" content="2026-03-14T13:13:23.569Z">
 <meta property="article:author" content="Wxx">
 <meta name="twitter:card" content="summary">
 
@@ -899,6 +899,25 @@
 
 
   <script>
+    var CACHE_KEY = 'resume_auth';
+
+    function getCurrentMonth() {
+      var d = new Date();
+      return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+    }
+
+    function checkCachedAuth() {
+      try {
+        var cached = localStorage.getItem(CACHE_KEY);
+        if (cached === getCurrentMonth()) {
+          document.getElementById('passwordPage').style.display = 'none';
+          document.getElementById('resumePage').style.display = 'block';
+          return true;
+        }
+      } catch (e) {}
+      return false;
+    }
+
     function generateExpectedPassword() {
       const now = new Date();
       const year = now.getFullYear();
@@ -942,6 +961,7 @@
           const isValid = validate(input);
 
           if (isValid) {
+            try { localStorage.setItem(CACHE_KEY, getCurrentMonth()); } catch (e) {}
             document.getElementById('passwordPage').style.display = 'none';
             document.getElementById('resumePage').style.display = 'block';
           } else {
@@ -956,6 +976,9 @@
         }
       }, 900);
     }
+
+    // Check cache on page load
+    checkCachedAuth();
 
     function exportToPDF() {
       // Hide the export button before printing

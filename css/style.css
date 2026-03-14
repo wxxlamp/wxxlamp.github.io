@@ -400,7 +400,7 @@ html {
 body {
   padding: 0;
   margin: 0;
-  font-family: "Open Sans", "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", "Microsoft Jhenghei", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", "Helvetica Neue", Arial, sans-serif;
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -425,32 +425,32 @@ a {
 
 h1 {
   font-size: 1.5rem;
-  font-family: "Open Sans", "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", "Microsoft Jhenghei", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", "Helvetica Neue", Arial, sans-serif;
 }
 
 h2 {
   font-size: 1.4rem;
-  font-family: "Open Sans", "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", "Microsoft Jhenghei", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", "Helvetica Neue", Arial, sans-serif;
 }
 
 h3 {
   font-size: 1.3rem;
-  font-family: "Open Sans", "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", "Microsoft Jhenghei", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", "Helvetica Neue", Arial, sans-serif;
 }
 
 h4 {
   font-size: 1.2rem;
-  font-family: "Open Sans", "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", "Microsoft Jhenghei", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", "Helvetica Neue", Arial, sans-serif;
 }
 
 h5 {
   font-size: 1.1rem;
-  font-family: "Open Sans", "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", "Microsoft Jhenghei", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", "Helvetica Neue", Arial, sans-serif;
 }
 
 h6 {
   font-size: 1rem;
-  font-family: "Open Sans", "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", "Microsoft Jhenghei", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", "Helvetica Neue", Arial, sans-serif;
 }
 
 .content-wrapper {
@@ -500,7 +500,7 @@ h6 {
   margin: 0 auto;
 }
 
-@media only screen and (max-width: 750px) {
+@media only screen and (max-width: 768px) {
   .site-header-inner, .content {
     width: 90%;
   }
@@ -522,7 +522,7 @@ h6 {
   padding: 20px 20px;
 }
 
-@media only screen and (max-width: 750px) {
+@media only screen and (max-width: 768px) {
   .header {
     padding: 20px 0 0;
     text-align: center;
@@ -589,7 +589,7 @@ h6 {
   line-height: 1.4;
   font-size: 1.3em;
   font-weight: 400;
-  font-family: "Open Sans", "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", "Microsoft Jhenghei", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", "Helvetica Neue", Arial, sans-serif;
 }
 .post .post-header .post-link {
   display: inline-block;
@@ -619,37 +619,37 @@ h6 {
 .post .post-content h1 {
   font-size: 1.3em;
   font-weight: 400;
-  font-family: "Open Sans", "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", "Microsoft Jhenghei", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", "Helvetica Neue", Arial, sans-serif;
   margin-top: 1.2em;
 }
 .post .post-content h2 {
   font-size: 1.3em;
   font-weight: 400;
-  font-family: "Open Sans", "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", "Microsoft Jhenghei", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", "Helvetica Neue", Arial, sans-serif;
   margin-top: 1.2em;
 }
 .post .post-content h3 {
   font-size: 1.3em;
   font-weight: 400;
-  font-family: "Open Sans", "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", "Microsoft Jhenghei", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", "Helvetica Neue", Arial, sans-serif;
   margin-top: 1.2em;
 }
 .post .post-content h4 {
   font-size: 1.3em;
   font-weight: 400;
-  font-family: "Open Sans", "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", "Microsoft Jhenghei", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", "Helvetica Neue", Arial, sans-serif;
   margin-top: 1.2em;
 }
 .post .post-content h5 {
   font-size: 1.3em;
   font-weight: 400;
-  font-family: "Open Sans", "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", "Microsoft Jhenghei", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", "Helvetica Neue", Arial, sans-serif;
   margin-top: 1.2em;
 }
 .post .post-content h6 {
   font-size: 1.3em;
   font-weight: 400;
-  font-family: "Open Sans", "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", "Microsoft Jhenghei", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", "Helvetica Neue", Arial, sans-serif;
   margin-top: 1.2em;
 }
 .post .post-content .headerlink:hover {
@@ -842,7 +842,7 @@ h6 {
 .post .post-content .read-more .read-more-link {
   color: #4D89FB;
   font-size: 1.1em;
-  font-family: "Open Sans", "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", "Microsoft Jhenghei", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", "Helvetica Neue", Arial, sans-serif;
 }
 .post .post-content .read-more .read-more-link:hover {
   border-bottom: 1px solid #4D89FB;
@@ -850,7 +850,7 @@ h6 {
 .post .post-footer {
   margin-top: 20px;
   border-top: 1px solid #eee;
-  font-family: "Open Sans", "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", "Microsoft Jhenghei", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", "Helvetica Neue", Arial, sans-serif;
 }
 .post .post-footer .post-tags {
   padding: 15px 0;
@@ -878,7 +878,7 @@ h6 {
   font-weight: 400;
   font-size: 16px;
   color: rgba(0, 0, 0, 0.75);
-  font-family: "Open Sans", "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", "Microsoft Jhenghei", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", "Helvetica Neue", Arial, sans-serif;
   transition-property: transform;
   transition-timing-function: ease-out;
   transition-duration: 0.3s;
@@ -900,7 +900,7 @@ h6 {
 .post .post-footer .post-nav .nav-mobile {
   display: none;
 }
-@media only screen and (max-width: 750px) {
+@media only screen and (max-width: 768px) {
   .post .post-footer .post-nav .nav-default {
     display: none;
   }
@@ -923,7 +923,7 @@ h6 {
 .pagination .next {
   font-weight: 400;
   font-size: 16px;
-  font-family: "Open Sans", "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", "Microsoft Jhenghei", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", "Helvetica Neue", Arial, sans-serif;
   transition-property: transform;
   transition-timing-function: ease-out;
   transition-duration: 0.3s;
@@ -1040,7 +1040,7 @@ h6 {
   margin-top: 30px;
 }
 .archive .archive-title {
-  font-family: "Open Sans", "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", "Microsoft Jhenghei", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", "Helvetica Neue", Arial, sans-serif;
 }
 .archive .archive-title.tag, .archive .archive-title.category {
   margin: 15px 0;
@@ -1053,7 +1053,7 @@ h6 {
   line-height: 31px;
 }
 .archive .collection-title {
-  font-family: "Open Sans", "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", "Microsoft Jhenghei", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", "Helvetica Neue", Arial, sans-serif;
   font-size: 29px;
 }
 .archive .collection-title .archive-year {
@@ -1097,7 +1097,7 @@ h6 {
 .tag-cloud {
   margin: 2em 0 3em;
   text-align: center;
-  font-family: "Open Sans", "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", "Microsoft Jhenghei", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", "Helvetica Neue", Arial, sans-serif;
 }
 .tag-cloud .tag-cloud-title {
   display: inline-block;
@@ -1125,7 +1125,7 @@ h6 {
 .categories {
   margin: 2em 0 3em;
   text-align: center;
-  font-family: "Open Sans", "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", "Microsoft Jhenghei", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", "Helvetica Neue", Arial, sans-serif;
 }
 .categories .categories-title {
   display: inline-block;
@@ -1265,11 +1265,6 @@ h6 {
   transform: translateY(-5px);
 }
 
-@media only screen and (max-width: 750px) {
-  .back-to-top {
-    display: none !important;
-  }
-}
 .menu-item-resume {
   position: relative;
   cursor: pointer;
@@ -1280,6 +1275,7 @@ h6 {
   cursor: pointer;
   color: rgba(0, 0, 0, 0.6);
   font-size: inherit;
+  text-decoration: none;
 }
 .menu-item-resume .resume-nav-label::after {
   content: " ▾";
@@ -1320,22 +1316,22 @@ h6 {
   background: #f5f5f5;
   color: #4D89FB;
 }
-.menu-item-resume:hover .resume-lang-dropdown, .menu-item-resume.active .resume-lang-dropdown {
+.menu-item-resume:hover .resume-lang-dropdown, .menu-item-resume:focus-within .resume-lang-dropdown, .menu-item-resume.active .resume-lang-dropdown {
   display: block;
 }
 
 body {
-  font-family: "Smiley Sans Oblique", "Open Sans", "Helvetica Neue", Arial, sans-serif;
+  font-family: "Smiley Sans Oblique", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", "Helvetica Neue", Arial, sans-serif;
 }
 
 #masthead {
-  position: fixed !important;
-  top: 0 !important;
-  left: 0 !important;
-  right: 0 !important;
-  z-index: 1000 !important;
-  background: #fff !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 #content {
@@ -1350,16 +1346,16 @@ body {
 }
 
 #secondary {
-  position: fixed !important;
+  position: fixed;
   top: 80px;
   right: 5%;
-  width: 22% !important;
+  width: 22%;
   max-width: 280px;
   max-height: calc(100vh - 100px);
   overflow-y: auto;
   z-index: 100;
-  float: none !important;
-  padding-top: 0 !important;
+  float: none;
+  padding-top: 0;
 }
 #secondary::-webkit-scrollbar {
   width: 4px;
@@ -1420,7 +1416,7 @@ body {
 }
 
 #primary {
-  max-width: 1000px !important;
+  max-width: 1000px;
 }
 
 #primary.home {
@@ -1443,98 +1439,151 @@ body {
 }
 @media (min-width: 769px) and (max-width: 1024px) {
   #content {
-    width: 95% !important;
-    padding: 0 10px !important;
+    width: 95%;
+    padding: 0 10px;
   }
   #primary {
-    width: 100% !important;
-    padding: 0 20px !important;
+    width: 100%;
+    padding: 0 20px;
     box-sizing: border-box;
   }
   #primary.home {
-    width: 100% !important;
-    padding: 0 20px !important;
+    width: 100%;
+    padding: 0 20px;
   }
   .post {
-    padding: 20px !important;
+    padding: 20px;
   }
 }
 @media (max-width: 768px) {
   #masthead {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    z-index: 1000 !important;
-    background: #fff !important;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
-    height: auto !important;
-    min-height: 50px !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    height: auto;
   }
   #content {
-    margin-top: 75px !important;
-    padding-top: 20px;
-    width: 100% !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
+    margin-top: 60px;
+    padding-top: 15px;
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
   }
   .site-header-inner {
-    padding: 8px 12px;
+    padding: 0 15px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    height: auto !important;
-    line-height: 1.4 !important;
+    justify-content: space-between;
+    height: 48px;
+    line-height: 48px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
   .site-header-inner .site-title {
-    font-size: 1.2em;
-    margin: 0 0 6px 0;
-    text-align: center;
-    line-height: 1.3;
+    font-size: 1.1em;
+    margin: 0;
+    text-align: left;
+    line-height: 48px;
+    flex-shrink: 0;
   }
   .site-header-inner .site-title a {
     color: #333;
     display: inline-block;
-    padding: 2px 0;
+    padding: 0;
+    font-weight: 500;
   }
   #nav-top {
-    width: 100%;
-    float: none !important;
+    width: auto;
+    float: none;
   }
   #nav-top .nav-top-items {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 4px;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 2px;
     margin: 0;
     padding: 0;
     list-style: none;
   }
   #nav-top .nav-top-items .menu-item a {
-    padding: 5px 10px;
+    padding: 4px 8px;
     font-size: 13px;
-    color: #555;
+    color: rgba(0, 0, 0, 0.6);
     text-decoration: none;
     border-radius: 4px;
-    transition: all 0.2s;
+    transition: color 0.2s;
     white-space: nowrap;
     display: inline-block;
-    line-height: 1.3;
+    line-height: 1.4;
   }
   #nav-top .nav-top-items .menu-item a:hover, #nav-top .nav-top-items .menu-item a:active {
     color: #4D89FB;
-    background: rgba(77, 137, 251, 0.1);
   }
   #nav-top .nav-top-items .menu-item:last-child a {
-    color: #ff6600;
-    font-weight: 500;
+    color: #999;
+    font-size: 12px;
+  }
+  .menu-item-resume {
+    position: relative;
+  }
+  .menu-item-resume .resume-nav-label {
+    display: inline-block;
+    padding: 4px 8px;
+    font-size: 13px;
+    color: rgba(0, 0, 0, 0.6);
+    cursor: pointer;
+    line-height: 1.4;
+    border-radius: 4px;
+  }
+  .menu-item-resume .resume-nav-label::after {
+    font-size: 0.6em;
+    opacity: 0.5;
+  }
+  .menu-item-resume .resume-lang-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 2px);
+    right: 0;
+    left: auto;
+    transform: none;
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    min-width: 100px;
+    padding: 4px 0;
+    z-index: 999;
+  }
+  .menu-item-resume .resume-lang-dropdown li {
+    margin: 0;
+    line-height: 1;
+  }
+  .menu-item-resume .resume-lang-dropdown li a {
+    display: block;
+    font-size: 13px;
+    padding: 8px 14px;
+    color: #555;
+    white-space: nowrap;
+  }
+  .menu-item-resume .resume-lang-dropdown li a:hover, .menu-item-resume .resume-lang-dropdown li a:active {
+    background: #f5f5f5;
+    color: #4D89FB;
+  }
+  .menu-item-resume:hover .resume-lang-dropdown, .menu-item-resume:focus-within .resume-lang-dropdown, .menu-item-resume.active .resume-lang-dropdown {
+    display: block;
   }
   .home #primary {
-    width: 100% !important;
-    padding: 0 15px !important;
-    max-width: 100% !important;
-    margin: 0 auto !important;
-    float: none !important;
+    width: 100%;
+    padding: 0 15px;
+    max-width: 100%;
+    margin: 0 auto;
+    float: none;
   }
   .home .posts {
     width: 100%;
@@ -1542,7 +1591,7 @@ body {
   .home .post {
     max-width: 100%;
     margin-bottom: 1.8em;
-    padding: 0 0 1.2em 0 !important;
+    padding: 0 0 1.2em 0;
     border-bottom: 1px solid #eee;
   }
   .home .post .post-header {
@@ -1581,10 +1630,11 @@ body {
     display: none;
   }
   #secondary {
-    position: static !important;
-    width: 100% !important;
-    max-width: none !important;
-    margin: 20px 15px 0 15px;
+    display: block;
+    position: static;
+    width: 100%;
+    max-width: none;
+    margin: 20px 0 0 0;
     padding: 15px;
     background: #fafafa;
     border-radius: 8px;
@@ -1600,8 +1650,8 @@ body {
     padding-bottom: 8px;
   }
   .post {
-    padding: 15px 15px !important;
-    max-width: 100% !important;
+    padding: 15px 15px;
+    max-width: 100%;
     box-sizing: border-box;
   }
   .post .post-header {
@@ -1738,21 +1788,37 @@ body {
     border-bottom-color: #4D89FB;
   }
   #primary {
-    width: 100% !important;
-    max-width: 100% !important;
-    padding: 0 15px !important;
-    margin: 0 auto !important;
+    width: 100%;
+    max-width: 100%;
+    padding: 0 15px;
+    margin: 0 auto;
     box-sizing: border-box;
-    float: none !important;
+    float: none;
   }
   #primary article {
-    padding: 0 !important;
+    padding: 0;
+  }
+  .post-footer .post-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .post-footer .post-nav .prev, .post-footer .post-nav .next {
+    float: none;
+    font-size: 14px;
+    padding: 8px 0;
+  }
+  .post-footer .post-nav .prev:hover, .post-footer .post-nav .next:hover {
+    transform: none;
+  }
+  .post-footer .post-nav .next {
+    text-align: right;
   }
   .archive {
-    margin: 0.5em 0 1.5em !important;
+    margin: 0.5em 0 1.5em;
   }
   .archive #primary {
-    padding: 0 15px !important;
+    padding: 0 15px;
   }
   .archive .archive-title {
     margin-bottom: 1em;
@@ -1776,7 +1842,7 @@ body {
   }
   .archive .archive-post {
     margin: 14px 0;
-    padding: 0 !important;
+    padding: 0;
     line-height: 1.6;
   }
   .archive .archive-post .archive-post-time {
@@ -1801,10 +1867,10 @@ body {
     color: #4D89FB;
   }
   .categories {
-    margin: 0.5em 0 2em !important;
+    margin: 0.5em 0 2em;
   }
   .categories #primary {
-    padding: 0 15px !important;
+    padding: 0 15px;
   }
   .categories .categories-title {
     font-size: 1.4em;
@@ -1838,10 +1904,10 @@ body {
     margin-left: 4px;
   }
   .tag-cloud {
-    margin: 0.5em 0 2em !important;
+    margin: 0.5em 0 2em;
   }
   .tag-cloud #primary {
-    padding: 0 15px !important;
+    padding: 0 15px;
   }
   .tag-cloud .tag-cloud-title {
     font-size: 1.4em;
@@ -1874,10 +1940,10 @@ body {
     text-align: center;
     font-size: 0.85em;
     color: #666;
-    width: 100% !important;
-    max-width: 100% !important;
+    width: 100%;
+    max-width: 100%;
     box-sizing: border-box;
-    margin: 20px auto 0 !important;
+    margin: 20px auto 0;
   }
   #colophon .footer-author {
     display: inline;
@@ -1892,6 +1958,25 @@ body {
     margin-top: 10px;
     display: block;
   }
+  .pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+  }
+  .pagination .prev, .pagination .next {
+    float: none;
+    font-size: 14px;
+    padding: 8px 12px;
+    background: #f5f5f5;
+    border-radius: 4px;
+  }
+  .pagination .prev:hover, .pagination .next:hover {
+    transform: none;
+  }
+  .pagination .prev:active, .pagination .next:active {
+    background: #e8e8e8;
+  }
   .back-to-top {
     width: 40px;
     height: 40px;
@@ -1904,34 +1989,39 @@ body {
   body {
     font-size: 14px;
   }
-  #masthead {
-    min-height: 45px !important;
-  }
   #content {
-    margin-top: 70px !important;
-    padding-top: 15px;
+    margin-top: 56px;
+    padding-top: 12px;
   }
   .site-header-inner {
-    padding: 6px 10px;
+    padding: 0 10px;
+    height: 44px;
+    line-height: 44px;
   }
   .site-header-inner .site-title {
-    font-size: 1.1em;
-    margin-bottom: 4px;
+    font-size: 1em;
+    line-height: 44px;
   }
   #nav-top .nav-top-items {
-    gap: 3px;
+    gap: 1px;
   }
   #nav-top .nav-top-items .menu-item a {
-    padding: 3px 8px;
+    padding: 3px 6px;
     font-size: 12px;
-    border-radius: 3px;
+  }
+  #nav-top .nav-top-items .menu-item:last-child a {
+    font-size: 11px;
+  }
+  .menu-item-resume .resume-nav-label {
+    padding: 3px 6px;
+    font-size: 12px;
   }
   .home #primary {
-    padding: 0 12px !important;
+    padding: 0 12px;
   }
   .home .post {
     margin-bottom: 1.5em;
-    padding-bottom: 1em !important;
+    padding-bottom: 1em;
   }
   .home .post .post-title {
     font-size: 1.1em;
@@ -1946,7 +2036,7 @@ body {
     line-height: 1.7;
   }
   .post {
-    padding: 12px 12px !important;
+    padding: 12px 12px;
   }
   .post .post-header {
     margin-bottom: 1em;
@@ -2013,10 +2103,10 @@ body {
     padding: 6px 10px;
   }
   #primary {
-    padding: 0 12px !important;
+    padding: 0 12px;
   }
   #secondary {
-    margin: 15px 12px 0 12px;
+    margin: 15px 0 0 0;
     padding: 12px;
   }
   .archive .archive-title .archive-name {
@@ -2070,29 +2160,35 @@ body {
   }
 }
 @media (max-width: 375px) {
-  #masthead {
-    min-height: 40px !important;
-  }
   #content {
-    margin-top: 65px !important;
-    padding-top: 12px;
+    margin-top: 52px;
+    padding-top: 10px;
   }
   .site-header-inner {
-    padding: 5px 8px;
+    padding: 0 8px;
+    height: 40px;
+    line-height: 40px;
   }
   .site-header-inner .site-title {
-    font-size: 1em;
-    margin-bottom: 3px;
+    font-size: 0.9em;
+    line-height: 40px;
   }
   #nav-top .nav-top-items {
-    gap: 2px;
+    gap: 0;
   }
   #nav-top .nav-top-items .menu-item a {
-    padding: 2px 6px;
+    padding: 2px 5px;
+    font-size: 11px;
+  }
+  #nav-top .nav-top-items .menu-item:last-child a {
+    font-size: 10px;
+  }
+  .menu-item-resume .resume-nav-label {
+    padding: 2px 5px;
     font-size: 11px;
   }
   .home #primary {
-    padding: 0 10px !important;
+    padding: 0 10px;
   }
   .home .post {
     margin-bottom: 1.3em;
@@ -2106,7 +2202,7 @@ body {
     line-height: 1.65;
   }
   .post {
-    padding: 10px !important;
+    padding: 10px;
   }
   .post .post-header .post-title {
     font-size: 1.2em;
@@ -2129,7 +2225,7 @@ body {
   }
   .post .post-content pre {
     padding: 8px;
-    font-size: 11px;
+    font-size: 12px;
     line-height: 1.5;
   }
   .post .post-content ul, .post .post-content ol {
@@ -2142,7 +2238,7 @@ body {
   .archive #primary,
   .categories #primary,
   .tag-cloud #primary {
-    padding: 0 10px !important;
+    padding: 0 10px;
   }
   .archive .archive-title .archive-name {
     font-size: 1.35em;
@@ -2152,12 +2248,12 @@ body {
   }
 }
 h1, h2, h3, h4, h5, h6 {
-  font-family: "Smiley Sans Oblique", "Open Sans", "Helvetica Neue", Arial, sans-serif;
+  font-family: "Smiley Sans Oblique", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", "Helvetica Neue", Arial, sans-serif;
   font-weight: 600;
 }
 
 .post-title {
-  font-family: "Smiley Sans Oblique", "Open Sans", "Helvetica Neue", Arial, sans-serif;
+  font-family: "Smiley Sans Oblique", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", "Helvetica Neue", Arial, sans-serif;
 }
 
 .post-content {
@@ -2373,25 +2469,25 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .home .post {
-  margin-bottom: 1em !important;
+  margin-bottom: 1em;
   max-width: 100%;
-  padding: 0 0 1em 0 !important;
-  border-bottom: 1px solid #eee !important;
-  border-top: none !important;
+  padding: 0 0 1em 0;
+  border-bottom: 1px solid #eee;
+  border-top: none;
 }
 .home .post:last-child {
-  border-bottom: none !important;
+  border-bottom: none;
 }
 .home .post + .post {
-  border-top: none !important;
+  border-top: none;
 }
 
 .posts {
-  border-bottom: none !important;
+  border-bottom: none;
 }
 
 .post + .post {
-  border-top: none !important;
+  border-top: none;
 }
 
 .home .post .post-header {

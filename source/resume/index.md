@@ -11,7 +11,7 @@ contact:
   website: "https://wxxlamp.cn"
 education:
   - school: 香港科技大学（QS Ranking 50）
-    major: 信息技术 · 研究生（全日制）
+    major: 计算机科学与技术 · 研究生（全日制）
     date: 2024.09 – 2025.10
     description: 成绩优异，GPA 4.1/4.3，学习课程包括区块链、NLP、LLM等，获得24学期 Top Student Award Scholarship。
   - school: 郑州大学（双一流/211）

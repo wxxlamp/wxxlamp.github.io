@@ -13,6 +13,7 @@
     cursor: pointer;
     color: rgba(0, 0, 0, 0.6);
     font-size: inherit;
+    text-decoration: none;
 
     &::after {
       content: ' ▾';
@@ -60,25 +61,26 @@
   }
 
   &:hover .resume-lang-dropdown,
+  &:focus-within .resume-lang-dropdown,
   &.active .resume-lang-dropdown {
     display: block;
   }
 }
 
-// 1. Smiley Sans Font Application
+// 1. Smiley Sans Font Application (loads async, system fonts as fallback)
 body {
-  font-family: 'Smiley Sans Oblique', 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Smiley Sans Oblique', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft Yahei', 'Helvetica Neue', Arial, sans-serif;
 }
 
 // Fixed Header Styling - override theme default
 #masthead {
-  position: fixed !important;
-  top: 0 !important;
-  left: 0 !important;
-  right: 0 !important;
-  z-index: 1000 !important;
-  background: #fff !important;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
 // Adjust content to account for fixed header
@@ -96,16 +98,16 @@ body {
 
 // Fixed Sidebar Widgets on Home Page
 #secondary {
-  position: fixed !important;
+  position: fixed;
   top: 80px;
   right: 5%;
-  width: 22% !important;
+  width: 22%;
   max-width: 280px;
   max-height: calc(100vh - 100px);
   overflow-y: auto;
   z-index: 100;
-  float: none !important;
-  padding-top: 0 !important;
+  float: none;
+  padding-top: 0;
 
   // Scrollbar styling
   &::-webkit-scrollbar {
@@ -180,7 +182,7 @@ body {
 
 // Adjust primary content width - make it wider
 #primary {
-  max-width: 1000px !important;
+  max-width: 1000px;
 }
 
 #primary.home {
@@ -207,23 +209,23 @@ body {
 // Tablet devices (768px - 1024px)
 @media (min-width: 769px) and (max-width: 1024px) {
   #content {
-    width: 95% !important;
-    padding: 0 10px !important;
+    width: 95%;
+    padding: 0 10px;
   }
 
   #primary {
-    width: 100% !important;
-    padding: 0 20px !important;
+    width: 100%;
+    padding: 0 20px;
     box-sizing: border-box;
   }
 
   #primary.home {
-    width: 100% !important;
-    padding: 0 20px !important;
+    width: 100%;
+    padding: 0 20px;
   }
 
   .post {
-    padding: 20px !important;
+    padding: 20px;
   }
 }
 
@@ -231,99 +233,165 @@ body {
 @media (max-width: 768px) {
   // Fixed header with reduced height for mobile
   #masthead {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    z-index: 1000 !important;
-    background: #fff !important;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
-    height: auto !important;
-    min-height: 50px !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    height: auto;
   }
 
-  // Adjust content margin for smaller header - increased spacing
+  // Adjust content margin for header
   #content {
-    margin-top: 75px !important;
-    padding-top: 20px;
-    width: 100% !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
+    margin-top: 60px;
+    padding-top: 15px;
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
   }
 
-  // Header inner layout - more compact
+  // Header inner layout - single row: logo left, nav right
   .site-header-inner {
-    padding: 8px 12px;
+    padding: 0 15px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    height: auto !important;
-    line-height: 1.4 !important;
+    justify-content: space-between;
+    height: 48px;
+    line-height: 48px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 
     .site-title {
-      font-size: 1.2em;
-      margin: 0 0 6px 0;
-      text-align: center;
-      line-height: 1.3;
+      font-size: 1.1em;
+      margin: 0;
+      text-align: left;
+      line-height: 48px;
+      flex-shrink: 0;
 
       a {
         color: #333;
         display: inline-block;
-        padding: 2px 0;
+        padding: 0;
+        font-weight: 500;
       }
     }
   }
 
-  // Navigation - more compact and touch-friendly
+  // Navigation - compact horizontal
   #nav-top {
-    width: 100%;
-    float: none !important;
+    width: auto;
+    float: none;
 
     .nav-top-items {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 4px;
+      flex-wrap: nowrap;
+      align-items: center;
+      gap: 2px;
       margin: 0;
       padding: 0;
       list-style: none;
 
       .menu-item {
         a {
-          padding: 5px 10px;
+          padding: 4px 8px;
           font-size: 13px;
-          color: #555;
+          color: rgba(0,0,0,0.6);
           text-decoration: none;
           border-radius: 4px;
-          transition: all 0.2s;
+          transition: color 0.2s;
           white-space: nowrap;
           display: inline-block;
-          line-height: 1.3;
+          line-height: 1.4;
 
           &:hover, &:active {
             color: $theme-color;
-            background: rgba($theme-color, 0.1);
           }
         }
 
+        // RSS item - subtle styling
         &:last-child {
           a {
-            color: #ff6600;
-            font-weight: 500;
+            color: #999;
+            font-size: 12px;
           }
         }
       }
     }
   }
 
+  // Resume dropdown - compact single item with touch-friendly dropdown
+  .menu-item-resume {
+    position: relative;
+
+    .resume-nav-label {
+      display: inline-block;
+      padding: 4px 8px;
+      font-size: 13px;
+      color: rgba(0,0,0,0.6);
+      cursor: pointer;
+      line-height: 1.4;
+      border-radius: 4px;
+
+      &::after {
+        font-size: 0.6em;
+        opacity: 0.5;
+      }
+    }
+
+    .resume-lang-dropdown {
+      display: none;
+      position: absolute;
+      top: calc(100% + 2px);
+      right: 0;
+      left: auto;
+      transform: none;
+      background: #fff;
+      border: 1px solid #e8e8e8;
+      border-radius: 6px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      min-width: 100px;
+      padding: 4px 0;
+      z-index: 999;
+
+      li {
+        margin: 0;
+        line-height: 1;
+
+        a {
+          display: block;
+          font-size: 13px;
+          padding: 8px 14px;
+          color: #555;
+          white-space: nowrap;
+
+          &:hover, &:active {
+            background: #f5f5f5;
+            color: $theme-color;
+          }
+        }
+      }
+    }
+
+    // Show dropdown on hover and focus-within (touch devices)
+    &:hover .resume-lang-dropdown,
+    &:focus-within .resume-lang-dropdown,
+    &.active .resume-lang-dropdown {
+      display: block;
+    }
+  }
+
   // Home page mobile adjustments - improved spacing and typography
   .home {
     #primary {
-      width: 100% !important;
-      padding: 0 15px !important;
-      max-width: 100% !important;
-      margin: 0 auto !important;
-      float: none !important;
+      width: 100%;
+      padding: 0 15px;
+      max-width: 100%;
+      margin: 0 auto;
+      float: none;
     }
 
     .posts {
@@ -333,7 +401,7 @@ body {
     .post {
       max-width: 100%;
       margin-bottom: 1.8em;
-      padding: 0 0 1.2em 0 !important;
+      padding: 0 0 1.2em 0;
       border-bottom: 1px solid #eee;
 
       .post-header {
@@ -382,12 +450,13 @@ body {
     display: none;
   }
 
-  // Secondary sidebar on mobile
+  // Secondary sidebar on mobile - show below content
   #secondary {
-    position: static !important;
-    width: 100% !important;
-    max-width: none !important;
-    margin: 20px 15px 0 15px;
+    display: block;
+    position: static;
+    width: 100%;
+    max-width: none;
+    margin: 20px 0 0 0;
     padding: 15px;
     background: #fafafa;
     border-radius: 8px;
@@ -407,8 +476,8 @@ body {
 
   // Article layout adjustment - improved spacing and typography
   .post {
-    padding: 15px 15px !important;
-    max-width: 100% !important;
+    padding: 15px 15px;
+    max-width: 100%;
     box-sizing: border-box;
 
     .post-header {
@@ -580,24 +649,45 @@ body {
 
   // Page layout (for about, categories, tags, etc.)
   #primary {
-    width: 100% !important;
-    max-width: 100% !important;
-    padding: 0 15px !important;
-    margin: 0 auto !important;
+    width: 100%;
+    max-width: 100%;
+    padding: 0 15px;
+    margin: 0 auto;
     box-sizing: border-box;
-    float: none !important;
+    float: none;
 
     article {
-      padding: 0 !important;
+      padding: 0;
+    }
+  }
+
+  // Post navigation - stack on mobile for touch-friendly layout
+  .post-footer .post-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    .prev, .next {
+      float: none;
+      font-size: 14px;
+      padding: 8px 0;
+
+      &:hover {
+        transform: none;
+      }
+    }
+
+    .next {
+      text-align: right;
     }
   }
 
   // Archive page mobile - improved spacing
   .archive {
-    margin: 0.5em 0 1.5em !important;
+    margin: 0.5em 0 1.5em;
 
     #primary {
-      padding: 0 15px !important;
+      padding: 0 15px;
     }
 
     .archive-title {
@@ -626,7 +716,7 @@ body {
 
     .archive-post {
       margin: 14px 0;
-      padding: 0 !important;
+      padding: 0;
       line-height: 1.6;
 
       .archive-post-time {
@@ -658,10 +748,10 @@ body {
 
   // Categories page mobile - improved
   .categories {
-    margin: 0.5em 0 2em !important;
+    margin: 0.5em 0 2em;
 
     #primary {
-      padding: 0 15px !important;
+      padding: 0 15px;
     }
 
     .categories-title {
@@ -703,10 +793,10 @@ body {
 
   // Tags page mobile - improved
   .tag-cloud {
-    margin: 0.5em 0 2em !important;
+    margin: 0.5em 0 2em;
 
     #primary {
-      padding: 0 15px !important;
+      padding: 0 15px;
     }
 
     .tag-cloud-title {
@@ -746,10 +836,10 @@ body {
     text-align: center;
     font-size: 0.85em;
     color: #666;
-    width: 100% !important;
-    max-width: 100% !important;
+    width: 100%;
+    max-width: 100%;
     box-sizing: border-box;
-    margin: 20px auto 0 !important;
+    margin: 20px auto 0;
 
     .footer-author {
       display: inline;
@@ -765,6 +855,30 @@ body {
       font-size: 0.8em;
       margin-top: 10px;
       display: block;
+    }
+  }
+
+  // Pagination mobile
+  .pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+
+    .prev, .next {
+      float: none;
+      font-size: 14px;
+      padding: 8px 12px;
+      background: #f5f5f5;
+      border-radius: 4px;
+
+      &:hover {
+        transform: none;
+      }
+
+      &:active {
+        background: #e8e8e8;
+      }
     }
   }
 
@@ -784,48 +898,56 @@ body {
     font-size: 14px;
   }
 
-  // More compact header for small screens
-  #masthead {
-    min-height: 45px !important;
-  }
-
   #content {
-    margin-top: 70px !important;
-    padding-top: 15px;
+    margin-top: 56px;
+    padding-top: 12px;
   }
 
   .site-header-inner {
-    padding: 6px 10px;
+    padding: 0 10px;
+    height: 44px;
+    line-height: 44px;
 
     .site-title {
-      font-size: 1.1em;
-      margin-bottom: 4px;
+      font-size: 1em;
+      line-height: 44px;
     }
   }
 
   #nav-top {
     .nav-top-items {
-      gap: 3px;
+      gap: 1px;
 
       .menu-item {
         a {
-          padding: 3px 8px;
+          padding: 3px 6px;
           font-size: 12px;
-          border-radius: 3px;
+        }
+
+        &:last-child a {
+          font-size: 11px;
         }
       }
+    }
+  }
+
+  // Resume dropdown - smaller on small screens
+  .menu-item-resume {
+    .resume-nav-label {
+      padding: 3px 6px;
+      font-size: 12px;
     }
   }
 
   // Home page - small screens
   .home {
     #primary {
-      padding: 0 12px !important;
+      padding: 0 12px;
     }
 
     .post {
       margin-bottom: 1.5em;
-      padding-bottom: 1em !important;
+      padding-bottom: 1em;
 
       .post-title {
         font-size: 1.1em;
@@ -846,7 +968,7 @@ body {
 
   // Article - small screens
   .post {
-    padding: 12px 12px !important;
+    padding: 12px 12px;
 
     .post-header {
       margin-bottom: 1em;
@@ -931,11 +1053,11 @@ body {
 
   // Smaller padding for pages on tiny screens
   #primary {
-    padding: 0 12px !important;
+    padding: 0 12px;
   }
 
   #secondary {
-    margin: 15px 12px 0 12px;
+    margin: 15px 0 0 0;
     padding: 12px;
   }
 
@@ -1021,42 +1143,50 @@ body {
 
 // Extra small devices (phones under 375px)
 @media (max-width: 375px) {
-  // Even more compact header
-  #masthead {
-    min-height: 40px !important;
-  }
-
   #content {
-    margin-top: 65px !important;
-    padding-top: 12px;
+    margin-top: 52px;
+    padding-top: 10px;
   }
 
   .site-header-inner {
-    padding: 5px 8px;
+    padding: 0 8px;
+    height: 40px;
+    line-height: 40px;
 
     .site-title {
-      font-size: 1em;
-      margin-bottom: 3px;
+      font-size: 0.9em;
+      line-height: 40px;
     }
   }
 
   #nav-top {
     .nav-top-items {
-      gap: 2px;
+      gap: 0;
 
       .menu-item {
         a {
-          padding: 2px 6px;
+          padding: 2px 5px;
           font-size: 11px;
         }
+
+        &:last-child a {
+          font-size: 10px;
+        }
       }
+    }
+  }
+
+  .menu-item-resume {
+    .resume-nav-label {
+      padding: 2px 5px;
+      font-size: 11px;
     }
   }
 
   // Home page - extra small screens
   .home {
     #primary {
-      padding: 0 10px !important;
+      padding: 0 10px;
     }
 
     .post {
@@ -1076,7 +1206,7 @@ body {
 
   // Article - extra small screens
   .post {
-    padding: 10px !important;
+    padding: 10px;
 
     .post-header {
       .post-title {
@@ -1098,7 +1228,7 @@ body {
 
       pre {
         padding: 8px;
-        font-size: 11px;
+        font-size: 12px;
         line-height: 1.5;
       }
 
@@ -1117,7 +1247,7 @@ body {
   .archive #primary,
   .categories #primary,
   .tag-cloud #primary {
-    padding: 0 10px !important;
+    padding: 0 10px;
   }
 
   .archive {
@@ -1136,12 +1266,12 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Smiley Sans Oblique', 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Smiley Sans Oblique', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft Yahei', 'Helvetica Neue', Arial, sans-serif;
   font-weight: 600;
 }
 
 .post-title {
-  font-family: 'Smiley Sans Oblique', 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Smiley Sans Oblique', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft Yahei', 'Helvetica Neue', Arial, sans-serif;
 }
 
 // 2. Improved Article Spacing (参考优秀博客的间距)
@@ -1391,31 +1521,31 @@ h1, h2, h3, h4, h5, h6 {
 // 7. Better Post List on Home Page - Add separator between posts
 .home {
   .post {
-    margin-bottom: 1em !important;
+    margin-bottom: 1em;
     max-width: 100%;
-    padding: 0 0 1em 0 !important;
-    border-bottom: 1px solid #eee !important;
-    border-top: none !important;
+    padding: 0 0 1em 0;
+    border-bottom: 1px solid #eee;
+    border-top: none;
 
     &:last-child {
-      border-bottom: none !important;
+      border-bottom: none;
     }
 
     // Remove inherited borders
     & + .post {
-      border-top: none !important;
+      border-top: none;
     }
   }
 }
 
 // Remove default .posts border
 .posts {
-  border-bottom: none !important;
+  border-bottom: none;
 }
 
 // Remove default border between posts globally
 .post + .post {
-  border-top: none !important;
+  border-top: none;
 }
 
 // Home page post styling

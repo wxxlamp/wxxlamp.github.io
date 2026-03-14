@@ -9,7 +9,7 @@
                 {% for name, path in theme.menu %}
                     {% if name === 'Resume' %}
                     <li class="menu-item menu-item-resume">
-                        <span class="resume-nav-label">Resume</span>
+                        <a href="{{ url_for('/resume') }}" class="resume-nav-label" onclick="event.preventDefault()">Resume</a>
                         <ul class="resume-lang-dropdown">
                             <li><a href="{{ url_for('/resume') }}">中文简历</a></li>
                             <li><a href="{{ url_for('/resume-en') }}">English</a></li>

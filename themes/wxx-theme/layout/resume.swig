@@ -685,6 +685,25 @@
   {% include '_script/theme.swig' %}
 
   <script>
+    var CACHE_KEY = 'resume_auth';
+
+    function getCurrentMonth() {
+      var d = new Date();
+      return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+    }
+
+    function checkCachedAuth() {
+      try {
+        var cached = localStorage.getItem(CACHE_KEY);
+        if (cached === getCurrentMonth()) {
+          document.getElementById('passwordPage').style.display = 'none';
+          document.getElementById('resumePage').style.display = 'block';
+          return true;
+        }
+      } catch (e) {}
+      return false;
+    }
+
     function generateExpectedPassword() {
       const now = new Date();
       const year = now.getFullYear();
@@ -728,6 +747,7 @@
           const isValid = validate(input);
 
           if (isValid) {
+            try { localStorage.setItem(CACHE_KEY, getCurrentMonth()); } catch (e) {}
             document.getElementById('passwordPage').style.display = 'none';
             document.getElementById('resumePage').style.display = 'block';
           } else {
@@ -742,6 +762,9 @@
         }
       }, 900);
     }
+
+    // Check cache on page load
+    checkCachedAuth();
 
     function exportToPDF() {
       // Hide the export button before printing

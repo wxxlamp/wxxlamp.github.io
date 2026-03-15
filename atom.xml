@@ -11,7 +11,7 @@
   <rights>All rights reserved 2026, Wxx</rights>
   <subtitle>记录技术成长与生活感悟</subtitle>
   <title>王星星的魔灯</title>
-  <updated>2026-03-15T06:54:09.324Z</updated>
+  <updated>2026-03-15T08:43:33.869Z</updated>
   <entry>
     <author>
       <name>Wxx</name>
@@ -23,7 +23,7 @@
     <published>2025-10-07T02:36:00.000Z</published>
     <summary>从小镇做题家到香港科技大学读研的一年回顾，分享在港学习生活的独特体验与感悟。</summary>
     <title>为什么很多人都想去香港读书？</title>
-    <updated>2026-03-15T06:54:09.324Z</updated>
+    <updated>2026-03-15T08:43:33.869Z</updated>
   </entry>
   <entry>
     <author>
@@ -36,7 +36,7 @@
     <published>2025-09-17T02:36:00.000Z</published>
     <summary>深入解析数字人民币的本质与技术原理，对比传统支付网络和稳定币的异同。</summary>
     <title>有了在线支付，为什么需要数字人民币</title>
-    <updated>2026-03-15T06:54:09.324Z</updated>
+    <updated>2026-03-15T08:43:33.868Z</updated>
   </entry>
   <entry>
     <author>
@@ -49,7 +49,7 @@
     <published>2025-09-07T02:36:00.000Z</published>
     <summary>面向技术和小白用户的区块链与比特币科普，从去中心化概念到技术原理的通俗解读。</summary>
     <title>万字长文，从零科普比特币</title>
-    <updated>2026-03-15T06:54:09.324Z</updated>
+    <updated>2026-03-15T08:43:33.868Z</updated>
   </entry>
   <entry>
     <author>
@@ -62,7 +62,7 @@
     <published>2025-03-07T12:19:00.000Z</published>
     <summary>2024年终总结，新鲜、充实和迷茫的一年，接触新环境与新挑战的思考与感悟。</summary>
     <title>我的2024</title>
-    <updated>2026-03-15T06:54:09.321Z</updated>
+    <updated>2026-03-15T08:43:33.866Z</updated>
   </entry>
   <entry>
     <author>
@@ -75,7 +75,7 @@
     <published>2025-02-16T12:19:00.000Z</published>
     <summary>入职阿里三年的回顾与思考，从企业金融到ICBU技术部的经历，分享职场成长感悟。</summary>
     <title>我在阿里这三年，聊点非技术的</title>
-    <updated>2026-03-15T06:54:09.318Z</updated>
+    <updated>2026-03-15T08:43:33.864Z</updated>
   </entry>
   <entry>
     <author>
@@ -88,7 +88,7 @@
     <published>2024-01-22T12:19:00.000Z</published>
     <summary>2023年终总结，一个字累，两个字充实。平和、有意思、突破自我但也不够坚持的一年。</summary>
     <title>我的2023</title>
-    <updated>2026-03-15T06:54:09.321Z</updated>
+    <updated>2026-03-15T08:43:33.866Z</updated>
   </entry>
   <entry>
     <author>
@@ -101,7 +101,7 @@
     <published>2023-08-04T14:38:00.000Z</published>
     <summary>探讨Java泛型通配符与扩展字段的使用，分析泛型类型擦除导致的编译问题及解决方案。</summary>
     <title>泛型通配符和扩展字段</title>
-    <updated>2026-03-15T06:54:09.319Z</updated>
+    <updated>2026-03-15T08:43:33.864Z</updated>
   </entry>
   <entry>
     <author>
@@ -115,7 +115,7 @@
     <published>2023-07-09T02:36:00.000Z</published>
     <summary>以秒杀场景为例，讨论查询热点和写入热点数据的处理方案，涵盖缓存策略和流量控制。</summary>
     <title>如何处理热点数据问题</title>
-    <updated>2026-03-15T06:54:09.319Z</updated>
+    <updated>2026-03-15T08:43:33.864Z</updated>
   </entry>
   <entry>
     <author>
@@ -128,7 +128,7 @@
     <published>2023-06-11T11:36:00.000Z</published>
     <summary>记录分库分表场景下修改路由键引发的数据查询异常，分析bigint与字符串类型的路由差异。</summary>
     <title>当修改分库分表键时</title>
-    <updated>2026-03-15T06:54:09.324Z</updated>
+    <updated>2026-03-15T08:43:33.869Z</updated>
   </entry>
   <entry>
     <author>
@@ -141,7 +141,7 @@
     <published>2023-05-07T02:36:00.000Z</published>
     <summary>分析消息队列消费幂等问题，针对同一时间内多条状态变更消息导致重复消费的解决方案。</summary>
     <title>如何解决消息幂等问题</title>
-    <updated>2026-03-15T06:54:09.319Z</updated>
+    <updated>2026-03-15T08:43:33.864Z</updated>
   </entry>
   <entry>
     <author>
@@ -154,7 +154,7 @@
     <published>2023-05-05T02:36:00.000Z</published>
     <summary>精子库捐精体验记录，从报名体检到捐献的全过程分享与科普。</summary>
     <title>捐精有感</title>
-    <updated>2026-03-15T06:54:09.320Z</updated>
+    <updated>2026-03-15T08:43:33.865Z</updated>
   </entry>
   <entry>
     <author>
@@ -167,7 +167,7 @@
     <published>2023-04-25T13:36:00.000Z</published>
     <summary>排查MetaQ(RocketMQ)消费者堆积问题，从Spring Cloud Stream迁移到原生配置导致的消费异常分析。</summary>
     <title>MetaQ消费堆积问题排查</title>
-    <updated>2026-03-15T06:54:09.321Z</updated>
+    <updated>2026-03-15T08:43:33.865Z</updated>
   </entry>
   <entry>
     <author>
@@ -180,7 +180,7 @@
     <published>2023-03-13T11:36:00.000Z</published>
     <summary>两次上海之行的感悟对比，从初次震撼到五年后再访的心境变化与思考。</summary>
     <title>我对上海的印象</title>
-    <updated>2026-03-15T06:54:09.323Z</updated>
+    <updated>2026-03-15T08:43:33.868Z</updated>
   </entry>
   <entry>
     <author>
@@ -193,7 +193,7 @@
     <published>2023-02-18T11:36:00.000Z</published>
     <summary>Spring项目中的测试实践指南，涵盖单元测试和集成测试的方法论与常用工具。</summary>
     <title>Test In Spring Project</title>
-    <updated>2026-03-15T06:54:09.323Z</updated>
+    <updated>2026-03-15T08:43:33.868Z</updated>
   </entry>
   <entry>
     <author>
@@ -206,7 +206,7 @@
     <published>2023-02-07T02:36:00.000Z</published>
     <summary>零拷贝技术详解，从操作系统IO流程出发，分析mmap、sendfile等零拷贝实现方案。</summary>
     <title>零拷贝</title>
-    <updated>2026-03-15T06:54:09.324Z</updated>
+    <updated>2026-03-15T08:43:33.869Z</updated>
   </entry>
   <entry>
     <author>
@@ -219,7 +219,7 @@
     <published>2023-01-31T12:19:00.000Z</published>
     <summary>春节返乡随笔，关于过年的期盼与感悟，记录与家人团聚的温暖时光。</summary>
     <title>春节回家记</title>
-    <updated>2026-03-15T06:54:09.323Z</updated>
+    <updated>2026-03-15T08:43:33.867Z</updated>
   </entry>
   <entry>
     <author>
@@ -232,7 +232,7 @@
     <published>2023-01-22T12:19:00.000Z</published>
     <summary>2022年终总结，迷茫与成长交织的一年，经历裁员、组织调整后的思考与沉淀。</summary>
     <title>我的2022</title>
-    <updated>2026-03-15T06:54:09.321Z</updated>
+    <updated>2026-03-15T08:43:33.866Z</updated>
   </entry>
   <entry>
     <author>
@@ -245,7 +245,7 @@
     <published>2023-01-10T02:36:00.000Z</published>
     <summary>Netty框架可用性剖析，探讨Netty在网络编程中的优势及其对NIO、TCP粘包拆包等问题的处理。</summary>
     <title>Netty可用性剖析</title>
-    <updated>2026-03-15T06:54:09.322Z</updated>
+    <updated>2026-03-15T08:43:33.867Z</updated>
   </entry>
   <entry>
     <author>
@@ -258,7 +258,7 @@
     <published>2023-01-06T02:36:00.000Z</published>
     <summary>高中信息技术教师资格证面试笔记，包含结构化面试、试讲技巧和答辩准备要点。</summary>
     <title>高中信息技术面试笔记</title>
-    <updated>2026-03-15T06:54:09.323Z</updated>
+    <updated>2026-03-15T08:43:33.868Z</updated>
   </entry>
   <entry>
     <author>
@@ -271,6 +271,6 @@
     <published>2022-12-10T06:36:00.000Z</published>
     <summary>分析HashMap在多线程并发put场景下的安全问题，通过源码解读揭示并发环境下的潜在风险。</summary>
     <title>HashMap的并发put问题</title>
-    <updated>2026-03-15T06:54:09.321Z</updated>
+    <updated>2026-03-15T08:43:33.866Z</updated>
   </entry>
 </feed>

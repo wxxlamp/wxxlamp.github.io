@@ -377,7 +377,8 @@
       .section-title { font-size: 1.1rem; margin: 0.6rem 0 0.4rem; padding-bottom: 0.2rem; }
       .item { margin-bottom: 0.5rem; page-break-inside: avoid; }
       .section-title { page-break-after: avoid; }
-      .item-header { font-size: 0.95rem; margin-bottom: 0.1rem; }
+      .item-header { font-size: 0.95rem; margin-bottom: 0.1rem; flex-direction: row; justify-content: space-between; align-items: baseline; }
+      .education-header { flex-direction: row; gap: 0.5rem; }
       .item-subheader { font-size: 0.9rem; margin: 0.1rem 0 0.2rem; }
       .item-date { font-size: 0.85rem; }
       .item-content { font-size: 0.85rem; line-height: 1.4; margin-top: 0.2rem; }

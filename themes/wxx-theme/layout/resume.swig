@@ -534,6 +534,14 @@
       .item-header {
         font-size: 0.95rem;
         margin-bottom: 0.1rem;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: baseline;
+      }
+
+      .education-header {
+        flex-direction: row;
+        gap: 0.5rem;
       }
 
       .item-subheader {

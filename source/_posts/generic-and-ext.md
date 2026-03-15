@@ -1,12 +1,14 @@
 ---
-title: 泛型通配符和扩展字段
-date: 2023-08-04
-description: 探讨Java泛型通配符的使用技巧，以及扩展字段的最佳实践，通过泛型解决Map类型转换问题。
+title: "泛型通配符和扩展字段"
+date: 2023-08-04 22:38
 tags:
-  - Java
+   - Java
 categories:
-  - 场景实践
+   - 场景实践
+description: "探讨Java泛型通配符与扩展字段的使用，分析泛型类型擦除导致的编译问题及解决方案。"
 ---
+
+
 
 # 1. 问题引出
 
@@ -16,7 +18,7 @@ public class QuotaInfoView {
     /***
      * 额外信息
      */
-    private Map extra;
+    private Map<String, Object> extra;
 
     public void addExtraMap(String key, Object value) {
         if (extra == null) {
@@ -25,7 +27,7 @@ public class QuotaInfoView {
         extra.put(key, value);
     }
 
-    public void addExtraMap(Map map) {
+    public void addExtraMap(Map<String, Object> map) {
         if (MapUtils.isEmpty(map)) {
             return;
         }
@@ -36,29 +38,20 @@ public class QuotaInfoView {
 
     }
 }
-
 ```
-
 如果客户端想要使用如下方式调用的话，则会编译失败
-
 ```java
 public void test() {
-	Map map = new HashMap<>();
+	Map<String, String> map = new HashMap<>();
     quotaInfoView.addExtraMap(map); 
 }
-
 ```
-
 # 2. 巧用泛型通配符解决
-
 那么对于以上的问题我们怎么解决呢？可以使用三种泛型方式来解决
-
 ## 尝试一
-
 只要是String及其父类都可以放进来
-
 ```java
-public void addExtraMap(Map map) {
+public void addExtraMap(Map<String, ? super String> map) {
     if (MapUtils.isEmpty(map)) {
         return;
     }
@@ -68,25 +61,18 @@ public void addExtraMap(Map map) {
     extra.putAll(map);
 
 }
-
 ```
-
 但是对于这种形式，如果我使用如下的写法，仍然会编译失败
-
 ```java
 public void test() {
-	Map map = new HashMap<>();
+	Map<String, Integer> map = new HashMap<>();
     quotaInfoView.addExtraMap(map); 
 }
-
 ```
-
 ## 尝试二
-
 我们看一下String和Integer的通用父类是谁，那一定是object了
-
 ```java
-public void addExtraMap(Map map) {
+public void addExtraMap(Map<String, ? extends Object> map) {
     if (MapUtils.isEmpty(map)) {
         return;
     }
@@ -96,13 +82,10 @@ public void addExtraMap(Map map) {
     extra.putAll(map);
 
 }
-
 ```
-
 这种方式还可以再简化
-
 ```java
-public void addExtraMap(Map map) {
+public void addExtraMap(Map<String, ?> map) {
     if (MapUtils.isEmpty(map)) {
         return;
     }
@@ -112,29 +95,26 @@ public void addExtraMap(Map map) {
     extra.putAll(map);
 
 }
-
 ```
-
 ## 推荐阅读
-
-[EffectiveJava]读书笔记
+[[EffectiveJava]读书笔记](https://wxxlamp.cn/2022/03/22/java-effective/)
 
 # 3. 扩展字段的推荐写法
 
-大家都特别喜欢用扩展字段，但是开发没有银弹，扩展字段用时一时爽，维护火葬场，如下所示：有两个问题，一个是类型强转抛出NPE等，一个是不知道扩展字段里面究竟放的什么
+大家都特别喜欢用扩展字段，但是开发没有银弹，扩展字段用时一时爽，维护火葬场，如下所示：
+有两个问题，一个是类型强转抛出NPE等，一个是不知道扩展字段里面究竟放的什么
 
 ```java
 public void test() {
     // 如果a=null，则抛出npe
     long a = (long)model.getExt("a");
 }
-
 ```
 
 那么怎么才能在使用扩展字段的同时，也降低我们的维护成本呢？笔者推荐一种处理方式：
 
 ```java
-public class ExtendInfoKey {
+public class ExtendInfoKey<T> {
 
     /**
      * key
@@ -144,9 +124,9 @@ public class ExtendInfoKey {
     /**
      * class
      */
-    private final Class clazz;
+    private final Class<T> clazz;
 
-    public ExtendInfoKey(String key, Class clazz) {
+    public ExtendInfoKey(String key, Class<T> clazz) {
         this.key = key;
         this.clazz = clazz;
     }
@@ -155,7 +135,7 @@ public class ExtendInfoKey {
         return key;
     }
 
-    public Class getClazz() {
+    public Class<T> getClazz() {
         return clazz;
     }
 }
@@ -165,7 +145,7 @@ public class ExtendInfoKey {
 ```java
 public class ExtendInfoUtils {
 
-    public static  T getExtendValue(ExtendInfoKey key, Map attrs) {
+    public static <T> T getExtendValue(ExtendInfoKey<T> key, Map<String, String> attrs) {
         if (MapUtils.isEmpty(attrs)) {
             return null;
         }
@@ -173,7 +153,7 @@ public class ExtendInfoUtils {
         return JSON.parseObject(value, key.getClazz());
     }
 
-    public static  void addExtendInfo(ExtendInfoKey key, T value, Map attrs) {
+    public static <T> void addExtendInfo(ExtendInfoKey<T> key, T value, Map<String, String> attrs) {
         if (Objects.isNull(attrs)) {
             throw new NullPointerException("attrs can not be null");
         }
@@ -182,5 +162,4 @@ public class ExtendInfoUtils {
         }
     }
 }
-
 ```

@@ -1,6 +1,9 @@
 {
   "_comment": "Copy this file to config.json and fill in your tokens",
-  "default_provider": "imgur",
+  "default_provider": "chevereto",
+
+  "chevereto_api_key": "YOUR_CHEVERETO_API_KEY",
+  "chevereto_url": "https://your-chevereto-instance.com",
 
   "imgur_client_id": "YOUR_IMGUR_CLIENT_ID",
 

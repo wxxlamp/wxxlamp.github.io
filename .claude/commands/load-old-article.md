@@ -1,0 +1,1 @@
+请将 @temp/source/_posts 中的文件移动到 @source/_posts/ 中,移动的过程中注意 1. 将temp文件文档的图片通过 img-uploader技能上传到图床上,并且替换相对位置;2. 为每一篇文章都增加description;3. 如果文件名称冲突,以temp文件中的为准进行替换 

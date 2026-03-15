@@ -43,10 +43,10 @@ class SmMsUploader(BaseUploader):
                 response.raise_for_status()
 
                 return response.json()
-        except IOError as e:
-            return {"success": False, "message": f"File error: {str(e)}"}
         except requests.RequestException as e:
             return {"success": False, "message": f"Network error: {str(e)}"}
+        except OSError as e:
+            return {"success": False, "message": f"File error: {str(e)}"}
 
 class ImgurUploader(BaseUploader):
     """Uploader implementation for Imgur."""
@@ -70,10 +70,41 @@ class ImgurUploader(BaseUploader):
                 response = requests.post(self.API_URL, headers=headers, files=files)
                 response.raise_for_status()
                 return response.json()
-        except IOError as e:
-            return {"success": False, "message": f"File error: {str(e)}"}
         except requests.RequestException as e:
             return {"success": False, "message": f"Network error: {str(e)}"}
+        except OSError as e:
+            return {"success": False, "message": f"File error: {str(e)}"}
+
+class CheveretoUploader(BaseUploader):
+    """Uploader implementation for Chevereto-based image hosting (e.g. www.imgur.la)."""
+
+    def __init__(self, api_key, base_url):
+        self.api_key = api_key
+        self.base_url = base_url.rstrip('/')
+
+    def upload(self, image_path):
+        if not self.api_key:
+            raise ValueError("Chevereto API key is required.")
+
+        upload_url = f"{self.base_url}/api/1/upload"
+
+        try:
+            with open(image_path, 'rb') as f:
+                content = base64.b64encode(f.read()).decode('utf-8')
+
+            data = {
+                'key': self.api_key,
+                'source': content,
+                'format': 'json',
+            }
+
+            response = requests.post(upload_url, data=data)
+            response.raise_for_status()
+            return response.json()
+        except requests.RequestException as e:
+            return {"status_code": 0, "error": {"message": f"Network error: {str(e)}"}}
+        except OSError as e:
+            return {"status_code": 0, "error": {"message": f"File error: {str(e)}"}}
 
 class GitHubUploader(BaseUploader):
     """Uploader implementation for GitHub + jsDelivr CDN."""
@@ -99,7 +130,7 @@ class GitHubUploader(BaseUploader):
         try:
             with open(image_path, 'rb') as f:
                 content = f.read()
-        except IOError as e:
+        except OSError as e:
             return {"success": False, "message": f"File error: {str(e)}"}
 
         filename = os.path.basename(image_path)
@@ -160,7 +191,7 @@ def main():
     parser = argparse.ArgumentParser(description="Upload images to sm.ms, Imgur, or GitHub (jsDelivr CDN).")
     parser.add_argument("image_path", help="Path to the image file to upload")
     parser.add_argument("--token", help="API token/client-ID for the provider")
-    parser.add_argument("--provider", choices=["smms", "imgur", "github"], help="Image hosting provider (default: smms)")
+    parser.add_argument("--provider", choices=["smms", "imgur", "github", "chevereto"], help="Image hosting provider (default: smms)")
 
     args = parser.parse_args()
 
@@ -175,7 +206,17 @@ def main():
     )
 
     # Token resolution per provider: CLI --token > env var > config file
-    if provider == 'imgur':
+    if provider == 'chevereto':
+        api_key = args.token or os.environ.get('CHEVERETO_API_KEY') or config.get('chevereto_api_key')
+        base_url = os.environ.get('CHEVERETO_URL') or config.get('chevereto_url')
+        if not api_key:
+            print("Error: Chevereto API key not found. Provide via --token, CHEVERETO_API_KEY env, or config.json.")
+            sys.exit(1)
+        if not base_url:
+            print("Error: Chevereto URL not found. Set chevereto_url in config.json or CHEVERETO_URL env var.")
+            sys.exit(1)
+        uploader = CheveretoUploader(api_key, base_url)
+    elif provider == 'imgur':
         token = args.token or os.environ.get('IMGUR_CLIENT_ID') or config.get('imgur_client_id')
         if not token:
             print("Error: Imgur Client-ID not found. Provide it via --token, IMGUR_CLIENT_ID env var, or config.json.")
@@ -207,7 +248,18 @@ def main():
     print(f"Uploading {args.image_path} to {provider}...")
     result = uploader.upload(args.image_path)
 
-    if provider == 'imgur':
+    if provider == 'chevereto':
+        if result.get('status_code') == 200:
+            image_data = result.get('image', {})
+            print("\n✅ Upload Successful!")
+            print(f"URL: {image_data.get('url')}")
+            print(f"Viewer: {image_data.get('url_viewer', '')}")
+        else:
+            error = result.get('error', {})
+            print("\n❌ Upload Failed")
+            print(f"Message: {error.get('message', 'Unknown error')}")
+            sys.exit(1)
+    elif provider == 'imgur':
         if result.get('success') and result.get('data'):
             data = result['data']
             print("\n✅ Upload Successful!")

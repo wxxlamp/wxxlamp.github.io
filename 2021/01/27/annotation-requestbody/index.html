@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="深入分析Spring中@RequestBody注解的工作原理，探究SpringMVC如何解析HTTP请求体并映射到方法参数。"/>
+
+
+
+
+  <meta name="keywords" content="Java,SpringMVC," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="王星星的魔灯" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="https://wxxlamp.cn/2021/01/27/annotation-requestbody/"/>
+
+
+<meta name="description" content="深入分析Spring中@RequestBody注解的工作原理，探究SpringMVC如何解析HTTP请求体并映射到方法参数。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="@RequestBody的原理">
+<meta property="og:url" content="https://wxxlamp.cn/2021/01/27/annotation-requestbody/index.html">
+<meta property="og:site_name" content="王星星的魔灯">
+<meta property="og:description" content="深入分析Spring中@RequestBody注解的工作原理，探究SpringMVC如何解析HTTP请求体并映射到方法参数。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/98f5a38e_annotation-requestbody-1.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/94db22f0_annotation-requestbody-2.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/9fc9e5f8_annotation-requestbody-3.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/0401ebb4_annotation-requestbody-4.png">
+<meta property="article:published_time" content="2021-01-27T02:36:00.000Z">
+<meta property="article:modified_time" content="2026-03-15T06:54:09.319Z">
+<meta property="article:author" content="Wxx">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="SpringMVC">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/98f5a38e_annotation-requestbody-1.png">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/syst/dist/SmileySans-Oblique/result.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/syst/dist/SmileySans-Oblique/result.css"></noscript>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> @RequestBody的原理 - 王星星的魔灯 </title>
+  <meta name="generator" content="Hexo 8.1.1"></head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">王星星的魔灯</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="menu-item menu-item-resume">
+                        <a href="/resume" class="resume-nav-label" onclick="event.preventDefault()">Resume</a>
+                        <ul class="resume-lang-dropdown">
+                            <li><a href="/resume">中文简历</a></li>
+                            <li><a href="/resume-en">English</a></li>
+                        </ul>
+                    </li>
+                    
+                
+                <li class="menu-item">
+                    <a href="/atom.xml">RSS</a>
+                </li>
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          @RequestBody的原理
+        
+      </h1>
+
+      <time class="post-time">
+          1月 27 2021
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>通过Http传递参数一般有两种方式，一种是通过url解析参数，一种是通过body来解决，那么我们本次说的RequestBody就是去解析请求体然后映射到我们的参数，那 么它该如何解析body呢？这就是本篇博客诞生的目的。</p>
+<span id="more"></span>
+
+<p>这个其实是SpringMVC中做的一个处理机制，在整个SpringMVC的处理流程中，会通过HandlerMethod来代理每个Map后的controller和method，在通过反射invoke method的过程中，会解析request来获得arguments，而@RequestBody就是在解析参数的这个过程中起作用的</p>
+<img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/98f5a38e_annotation-requestbody-1.png" align="middle" />
+
+<h3 id="壹-执行流程"><a href="#壹-执行流程" class="headerlink" title="壹. 执行流程"></a>壹. 执行流程</h3><p>在<code>InvocableHandlerMethod#getMethodArgumentValues</code>中，它会遍历当前HandlerMethod的参数，对于每一个参数，它都会通过<code>HandlerMethodArgumentResolverComposite#supportsParameter</code>来判断是否可以被解析器解析，如果可以被解析，则通过<code>HandlerMethodArgumentResolverComposite#resolveArguement</code>进行解析</p>
+<img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/94db22f0_annotation-requestbody-2.png" align="middle" />
+
+<p>对于@RequestBody来说，它对应的解析器是<code>RequestResponseBodyMethodProcessor</code>，那么，我们就深入到它的源码中来一探究竟:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RequestResponseBodyMethodProcessor</span> <span class="keyword">extends</span> <span class="title class_">AbstractMessageConverterMethodProcessor</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 是否可以解析当前参数</span></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">supportsParameter</span><span class="params">(MethodParameter parameter)</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> parameter.hasParameterAnnotation(RequestBody.class);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 是否可以解析当前返回值</span></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">supportsReturnType</span><span class="params">(MethodParameter returnType)</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> (AnnotatedElementUtils.hasAnnotation(returnType.getContainingClass(), ResponseBody.class) ||</span><br><span class="line">				returnType.hasMethodAnnotation(ResponseBody.class));</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> Object <span class="title function_">resolveArgument</span><span class="params">(MethodParameter parameter, <span class="meta">@Nullable</span> ModelAndViewContainer mavContainer,</span></span><br><span class="line"><span class="params">			NativeWebRequest webRequest, <span class="meta">@Nullable</span> WebDataBinderFactory binderFactory)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line"></span><br><span class="line">		parameter = parameter.nestedIfOptional();</span><br><span class="line">        <span class="comment">// 解析handlerMethod中的参数</span></span><br><span class="line">		<span class="type">Object</span> <span class="variable">arg</span> <span class="operator">=</span> readWithMessageConverters(webRequest, parameter, parameter.getNestedGenericParameterType());</span><br><span class="line">        <span class="comment">// 获取变量名</span></span><br><span class="line">		<span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> Conventions.getVariableNameForParameter(parameter);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (binderFactory != <span class="literal">null</span>) &#123;</span><br><span class="line">			<span class="type">WebDataBinder</span> <span class="variable">binder</span> <span class="operator">=</span> binderFactory.createBinder(webRequest, arg, name);</span><br><span class="line">			<span class="keyword">if</span> (arg != <span class="literal">null</span>) &#123;</span><br><span class="line">                <span class="comment">// 通过binder校验@Validated注解的字段</span></span><br><span class="line">				validateIfApplicable(binder, parameter);</span><br><span class="line">				<span class="keyword">if</span> (binder.getBindingResult().hasErrors() &amp;&amp; isBindExceptionRequired(binder, parameter)) &#123;</span><br><span class="line">					<span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">MethodArgumentNotValidException</span>(parameter, binder.getBindingResult());</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (mavContainer != <span class="literal">null</span>) &#123;</span><br><span class="line">				mavContainer.addAttribute(BindingResult.MODEL_KEY_PREFIX + name, binder.getBindingResult());</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 如果方法是Optional参数，则代理</span></span><br><span class="line">		<span class="keyword">return</span> adaptArgumentIfNecessary(arg, parameter);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">protected</span> &lt;T&gt; Object <span class="title function_">readWithMessageConverters</span><span class="params">(NativeWebRequest webRequest, MethodParameter parameter,</span></span><br><span class="line"><span class="params">			Type paramType)</span> <span class="keyword">throws</span> IOException, HttpMediaTypeNotSupportedException, HttpMessageNotReadableException &#123;</span><br><span class="line"></span><br><span class="line">		<span class="type">HttpServletRequest</span> <span class="variable">servletRequest</span> <span class="operator">=</span> webRequest.getNativeRequest(HttpServletRequest.class);</span><br><span class="line">		Assert.state(servletRequest != <span class="literal">null</span>, <span class="string">&quot;No HttpServletRequest&quot;</span>);</span><br><span class="line">		<span class="type">ServletServerHttpRequest</span> <span class="variable">inputMessage</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ServletServerHttpRequest</span>(servletRequest);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 解析http请求中的body并映射到对应的parameter上</span></span><br><span class="line">		<span class="type">Object</span> <span class="variable">arg</span> <span class="operator">=</span> readWithMessageConverters(inputMessage, parameter, paramType);</span><br><span class="line">		<span class="keyword">if</span> (arg == <span class="literal">null</span> &amp;&amp; checkRequired(parameter)) &#123;</span><br><span class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">HttpMessageNotReadableException</span>(<span class="string">&quot;Required request body is missing: &quot;</span> +</span><br><span class="line">					parameter.getExecutable().toGenericString());</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> arg;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">protected</span> <span class="type">boolean</span> <span class="title function_">checkRequired</span><span class="params">(MethodParameter parameter)</span> &#123;</span><br><span class="line">		<span class="type">RequestBody</span> <span class="variable">requestBody</span> <span class="operator">=</span> parameter.getParameterAnnotation(RequestBody.class);</span><br><span class="line">		<span class="keyword">return</span> (requestBody != <span class="literal">null</span> &amp;&amp; requestBody.required() &amp;&amp; !parameter.isOptional());</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="贰-注册流程"><a href="#贰-注册流程" class="headerlink" title="贰. 注册流程"></a>贰. 注册流程</h3><p>那么<code>RequestResponseBodyMethodProcessor</code>是如何被注册到resolver中呢？主要是在<code>RequestMappingHandlerAdapter</code>中：</p>
+<blockquote>
+<p><code>RequestMappingHandlerAdapter</code>实现了<code>HandlerAdapter</code>这个接口，这个接口是MVC框架的SPI，<code>DispatcherServlet</code>通过此接口访问所有已安装的处理程序。</p>
+<p>HandlerAdapter主要是路由之后方法的适配器，DispatcherServlet在路由之后通过HandlerAdapter来执行真实的操作（handlerAdapter是通过HandlerMethod来执行的）</p>
+</blockquote>
+<p>对于<code>RequestResponseBodyMethodProcessor</code>来说，它实现了<code>InitializingBean</code>，在bean初始化之后会添加参数处理器和返回值处理器，对于参数处理器来说，内容如下：</p>
+<img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/9fc9e5f8_annotation-requestbody-3.png" align="middle" />
+
+<p>从图中我们可以看到，<code>RequestMappingHandlerAdapter</code>在初始化的时候会把系统给定的，自定义的参数解析器加载到内存中。</p>
+<p>加入说，我们要自定义一个参数解析器，系统会在什么时候加载进入内存呢？</p>
+<p>我们发现<code>RequestMappingHandlerAdapter#setCustomArgumentResolvers</code>这个方法就是要去设置自定义参数解析器的，那么我们只需要找到它的调用方即可。</p>
+<p>我们只需要实现WebMvcConfigurer即可（这点关系到Spring的自动装配，暂时没有看到，先鸽一下）</p>
+<h3 id="叁-设计优点"><a href="#叁-设计优点" class="headerlink" title="叁. 设计优点"></a>叁. 设计优点</h3><h4 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h4><p>采用策略模式＋工厂模式 + 组合模式：</p>
+<p>对于HandlerMethod的参数和返回值处理来说，对应着不同的处理方式，即对应着不同的策略，所以此处用的策略模式来处理的。至于<code>HandlerMethodArgumentResolverComposite</code>它则对应着策略工厂，同时，因为这个类实现了<code>HandlerMethodArgumentResolver</code>，所以它也是组合模式的变形，具体的策略类是<code>HandlerMethodArgumentResolver</code></p>
+<p>类图如下：</p>
+<img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/0401ebb4_annotation-requestbody-4.png" align="middle" />
+
+<h4 id="缓存处理"><a href="#缓存处理" class="headerlink" title="缓存处理"></a>缓存处理</h4><p>在参数解析工厂中，刚开始的参数解析器是在刚启动时注册到list中，但是如果之后被使用的时候就会存放到map中，可以直接获得(key是MethodParam)，提高路由效率</p>
+<h3 id="附：常见的MVC参数注解"><a href="#附：常见的MVC参数注解" class="headerlink" title="附：常见的MVC参数注解"></a>附：常见的MVC参数注解</h3><p>对于url解析参数来说，有两个注解，分别是<code>pathVariable</code>（指一种占位符）和<code>requestParam</code>,对于body来说，有<code>requestBody</code>。不加注解，也可以直接把url转为对应参数或者实体类</p>
+<ol>
+<li>@PathVariable: <a target="_blank" rel="noopener" href="http://www.666.com/web/6">www.666.com/web/6</a></li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping(&quot;/web/&#123;node&#125;&quot;)</span></span><br><span class="line"><span class="keyword">public</span> ReturnType <span class="title function_">listEmployeeInNode</span><span class="params">(<span class="meta">@PathVariable</span> String node)</span> <span class="keyword">throws</span> BusinessException &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>@ReqeustParam: <a target="_blank" rel="noopener" href="http://www.666.com/web?user=1">www.666.com/web?user=1</a></li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping(&quot;/web&quot;)</span></span><br><span class="line"><span class="keyword">public</span> ReturnType <span class="title function_">listEmployeeInNode</span><span class="params">(<span class="meta">@RequestParam(&quot;user&quot;)</span> String node)</span> <span class="keyword">throws</span> BusinessException &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>@RequestBody: <a target="_blank" rel="noopener" href="http://www.666.com/web">www.666.com/web</a>  body中是json</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping(&quot;/web&quot;)</span></span><br><span class="line"><span class="keyword">public</span> ReturnType <span class="title function_">listEmployeeInNode</span><span class="params">(<span class="meta">@RequestBody</span> UserDTO userDto)</span> <span class="keyword">throws</span> BusinessException &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>无注解：<a target="_blank" rel="noopener" href="http://www.666.com/web?userId=1&pwd=2">www.666.com/web?userId=1&amp;pwd=2</a></li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@PostMapping(&quot;/web&quot;)</span></span><br><span class="line"><span class="keyword">public</span> ReturnType <span class="title function_">listEmployeeInNode</span><span class="params">(UserDTO userDto)</span> <span class="keyword">throws</span> BusinessException &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1611093">link</a></p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/Java/">Java</a>
+		  
+			<a href="/tags/SpringMVC/">SpringMVC</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2021/02/17/spring-mvc-desc/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">SpringMVC源码分析</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2021/01/15/im-architecture/">
+        <span class="next-text nav-default">IM系统概览</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    
+
+<div class="github-comments">
+  <div class="comments-title">💬 Comments</div>
+  <p style="color: #666; font-size: 0.9em; margin-bottom: 1em;">
+    Comments require <a href="https://github.com/apps/giscus" target="_blank" rel="noopener">Giscus App</a> installed on your GitHub repository.
+  </p>
+  <script src="https://giscus.app/client.js"
+    data-repo="wxxlamp/wxxlamp.github.io"
+    data-repo-id="R_kgDOCiYteA"
+    data-category="General"
+    data-category-id="DIC_kwDOCiYteM4CelIo"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="light"
+    data-lang="en"
+    crossorigin="anonymous"
+    async>
+  </script>
+</div>
+
+
+
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+    
+
+<div class="toc-container" id="toc-container">
+  <div class="toc-title">Contents</div>
+  <ul class="toc-list" id="toc-list">
+    
+  </ul>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Generate TOC from post content
+  const content = document.querySelector('.post-content');
+  const tocList = document.getElementById('toc-list');
+
+  if (!content || !tocList) return;
+
+  const headings = content.querySelectorAll('h1, h2, h3, h4');
+
+  if (headings.length < 2) {
+    document.getElementById('toc-container').style.display = 'none';
+    return;
+  }
+
+  headings.forEach(function(heading, index) {
+    // Add ID to heading if not exists
+    if (!heading.id) {
+      heading.id = 'heading-' + index;
+    }
+
+    const li = document.createElement('li');
+    li.className = 'toc-' + heading.tagName.toLowerCase();
+
+    const a = document.createElement('a');
+    a.href = '#' + heading.id;
+    a.textContent = heading.textContent;
+    a.onclick = function(e) {
+      e.preventDefault();
+      heading.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    li.appendChild(a);
+    tocList.appendChild(li);
+  });
+
+  // Active section highlighting
+  const tocItems = tocList.querySelectorAll('li');
+
+  function updateActiveToc() {
+    const scrollPos = window.scrollY + 100;
+
+    headings.forEach(function(heading, index) {
+      const top = heading.offsetTop;
+      const bottom = top + heading.offsetHeight;
+
+      if (scrollPos >= top && scrollPos < bottom) {
+        tocItems.forEach(function(item) {
+          item.classList.remove('active');
+        });
+        if (tocItems[index]) {
+          tocItems[index].classList.add('active');
+        }
+      }
+    });
+  }
+
+  window.addEventListener('scroll', updateActiveToc);
+  updateActiveToc();
+});
+</script>
+
+
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2014 -
+    
+    2026
+    <span class="footer-author">Wxx.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> and <a class="theme-link" target="_blank" rel="noopener" href="https://github.com/frostfan/hexo-theme-polarbear">Polar Bear</a>
+    </span>
+</span>
+<span class="site-stats" style="display: block; margin-top: 8px; font-size: 0.85rem; color: #666;">
+    Total Visits: <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> ·
+    Unique Visitors: <span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>
+</span>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="JavaFX桌面应用开发经历分享，记录使用JavaFX开发GUI应用的体验与思考。"/>
+
+
+
+
+  <meta name="keywords" content="Java,JavaFX," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="王星星的魔灯" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="https://wxxlamp.cn/2021/10/31/talk-about-javafx/"/>
+
+
+<meta name="description" content="JavaFX桌面应用开发经历分享，记录使用JavaFX开发GUI应用的体验与思考。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="漫谈JavaFX">
+<meta property="og:url" content="https://wxxlamp.cn/2021/10/31/talk-about-javafx/index.html">
+<meta property="og:site_name" content="王星星的魔灯">
+<meta property="og:description" content="JavaFX桌面应用开发经历分享，记录使用JavaFX开发GUI应用的体验与思考。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/c94bddd1_javafx.png">
+<meta property="article:published_time" content="2021-10-31T11:52:00.000Z">
+<meta property="article:modified_time" content="2026-03-15T06:54:09.323Z">
+<meta property="article:author" content="Wxx">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="JavaFX">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/c94bddd1_javafx.png">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/syst/dist/SmileySans-Oblique/result.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/syst/dist/SmileySans-Oblique/result.css"></noscript>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> 漫谈JavaFX - 王星星的魔灯 </title>
+  <meta name="generator" content="Hexo 8.1.1"></head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">王星星的魔灯</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="menu-item menu-item-resume">
+                        <a href="/resume" class="resume-nav-label" onclick="event.preventDefault()">Resume</a>
+                        <ul class="resume-lang-dropdown">
+                            <li><a href="/resume">中文简历</a></li>
+                            <li><a href="/resume-en">English</a></li>
+                        </ul>
+                    </li>
+                    
+                
+                <li class="menu-item">
+                    <a href="/atom.xml">RSS</a>
+                </li>
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          漫谈JavaFX
+        
+      </h1>
+
+      <time class="post-time">
+          10月 31 2021
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>从接触软件工程到现在，我依次使用过C&#x2F;Cpp&#x2F;Java&#x2F;Php&#x2F;Python&#x2F;JavaScript等编程语言，也使用过它们的一些工程化的框架，如Java系的Spring，Js系的Vue和React。因为机缘巧合，我对Java接触的更多一点，用Spring写过Web，用Jsoup写过爬虫，用Swing写过桌面，用Netty写过IM，恰好最近有一个开发桌面端工具的小需求，所以就试用了一把号称<code>next generation client application platform for desktop, mobile and embedded systems based on JavaSE</code> 的JavaFX</p>
+<p>本文会着重说明JavaFx针对于使用者的设计思路，同时也会用少量的笔墨比较下和前端生态的不同 : )</p>
+<h3 id="JavaFX简介"><a href="#JavaFX简介" class="headerlink" title="JavaFX简介"></a>JavaFX简介</h3><h4 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h4><ol>
+<li>采用Fxml进行UI界面的搭建（类似于Html）</li>
+<li>采用CSS对组件进行样式填充（当然也可以通过硬编码）</li>
+<li>可以通过WebView运行JavaScript代码</li>
+<li>丰富的内置组件，如HtmlEditor，TreeView等等，同时也可以自定义组件</li>
+<li>支持数据绑定，UI线程刷新界面的时候可以直接获取到最新的数据</li>
+<li>Native Compiling，意味着不用再要求客户安装JRE了</li>
+</ol>
+<h4 id="设计模型"><a href="#设计模型" class="headerlink" title="设计模型"></a>设计模型</h4><p>对于JavaFx来说，有几个重要的组件。如Stage，Scene，Nodes。Stage对应着窗口，主界面是一个Stage，提示弹窗也是一个Stage。Scene指的是页面，在一个Stage中，可以有多个Scene。Nodes指的是组件，node可以根据不同的布局嵌入到scene中</p>
+<p>对于Nodes来说，有以下三种类型：</p>
+<ul>
+<li>Root Node：第一个场景视图</li>
+<li>Branch Node：具有子节点的节点，主要有Group，Region(Pane&#x2F;Control)，WebView</li>
+<li>Leaf Node：没有子节点的节点，如Button，ImageView</li>
+</ul>
+<center><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/c94bddd1_javafx.png" alt="JavaFX" style="zoom: 67%;"/></center>
+
+<h3 id="快速上手"><a href="#快速上手" class="headerlink" title="快速上手"></a>快速上手</h3><p>那么，要编写一个简单的桌面应用，并且需要利用JavaFx的各种牛逼特性，需要几步呢？</p>
+<ol>
+<li>通过IDE新建一个JavaFX项目</li>
+<li>使用SenceBuilder配置组件布局并生成Fxml文件</li>
+<li>使用CSS对组件样式进行填充</li>
+<li>将Controller和Fxml中的组件关联起来，在Controller中配置组件的属性，以及组件相关事件的响应逻辑</li>
+<li>在Controller中完成对应业务逻辑的处理</li>
+<li>通过IDEA的打包工具对JavaFX项目进行Native Compiling，声称对应的客户端文件(exe&#x2F;dmg)</li>
+</ol>
+<p>具体的步骤可以参考<a target="_blank" rel="noopener" href="https://code.makery.ch/zh-cn/library/javafx-tutorial/part1/">JavaFx教程</a></p>
+<p><strong>【注意】因为从JDK9开始，FX项目就从JDK自带的类库中移除，所以新手建议使用JDK8，如果使用JDK9+则需要进行相关的模块化配置，并且引入JavaFX的Jar包</strong></p>
+<h3 id="工程化"><a href="#工程化" class="headerlink" title="工程化"></a>工程化</h3><h4 id="窗体缩放"><a href="#窗体缩放" class="headerlink" title="窗体缩放"></a>窗体缩放</h4><p>客户端的窗体往往需要缩放，那么，设计者就必须考虑窗体在缩放时，组件的大小变化，以及组件相对位置和绝对位置的变化，针对于这些问题，我们可以通过布局和双向绑定来解决</p>
+<ol>
+<li>通过<code>AnchorPane</code> 固定组件在窗体中的位置，这样组件就会对窗体的Width&amp;Height变化无感知</li>
+<li>通过组件的数据绑定功能，将组件的大小以及相对距离与窗体的Width&amp;Height绑定到一起，然后当窗体变化的时候，组件被绑定的相关信息也会变化</li>
+</ol>
+<h4 id="现有问题"><a href="#现有问题" class="headerlink" title="现有问题"></a>现有问题</h4><p>JavaFx作为Demo来用是完全合格的，但是它想称霸桌面开发，我觉得从工程化的层面上来讲，还有很多的问题，尤其是跟当前的前端生态相比，还差了许多。下面简单列举一下我在开发JavaFx的过程中遇到的一些问题</p>
+<ol>
+<li>组件化建设很落后，意味着很难复用，并且组件通信是一个大问题。当然，这不是说JavaFX不能进行组件通信，我只是说JavaFX的组件通信需要用户自己完善，很难支持大型项目开发。举个例子，假设sence中的button接收到了click event后，需要读取其他Sence中各个组件的信息，这对于JavaFX就很难搞，如果有很多类似需求，那么将会很快的腐蚀掉已有的代码</li>
+<li>简单的界面和逻辑分离，没办法动态加载组件。JavaFX当前的FXML编程模型，只能跟20年前使用HTML+CSS+JavaScript编写网页的状态一样。一个简单的栗子：有一个boolean变量a，假如用户希望a&#x3D;true的时候当前界面渲染button，反之，当前界面渲染textArea。这个需求很简单，也很常见，JavaScript生态中的各个框架(Vue&#x2F;React&#x2F;…)都能很简单的实现，但是，对于JavaFX来说，如果你是用Fxml进行页面渲染，这将需要更多的代码量才能完成</li>
+<li>生态太弱，需要一些基础能力都需要自己造轮子。JavaFX跟JavaScript的生态相比，差的不是一点两点，需要数十年才能赶平，当然，我觉得JavaFX是没希望了追上JavaScript的生态了，毕竟用JavaFX的人少，生态也很难好好发展起来</li>
+</ol>
+<p><strong>【当然，这都是我一家之言，也可能JavaFX在lastest version中已经完善，要是有人有解决方案可以留言】</strong></p>
+<h3 id="漫谈大前端"><a href="#漫谈大前端" class="headerlink" title="漫谈大前端"></a>漫谈大前端</h3><p>如今的大前端百花齐放，先梳理下各个平台用到的开发工具：</p>
+<ul>
+<li>Web和H5领域：主要是JavaScrpit和TypeScript，使用的框架一般是Vue&#x2F;React&#x2F;Angular</li>
+<li>IOS领域：主要用Swift&#x2F;Object-C</li>
+<li>Android领域：主要是Java&#x2F;Kotlin</li>
+<li>PC领域:：如果是Windows的话可以用C#，如果是Mac的话可以用Swift</li>
+<li>跨平台领域：有JavaScript(Electron)，Java(FX)，Dart(Flutter)，Cpp(QT)</li>
+</ul>
+<p>什么是前端，我理解的前端就是直接跟用户交互的平台，抽象来说，就是界面+逻辑</p>
+<p>如果要编写一个界面，我们需要定义这个界面的骨架和布局，即我们需要规定好当前界面或模块中，每个组件的排列方式，常见的布局方式有浮动布局，绝对定位布局，网格布局，弹性布局等等。有了布局之后，我们就需要将组件放在布局上，常见的组件有form，button，table等等。通过布局+组件的结合，就形成了基本的用户界面。但是，这样还远远不够，因为组件没有样式，如果想要红的button，绿的form，紫的table，就需要再进行样式填充，给予组件五彩斑斓的黑</p>
+<p>对于前端来讲，仅仅编写完界面只是是第一步，更重要的是逻辑的编写。譬如组件展示的时机，触发组件后的反馈效果，路由能力的编写等等。随着前后端分离的热潮，前端越来越重要，不仅包含一些业务逻辑，也有各种抽象和逻辑服用，这会使得逻辑代码的编写更加复杂</p>
+<p>所以，无论是H5还是客户端，对于前端来讲，编写一个界面需要布局+组件+样式，其中用到的语言工具无非是HTML&#x2F;XML&#x2F;FXML+CSS。然后我们再通过编程语言（JavaScript&#x2F;Java&#x2F;Cpp&#x2F;…）来赋予界面行为和业务逻辑，便可以构建五彩缤纷的前端世界</p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/Java/">Java</a>
+		  
+			<a href="/tags/JavaFX/">JavaFX</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2021/12/12/cve-2021-44228-log4j/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">开发眼中的Log4J远程代码执行漏洞</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2021/09/21/app-learning-quick-start/">
+        <span class="next-text nav-default">新人快速上手应用指北</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    
+
+<div class="github-comments">
+  <div class="comments-title">💬 Comments</div>
+  <p style="color: #666; font-size: 0.9em; margin-bottom: 1em;">
+    Comments require <a href="https://github.com/apps/giscus" target="_blank" rel="noopener">Giscus App</a> installed on your GitHub repository.
+  </p>
+  <script src="https://giscus.app/client.js"
+    data-repo="wxxlamp/wxxlamp.github.io"
+    data-repo-id="R_kgDOCiYteA"
+    data-category="General"
+    data-category-id="DIC_kwDOCiYteM4CelIo"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="light"
+    data-lang="en"
+    crossorigin="anonymous"
+    async>
+  </script>
+</div>
+
+
+
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+    
+
+<div class="toc-container" id="toc-container">
+  <div class="toc-title">Contents</div>
+  <ul class="toc-list" id="toc-list">
+    
+  </ul>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Generate TOC from post content
+  const content = document.querySelector('.post-content');
+  const tocList = document.getElementById('toc-list');
+
+  if (!content || !tocList) return;
+
+  const headings = content.querySelectorAll('h1, h2, h3, h4');
+
+  if (headings.length < 2) {
+    document.getElementById('toc-container').style.display = 'none';
+    return;
+  }
+
+  headings.forEach(function(heading, index) {
+    // Add ID to heading if not exists
+    if (!heading.id) {
+      heading.id = 'heading-' + index;
+    }
+
+    const li = document.createElement('li');
+    li.className = 'toc-' + heading.tagName.toLowerCase();
+
+    const a = document.createElement('a');
+    a.href = '#' + heading.id;
+    a.textContent = heading.textContent;
+    a.onclick = function(e) {
+      e.preventDefault();
+      heading.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    li.appendChild(a);
+    tocList.appendChild(li);
+  });
+
+  // Active section highlighting
+  const tocItems = tocList.querySelectorAll('li');
+
+  function updateActiveToc() {
+    const scrollPos = window.scrollY + 100;
+
+    headings.forEach(function(heading, index) {
+      const top = heading.offsetTop;
+      const bottom = top + heading.offsetHeight;
+
+      if (scrollPos >= top && scrollPos < bottom) {
+        tocItems.forEach(function(item) {
+          item.classList.remove('active');
+        });
+        if (tocItems[index]) {
+          tocItems[index].classList.add('active');
+        }
+      }
+    });
+  }
+
+  window.addEventListener('scroll', updateActiveToc);
+  updateActiveToc();
+});
+</script>
+
+
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2014 -
+    
+    2026
+    <span class="footer-author">Wxx.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> and <a class="theme-link" target="_blank" rel="noopener" href="https://github.com/frostfan/hexo-theme-polarbear">Polar Bear</a>
+    </span>
+</span>
+<span class="site-stats" style="display: block; margin-top: 8px; font-size: 0.85rem; color: #666;">
+    Total Visits: <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> ·
+    Unique Visitors: <span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>
+</span>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>

@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="个人技术体系建设的三次迭代，从面试驱动到业务驱动再到体系化的技术认知演进。"/>
+
+
+
+
+  <meta name="keywords" content="Growth," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="王星星的魔灯" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="https://wxxlamp.cn/2022/01/21/my-biz-tech-architecture/"/>
+
+
+<meta name="description" content="个人技术体系建设的三次迭代，从面试驱动到业务驱动再到体系化的技术认知演进。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="我的技术体系变迁史">
+<meta property="og:url" content="https://wxxlamp.cn/2022/01/21/my-biz-tech-architecture/index.html">
+<meta property="og:site_name" content="王星星的魔灯">
+<meta property="og:description" content="个人技术体系建设的三次迭代，从面试驱动到业务驱动再到体系化的技术认知演进。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/7658e05a_my-tech-architech.png">
+<meta property="article:published_time" content="2022-01-21T01:52:00.000Z">
+<meta property="article:modified_time" content="2026-03-15T06:54:09.321Z">
+<meta property="article:author" content="Wxx">
+<meta property="article:tag" content="Growth">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/7658e05a_my-tech-architech.png">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/syst/dist/SmileySans-Oblique/result.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/syst/dist/SmileySans-Oblique/result.css"></noscript>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> 我的技术体系变迁史 - 王星星的魔灯 </title>
+  <meta name="generator" content="Hexo 8.1.1"></head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">王星星的魔灯</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="menu-item menu-item-resume">
+                        <a href="/resume" class="resume-nav-label" onclick="event.preventDefault()">Resume</a>
+                        <ul class="resume-lang-dropdown">
+                            <li><a href="/resume">中文简历</a></li>
+                            <li><a href="/resume-en">English</a></li>
+                        </ul>
+                    </li>
+                    
+                
+                <li class="menu-item">
+                    <a href="/atom.xml">RSS</a>
+                </li>
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          我的技术体系变迁史
+        
+      </h1>
+
+      <time class="post-time">
+          1月 21 2022
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>从宏观上来讲，我对技术的认知，以及自身技术体系的建设，从19年到21年，应该是经历了三次迭代。</p>
+<p>19年的时候，我刚开始找实习，那时候想的是如何才能增加面试的成功率，所以不断的找面试题，当时就面试和学习的角度，把技术分为了：编程语言（Java基础，集合，多线程，虚拟机），数据库，计算机网络，操作系统，数据结构和算法，设计模式，场景设计等几个方面，我不断的往这几个方面去填充内容，也获得不小的提升，面试也拿到了不少的offer。</p>
+<p>20年实习结束后，有了一点点工作经验，我开始重新思考自身技术体系的建设。因为在工作过程中，遇到的一些问题都是应用层面的，这时候就没办法按照原有的逻辑来归类思考；另一方面，我觉得原来的分类太教科书化，需要再抽象一层，才能更好的归类我在工作中总结的一些文章。所以，我把技术维度按照：场景实践，基础夯实，架构思考，源码剖析，踩坑记录等五个方面。这样的话，不管是宏观的架构，还是基础的技术，抑或是编程技巧，都会囊括其中。</p>
+<p>到了21年我毕业之后到杭州工作，接触的业务项目越来越多，对技术的认知也变得更偏向业务层面。而且，原来的体系更偏向于文章归类的维度，而我更想建立一个技术统一的方法论。所以，更进一步，从开发的角度出发，我开始把技术分为两个核心，业务开发的一个核心是实践，而实践中还包括两种，一种是微观的编程实践，一种是宏观的架构实践。另一个核心，则是思想，这种思想模式包括：可扩展，高性能，高可用，以及在这三者中可能出现的一致性问题。</p>
+<p>目前技术体系还是不太成熟，不知道22年结束后，又能演变成什么样子….</p>
+<p>附：第三代技术体系大图（建设中）</p>
+<img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/7658e05a_my-tech-architech.png" align="middle" />
+
+
+
+<p>2023-01-15更新：</p>
+<p>22年业务仍然比较多，同时自己也开始负责了一款产品的开发和运维，学到了不少的东西，但是说实话，疲于应对多变的需求，沉淀的思想和干货比较少。总体上的方法论还是和21年保持一致，同时，主要是丰富了宏观的架构实践这一块，了解的东西更多了。希望23年能把这些东西整理总结一下。</p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/Growth/">Growth</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2022/01/27/my-2021/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">我的2021</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2022/01/16/tech-pm-first/">
+        <span class="next-text nav-default">技术PM处女贴</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    
+
+<div class="github-comments">
+  <div class="comments-title">💬 Comments</div>
+  <p style="color: #666; font-size: 0.9em; margin-bottom: 1em;">
+    Comments require <a href="https://github.com/apps/giscus" target="_blank" rel="noopener">Giscus App</a> installed on your GitHub repository.
+  </p>
+  <script src="https://giscus.app/client.js"
+    data-repo="wxxlamp/wxxlamp.github.io"
+    data-repo-id="R_kgDOCiYteA"
+    data-category="General"
+    data-category-id="DIC_kwDOCiYteM4CelIo"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="light"
+    data-lang="en"
+    crossorigin="anonymous"
+    async>
+  </script>
+</div>
+
+
+
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+    
+
+<div class="toc-container" id="toc-container">
+  <div class="toc-title">Contents</div>
+  <ul class="toc-list" id="toc-list">
+    
+  </ul>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Generate TOC from post content
+  const content = document.querySelector('.post-content');
+  const tocList = document.getElementById('toc-list');
+
+  if (!content || !tocList) return;
+
+  const headings = content.querySelectorAll('h1, h2, h3, h4');
+
+  if (headings.length < 2) {
+    document.getElementById('toc-container').style.display = 'none';
+    return;
+  }
+
+  headings.forEach(function(heading, index) {
+    // Add ID to heading if not exists
+    if (!heading.id) {
+      heading.id = 'heading-' + index;
+    }
+
+    const li = document.createElement('li');
+    li.className = 'toc-' + heading.tagName.toLowerCase();
+
+    const a = document.createElement('a');
+    a.href = '#' + heading.id;
+    a.textContent = heading.textContent;
+    a.onclick = function(e) {
+      e.preventDefault();
+      heading.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    li.appendChild(a);
+    tocList.appendChild(li);
+  });
+
+  // Active section highlighting
+  const tocItems = tocList.querySelectorAll('li');
+
+  function updateActiveToc() {
+    const scrollPos = window.scrollY + 100;
+
+    headings.forEach(function(heading, index) {
+      const top = heading.offsetTop;
+      const bottom = top + heading.offsetHeight;
+
+      if (scrollPos >= top && scrollPos < bottom) {
+        tocItems.forEach(function(item) {
+          item.classList.remove('active');
+        });
+        if (tocItems[index]) {
+          tocItems[index].classList.add('active');
+        }
+      }
+    });
+  }
+
+  window.addEventListener('scroll', updateActiveToc);
+  updateActiveToc();
+});
+</script>
+
+
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2014 -
+    
+    2026
+    <span class="footer-author">Wxx.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> and <a class="theme-link" target="_blank" rel="noopener" href="https://github.com/frostfan/hexo-theme-polarbear">Polar Bear</a>
+    </span>
+</span>
+<span class="site-stats" style="display: block; margin-top: 8px; font-size: 0.85rem; color: #666;">
+    Total Visits: <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> ·
+    Unique Visitors: <span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>
+</span>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>

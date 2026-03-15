@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="微服务中多RPC调用并行优化，将串行调用转为并行以降低Facade层响应时间的实践方案。"/>
+
+
+
+
+  <meta name="keywords" content="Concurrent," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="王星星的魔灯" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="https://wxxlamp.cn/2022/10/30/multi-rpc-return/"/>
+
+
+<meta name="description" content="微服务中多RPC调用并行优化，将串行调用转为并行以降低Facade层响应时间的实践方案。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="当调用多个IO操作时">
+<meta property="og:url" content="https://wxxlamp.cn/2022/10/30/multi-rpc-return/index.html">
+<meta property="og:site_name" content="王星星的魔灯">
+<meta property="og:description" content="微服务中多RPC调用并行优化，将串行调用转为并行以降低Facade层响应时间的实践方案。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-10-30T06:36:00.000Z">
+<meta property="article:modified_time" content="2026-03-15T06:54:09.321Z">
+<meta property="article:author" content="Wxx">
+<meta property="article:tag" content="Concurrent">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/syst/dist/SmileySans-Oblique/result.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/syst/dist/SmileySans-Oblique/result.css"></noscript>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> 当调用多个IO操作时 - 王星星的魔灯 </title>
+  <meta name="generator" content="Hexo 8.1.1"></head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">王星星的魔灯</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="menu-item menu-item-resume">
+                        <a href="/resume" class="resume-nav-label" onclick="event.preventDefault()">Resume</a>
+                        <ul class="resume-lang-dropdown">
+                            <li><a href="/resume">中文简历</a></li>
+                            <li><a href="/resume-en">English</a></li>
+                        </ul>
+                    </li>
+                    
+                
+                <li class="menu-item">
+                    <a href="/atom.xml">RSS</a>
+                </li>
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          当调用多个IO操作时
+        
+      </h1>
+
+      <time class="post-time">
+          10月 30 2022
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <h2 id="0-前言"><a href="#0-前言" class="headerlink" title="0. 前言"></a>0. 前言</h2><p>在微服务系统中，各个域都有自己的服务模块承接。同时，在后端的Facade层中，会负责聚合各种微服务，然后再把聚合的结果返回给上游。在聚合的过程中，可能聚合的数据源不是互相依赖的，那么我们就可以转串行为并行，来提高Facade服务的RT。<br />举个栗子：营销系统判断该用户是否有权限领券，在判断权限的过程中，需要做这几件事情：</p>
+<ol>
+<li>请求风控系统判断该用户是否在黑名单中</li>
+<li>请求业务系统A用户是否有开通某领券服务（领券的前置条件），etc</li>
+</ol>
+<p>那么对于这几件事情，可以认为这些调用都是互相没有关系的，所以我们可以舍弃之前的串行调用方式，改用并行调用，本章即是讨论并行调用的几种方式，并简要分析。</p>
+<h2 id="1-线程池处理"><a href="#1-线程池处理" class="headerlink" title="1. 线程池处理"></a>1. 线程池处理</h2><p>因为需要获取返回值，所以普通的Runnable一定是不行的，需要去实现Callable接口才可以，然后将远程执行的RPC任务放到线程池中，轮训每次的调用结果，并将结果放到集合中，如果所有的异步任务处理完成，则进行汇总，然后返回到调用方，示例代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 调用方法</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">testWithThread</span><span class="params">(List&lt;String&gt; ret)</span> &#123;</span><br><span class="line">    List&lt;CallableTask&gt; rpcs = ImmutableList.of(<span class="keyword">new</span> <span class="title class_">CallableTask</span>(<span class="string">&quot;1&quot;</span>), <span class="keyword">new</span> <span class="title class_">CallableTask</span>(<span class="string">&quot;2&quot;</span>),</span><br><span class="line">                <span class="keyword">new</span> <span class="title class_">CallableTask</span>(<span class="string">&quot;3&quot;</span>),<span class="keyword">new</span> <span class="title class_">CallableTask</span>(<span class="string">&quot;4&quot;</span>));</span><br><span class="line">    Queue&lt;Future&lt;String&gt;&gt; list = rpcs.stream()</span><br><span class="line">                .map(ThreadPoolConfig.EXECUTOR::submit)</span><br><span class="line">                .collect(Collectors.toCollection(Lists::newLinkedList));</span><br><span class="line">    <span class="keyword">while</span> (!list.isEmpty()) &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">ans</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        Future&lt;String&gt; poll = list.poll();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            ans = poll.get(<span class="number">100</span>, TimeUnit.MILLISECONDS);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (TimeoutException | InterruptedException | ExecutionException e) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;time out&quot;</span>);</span><br><span class="line">            list.offer(poll);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (ans != <span class="literal">null</span>) &#123;</span><br><span class="line">            ret.add(ans);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 模拟RPC任务</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CallableTask</span> <span class="keyword">implements</span> <span class="title class_">Callable</span>&lt;String&gt; &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String ans;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">CallableTask</span> <span class="params">(String ans)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.ans = ans;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">call</span><span class="params">()</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        Thread.sleep(<span class="number">1000L</span>);</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是如上所示，由调用者去轮训且将未完成的Future放到队列中重新轮训去获得结果显然不够优雅，所以还需要对线程的编排进一步优化</p>
+<h2 id="2-CompletableFuture"><a href="#2-CompletableFuture" class="headerlink" title="2. CompletableFuture"></a>2. CompletableFuture</h2><p>正是因为线程编排和获取返回值太过于麻烦，所以Java8之后有了<code>CompletableFuture</code>类去协助我们做线程编排</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;String&gt; <span class="title function_">testWithCompleteFuture</span><span class="params">(List&lt;String&gt; ret)</span> &#123;</span><br><span class="line">    List&lt;CallableTask&gt; rpcs = ImmutableList.of(<span class="keyword">new</span> <span class="title class_">CallableTask</span>(<span class="string">&quot;1&quot;</span>), <span class="keyword">new</span> <span class="title class_">CallableTask</span>(<span class="string">&quot;2&quot;</span>),</span><br><span class="line">                <span class="keyword">new</span> <span class="title class_">CallableTask</span>(<span class="string">&quot;3&quot;</span>),<span class="keyword">new</span> <span class="title class_">CallableTask</span>(<span class="string">&quot;4&quot;</span>));</span><br><span class="line">    List&lt;CompletableFuture&lt;String&gt;&gt; collect = rpcs.stream()</span><br><span class="line">                .map(e -&gt; CompletableFuture.supplyAsync(e, ThreadPoolConfig.EXECUTOR).whenComplete(((s, throwable) -&gt; ret.add(s))))</span><br><span class="line">                .collect(Collectors.toList());</span><br><span class="line">    CompletableFuture.allOf(collect.toArray(<span class="keyword">new</span> <span class="title class_">CompletableFuture</span>[]&#123;&#125;)).join();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是CompletableFuture最大的作用并不是如上所述简单的并行调度，它更强大的功能是各种任务调用的编排，譬如先并行执行a，b，c三个任务，等任务执行完之后，再执行d任务等，在此只是抛砖引用，具体的高阶功能不再赘述</p>
+<h2 id="3-One-More-Thing"><a href="#3-One-More-Thing" class="headerlink" title="3. One More Thing"></a>3. One More Thing</h2><p>其实上文中说的主要是需要获取并行调用结果的情况，还有一种情况也很常见，就是后置通知的流程，它不需要获取Provider的响应来提供给上游，仍然举个栗子：用户开通某服务之后，服务管理系统需要处理这几件事情：</p>
+<ol>
+<li>将用户的资料存入用户信息系统</li>
+<li>通知关联业务用户已经开通</li>
+<li>将用户的附加信息进行标记，etc<blockquote>
+<p>注意：下面的讨论，建立在这些后置处理的事情，是和主业务保持最终一致性，而不是强一致性，譬如不存在用户资料存储失败，就算是开通失败</p>
+</blockquote>
+</li>
+</ol>
+<p>对于这些处理，上游的调用方是不需要感知到的，一般有两种处理方式，第一种是本地系统直接发送消息，由下游系统订阅并处理，第二种方式是本地系统直接调用下游的RPC服务，直接处理流程。本段主要讨论第二种方式。<br />并发调用的时候，可以使用上文中提到的线程池或者直接用CompletableFuture进行线程编排。另一种方式是使用Spring Event来完成后置通知，但是对于Spring Event来说，它本身是同步的，需要结合Spring Async的能力进行异步化。<br />尤其要注意的是，不管使用哪种方式，一定要考虑调用失败的场景（如服务找不到，调用超时，调用服务内部异常等），因为是要保证最终一致性，可以把调用失败的上下文落库，等待定时调度任务重试即可<br />不过要说明的是，不能只用Spring的Async注解，因为Spring的异步能力默认是一个方法新开一个线程，当异步Listener过多的是时候，容易导致线程的OOM，所以此时需要我们自定义线程池去复用，一个简单的例子如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 调用</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Client</span> &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> ApplicationEventPublisher publisher;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">invoke</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="type">SpringEvent</span> <span class="variable">springEvent</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SpringEvent</span>();</span><br><span class="line">        publisher.publishEvent(springEvent);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 监听</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Listener</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@EventListener</span></span><br><span class="line">    <span class="meta">@Async</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test1</span><span class="params">(SpringEvent event)</span> &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> Thread.currentThread().getName();</span><br><span class="line">        System.out.println(event + name + <span class="string">&quot; 111 &quot;</span> + System.currentTimeMillis());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@EventListener</span></span><br><span class="line">    <span class="meta">@Async</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test2</span><span class="params">(SpringEvent event)</span> &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> Thread.currentThread().getName();</span><br><span class="line">        System.out.println(event + name + <span class="string">&quot; 222 &quot;</span> + System.currentTimeMillis());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 配置</span></span><br><span class="line"><span class="meta">@EnableAsync</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AsyncConfig</span> <span class="keyword">implements</span> <span class="title class_">AsyncConfigurer</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Executor <span class="title function_">getAsyncExecutor</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="type">ThreadPoolTaskExecutor</span> <span class="variable">taskExecutor</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ThreadPoolTaskExecutor</span>();</span><br><span class="line">        taskExecutor.setCorePoolSize(<span class="number">2</span>);</span><br><span class="line">        taskExecutor.setMaxPoolSize(<span class="number">10</span>);</span><br><span class="line">        taskExecutor.setQueueCapacity(<span class="number">15</span>);</span><br><span class="line">        taskExecutor.setThreadNamePrefix(<span class="string">&quot;async-thread-&quot;</span>);</span><br><span class="line">        taskExecutor.initialize();</span><br><span class="line">        <span class="keyword">return</span> taskExecutor;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> AsyncUncaughtExceptionHandler <span class="title function_">getAsyncUncaughtExceptionHandler</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>::processException;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">processException</span><span class="params">(Throwable throwable, Method method, Object... objects)</span> &#123;</span><br><span class="line">        <span class="comment">// 上下文落库，等待定时任务唤醒重试</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/Concurrent/">Concurrent</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2022/12/10/multi-thread-hashmap-put/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">HashMap的并发put问题</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2022/08/09/java-threadpool-throw-ex/">
+        <span class="next-text nav-default">当线程池的任务抛出异常...</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    
+
+<div class="github-comments">
+  <div class="comments-title">💬 Comments</div>
+  <p style="color: #666; font-size: 0.9em; margin-bottom: 1em;">
+    Comments require <a href="https://github.com/apps/giscus" target="_blank" rel="noopener">Giscus App</a> installed on your GitHub repository.
+  </p>
+  <script src="https://giscus.app/client.js"
+    data-repo="wxxlamp/wxxlamp.github.io"
+    data-repo-id="R_kgDOCiYteA"
+    data-category="General"
+    data-category-id="DIC_kwDOCiYteM4CelIo"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="light"
+    data-lang="en"
+    crossorigin="anonymous"
+    async>
+  </script>
+</div>
+
+
+
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+    
+
+<div class="toc-container" id="toc-container">
+  <div class="toc-title">Contents</div>
+  <ul class="toc-list" id="toc-list">
+    
+  </ul>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Generate TOC from post content
+  const content = document.querySelector('.post-content');
+  const tocList = document.getElementById('toc-list');
+
+  if (!content || !tocList) return;
+
+  const headings = content.querySelectorAll('h1, h2, h3, h4');
+
+  if (headings.length < 2) {
+    document.getElementById('toc-container').style.display = 'none';
+    return;
+  }
+
+  headings.forEach(function(heading, index) {
+    // Add ID to heading if not exists
+    if (!heading.id) {
+      heading.id = 'heading-' + index;
+    }
+
+    const li = document.createElement('li');
+    li.className = 'toc-' + heading.tagName.toLowerCase();
+
+    const a = document.createElement('a');
+    a.href = '#' + heading.id;
+    a.textContent = heading.textContent;
+    a.onclick = function(e) {
+      e.preventDefault();
+      heading.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    li.appendChild(a);
+    tocList.appendChild(li);
+  });
+
+  // Active section highlighting
+  const tocItems = tocList.querySelectorAll('li');
+
+  function updateActiveToc() {
+    const scrollPos = window.scrollY + 100;
+
+    headings.forEach(function(heading, index) {
+      const top = heading.offsetTop;
+      const bottom = top + heading.offsetHeight;
+
+      if (scrollPos >= top && scrollPos < bottom) {
+        tocItems.forEach(function(item) {
+          item.classList.remove('active');
+        });
+        if (tocItems[index]) {
+          tocItems[index].classList.add('active');
+        }
+      }
+    });
+  }
+
+  window.addEventListener('scroll', updateActiveToc);
+  updateActiveToc();
+});
+</script>
+
+
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2014 -
+    
+    2026
+    <span class="footer-author">Wxx.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> and <a class="theme-link" target="_blank" rel="noopener" href="https://github.com/frostfan/hexo-theme-polarbear">Polar Bear</a>
+    </span>
+</span>
+<span class="site-stats" style="display: block; margin-top: 8px; font-size: 0.85rem; color: #666;">
+    Total Visits: <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> ·
+    Unique Visitors: <span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>
+</span>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>

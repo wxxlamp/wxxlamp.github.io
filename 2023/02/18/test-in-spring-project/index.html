@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="Spring项目中的测试实践指南，涵盖单元测试和集成测试的方法论与常用工具。"/>
+
+
+
+
+  <meta name="keywords" content="Spring," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="王星星的魔灯" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="https://wxxlamp.cn/2023/02/18/test-in-spring-project/"/>
+
+
+<meta name="description" content="Spring项目中的测试实践指南，涵盖单元测试和集成测试的方法论与常用工具。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Test In Spring Project">
+<meta property="og:url" content="https://wxxlamp.cn/2023/02/18/test-in-spring-project/index.html">
+<meta property="og:site_name" content="王星星的魔灯">
+<meta property="og:description" content="Spring项目中的测试实践指南，涵盖单元测试和集成测试的方法论与常用工具。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-02-18T11:36:00.000Z">
+<meta property="article:modified_time" content="2026-03-15T06:54:09.323Z">
+<meta property="article:author" content="Wxx">
+<meta property="article:tag" content="Spring">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/syst/dist/SmileySans-Oblique/result.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/syst/dist/SmileySans-Oblique/result.css"></noscript>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> Test In Spring Project - 王星星的魔灯 </title>
+  <meta name="generator" content="Hexo 8.1.1"></head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">王星星的魔灯</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="menu-item menu-item-resume">
+                        <a href="/resume" class="resume-nav-label" onclick="event.preventDefault()">Resume</a>
+                        <ul class="resume-lang-dropdown">
+                            <li><a href="/resume">中文简历</a></li>
+                            <li><a href="/resume-en">English</a></li>
+                        </ul>
+                    </li>
+                    
+                
+                <li class="menu-item">
+                    <a href="/atom.xml">RSS</a>
+                </li>
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Test In Spring Project
+        
+      </h1>
+
+      <time class="post-time">
+          2月 18 2023
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>系统的测试，从范围大致会分为单元测试，集成测试，回归测试等等。通常来说，真正由开发所负责的测试包含单元测试和集成测试。<br>由于大家在实际的开发过程中，对各种测试的范围理解都不一样，就本文来讲，一般说的单元测试指（按照类维度&#x2F;模块维度），集成测试是以接口维度对该接口下的整个业务逻辑进行的测试<br>所谓单元测试，就是对某个类业务逻辑的测试，在测试之前，需要将该类所依赖的下游和模块全部MOCK掉，并且根据测试场景生成不同的case，从而保证类的业务逻辑的正确性。<br>所谓的集成测试，是对业务流程的测试，它不是对一个模块或者一个类的测试，而是测试某个业务流程下，所有类和模块之间的正确性。</p>
+<h3 id="单元VS集成"><a href="#单元VS集成" class="headerlink" title="单元VS集成"></a>单元VS集成</h3><p>单元测试的优点有很多，譬如编写起来非常快，我们只要对负责自己编写的代码进行测试即可，即使我们在不熟悉整个应用代码的情况下，也可以写出很健壮的测试代码。<br>但是如果要对整个业务逻辑负责，就不得不写集成测试，集成测试可以帮助我们更大胆的重构，同时，也可以方便新同学更快的了解业务代码，除此之外，因为集成测试是针对业务逻辑而非模块的，所以即使我们针对于某业务逻辑新增了一些类或者模块，我们甚至只依赖于老的集成测试的用例，就可以测试到增量的代码。<br>不过集成测试也有一个缺点，就是需要对应用以来的集成设施和外部以来进行mock，这在前期需要付出极大的精力去完成这件事情。不过一单集成测试覆盖到应用之后，就是一件功在当代，利在千秋的事情。</p>
+<h3 id="傻傻分不清的概念"><a href="#傻傻分不清的概念" class="headerlink" title="傻傻分不清的概念"></a>傻傻分不清的概念</h3><h4 id="Junit-Mockito-PowerMock"><a href="#Junit-Mockito-PowerMock" class="headerlink" title="Junit&amp;Mockito&amp;PowerMock"></a>Junit&amp;Mockito&amp;PowerMock</h4><p>直接引用chat-gpt的回复：</p>
+<blockquote>
+<p>JUnit是Java中最流行的测试框架之一，主要用于编写单元测试。它提供了一些基本的断言和测试注释，用于测试Java应用程序的各个部分。<br>Mockito是一个用于Java的Mocking框架，它允许您使用模拟对象替换真实对象，并在单元测试中模拟方法调用和对象状态。<br>PowerMock是一个基于Mockito和EasyMock的Mocking框架，它允许您在单元测试中模拟静态方法、构造函数和私有方法等内容，这些通常是很难模拟的。<br>因此，JUnit用于编写单元测试，Mockito用于模拟对象，而PowerMock用于模拟静态方法、构造函数和私有方法等内容。</p>
+</blockquote>
+<h2 id="单元测试"><a href="#单元测试" class="headerlink" title="单元测试"></a>单元测试</h2><p>一般来说，写好单元测试，相对来说简单一点。同时，如果在测试类的时候，一般是不建议启动Spring容器的，这样会把很多不需要测试的bean也初始化进来，会导致UT的启动时间变得很长。同时，如果启动了Spring容器，要把很多不需要测试的bean进行mock，这样的ROI也非常低。<br>所以在下面的示例中，我没有列出来Spring容器的测试方式，而是使用完全不启动容器的方式来进行测试。</p>
+<h3 id="简单测试"><a href="#简单测试" class="headerlink" title="简单测试"></a>简单测试</h3><p>如果我们要测试的类非常简单，也没有依赖其他外部类，那么我们只需要引入Junit包，同时编写如下代码即可：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test</span><span class="params">()</span> &#123;</span><br><span class="line">        Assert.assertEquals(StringUtils.substring(<span class="string">&quot;aaabbb&quot;</span>, <span class="number">0</span>, <span class="number">3</span>), <span class="string">&quot;aaa&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是事实上，这种测试非常少，只有在测试没有下游依赖工具类的时候可能会用到。除此之外，在单元测试中，我们要测试的类，更多是有很多下游依赖的，那么这种情况该怎么测试呢？</p>
+<h3 id="依赖测试"><a href="#依赖测试" class="headerlink" title="依赖测试"></a>依赖测试</h3><p>假如说是下面的一个类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestDependency</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="type">TestSimple</span> <span class="variable">testSimple</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">TestSimple</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">runDependency</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> testSimple.getName();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果我们想只测试<code>TestDependency</code>而不想依赖原始的<code>TestSimple</code>，那么我们就可以使用Mockito和PowerMock，通过对TestSimple进行注入mock的方式进行测试，如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RunWith(PowerMockRunner.class)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestDependencyTest</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@InjectMocks</span></span><br><span class="line">    <span class="keyword">private</span> TestDependency testDependency;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Mock</span></span><br><span class="line">    <span class="keyword">private</span> TestSimple testSimple;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test</span><span class="params">()</span> &#123;</span><br><span class="line">        Mockito.<span class="keyword">when</span>(testSimple.getName()).thenReturn(<span class="string">&quot;B&quot;</span>);</span><br><span class="line">        Assert.assertEquals(<span class="string">&quot;B&quot;</span>, testDependency.runDependency());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意，如果是Spring容器的话，还有另外一种mock方式，这里暂时不表。</p>
+</blockquote>
+<h4 id="Mock-InjectMocks-Spy"><a href="#Mock-InjectMocks-Spy" class="headerlink" title="Mock&amp;InjectMocks&amp;Spy"></a>Mock&amp;InjectMocks&amp;Spy</h4><p>如果刚开始使用PowerMock，往往会对这三种mock方式有疑问，下面做一个说明：</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/zendwang/p/mockito-mock-spy-usage.html">Mock和Spy都可以对对象进行mock</a>，但是对于未指定mock的方法，spy默认会调用真实的方法，有返回值的返回真实的返回值，而Mock默认不执行，即使有返回值的，也默认返回null；所以理论上讲，使用Spy的话，单测的覆盖率会更高一点</li>
+<li>InjectMocks可以创建一个实例，简单的说是这个Mock可以调用真实代码的方法，我们一般会通过InjectMocks来标注真实的要测试的对象</li>
+</ol>
+<h3 id="模块测试"><a href="#模块测试" class="headerlink" title="模块测试"></a>模块测试</h3><p>事实上，有时候我们不单单想测试一个类，如果要连续测试多个类或者一整个模块的话，在不使用Spring容器的情况下，用InjectMocks就比较困难了，举个下面的例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestDependency</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="type">TestSimple</span> <span class="variable">testSimple</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">TestSimple</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">runDependency</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> testSimple.getName();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestSimple</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">TestInner</span> <span class="variable">testInner</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">TestInner</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getName</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> testInner.getName();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestInner</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getName</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;a&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>假如说我在一个UT中，既想测试<code>TestDependency</code>和<code>TestSimple</code>，只mock<code>TestInner</code>的话，理论上用InjectMocks是比较困难的，这个时候有一个方法，就是通过构造方法的注入来实现。（*Spring不推荐通过Autowired注入），如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestDependency</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> TestSimple testSimple;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">TestDependency</span><span class="params">(TestSimple testSimple)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.testSimple = testSimple;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">runDependency</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> testSimple.getName();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestSimple</span> &#123;</span><br><span class="line">    </span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> TestInner testInner;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">TestSimple</span><span class="params">(TestInner testInner)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.testInner = testInner;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getName</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> testInner.getName();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestInner</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getName</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;a&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样的话，我们的测试方法就可以这么写，这也是Spring推荐构造器注入的一个理由</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RunWith(PowerMockRunner.class)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestDependencyTest</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> TestDependency testDependency;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Mock</span></span><br><span class="line">    <span class="keyword">private</span> TestInner testInner;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test</span><span class="params">()</span> &#123;</span><br><span class="line">        Mockito.<span class="keyword">when</span>(testInner.getTestInner()).thenReturn(<span class="string">&quot;BC&quot;</span>);</span><br><span class="line">        testDependency = <span class="keyword">new</span> <span class="title class_">TestDependency</span>(<span class="keyword">new</span> <span class="title class_">TestSimple</span>(testInner));</span><br><span class="line">        Assert.assertEquals(<span class="string">&quot;BC&quot;</span>, testDependency.runDependency());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Mock静态方法"><a href="#Mock静态方法" class="headerlink" title="Mock静态方法"></a>Mock静态方法</h3><p>有时候，我们在测试时需要将静态的工具类mock掉，在这种情况下，前面两种方式就不太合适，我们需要借助PowerMock的能力，通过<code>@PrepareForTest</code>注解，将这些工具类mock掉，如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RunWith(PowerMockRunner.class)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestSimpleTest</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="meta">@PrepareForTest(StringUtils.class)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testA</span><span class="params">()</span> &#123;</span><br><span class="line">        PowerMockito.mockStatic(StringUtils.class);</span><br><span class="line">        Mockito.<span class="keyword">when</span>(StringUtils.substring(Mockito.anyString(), Mockito.anyInt(), Mockito.anyInt()))</span><br><span class="line">            .thenReturn(<span class="string">&quot;a&quot;</span>);</span><br><span class="line">        Assert.assertEquals(<span class="string">&quot;a&quot;</span>, StringUtils.substring(<span class="string">&quot;AAAAA&quot;</span>, <span class="number">0</span>,<span class="number">3</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Mock私有方法"><a href="#Mock私有方法" class="headerlink" title="Mock私有方法"></a>Mock私有方法</h3><p>甚至有时候，对于某些私有方法的行为，也是不确定的，所以我们也需要去mock它，这个时候，我们仍然可以通过PowerMock去完成私有方法的Mock和打桩<br><del>略</del></p>
+<h2 id="集成测试"><a href="#集成测试" class="headerlink" title="集成测试"></a>集成测试</h2><p>集成测试和单元测试不一样，一般来说，我们需要测试整个业务逻辑，而一个业务逻辑中基本就包含了大部分的代码，所以对于集成测试来讲，我们一般都会直接启动一个Spring的测试容器，将外部的RPC，中间件的bean和数据库进行mock，除此之外，其他的代码都会走到真实的逻辑当中。</p>
+<h3 id="SpringTest-vs-SpringBootTest"><a href="#SpringTest-vs-SpringBootTest" class="headerlink" title="SpringTest vs SpringBootTest"></a>SpringTest vs SpringBootTest</h3><p>在测试spring容器的时候，往往有两种配置，一种是单纯测试Sring容器：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RunWith(SpringRunner.class)</span></span><br><span class="line"><span class="meta">@ContextConfiguration(classes = &#123;TestDataSourceConfig.class&#125;,</span></span><br><span class="line"><span class="meta">        loader = AnnotationConfigContextLoader.class)</span></span><br><span class="line"><span class="meta">@TestPropertySource(locations = &#123;&quot;classpath:test.properties&quot;&#125; )</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SpringTest</span> &#123;</span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> JdbcTemplate jdbcTemplate;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>另外一种是测试SpringBoot容器：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RunWith(SpringRunner.class)</span></span><br><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SpringTest</span> &#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> JdbcTemplate jdbcTemplate;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因为SpringBoot多了自动装配的能力，所以这两者的区别就是，第一种是只测试Spring容器，而第二种会引入SpringBoot的装配能力。举个简单的例子：<br>如果我们在测试类中引入<code>JdbcTemplate</code>这个bean的话，使用第一种方式是获取不到的，只有通过SpringBootTest才能拿到自动装配的bean。<br>换句话说，如果使用spring容器来测试，我们需要额外mock很多在SpringBoot中自动装配的bean。但是这样也有一个优点，就是我们可以自己选择引入哪些bean，不用通过SpringBoot的auto configure将所有的配置bean全都引入进来。<br>除此之外，SpringBootTest还可以自动扫描测试的配置类，而不是像Spring容器一样，通过<code>ContextConfiguration</code>来完成配置项的引入。</p>
+<h3 id="数据源Mock"><a href="#数据源Mock" class="headerlink" title="数据源Mock"></a>数据源Mock</h3><p>所谓的数据源Mock，就是需要mock数据库相关的操作。这样就可以测试到repo和具体的sql，使代码的覆盖度更高。<br>一般来讲，Mock数据源的话，我们需要通过H2内存数据库来代替远程的Mysql数据库。除此之外，如果是用到sequence生成id的方式的话，我们也需要将对应的基础类进行mock。<br>但是我们不能只mock<code>DataSource</code>就认为是万事大吉了，就像上文所说，如果我们只用了Spring容器的测试，我们就还需要将依赖data Source的其他类进行重新注入，譬如<code>SqlSessionFactoryBean </code>、<code>PlatformTransactionManager </code>、<code>TransactionTemplate </code>等等。<br>而如果我们使用了SpringBootTest的测试，就无需对其他bean进行重新注入。如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@TestConfiguration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestDataSourceConfig</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean(name = &quot;dataSource&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> DataSource <span class="title function_">dataSource</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">EmbeddedDatabaseBuilder</span>()</span><br><span class="line">            .setType(EmbeddedDatabaseType.H2)</span><br><span class="line">            .setName(<span class="string">&quot;testDB&quot;</span>)</span><br><span class="line">            .addScript(<span class="string">&quot;classpath:db/init.sql&quot;</span>)</span><br><span class="line">            .build();;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="外部接口Mock"><a href="#外部接口Mock" class="headerlink" title="外部接口Mock"></a>外部接口Mock</h3><p>对于外部的rpc接口来说，我们在做集成测试的时候也需要将其mock掉。就Spring容器来说，我们有两种mock方式，对于那些不管在什么case下，期望值都一样的接口，我们可以统一mock掉；而对于那些不同case需要期待不通返回值的（譬如风控接口，我们需要测试其返回成功或者失败的链路），我们就需要定制化mock。</p>
+<h4 id="统一MOCK"><a href="#统一MOCK" class="headerlink" title="统一MOCK"></a>统一MOCK</h4><p>统一mock的方式有两种，如下所示：</p>
+<ol>
+<li>直接实现接口</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@TestConfiguration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ServiceMockConfig</span> &#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> ExtRpc <span class="title function_">extRpcMethod</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ExtRpc</span>() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> ExtRpcResponse <span class="title function_">query</span><span class="params">(ExtRpcRequest request)</span> &#123;</span><br><span class="line">                <span class="type">ExtRpcResponse</span> <span class="variable">response</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ExtRpcResponse</span>();</span><br><span class="line">                response.setSuccess(<span class="literal">true</span>);</span><br><span class="line">                <span class="keyword">return</span> response;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>如果接口中包含的方法太多，我们不想全部都实现完，我们可以通过Mockito完成特定方法的mock</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@TestConfiguration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ServiceMockConfig</span> &#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> ExtRpc <span class="title function_">extRpcMethod</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> Mockito.mock(ExtRpc.class, e -&gt; &#123;</span><br><span class="line">            <span class="type">String</span> <span class="variable">method</span> <span class="operator">=</span> e.getMethod().getName();</span><br><span class="line">            <span class="keyword">switch</span> (method) &#123;</span><br><span class="line">                <span class="keyword">case</span> <span class="string">&quot;query&quot;</span>:</span><br><span class="line">                    <span class="type">ExtRpcResponse</span> <span class="variable">response</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ExtRpcResponse</span>();</span><br><span class="line">                    response.setSuccess(<span class="literal">true</span>);</span><br><span class="line">                    <span class="keyword">return</span> response;</span><br><span class="line">                <span class="keyword">default</span>:</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>又或者，我们只是想mock这bean，也不需要感知到它的返回值，那么我们也可以通过Mockito完成：</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@TestConfiguration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ServiceMockConfig</span> &#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> ExtRpc <span class="title function_">extRpcMethod</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> Mockito.mock(ExtRpc.class);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 不推荐，因为IDEA不能识别</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="meta">@MockBean</span></span><br><span class="line">    <span class="keyword">public</span> ExtRpcA extRpcA;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="定制化MOCK"><a href="#定制化MOCK" class="headerlink" title="定制化MOCK"></a>定制化MOCK</h4><p>我们可以在外部统一mock的基础中，通过mockito对不通UT的不同case完成定制化的mock。如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RpcMock</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">mockRpcExt</span><span class="params">(<span class="type">boolean</span> ans)</span> &#123;</span><br><span class="line">        Mockito.doReturn(buildMockRpcResponse(ans)).<span class="keyword">when</span>(InstanceLocator.getInstance(ExtRpc.class)).query(Mockito.any());</span><br><span class="line">	&#125;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="title function_">ExtRpcResponse</span><span class="params">(<span class="type">boolean</span> ans)</span> &#123;</span><br><span class="line">        <span class="type">ExtRpcResponse</span> <span class="variable">response</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ExtRpcResponse</span>();</span><br><span class="line">        response.setSuccess(ans);</span><br><span class="line">        <span class="keyword">return</span> response;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RunWith(SpringRunner.class)</span></span><br><span class="line"><span class="meta">@ContextConfiguration(classes = &#123;TestDataSourceConfig.class&#125;,</span></span><br><span class="line"><span class="meta">        loader = AnnotationConfigContextLoader.class)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span> &#123;</span><br><span class="line">    <span class="meta">@Before</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">init</span><span class="params">()</span> &#123;</span><br><span class="line">        RpcMock.mockRpcExt(<span class="literal">true</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>不过要说的是，这里推荐将这些定制mock封装在一个类里，毕竟从设计模式上讲，组合大于继承。</p>
+<h3 id="基础设施Mock"><a href="#基础设施Mock" class="headerlink" title="基础设施Mock"></a>基础设施Mock</h3><p>除了外部服务之外，我们还需要对一些基础设施进行mock，譬如加解密，MQ，缓存，等等，总体上来说都是异曲同工的，所以这里就不赘述了。</p>
+<h3 id="Bean的排除和引入"><a href="#Bean的排除和引入" class="headerlink" title="Bean的排除和引入"></a>Bean的排除和引入</h3><p>上文我们引入了很多mock的Bean，容器很有可能会启动不起来，因为可能此时容器中既有真实的Bean，又有mock的Bean，这个时候，我们就需要将那些冲突的真实的Bean从测试容器中排除。<br>除此之外，有些Bean因为加载了非常恶心的东西（导致我们测试容器启动不起来），我们也需要排除。如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ComponentScan(basePackages = &#123;</span></span><br><span class="line"><span class="meta">    &quot;扫描我们希望引入的包和类&quot;</span></span><br><span class="line"><span class="meta">&#125;, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE,</span></span><br><span class="line"><span class="meta">        classes = &#123;要排除的包和类&#125;))</span></span><br><span class="line"><span class="meta">@Import(&#123;</span></span><br><span class="line"><span class="meta">        希望引入的bean</span></span><br><span class="line"><span class="meta">&#125;)</span></span><br><span class="line"><span class="meta">@TestConfiguration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ServiceMockConfig</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/Spring/">Spring</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2023/03/13/view-of-shanghai/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">我对上海的印象</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2023/02/07/zero-copy/">
+        <span class="next-text nav-default">零拷贝</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    
+
+<div class="github-comments">
+  <div class="comments-title">💬 Comments</div>
+  <p style="color: #666; font-size: 0.9em; margin-bottom: 1em;">
+    Comments require <a href="https://github.com/apps/giscus" target="_blank" rel="noopener">Giscus App</a> installed on your GitHub repository.
+  </p>
+  <script src="https://giscus.app/client.js"
+    data-repo="wxxlamp/wxxlamp.github.io"
+    data-repo-id="R_kgDOCiYteA"
+    data-category="General"
+    data-category-id="DIC_kwDOCiYteM4CelIo"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="light"
+    data-lang="en"
+    crossorigin="anonymous"
+    async>
+  </script>
+</div>
+
+
+
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+    
+
+<div class="toc-container" id="toc-container">
+  <div class="toc-title">Contents</div>
+  <ul class="toc-list" id="toc-list">
+    
+  </ul>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Generate TOC from post content
+  const content = document.querySelector('.post-content');
+  const tocList = document.getElementById('toc-list');
+
+  if (!content || !tocList) return;
+
+  const headings = content.querySelectorAll('h1, h2, h3, h4');
+
+  if (headings.length < 2) {
+    document.getElementById('toc-container').style.display = 'none';
+    return;
+  }
+
+  headings.forEach(function(heading, index) {
+    // Add ID to heading if not exists
+    if (!heading.id) {
+      heading.id = 'heading-' + index;
+    }
+
+    const li = document.createElement('li');
+    li.className = 'toc-' + heading.tagName.toLowerCase();
+
+    const a = document.createElement('a');
+    a.href = '#' + heading.id;
+    a.textContent = heading.textContent;
+    a.onclick = function(e) {
+      e.preventDefault();
+      heading.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    li.appendChild(a);
+    tocList.appendChild(li);
+  });
+
+  // Active section highlighting
+  const tocItems = tocList.querySelectorAll('li');
+
+  function updateActiveToc() {
+    const scrollPos = window.scrollY + 100;
+
+    headings.forEach(function(heading, index) {
+      const top = heading.offsetTop;
+      const bottom = top + heading.offsetHeight;
+
+      if (scrollPos >= top && scrollPos < bottom) {
+        tocItems.forEach(function(item) {
+          item.classList.remove('active');
+        });
+        if (tocItems[index]) {
+          tocItems[index].classList.add('active');
+        }
+      }
+    });
+  }
+
+  window.addEventListener('scroll', updateActiveToc);
+  updateActiveToc();
+});
+</script>
+
+
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2014 -
+    
+    2026
+    <span class="footer-author">Wxx.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> and <a class="theme-link" target="_blank" rel="noopener" href="https://github.com/frostfan/hexo-theme-polarbear">Polar Bear</a>
+    </span>
+</span>
+<span class="site-stats" style="display: block; margin-top: 8px; font-size: 0.85rem; color: #666;">
+    Total Visits: <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> ·
+    Unique Visitors: <span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>
+</span>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>

@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="基于Hexo博客主题Anatole-core的二次开发，添加分类、目录、访问统计、打赏、友链等功能。"/>
+
+
+
+
+  <meta name="keywords" content="HEXO," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="王星星的魔灯" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="https://wxxlamp.cn/2021/03/22/diy-hexo-theme/"/>
+
+
+<meta name="description" content="基于Hexo博客主题Anatole-core的二次开发，添加分类、目录、访问统计、打赏、友链等功能。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HEXO主题修改指北">
+<meta property="og:url" content="https://wxxlamp.cn/2021/03/22/diy-hexo-theme/index.html">
+<meta property="og:site_name" content="王星星的魔灯">
+<meta property="og:description" content="基于Hexo博客主题Anatole-core的二次开发，添加分类、目录、访问统计、打赏、友链等功能。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-03-22T11:38:00.000Z">
+<meta property="article:modified_time" content="2026-03-15T06:54:09.319Z">
+<meta property="article:author" content="Wxx">
+<meta property="article:tag" content="HEXO">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/syst/dist/SmileySans-Oblique/result.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/syst/dist/SmileySans-Oblique/result.css"></noscript>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> HEXO主题修改指北 - 王星星的魔灯 </title>
+  <meta name="generator" content="Hexo 8.1.1"></head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">王星星的魔灯</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="menu-item menu-item-resume">
+                        <a href="/resume" class="resume-nav-label" onclick="event.preventDefault()">Resume</a>
+                        <ul class="resume-lang-dropdown">
+                            <li><a href="/resume">中文简历</a></li>
+                            <li><a href="/resume-en">English</a></li>
+                        </ul>
+                    </li>
+                    
+                
+                <li class="menu-item">
+                    <a href="/atom.xml">RSS</a>
+                </li>
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          HEXO主题修改指北
+        
+      </h1>
+
+      <time class="post-time">
+          3月 22 2021
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>为什么会写这篇文章呢？如你所见，我的博客使用hexo驱动，使用的主题是<a target="_blank" rel="noopener" href="https://github.com/mrcore/hexo-theme-Anatole-Core">Anatole-core</a>，它简洁美观，易于使用，感谢作者的开源，resp。</p>
+<p>但是这个主题的某些功能并不能达到我的想象。譬如没有分类，没有目录，没有用户访问统计，没有打赏，没有友链等等…所以，我的直接需求驱动着我去修改这个主题</p>
+<blockquote>
+<p>PS: 如果你仅仅是使用HEXO写博客，我推荐你访问<a href="https://wxxlamp.cn/2020/12/16/hexo-guide/">这篇文章</a></p>
+</blockquote>
+<h3 id="1-HEXO工作原理"><a href="#1-HEXO工作原理" class="headerlink" title="1. HEXO工作原理"></a>1. <a target="_blank" rel="noopener" href="https://www.larscheng.com/hexo-principle/">HEXO工作原理</a></h3><p>在HEXO中，我们通过<code>hexo g</code>命令来将我们的md文件生成为对应的html页面，进而将这些html静态页面通过服务器展示到browser中，在这个过程中，我们要意识到两件事的发生，第一件事是HEXO解析md中的变量(如title,crete_time,content,author.etc)并存储在内存中，第二件事是，HEXO通过模板渲染引擎对内存中的变量进行渲染并形成HTML文件。</p>
+<blockquote>
+<p>这里我脑洞大开了一下，因为建站几乎是每个程序员的需求，即使HEXO很方便，但是后端程序员使用HEXO进行主题DIY的时候还要接触大量的前端概念，所以我想，能不能用Java实现HEXO的功能，毕竟Java有Thymeleaf之类的可以直接生成HTML的模板引擎，所以我们只需要解析md的变量即可</p>
+</blockquote>
+<p>之后，其实还有一件事，HEXO会把渲染后的HTML和文件和themes&#x2F;source文件夹的中除了layout的文件全部拷贝到public中，供浏览器展示</p>
+<h3 id="2-HEXO主题构成"><a href="#2-HEXO主题构成" class="headerlink" title="2. HEXO主题构成"></a>2. HEXO主题构成</h3><p>通过上面的介绍，我们应该会知道，HEXO中的第二步，即渲染为各式各样的HTML文件这一步，就是我们各式各样的主题完成的。</p>
+<p>在正常情况下，一个HTML的页面是由CSS，JS和HTML本身组成的，那么对于我们的HEXO主题来说，我们也需要包括这三样，但是等等，我们的md里面的变量如何渲染进HTML中呢？这就要提到我们之前说过的模板引擎了，常见的模板引擎有jade(pug)，swig(hexo自带)，ejs，haml几种，他们把数据在编译时渲染成了我们需要的html页面。那么到现在来说，一个hexo主题就需要有模板引擎，css，js。</p>
+<p>但是，很多人觉得css太费事，所以他们在开发的时候会使用scss，stylus或者less，不过，开发者必须把scss或者less编译为css，因为hexo会把themes&#x2F;source文件夹中的除了layout文件夹的内容全部拷贝到了public文件夹中，这时候，渲染成的html会去引用我们声明的js和css。</p>
+<p>同时，我们还需要各种图片，所以一个hexo主题中也会有.jpg&#x2F;.png文件，有时候我们还需要特殊字体，所以我们还需要字体相关的文件。不仅如此，为了支持国际化，我们还需要有yml文件去定义。</p>
+<p>综上所述，一个hexo主题需要有：模板引擎,css,js,img,font.etc</p>
+<h3 id="3-修改你的hexo主题"><a href="#3-修改你的hexo主题" class="headerlink" title="3. 修改你的hexo主题"></a>3. 修改你的hexo主题</h3><p>一般我们修改主题的时候，首先就需要进入themes&#x2F;source&#x2F;layout文件夹，去查看整个主题的页面布局情况。</p>
+<p>一般的主题结构会分为下面几个部分：</p>
+<ul>
+<li>HTML 的 <code>head</code> 部分</li>
+<li>顶部导航栏 nav</li>
+<li>页面头部、底部</li>
+<li>页面侧边栏 siderbar</li>
+<li>页面主体部分（显示文章的地方） main</li>
+<li>……</li>
+</ul>
+<p>如果你想要更深一步去修改乃至创建hexo主题，<a target="_blank" rel="noopener" href="https://liuyib.github.io/2019/08/20/develop-hexo-theme-from-0-to-1/">这篇博客可能对你有帮助。。。</a></p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/HEXO/">HEXO</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2021/03/29/mybatis-mapping-object/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">MyBatis中实体类和关系的映射原理</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2021/02/25/ali-22-internships/">
+        <span class="next-text nav-default">搞Java，来这就对了！</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    
+
+<div class="github-comments">
+  <div class="comments-title">💬 Comments</div>
+  <p style="color: #666; font-size: 0.9em; margin-bottom: 1em;">
+    Comments require <a href="https://github.com/apps/giscus" target="_blank" rel="noopener">Giscus App</a> installed on your GitHub repository.
+  </p>
+  <script src="https://giscus.app/client.js"
+    data-repo="wxxlamp/wxxlamp.github.io"
+    data-repo-id="R_kgDOCiYteA"
+    data-category="General"
+    data-category-id="DIC_kwDOCiYteM4CelIo"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="light"
+    data-lang="en"
+    crossorigin="anonymous"
+    async>
+  </script>
+</div>
+
+
+
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+    
+
+<div class="toc-container" id="toc-container">
+  <div class="toc-title">Contents</div>
+  <ul class="toc-list" id="toc-list">
+    
+  </ul>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Generate TOC from post content
+  const content = document.querySelector('.post-content');
+  const tocList = document.getElementById('toc-list');
+
+  if (!content || !tocList) return;
+
+  const headings = content.querySelectorAll('h1, h2, h3, h4');
+
+  if (headings.length < 2) {
+    document.getElementById('toc-container').style.display = 'none';
+    return;
+  }
+
+  headings.forEach(function(heading, index) {
+    // Add ID to heading if not exists
+    if (!heading.id) {
+      heading.id = 'heading-' + index;
+    }
+
+    const li = document.createElement('li');
+    li.className = 'toc-' + heading.tagName.toLowerCase();
+
+    const a = document.createElement('a');
+    a.href = '#' + heading.id;
+    a.textContent = heading.textContent;
+    a.onclick = function(e) {
+      e.preventDefault();
+      heading.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    li.appendChild(a);
+    tocList.appendChild(li);
+  });
+
+  // Active section highlighting
+  const tocItems = tocList.querySelectorAll('li');
+
+  function updateActiveToc() {
+    const scrollPos = window.scrollY + 100;
+
+    headings.forEach(function(heading, index) {
+      const top = heading.offsetTop;
+      const bottom = top + heading.offsetHeight;
+
+      if (scrollPos >= top && scrollPos < bottom) {
+        tocItems.forEach(function(item) {
+          item.classList.remove('active');
+        });
+        if (tocItems[index]) {
+          tocItems[index].classList.add('active');
+        }
+      }
+    });
+  }
+
+  window.addEventListener('scroll', updateActiveToc);
+  updateActiveToc();
+});
+</script>
+
+
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2014 -
+    
+    2026
+    <span class="footer-author">Wxx.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> and <a class="theme-link" target="_blank" rel="noopener" href="https://github.com/frostfan/hexo-theme-polarbear">Polar Bear</a>
+    </span>
+</span>
+<span class="site-stats" style="display: block; margin-top: 8px; font-size: 0.85rem; color: #666;">
+    Total Visits: <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> ·
+    Unique Visitors: <span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>
+</span>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>

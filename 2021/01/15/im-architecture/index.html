@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="IM即时通讯系统架构总结，包括通信流程、消息同步方式、在线与离线消息处理机制。"/>
+
+
+
+
+  <meta name="keywords" content="IM," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="王星星的魔灯" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="https://wxxlamp.cn/2021/01/15/im-architecture/"/>
+
+
+<meta name="description" content="IM即时通讯系统架构总结，包括通信流程、消息同步方式、在线与离线消息处理机制。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="IM系统概览">
+<meta property="og:url" content="https://wxxlamp.cn/2021/01/15/im-architecture/index.html">
+<meta property="og:site_name" content="王星星的魔灯">
+<meta property="og:description" content="IM即时通讯系统架构总结，包括通信流程、消息同步方式、在线与离线消息处理机制。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/85a7042f_ims-flow.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/f7d77102_ims-offline.png">
+<meta property="article:published_time" content="2021-01-15T11:41:00.000Z">
+<meta property="article:modified_time" content="2026-03-15T06:54:09.319Z">
+<meta property="article:author" content="Wxx">
+<meta property="article:tag" content="IM">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/85a7042f_ims-flow.png">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/syst/dist/SmileySans-Oblique/result.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/syst/dist/SmileySans-Oblique/result.css"></noscript>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> IM系统概览 - 王星星的魔灯 </title>
+  <meta name="generator" content="Hexo 8.1.1"></head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">王星星的魔灯</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="menu-item menu-item-resume">
+                        <a href="/resume" class="resume-nav-label" onclick="event.preventDefault()">Resume</a>
+                        <ul class="resume-lang-dropdown">
+                            <li><a href="/resume">中文简历</a></li>
+                            <li><a href="/resume-en">English</a></li>
+                        </ul>
+                    </li>
+                    
+                
+                <li class="menu-item">
+                    <a href="/atom.xml">RSS</a>
+                </li>
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          IM系统概览
+        
+      </h1>
+
+      <time class="post-time">
+          1月 15 2021
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>组里做的IM需要优化，同时这也是我毕设的选题，所以我最近抽空总结了下组里IM的现有流程和架构，其中，就通信流程和同步方式的学习，我获益颇深。</p>
+<p>但是，对于缓存失效，性能优化（集群，缓存，异步，批处理），代码抽象等地方还不是很好，还需要我下一步继续改进</p>
+<h3 id="一-通信流程"><a href="#一-通信流程" class="headerlink" title="一. 通信流程"></a>一. 通信流程</h3><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/85a7042f_ims-flow.png" align="middle" />
+
+<h3 id="二-基础功能"><a href="#二-基础功能" class="headerlink" title="二. 基础功能"></a>二. 基础功能</h3><p>用户在上线之后会把信息存入redis中，便于后续收发消息。存储的信息包括用户的channel，ack，token，seq，在线人数等</p>
+<h4 id="1-单聊-C2C"><a href="#1-单聊-C2C" class="headerlink" title="1. 单聊(C2C)"></a>1. 单聊(C2C)</h4><p>单聊逻辑比较简单，当sender通过长连接把消息发送给server之后，server再把消息(通过RPC&#x2F;RESTful)转发给route，route将消息和序列号落库之后，再通过redis的缓存，转发给receiver的channel中</p>
+<h4 id="2-群聊-C2G"><a href="#2-群聊-C2G" class="headerlink" title="2.  群聊(C2G)"></a>2.  群聊(C2G)</h4><p>我们把群聊和单聊的逻辑基本抽象成一样的，把群也作为一个接受者</p>
+<p>群聊的接收方为groupId，第二步业务处理会把receiver的groupId通过查库的方式获得群里面的所有成员，然后再通过Server把消息转发给所有群成员，然后再通过channel发送消息</p>
+<h4 id="3-推送-S2C"><a href="#3-推送-S2C" class="headerlink" title="3. 推送(S2C)"></a>3. 推送(S2C)</h4><p>推送并不能通过groupId进行写扩散的优化，所以会存在写入大量msg，并且会大量更新receiver的ack_seq和msg_seq，所以推送需要额外优化</p>
+<h3 id="三-消息同步"><a href="#三-消息同步" class="headerlink" title="三. 消息同步"></a>三. 消息同步</h3><h4 id="1-落库方式"><a href="#1-落库方式" class="headerlink" title="1. 落库方式"></a>1. 落库方式</h4><p>msg_seq保存的是消息的seq，以receiverId为粒度自增。last_ack_seq保存的是确认的seq，之所以服务端保存ack是因为如果不保存，当用户换手机之后，就不能获得未读消息了</p>
+<ol>
+<li>group：msg_seq</li>
+<li>group_user: last_ack_seq</li>
+<li>message: msg_seq</li>
+<li>user: last_ack_seq   msg_seq</li>
+</ol>
+<p>单聊：消息落库，用户msg_seq<strong>根据userId为粒度自增</strong>，落库更新(1%)，用户ack_seq更新(1%)</p>
+<p>群聊：消息落库：群聊msg_seq<strong>根据groupId为粒度自增</strong>，落库更新(1%)，用户群聊ack_seq更新(1%)。<strong>[当群人数很多，同时看到消息的时候，瞬间的ack确认，即是是1%的概率更新数据库也有可能把库打掉]</strong></p>
+<h4 id="2-同步流程"><a href="#2-同步流程" class="headerlink" title="2. 同步流程"></a>2. 同步流程</h4><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/f7d77102_ims-offline.png" style="zoom: 67%;" />
+
+<h4 id="3-缓存失效"><a href="#3-缓存失效" class="headerlink" title="3. 缓存失效"></a>3. 缓存失效</h4><p>因为msg_seq&amp;ack_seq在Redis中存储，只有1%的概率会同步到DB中，当Redis失效的时候，如何保证用户一定能同步到未读的信息，这也是一个问题。</p>
+<blockquote>
+<p><strong>以下假设建立在user1离线的情况下</strong></p>
+<p>假如在一次C2C中，user1的msg_seq刚好落库，并且此时数据库中的user1_msg_seq是100，同时Redis中的user1_msg_seq也是100。之后user1正常作为receiver接收消息，不过此时并没有触发落库机制</p>
+<p>不知道过了多久，数据库中的user1_msg_seq&#x3D;100(因为没有被1%的几率触发)，Redis的user1_msg_seq是200，说明此时user1已经又接收到了100条数据，但是还没有同步到DB中，此时Redis宕机</p>
+</blockquote>
+<p>这时，user1的100条数据是丢失的，所以，之前的解决办法是，我们需要重新从数据库中获取旧的seq，同时给其增加10000的步长(对于1%的落库来说，1w几乎能保证一定比宕机的redis的seq大)</p>
+<p>对于ack_seq来说，则不存在这种问题，因为我们的ack是从客户端获取的，换句话说，我们服务端的ack是<strong>无状态</strong>的，所以不用考虑1w的步长</p>
+<h4 id="4-消息乱序"><a href="#4-消息乱序" class="headerlink" title="4. 消息乱序"></a>4. 消息乱序</h4><p>如果sender发送消息的顺序是1,2，但是receiver接收消息的顺序是2,1，那该如何处理？</p>
+<p>我们需要在发送消息时携带上该消息的createTime，然后客户端根据createTime重新调整部分范围内的顺序</p>
+<h4 id="5-优化方案"><a href="#5-优化方案" class="headerlink" title="5. 优化方案"></a>5. 优化方案</h4><ol>
+<li><strong>同步消息可以需要多次少量同步，不用一次把所有未读消息同步完</strong>，类似于分页查询</li>
+<li>可以选择MQ做缓冲，其实对于推送来说，因为不需要及时性，所以可以<strong>通过MQ进行削峰填谷的作用</strong></li>
+<li>对于长连接的发送消息来说，额外的落库操作也可以通过另外开辟一个线程落库，或者使用消息队列<strong>异步落库</strong>（同步消息时可能会有延迟），但是消息发送和存储的一致性就没办法保证</li>
+<li>落库不能用百分率，因为百分之一对应1w，这个成本是很大的，可以考虑使用固定步长</li>
+<li>ack不能每次都落库(1%)，也需要用<strong>步长来落库</strong>[参考微信]</li>
+</ol>
+<h3 id="四-方案取舍"><a href="#四-方案取舍" class="headerlink" title="四. 方案取舍"></a>四. 方案取舍</h3><h4 id="1-服务器选型"><a href="#1-服务器选型" class="headerlink" title="1. 服务器选型"></a>1. 服务器选型</h4><p>Tomcat还是Netty：暂定基于Netty的原生连接，为了简单易用，选择Yeauty作为WebSocket的脚手架，方便Tomcat到Netty上的迁移。但是如果使用Yeauty，就固定了传输格式，享受不了Netty的自定义网络传输红利</p>
+<h4 id="2-通信协议"><a href="#2-通信协议" class="headerlink" title="2. 通信协议"></a>2. 通信协议</h4><ul>
+<li>长连接：TCP下的WebSocket还是基于TCP自己解析，暂定基于TCP的ProtoBuf</li>
+<li>短连接：目前使用RESTful，后期希望改进为RPC</li>
+</ul>
+<h4 id="3-读写扩散"><a href="#3-读写扩散" class="headerlink" title="3. 读写扩散"></a>3. 读写扩散</h4><p>读扩散还是<strong>写扩散</strong>，目前是基于写扩散。因为对于我们的业务来说，当群聊人数控制得当，且并发不是很高的情况下，写扩散更容易编写。</p>
+<p>同时，把群Id也作为receiver，防止群聊人数过多，增加写扩散的写入压力。同时一次消息也只存入一次msg的实体类，对于ack_seq和msg_seq都是随机更新</p>
+<h3 id="五-架构问题"><a href="#五-架构问题" class="headerlink" title="五. 架构问题"></a>五. 架构问题</h3><h4 id="1-服务部署"><a href="#1-服务部署" class="headerlink" title="1. 服务部署"></a>1. 服务部署</h4><p>集群部署，将Netty作为集群部署</p>
+<p><strong>在多台服务器中如何路由到receiver的channel中</strong>——需要前置一个route进行路由</p>
+<p><strong>每台服务器的注册和服务发现问题</strong>——需要注册中心，可能是Redis，也可能是Zookeeper</p>
+<h4 id="2-业务抽象"><a href="#2-业务抽象" class="headerlink" title="2. 业务抽象"></a>2. 业务抽象</h4><p>需要把基本的聊天管道，和建群，好友等模块的业务抽象出来，然后对外提供SDK</p>
+<h4 id="3-消息可达"><a href="#3-消息可达" class="headerlink" title="3. 消息可达"></a>3. 消息可达</h4><p>当发送方发送成功或者接送放接收成功消息都会给服务端发送ack，以此来表明自己接收成功</p>
+<h3 id="六-监控问题"><a href="#六-监控问题" class="headerlink" title="六. 监控问题"></a>六. 监控问题</h3><p>目前只能监控在线人数，还是有所欠缺的</p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/IM/">IM</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2021/01/27/annotation-requestbody/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">@RequestBody的原理</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2021/01/10/a-little-red-flower-review/">
+        <span class="next-text nav-default">《送你一朵小红花》观后感</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    
+
+<div class="github-comments">
+  <div class="comments-title">💬 Comments</div>
+  <p style="color: #666; font-size: 0.9em; margin-bottom: 1em;">
+    Comments require <a href="https://github.com/apps/giscus" target="_blank" rel="noopener">Giscus App</a> installed on your GitHub repository.
+  </p>
+  <script src="https://giscus.app/client.js"
+    data-repo="wxxlamp/wxxlamp.github.io"
+    data-repo-id="R_kgDOCiYteA"
+    data-category="General"
+    data-category-id="DIC_kwDOCiYteM4CelIo"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="light"
+    data-lang="en"
+    crossorigin="anonymous"
+    async>
+  </script>
+</div>
+
+
+
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+    
+
+<div class="toc-container" id="toc-container">
+  <div class="toc-title">Contents</div>
+  <ul class="toc-list" id="toc-list">
+    
+  </ul>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Generate TOC from post content
+  const content = document.querySelector('.post-content');
+  const tocList = document.getElementById('toc-list');
+
+  if (!content || !tocList) return;
+
+  const headings = content.querySelectorAll('h1, h2, h3, h4');
+
+  if (headings.length < 2) {
+    document.getElementById('toc-container').style.display = 'none';
+    return;
+  }
+
+  headings.forEach(function(heading, index) {
+    // Add ID to heading if not exists
+    if (!heading.id) {
+      heading.id = 'heading-' + index;
+    }
+
+    const li = document.createElement('li');
+    li.className = 'toc-' + heading.tagName.toLowerCase();
+
+    const a = document.createElement('a');
+    a.href = '#' + heading.id;
+    a.textContent = heading.textContent;
+    a.onclick = function(e) {
+      e.preventDefault();
+      heading.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    li.appendChild(a);
+    tocList.appendChild(li);
+  });
+
+  // Active section highlighting
+  const tocItems = tocList.querySelectorAll('li');
+
+  function updateActiveToc() {
+    const scrollPos = window.scrollY + 100;
+
+    headings.forEach(function(heading, index) {
+      const top = heading.offsetTop;
+      const bottom = top + heading.offsetHeight;
+
+      if (scrollPos >= top && scrollPos < bottom) {
+        tocItems.forEach(function(item) {
+          item.classList.remove('active');
+        });
+        if (tocItems[index]) {
+          tocItems[index].classList.add('active');
+        }
+      }
+    });
+  }
+
+  window.addEventListener('scroll', updateActiveToc);
+  updateActiveToc();
+});
+</script>
+
+
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2014 -
+    
+    2026
+    <span class="footer-author">Wxx.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> and <a class="theme-link" target="_blank" rel="noopener" href="https://github.com/frostfan/hexo-theme-polarbear">Polar Bear</a>
+    </span>
+</span>
+<span class="site-stats" style="display: block; margin-top: 8px; font-size: 0.85rem; color: #666;">
+    Total Visits: <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> ·
+    Unique Visitors: <span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>
+</span>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>

@@ -12,7 +12,7 @@
 
 
 
-  <meta name="description" content="本文系统介绍Java 8函数式编程与Lambda表达式的核心知识，从Lambda的数学起源讲起，详细解析Function、Consumer、Supplier三大基础函数式接口的用法及其在JDK中的应用，并展示如何自定义函数式接口。同时结合责任链模式、观察者模式、策略模式等常见设计模式，演示Lambda如何大幅简化代码，帮助读者将Lambda从被动调用提升为主动设计。"/>
+  <meta name="description" content="介绍Java 8函数式编程与Lambda表达式，解析Function、Consumer、Supplier三大函数式接口，结合责任链、观察者、策略等设计模式演示Lambda简化代码的技巧。"/>
 
 
 
@@ -35,15 +35,15 @@
 <link rel="canonical" href="https://wxxlamp.cn/2021/08/22/java-8-lambda/"/>
 
 
-<meta name="description" content="本文系统介绍Java 8函数式编程与Lambda表达式的核心知识，从Lambda的数学起源讲起，详细解析Function、Consumer、Supplier三大基础函数式接口的用法及其在JDK中的应用，并展示如何自定义函数式接口。同时结合责任链模式、观察者模式、策略模式等常见设计模式，演示Lambda如何大幅简化代码，帮助读者将Lambda从被动调用提升为主动设计。">
+<meta name="description" content="介绍Java 8函数式编程与Lambda表达式，解析Function、Consumer、Supplier三大函数式接口，结合责任链、观察者、策略等设计模式演示Lambda简化代码的技巧。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java8的函数式编程">
 <meta property="og:url" content="https://wxxlamp.cn/2021/08/22/java-8-lambda/index.html">
 <meta property="og:site_name" content="王星星的魔灯">
-<meta property="og:description" content="本文系统介绍Java 8函数式编程与Lambda表达式的核心知识，从Lambda的数学起源讲起，详细解析Function、Consumer、Supplier三大基础函数式接口的用法及其在JDK中的应用，并展示如何自定义函数式接口。同时结合责任链模式、观察者模式、策略模式等常见设计模式，演示Lambda如何大幅简化代码，帮助读者将Lambda从被动调用提升为主动设计。">
+<meta property="og:description" content="介绍Java 8函数式编程与Lambda表达式，解析Function、Consumer、Supplier三大函数式接口，结合责任链、观察者、策略等设计模式演示Lambda简化代码的技巧。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-08-22T01:52:00.000Z">
-<meta property="article:modified_time" content="2026-03-16T14:04:10.438Z">
+<meta property="article:modified_time" content="2026-03-16T14:17:17.066Z">
 <meta property="article:author" content="Wxx">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="Lambda">
@@ -67,6 +67,22 @@
   };
 </script>
 
+
+
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+    }
+  };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
 
 

@@ -63,6 +63,22 @@
 
 
 
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+    }
+  };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
 
   
 
@@ -152,6 +168,21 @@
         <span class="archive-post-title">
           <a href="/2023/07/09/how-to-process-hot-data/" class="archive-post-link">
             如何处理热点数据问题
+          </a>
+        </span>
+      </div>
+    
+      
+
+      <div class="archive-post">
+        <span class="archive-post-time">
+          
+            2023-06-11
+          
+        </span>
+        <span class="archive-post-title">
+          <a href="/2023/06/11/when-change-db-route-key/" class="archive-post-link">
+            当修改分库分表键时
           </a>
         </span>
       </div>

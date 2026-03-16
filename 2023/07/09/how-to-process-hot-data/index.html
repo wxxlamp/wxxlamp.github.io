@@ -12,7 +12,7 @@
 
 
 
-  <meta name="description" content="以秒杀场景为例，分别从查询热点和写入热点两个维度讨论热点数据处理方案：查询热点方面，通过缓存预热将数据同步至Redis，并在流量极大时采用大key分片、多级缓存（浏览器/CDN/本地/Redis）和分段预加载策略；写入热点方面，针对库存扣减高并发场景，分析库存分库、Redis扣减异步落库、明细异步汇总、应用层限流及独立热点库等多种方案，同时强调乐观锁保证扣减一致性以及延迟双删维护缓存一致性的重要性。"/>
+  <meta name="description" content="以秒杀场景为例，探讨查询热点与写入热点的处理方案：查询热点通过缓存预热、大key分片、多级缓存应对；写入热点采用库存分库、Redis异步落库、应用层限流等策略，同时保障缓存一致性。"/>
 
 
 
@@ -35,15 +35,15 @@
 <link rel="canonical" href="https://wxxlamp.cn/2023/07/09/how-to-process-hot-data/"/>
 
 
-<meta name="description" content="以秒杀场景为例，分别从查询热点和写入热点两个维度讨论热点数据处理方案：查询热点方面，通过缓存预热将数据同步至Redis，并在流量极大时采用大key分片、多级缓存（浏览器&#x2F;CDN&#x2F;本地&#x2F;Redis）和分段预加载策略；写入热点方面，针对库存扣减高并发场景，分析库存分库、Redis扣减异步落库、明细异步汇总、应用层限流及独立热点库等多种方案，同时强调乐观锁保证扣减一致性以及延迟双删维护缓存一致性的重要性">
+<meta name="description" content="以秒杀场景为例，探讨查询热点与写入热点的处理方案：查询热点通过缓存预热、大key分片、多级缓存应对；写入热点采用库存分库、Redis异步落库、应用层限流等策略，同时保障缓存一致性。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="如何处理热点数据问题">
 <meta property="og:url" content="https://wxxlamp.cn/2023/07/09/how-to-process-hot-data/index.html">
 <meta property="og:site_name" content="王星星的魔灯">
-<meta property="og:description" content="以秒杀场景为例，分别从查询热点和写入热点两个维度讨论热点数据处理方案：查询热点方面，通过缓存预热将数据同步至Redis，并在流量极大时采用大key分片、多级缓存（浏览器&#x2F;CDN&#x2F;本地&#x2F;Redis）和分段预加载策略；写入热点方面，针对库存扣减高并发场景，分析库存分库、Redis扣减异步落库、明细异步汇总、应用层限流及独立热点库等多种方案，同时强调乐观锁保证扣减一致性以及延迟双删维护缓存一致性的重要性">
+<meta property="og:description" content="以秒杀场景为例，探讨查询热点与写入热点的处理方案：查询热点通过缓存预热、大key分片、多级缓存应对；写入热点采用库存分库、Redis异步落库、应用层限流等策略，同时保障缓存一致性。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-07-09T02:36:00.000Z">
-<meta property="article:modified_time" content="2026-03-16T14:04:10.438Z">
+<meta property="article:modified_time" content="2026-03-16T14:17:17.066Z">
 <meta property="article:author" content="Wxx">
 <meta property="article:tag" content="CACHE">
 <meta property="article:tag" content="DB">
@@ -67,6 +67,22 @@
   };
 </script>
 
+
+
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+    }
+  };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
 
 
@@ -201,8 +217,8 @@
       </a>
     
     
-      <a class="next" href="/2023/05/07/how-to-deal-msg-reconsume/">
-        <span class="next-text nav-default">如何解决消息幂等问题</span>
+      <a class="next" href="/2023/06/11/when-change-db-route-key/">
+        <span class="next-text nav-default">当修改分库分表键时</span>
         <span class="prev-text nav-mobile">Next</span>
         <i class="iconfont icon-right"></i>
       </a>

@@ -12,7 +12,7 @@
 
 
 
-  <meta name="description" content="针对Spring MVC中@RequestBody无法将请求体映射到多个独立参数的局限，通过实现HandlerMethodArgumentResolver接口自定义参数解析器，结合自定义注解@RequestBodyParam，复用AbstractMessageConverterMethodArgumentResolver的消息转换能力，实现将POST请求body中的JSON字段精准映射到多个String类型方法参数的功能，从实验出发到完整代码实现，并说明其在公司全POST接口场景下的实际应用背景。"/>
+  <meta name="description" content="解决Spring MVC中@RequestBody无法映射到多个参数的问题，通过自定义HandlerMethodArgumentResolver和注解，实现JSON字段到多参数的精准映射。"/>
 
 
 
@@ -35,15 +35,15 @@
 <link rel="canonical" href="https://wxxlamp.cn/2020/12/22/diy-param-parse-annotation/"/>
 
 
-<meta name="description" content="针对Spring MVC中@RequestBody无法将请求体映射到多个独立参数的局限，通过实现HandlerMethodArgumentResolver接口自定义参数解析器，结合自定义注解@RequestBodyParam，复用AbstractMessageConverterMethodArgumentResolver的消息转换能力，实现将POST请求body中的JSON字段精准映射到多个Str">
+<meta name="description" content="解决Spring MVC中@RequestBody无法映射到多个参数的问题，通过自定义HandlerMethodArgumentResolver和注解，实现JSON字段到多参数的精准映射。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="DIY一个参数解析器">
 <meta property="og:url" content="https://wxxlamp.cn/2020/12/22/diy-param-parse-annotation/index.html">
 <meta property="og:site_name" content="王星星的魔灯">
-<meta property="og:description" content="针对Spring MVC中@RequestBody无法将请求体映射到多个独立参数的局限，通过实现HandlerMethodArgumentResolver接口自定义参数解析器，结合自定义注解@RequestBodyParam，复用AbstractMessageConverterMethodArgumentResolver的消息转换能力，实现将POST请求body中的JSON字段精准映射到多个Str">
+<meta property="og:description" content="解决Spring MVC中@RequestBody无法映射到多个参数的问题，通过自定义HandlerMethodArgumentResolver和注解，实现JSON字段到多参数的精准映射。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-12-22T10:26:00.000Z">
-<meta property="article:modified_time" content="2026-03-16T14:04:10.438Z">
+<meta property="article:modified_time" content="2026-03-16T14:17:17.066Z">
 <meta property="article:author" content="Wxx">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="SpringMVC">
@@ -67,6 +67,22 @@
   };
 </script>
 
+
+
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+    }
+  };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
 
 

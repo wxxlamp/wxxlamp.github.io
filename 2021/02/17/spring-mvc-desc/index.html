@@ -12,7 +12,7 @@
 
 
 
-  <meta name="description" content="本文系统解析SpringMVC的核心架构与工作原理，涵盖主要模块、执行流程、启动流程与初始化流程四个维度。详细介绍DispatcherServlet、HandlerMapping、HandlerAdapter、HandlerExecutionChain、HandlerMethodArgumentResolver等关键组件的职责与协作关系，并追踪从HTTP请求进入Tomcat到最终响应渲染的完整调用链。同时分析SpringMVC大量运用的工厂模式、策略模式、责任链模式等设计思想，并与Tomcat过滤器链设计进行对比，附源码片段辅助理解。"/>
+  <meta name="description" content="系统解析SpringMVC核心架构与工作原理，涵盖关键组件、执行流程、启动初始化流程及设计模式运用，附源码分析。"/>
 
 
 
@@ -35,15 +35,15 @@
 <link rel="canonical" href="https://wxxlamp.cn/2021/02/17/spring-mvc-desc/"/>
 
 
-<meta name="description" content="本文系统解析SpringMVC的核心架构与工作原理，涵盖主要模块、执行流程、启动流程与初始化流程四个维度。详细介绍DispatcherServlet、HandlerMapping、HandlerAdapter、HandlerExecutionChain、HandlerMethodArgumentResolver等关键组件的职责与协作关系，并追踪从HTTP请求进入Tomcat到最终响应渲染的完整调用">
+<meta name="description" content="系统解析SpringMVC核心架构与工作原理，涵盖关键组件、执行流程、启动初始化流程及设计模式运用，附源码分析。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SpringMVC源码分析">
 <meta property="og:url" content="https://wxxlamp.cn/2021/02/17/spring-mvc-desc/index.html">
 <meta property="og:site_name" content="王星星的魔灯">
-<meta property="og:description" content="本文系统解析SpringMVC的核心架构与工作原理，涵盖主要模块、执行流程、启动流程与初始化流程四个维度。详细介绍DispatcherServlet、HandlerMapping、HandlerAdapter、HandlerExecutionChain、HandlerMethodArgumentResolver等关键组件的职责与协作关系，并追踪从HTTP请求进入Tomcat到最终响应渲染的完整调用">
+<meta property="og:description" content="系统解析SpringMVC核心架构与工作原理，涵盖关键组件、执行流程、启动初始化流程及设计模式运用，附源码分析。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-02-17T14:44:00.000Z">
-<meta property="article:modified_time" content="2026-03-16T14:04:10.442Z">
+<meta property="article:modified_time" content="2026-03-16T14:17:17.070Z">
 <meta property="article:author" content="Wxx">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="Spring">
@@ -68,6 +68,22 @@
   };
 </script>
 
+
+
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+    }
+  };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
 
 

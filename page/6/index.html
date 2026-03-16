@@ -63,6 +63,22 @@
 
 
 
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+    }
+  };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
 
   
 
@@ -132,6 +148,136 @@
     <header class="post-header">
       <h1 class="post-title">
         
+          <a class="post-link" href="/2020/12/31/my-2020/">我的2020</a>
+        
+      </h1>
+
+      <time class="post-time">
+          12月 31 2020
+      </time>
+    </header>
+
+
+
+    
+        <div class="post-excerpt">
+            21岁的2020年终总结，记录从校园走入职场的第一次实习冲击。对比学校与社会的截然不同，感慨技术不再是唯一影响力。文末写下对2021年的八条心愿，涵盖成长、旅行、健身、感情与博客目标。
+        </div>
+          
+
+    
+  </article>
+
+        
+            
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          <a class="post-link" href="/2020/12/29/pdd-interview-20/">拼多多两轮游</a>
+        
+      </h1>
+
+      <time class="post-time">
+          12月 29 2020
+      </time>
+    </header>
+
+
+
+    
+        <div class="post-excerpt">
+            记录拼多多拼越计划两轮面试经历，涵盖SQL优化、索引原理、RPC、TCP、Java IO模型、Redis等基础与进阶考点。
+        </div>
+          
+
+    
+  </article>
+
+        
+            
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          <a class="post-link" href="/2020/12/24/kotlin-learn/">Kotlin学习笔记</a>
+        
+      </h1>
+
+      <time class="post-time">
+          12月 24 2020
+      </time>
+    </header>
+
+
+
+    
+        <div class="post-excerpt">
+            Kotlin入门笔记，介绍其发展历史及与Java的对比。涵盖简洁性、空安全、互操作性三大特点，通过代码示例展示data class、lambda、扩展函数等语法糖，帮助Java开发者快速上手。
+        </div>
+          
+
+    
+  </article>
+
+        
+            
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          <a class="post-link" href="/2020/12/22/diy-param-parse-annotation/">DIY一个参数解析器</a>
+        
+      </h1>
+
+      <time class="post-time">
+          12月 22 2020
+      </time>
+    </header>
+
+
+
+    
+        <div class="post-excerpt">
+            解决Spring MVC中@RequestBody无法映射到多个参数的问题，通过自定义HandlerMethodArgumentResolver和注解，实现JSON字段到多参数的精准映射。
+        </div>
+          
+
+    
+  </article>
+
+        
+            
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          <a class="post-link" href="/2020/12/17/java-memory/">类在内存中的存储方式</a>
+        
+      </h1>
+
+      <time class="post-time">
+          12月 17 2020
+      </time>
+    </header>
+
+
+
+    
+        <div class="post-excerpt">
+            系统梳理Java内存结构，对比C与Java内存处理差异，详解JDK8虚拟机栈、堆、方法区等区域的职责，演示类加载与内存分配过程，及继承、接口等场景的内存模型。
+        </div>
+          
+
+    
+  </article>
+
+        
+            
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
           <a class="post-link" href="/2020/12/16/hexo-guide/">Hexo使用指南</a>
         
       </h1>
@@ -145,7 +291,7 @@
 
     
         <div class="post-excerpt">
-            Hexo博客从零搭建的完整实战指南，涵盖Node.js与npm环境准备、Hexo CLI安装初始化、_config.yml核心配置、GitHub Pages部署（hexo d命令与直接git push两种方式）及主题更换全流程，同时收录了ejs安装失败、fsevents平台警告、缺少Git Deployer、部署后CSS丢失、node-sass源配置等常见坑点及对应解决方案，并汇总了常用npm与hexo命令速查表。
+            Hexo博客从零搭建实战指南，涵盖环境准备、安装配置、GitHub Pages部署及主题更换，收录常见坑点及解决方案。
         </div>
           
 
@@ -171,7 +317,7 @@
 
     
         <div class="post-excerpt">
-            记一次学校十大最美教师评选微信小程序外包经历。原本计划自研高并发投票系统，因时间紧迫转而采购第三方系统，结果在投票第四天遭遇疑似刷票事件，票数暴涨却因系统黑盒无从排查，最终活动草草收场。深刻反思外包依赖的风险，以及开发者应具备Owner意识和全局视野，出了问题才能迅速定位、有效应对。
+            记一次学校评选系统外包经历，原计划自研因时间紧采购第三方，遭遇疑似刷票却因系统黑盒无法排查，反思外包风险与开发者Owner意识的重要性。
         </div>
           
 
@@ -197,7 +343,7 @@
 
     
         <div class="post-excerpt">
-            本文是作者秋招收尾阶段的心路历程记录，回顾了从大二决心学Java、每天苦学到拿下微信、阿里、腾讯等多家大厂offer的成长历程。文章坦诚分享了在互联网与银行岗位之间的选择纠结，反思实习期间对工作意义的困惑与迷茫，并展望未来从程序员成长为工程师的目标，计划在语言本质、架构设计、编码规范、金融场景等方向持续深耕，文字真实而富有共鸣。
+            记录作者从大二自学Java到斩获多家大厂offer的成长历程，分享在互联网与银行岗位间的选择纠结，以及对工作意义的反思，展望从程序员向工程师的进阶之路。
         </div>
           
 
@@ -223,7 +369,7 @@
 
     
         <div class="post-excerpt">
-            记录实习中遭遇Oracle varchar2字段4000字节上限导致数据插入失败的问题，对比更改字段类型、建立外部索引、拆分字段三种方案的优劣，最终采用新建EXT溢出扩展表并以链表结构串联分片数据的方案，通过代理或拦截器实现对原有insert与query逻辑的最小侵入，同时探讨了按Oracle编码方式切割与直接按字节存储两种确定MAX_VALUE的方法。
+            解决Oracle varchar2字段超4000字节上限问题，采用新建EXT扩展表以链表串联分片数据，通过代理模式实现最小侵入式改造。
         </div>
           
 
@@ -249,137 +395,7 @@
 
     
         <div class="post-excerpt">
-            教师资格证笔试备考系统整理笔记，涵盖综合素质与教育知识与能力两大科目。综合素质部分重点梳理新课改背景下的教师观（角色转变与行为转变）、教育观（素质教育理念）、学生观（发展性、独特性、独立性）及教师职业道德五大维度；教育知识与能力部分涉及教育概念、中学课程、教学方法、中学生发展心理与学习心理、德育原则、心理辅导及班级管理等八大章节核心考点，是备考复习的实用参考资料。
-        </div>
-          
-
-    
-  </article>
-
-        
-            
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2020/10/17/university-review/">我的大学</a>
-        
-      </h1>
-
-      <time class="post-time">
-          10月 17 2020
-      </time>
-    </header>
-
-
-
-    
-        <div class="post-excerpt">
-            大四毕业季对四年大学生活的真诚回顾与反思。大一转专业从理工科跨入计算机、退出国旗护卫队；大二阴差阳错进入软件工程卓越班，在实验室学习Java并独立搭建博客系统；大三系统整理面经、完成20余场春招实习面试并斩获阿里与腾讯实习offer；大四在实习与求职并行中以0.03分之差与保研资格失之交臂，最终拿到多家大厂offer。文章夹叙夹议，坦诚记录勤奋、迷茫、遗憾与成长交织的青春历程，字里行间充满对大学时代的不舍与深情。
-        </div>
-          
-
-    
-  </article>
-
-        
-            
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2020/10/15/baidu-interview/">百度三轮游</a>
-        
-      </h1>
-
-      <time class="post-time">
-          10月 15 2020
-      </time>
-    </header>
-
-
-
-    
-        <div class="post-excerpt">
-            记录一次百度秋招三轮面试的完整经历，涵盖Java基础（String、锁机制、集合）、IO模型（BIO/NIO）、线程状态与线程池、数据库索引与AQS原理、缓存一致性、分布式锁、Zookeeper集群发现、Spring AOP实现原理等核心知识点，并附有LRU缓存和对称二叉树的代码实现，适合秋招面试备考参考。
-        </div>
-          
-
-    
-  </article>
-
-        
-            
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2020/10/14/reference-point/">C++的引用和指针[转]</a>
-        
-      </h1>
-
-      <time class="post-time">
-          10月 14 2020
-      </time>
-    </header>
-
-
-
-    
-        <div class="post-excerpt">
-            本文从变量与内存的底层本质出发，系统梳理C++中指针与引用的核心概念与区别。指针是存储内存地址的变量，可为空、可重指向；引用是目标变量的别名，必须初始化且不可更改指向。文章涵盖两者在内存分配、符号表、参数传递、函数返回值等场景下的差异，并详细区分了const修饰下的常量指针、指针常量与常量引用的含义与用法，帮助读者彻底厘清这一C++高频面试考点。
-        </div>
-          
-
-    
-  </article>
-
-        
-            
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2020/09/21/tomcat-websocket/">Tomcat中websocket的使用和原理</a>
-        
-      </h1>
-
-      <time class="post-time">
-          9月 21 2020
-      </time>
-    </header>
-
-
-
-    
-        <div class="post-excerpt">
-            深入剖析WebSocket协议在SpringBoot+Tomcat中的使用方式与底层实现原理。使用层面介绍@ServerEndpoint注解及@OnOpen、@OnClose、@OnMessage、@OnError等生命周期方法的配置与前后端完整示例代码；源码层面逐步分析启动流程（ServerEndpointExporter注册端点、WsServerContainer装载配置、PojoMethodMapping处理注解方法映射）和执行流程（WsFilter协议升级、WsHttpUpgradeHandler初始化Session、反射调用业务逻辑），并总结建造者模式、过滤器模式、模板方法模式和适配器模式等在其中的应用。
-        </div>
-          
-
-    
-  </article>
-
-        
-            
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2020/08/20/meituan-interview/">开水团面试</a>
-        
-      </h1>
-
-      <time class="post-time">
-          8月 20 2020
-      </time>
-    </header>
-
-
-
-    
-        <div class="post-excerpt">
-            美团基础架构部实习秋招三轮面试经验复盘。一面考查HashMap与ConcurrentHashMap原理、JVM内存结构、线程池参数、sleep与wait区别及Redis五种数据结构；二面深入TCP状态机、数据库聚簇索引与SQL优化、GCRoot对象；三面与HR面聚焦技术热情、学习方法和个人成长，并附两道算法题（翻转链表与删除字符串中特定字符）详解。
+            教师资格证笔试备考笔记，涵盖综合素质与教育知识与能力两大科目，包括教师观、教育观、学生观、职业道德及教育心理等核心考点。
         </div>
           
 
@@ -410,14 +426,14 @@
     
     <section id="tags" class="widget-area widget_categories">
         <h3 class="widget-title">Categories</h3>
-        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%85%B6%E4%BB%96%E7%9F%A5%E8%AF%86/">其他知识</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/">区块链</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9C%BA%E6%99%AF%E5%AE%9E%E8%B7%B5/">场景实践</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9F%BA%E7%A1%80%E5%A4%AF%E5%AE%9E/">基础夯实</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E5%AD%A6%E4%B9%A0/">技术学习</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9E%B6%E6%9E%84%E6%80%9D%E8%80%83/">架构思考</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/">源码剖析</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%9F%E6%B4%BB%E6%84%9F%E6%82%9F/">生活感悟</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%87%87%E5%9D%91%E8%AE%B0%E5%BD%95/">采坑记录</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9D%A2%E8%AF%95%E7%BB%8F%E9%AA%8C/">面试经验</a><span class="category-list-count">13</span></li></ul>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%85%B6%E4%BB%96%E7%9F%A5%E8%AF%86/">其他知识</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/">区块链</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9C%BA%E6%99%AF%E5%AE%9E%E8%B7%B5/">场景实践</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9F%BA%E7%A1%80%E5%A4%AF%E5%AE%9E/">基础夯实</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9E%B6%E6%9E%84%E6%80%9D%E8%80%83/">架构思考</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/">源码剖析</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%9F%E6%B4%BB%E6%84%9F%E6%82%9F/">生活感悟</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%87%87%E5%9D%91%E8%AE%B0%E5%BD%95/">采坑记录</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9D%A2%E8%AF%95%E7%BB%8F%E9%AA%8C/">面试经验</a><span class="category-list-count">12</span></li></ul>
     </section>
 
 
     
     <section id="tags" class="widget-area widget_tags">
         <h3 class="widget-title">Tags</h3>
-        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/" rel="tag">AI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-Learning/" rel="tag">Machine Learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LLM/" rel="tag">LLM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a><span class="tag-list-count">25</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Internships/" rel="tag">Internships</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Life/" rel="tag">Life</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Book-Critics/" rel="tag">Book-Critics</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringMVC/" rel="tag">SpringMVC</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Campus-Recruitment/" rel="tag">Campus Recruitment</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web-Security/" rel="tag">Web Security</a><span class="tag-list-count">1</span></li></ul>
+        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jvm/" rel="tag">Jvm</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a><span class="tag-list-count">24</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Internships/" rel="tag">Internships</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/" rel="tag">AI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-Learning/" rel="tag">Machine Learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LLM/" rel="tag">LLM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Life/" rel="tag">Life</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Campus-Recruitment/" rel="tag">Campus Recruitment</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web-Security/" rel="tag">Web Security</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DB/" rel="tag">DB</a><span class="tag-list-count">5</span></li></ul>
     </section>
 
 

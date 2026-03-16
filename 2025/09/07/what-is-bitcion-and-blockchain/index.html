@@ -12,7 +12,7 @@
 
 
 
-  <meta name="description" content="面向技术和小白用户的区块链与比特币科普，从去中心化概念到技术原理的通俗解读。"/>
+  <meta name="description" content="本文面向技术和非技术读者，系统科普区块链与比特币的核心原理。从中心化与去中心化货币的优劣对比出发，深入讲解区块链的链式结构、Hash指针与不可篡改性，进而阐述比特币的非对称加密、账户体系、Merkle Tree、UTXO防双花机制，以及工作量证明（PoW）共识机制与挖矿激励的完整逻辑，最后梳理一笔比特币交易从发起到上链的全流程。"/>
 
 
 
@@ -35,36 +35,36 @@
 <link rel="canonical" href="https://wxxlamp.cn/2025/09/07/what-is-bitcion-and-blockchain/"/>
 
 
-<meta name="description" content="面向技术和小白用户的区块链与比特币科普，从去中心化概念到技术原理的通俗解读。">
+<meta name="description" content="本文面向技术和非技术读者，系统科普区块链与比特币的核心原理。从中心化与去中心化货币的优劣对比出发，深入讲解区块链的链式结构、Hash指针与不可篡改性，进而阐述比特币的非对称加密、账户体系、Merkle Tree、UTXO防双花机制，以及工作量证明（PoW）共识机制与挖矿激励的完整逻辑，最后梳理一笔比特币交易从发起到上链的全流程。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="万字长文，从零科普比特币">
 <meta property="og:url" content="https://wxxlamp.cn/2025/09/07/what-is-bitcion-and-blockchain/index.html">
 <meta property="og:site_name" content="王星星的魔灯">
-<meta property="og:description" content="面向技术和小白用户的区块链与比特币科普，从去中心化概念到技术原理的通俗解读。">
+<meta property="og:description" content="本文面向技术和非技术读者，系统科普区块链与比特币的核心原理。从中心化与去中心化货币的优劣对比出发，深入讲解区块链的链式结构、Hash指针与不可篡改性，进而阐述比特币的非对称加密、账户体系、Merkle Tree、UTXO防双花机制，以及工作量证明（PoW）共识机制与挖矿激励的完整逻辑，最后梳理一笔比特币交易从发起到上链的全流程。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2025/png/719664/1757236562304-d7fe30aa-5fa9-458a-bd83-55f46d2a84a6.png">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2025/png/719664/1757237268940-97882008-50d4-4754-9d1d-194ac9745c48.png">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2025/png/719664/1757468995454-8d5c3686-5c69-4b85-8361-f4b66688c6b6.png">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2025/png/719664/1757683369346-38f248b3-c947-472b-a5c4-77155e73d087.png">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2025/png/719664/1757741620959-e3f62177-1ec6-4f60-a4c1-82fb84eeacfc.png">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2025/png/719664/1757684078576-03a407b3-4081-4d71-b815-8e7e615fddab.png">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2025/png/719664/1757685244885-8cce19d0-27f9-4477-9fa4-45b29203e8ff.png">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2025/png/719664/1757685477416-21aba0b3-801e-4ec5-83e8-800db44f41db.png">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2025/png/719664/1757685765173-6648406c-889a-45d0-990c-6a9c8604c973.png">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2025/png/719664/1757686283887-a936d766-1246-43d4-a379-2a47566211c3.png">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2025/png/719664/1757688958556-d15681fe-c863-4745-9704-e70eb13d0b3d.png">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2025/png/719664/1757691123865-2ec86672-659d-4a46-83c6-f6a64362b38a.png">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2025/png/719664/1757691502973-79624676-88ae-4d74-9001-76088ea761e0.png">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2025/png/719664/1757742276374-365d4cbd-3aac-4436-bca7-72a822655932.png">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2025/png/719664/1757742528914-38576d2d-25b5-47ea-9fd7-5631babf27f5.png">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2025/png/719664/1757744992062-16dacb16-44f5-4a1a-87f6-ce437d57e60e.png">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/__puml/093120dfebb8d07583b501eead4008d0.svg">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/715e78c0_btc_img_01.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/ab2a1c74_btc_img_02.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/27e44fd0_btc_img_03.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/23123fe5_btc_img_04.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/c5e69815_btc_img_05.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/9beb844a_btc_img_06.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/f67db3e0_btc_img_07.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/5f5ac865_btc_img_08.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/424a115c_btc_img_09.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/8e367f8b_btc_img_10.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/23b7f548_btc_img_11.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/22a079e5_btc_img_12.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/fd9c71b0_btc_img_13.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/72ca1d6d_btc_img_14.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/d01e1eab_btc_img_15.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/853decfb_btc_img_16.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/9fd2ee78_btc_img_17.svg">
 <meta property="article:published_time" content="2025-09-07T02:36:00.000Z">
-<meta property="article:modified_time" content="2026-03-15T08:43:33.868Z">
+<meta property="article:modified_time" content="2026-03-16T13:56:19.640Z">
 <meta property="article:author" content="Wxx">
 <meta property="article:tag" content="Blockchain">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://cdn.nlark.com/yuque/0/2025/png/719664/1757236562304-d7fe30aa-5fa9-458a-bd83-55f46d2a84a6.png">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/715e78c0_btc_img_01.png">
 
 
 <link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
@@ -195,11 +195,11 @@
 <h1 id="区块链是什么"><a href="#区块链是什么" class="headerlink" title="区块链是什么"></a>区块链是什么</h1><p>区块链是实现去中心化货币的一种方式。同时，结合非对称加密等加密算法，就可以实现出来去中心化的加密货币。所以这里有一些误区需要澄清，即：加密货币不一定是去中心的，去中心的，也不一定是加密货币。譬如，黄金就是典型的去中心化的、非加密货币。不过，对于现代的数字货币来说，如果不加密就可能导致A冒充B的情况，所以像我们常说的比特币、以特朗普为 IP 的迷因币等既是加密货币，又是去中心化货币。</p>
 <p>区块链是由一个一个区块组成，每个区块分为两部分，一部分是区块头，记录一些基本信息，另一部分是区块体，主要记录一些交易的数据。这些交易分为两种，一种是铸币交易，即凭空发行了一些货币，并且把该货币转账给某个账户；另一种是普通转账交易，即账户A把钱转给了账户B。要注意的是，社区中每个全节点都会维护一整条区块链。</p>
 <h2 id="从宏观上看区块链"><a href="#从宏观上看区块链" class="headerlink" title="从宏观上看区块链"></a>从宏观上看区块链</h2><p>从技术的角度讲，区块链本质也是一个链表。传统的链表一般是上一个区块会通过指针下一个区块，如下图所示：</p>
-<p><img src="https://cdn.nlark.com/yuque/0/2025/png/719664/1757236562304-d7fe30aa-5fa9-458a-bd83-55f46d2a84a6.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/715e78c0_btc_img_01.png"></p>
 <p>不过，区块链特殊的地方在于，区块链链中的下一个区块会指向上一个区块。而且它不是通过传统的指针地址指向上一个区块，而是通过Hash指针。</p>
 <p>所谓的hash指针，其实本质上就是一个hash值。有计算机基础的朋友都知道，hash算法即是将某个值X，映射成另一个值Y，且这个过程是不可逆。常见的hash算法，如SHA-256，会将一个无轮多大的X，映射成一个固定长度256位的新值Y</p>
 <p>区块链中的下一个区块b指向上一个区块a，本质就是区块b，记录了区块a的hash值。如下图所示：</p>
-<p><img src="https://cdn.nlark.com/yuque/0/2025/png/719664/1757237268940-97882008-50d4-4754-9d1d-194ac9745c48.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/ab2a1c74_btc_img_02.png"></p>
 <p>这样做的一个好处就是，如果a区块的内容发生改变，b区块记录的hash值就会发生改变，那么b区块就会认为a区块非法，整个链就会断掉。要想链不断掉，保存该区块链的节点不仅需要修改区块 a，还需重新计算区块 a 之后所有区块的哈希值（因为每个区块的哈希都依赖前一个区块）—— 这个过程需要消耗大量算力（如 PoW 机制下需重新完成‘挖矿’验证），技术成本极高。更关键的是，即使完成修改，该节点还需控制全网超过 51% 的算力（PoW）或质押资产（PoS），才能迫使其他节点放弃原有的合法链条、接受篡改后的版本。这种51% 攻击的成本远超篡改能获得的收益，因此基本杜绝了篡改可能。</p>
 <p>所以，通过区块链的这个特性，保证了链上的每一个区块都是<strong>不可篡改</strong>的。其实这个就是区块链的全部内容，没有任何复杂的东西在，一句话来说，<strong>区块链</strong><strong><font style="color:rgba(0, 0, 0, 0.85);">是一个由去中心化节点共同维护的不可变数据库</font></strong><font style="color:rgba(0, 0, 0, 0.85);">（这种“不可变”并非绝对，理论上需无限算力才能篡改，但在现实中，足以保证链上交易记录的真实性和安全性）</font></p>
 <h2 id="去中心化货币为什么需要区块链"><a href="#去中心化货币为什么需要区块链" class="headerlink" title="去中心化货币为什么需要区块链"></a>去中心化货币为什么需要区块链</h2><p>在聊区块链之前，我们先思考为什么去中心化货币需要区块链。又因为区块链的一大特性就是不变性，所以，话题就变成了：为什么去中心化货币需要不可变。</p>
@@ -215,9 +215,9 @@
 </blockquote>
 <p>区块链的每个区块中都会记录一定数量的转账交易。假如说区块上其中一笔交易是Alice将10BTC转给Bob，从密码学的角度来讲，我们需要做哪些加密工作呢？</p>
 <p>考虑如果Alice通过支付宝转账给Bob的场景，在扫码支付前，Alice需要输入密码验证当前支付宝账户确实是她自己的。这其中有两个步骤，第一个步骤是转账前需要在中心化的支付宝中设置密码，第二步是转账中输入密码被中心化的支付宝验证通过。</p>
-<p><img src="https://cdn.nlark.com/yuque/0/2025/png/719664/1757468995454-8d5c3686-5c69-4b85-8361-f4b66688c6b6.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/27e44fd0_btc_img_03.png"></p>
 <p>同样的，在区块链上的一笔交易，发起交易的人也需要证明她就是Alice。所以，第一步，Alice应该先对这笔交易设置密码，在区块链中，我们把设置密码这个动作叫做签名（信用卡的账单也叫签名）。当这笔交易准备被打包到区块中的时候，区块进行第二步操作，即验证签名的真实性。</p>
-<p><img src="https://cdn.nlark.com/yuque/0/2025/png/719664/1757683369346-38f248b3-c947-472b-a5c4-77155e73d087.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/23123fe5_btc_img_04.png"></p>
 <p>因为比特币是去中心化的，每个节点不可能存储账户的密码（节点存储账户的密码，所有账户的密码都会泄露）。在没有密码情况下的签名和验证，就可以通过非对称加密在不泄露密码的问题来验证用户。</p>
 <blockquote>
 <p>非对称加密分为公钥和私钥，计算机相关专业的朋友们应该都知道，HTTPS就是基于非对称加密的。简要的流程是：1）client将server的公钥作为key对内容进行非对称加密后，传输给server；2）server使用自己的私钥对内容进行非对称解密。</p>
@@ -228,16 +228,16 @@
 <p>那么问题来了，我们是如何知道比特币某个账户的余额呢？</p>
 <p>在中心化的银行系统中，可以通过关系型数据库（Oracle，MySQL）等来存储账户和余额的映射关系。一旦用户发生交易，中心化系统只需要执行简单的update语句更新数据即可。但是，在去中心化的系统中，怎么保证每个节点都去更新区块中交易影响到的账户呢？又怎么保证每个节点的账户数据都是一致的呢？</p>
 <p>这其实是很难的，而且我们知道，基于区块链不可变的特性，数据一旦插入，就不能更新，所以在比特币的区块链中，账户的余额是不能更新的，那该怎么表示呢？</p>
-<p><img src="https://cdn.nlark.com/yuque/0/2025/png/719664/1757741620959-e3f62177-1ec6-4f60-a4c1-82fb84eeacfc.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/c5e69815_btc_img_05.png"></p>
 <p>如上图所示，我们可以使用交易账本计算，因为区块链会记录每一笔交易的信息（包含BTC转出方和接受方），通过对交易流水的数据进行累加，即可得出账户的余额——这就是本节的标题，为什么比特币是基于区块链<strong>账本</strong>的加密货币。（以太坊是基于账户的，通过MPT设计更加复杂，本篇不表）</p>
 <h2 id="区块链、节点、账户"><a href="#区块链、节点、账户" class="headerlink" title="区块链、节点、账户"></a>区块链、节点、账户</h2><p>上一节中，我们引入了比特币账户的概念。初学者可能会有点混淆，是否发起交易的账户是否和节点是等价的？每个节点必须要维护一个区块链么？</p>
 <p>必须要澄清的一点是，账户和节点没有必然关系。节点是用来运行区块链的机器，每个节点都是等价的，运行着一个相同的区块链。区块链中的区块打包的是账户之间交易的信息。一个没有任何账户的人，也可以运行一个区块链节点（只不过没有任何收益，所以不会有人这么干）</p>
 <p>举个例子，Alice有一个账户，账户包含公钥PublicA和私钥PrivateA。Alice拥有一台包含整条区块链的机器，这个机器就是比特币中的一个节点。</p>
-<p><img src="https://cdn.nlark.com/yuque/0/2025/png/719664/1757684078576-03a407b3-4081-4d71-b815-8e7e615fddab.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/9beb844a_btc_img_06.png"></p>
 <p>这里有一个问题：随着区块链中交易的增多，整条链需要的存储空间也就越大。如果每个节点都存储整条链的所有信息的话，意味着每个节点都需要有一个超大存储空间的机器，这样比特币的使用门槛就会变得非常高。所以，为了让手机也可以成为一个区块链节点（人人可用），比特币协议把节点分为全节点和轻节点。</p>
 <p>全节点存储区块链所有的信息，负责验证所有交易和区块的合法性。其中，部分全节点会参与打包区块（即挖矿），这类参与挖矿的全节点被称为“矿工”。轻节点不存储交易的明细，只存储区块链中每个区块头，轻节点只能从全节点中同步合法区块，不负责交易的写入。</p>
 <h1 id="比特币的数据结构"><a href="#比特币的数据结构" class="headerlink" title="比特币的数据结构"></a>比特币的数据结构</h1><h2 id="单个区块的数据结构"><a href="#单个区块的数据结构" class="headerlink" title="单个区块的数据结构"></a>单个区块的数据结构</h2><p>现在我们了解到，轻节点只有区块链中的区块head，全节点既有区块head存储metadata，也有区块body存储所有的交易信息。如下所示（具体的区块内容可以访问<a target="_blank" rel="noopener" href="https://www.oklink.com/zh-hans/bitcoin/block/914370">oklink</a>查询最近真实的区块）：</p>
-<p><img src="https://cdn.nlark.com/yuque/0/2025/png/719664/1757685244885-8cce19d0-27f9-4477-9fa4-45b29203e8ff.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/f67db3e0_btc_img_07.png"></p>
 <p>这里我们需要强调一些更细节的东西，之前讲到的hash指针，其实不是对上一个区块的所有数据取hash。假如说区块b的上一个区块是区块a，那么区块b获取区块a的hash值流程应该是：</p>
 <ol>
 <li>区块 a 生成时，先将自身所有交易通过 Merkle Tree（下文会讲）计算出所有交易的最终 Hash 结果（Merkle root），并将其写入自己的区块头</li>
@@ -249,7 +249,7 @@
 <p>此时，Bob的轻节点就只能向P2P网络中的任意一个全节点求证，是否有一笔“Alice给Bob转了10BTC”的交易。但是，因为比特币是去中心化货币，所以理论上任何一个节点都是不可信的，假如Bob的轻节点请求到了Alice的全节点，Alice的全节点直接回复Bob有这笔交易（但其实没有），那么Bob就约等于被欺骗了。</p>
 <p>如何解决这个问题呢？——通过Merkle Tree来维护整个交易的结构。</p>
 <h3 id="Merkle-Tree"><a href="#Merkle-Tree" class="headerlink" title="Merkle Tree"></a>Merkle Tree</h3><p>Merkle Tree是指所有的交易通过两两取hash，再对hash值两两取hash，最后一直递归，获取一个根hash值（叫做Merkle根）。所有的交易，和这个过程中产生的hash，就会构成一颗Merkle Tree，如下所示：</p>
-<p><img src="https://cdn.nlark.com/yuque/0/2025/png/719664/1757685477416-21aba0b3-801e-4ec5-83e8-800db44f41db.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/5f5ac865_btc_img_08.png"></p>
 <p>从图中我们可以发现，如果要修改某个交易的hash，随着修改传递，Merkle根也会随之改变，因为Merkle根被包含在区块header中，所以Merkle根的修改会导致区块头的hash指针修改，进而影响到所有的后继节点，所以这几乎是一个不可能完成的事情。</p>
 <p>Merkle Tree有一个特性，即给出部分Hash值（即Merkle路径），就可以验证某一笔交易是否存在。基于上图我们可以举个例子，如果一个轻节点要验证TX1交易是否存在，全节点只需要给出TX2、H(2)和H(34)的hash值，轻节点就可以计算出Merkle根hash，然后将这个hash与轻节点自己区块头的hash做对比，如果相等，则说明TX1这个交易确实存在。</p>
 <p>从实际出发，如果Bob的轻节点希望验证交易TX是否已经被打包到全节点中，此时验证流程如下：</p>
@@ -261,12 +261,12 @@
 <p>因为轻节点只是不会维护交易信息，他们仍然会保存区块链上的每个区块头，区块头中包含Merkle根。轻节点校验的本质就是用自己区块中正确的Merkle根和通过（交易+Merkle路径）计算出来的Merkle根作比较。</p>
 <h2 id="比特币数据结构概览"><a href="#比特币数据结构概览" class="headerlink" title="比特币数据结构概览"></a>比特币数据结构概览</h2><p>比特币中，每一个全节点究竟是什么样的？它们是如何组织各个区块的？Merkle Tree究竟会被存储到哪里？</p>
 <p>一张图来揭露每个全节点中的数据结构：</p>
-<p><img src="https://cdn.nlark.com/yuque/0/2025/png/719664/1757685765173-6648406c-889a-45d0-990c-6a9c8604c973.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/424a115c_btc_img_09.png"></p>
 <p>（注意，每个全节点的区块链中的区块数据都是一致的）</p>
 <h1 id="比特币的共识机制"><a href="#比特币的共识机制" class="headerlink" title="比特币的共识机制"></a>比特币的共识机制</h1><p>在分析比特币的交易详情之前，我们首先要思考比特币作为去中心化货币的元老级货币，它如何1）让每个节点达成共识、保证每个节点的区块链数据是一致的？2）防止恶意节点将非法交易散播到其他正常的节点中？</p>
 <p>这些技术问题我们需要通过交易指针、UTXO以及多节点的共识协议来解决。</p>
 <h2 id="工作量证明（PoW）"><a href="#工作量证明（PoW）" class="headerlink" title="工作量证明（PoW）"></a>工作量证明（PoW）</h2><p>因为比特币是去中心化货币，每个节点都维护着一个区块链。前文中提到，每个节点区块链中所有的区块以及区块中的交易数据都应该是一致的。但是每个节点都是独立的，所以比特币就必须要<strong>通过一个机制来让所有节点认可某一个节点中区块的数据</strong>（即当某一个节点A的下一个区块形成后，其他所有节点都要follow这个决策，并且放弃打包自己的区块，将节点A的这个区块作为自己区块链中的下一个区块）。</p>
-<p><img src="https://cdn.nlark.com/yuque/0/2025/png/719664/1757686283887-a936d766-1246-43d4-a379-2a47566211c3.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/8e367f8b_btc_img_10.png"></p>
 <p>当交易很多的时候，可能A节点打包了a,b,c三个交易在自己的区块，同时B节点也打包了b,d,f三个交易在自己的区块，这种情况下，其他节点以A、B两个区块的哪个区块为准呢？在比特币中，工作量证明就是为了解决某个节点新打包的区块，被其他所有节点认可的问题。</p>
 <p>在比特币的世界中，程序在节点新生成区块的时候，会设置一个难度值X，每个节点打包新区块时，需对“区块头”（包含前一区块哈希、默克尔根、时间戳、难度目标、nonce 等）计算哈希，得到的哈希值Y需满足难度 X 的具体要求。由于哈希值不可预测，节点只能通过不断调整 nonce等方式，反复尝试计算，直到得到符合难度X的哈希值Y。 当Y符合X的要求的时候，节点打包的新区块才会被认为是合法区块，广播出去后才有可能被其他节点接收——<strong>这种通过尝试不同nonce计算Y以符合X的证明过程就叫做工作量证明（PoW）</strong>。</p>
 <p>比特币系统每经历2016个区块会根据所有节点的算力动态调整难度值X，以保证节点打包区块的平均时间在10分钟左右，即每次交易被发布到区块链上大概需要十分钟（确认交易需要等待后续6个区块生成，大概一小时），这与支付宝动辄十万级别的TPS根本无法比较。节点们计算Y来打包区块的过程就被称作是挖矿，这些挖矿的节点，也被叫做矿工。</p>
@@ -277,7 +277,7 @@
 <li>每个节点可以理解成一个独立的计算机，单靠本地时钟的话，不同计算机的时间是可能有偏差的（甚至某个节点可以估计把自己的本地时钟调早）。这就会导致不同节点理解的最新时间不一样。</li>
 <li>如果基于时间打包区块，同一时间段会有大量不同的节点被发布到网络上，这样会造成区块链的大量分叉，但是<strong>我们只能以最长的那一条为合法链</strong>，这样就会导致发布的大量区块其实是无效的，白白浪费算力，影响比特币社区。</li>
 </ol>
-<p><img src="https://cdn.nlark.com/yuque/0/2025/png/719664/1757688958556-d15681fe-c863-4745-9704-e70eb13d0b3d.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/23b7f548_btc_img_11.png"></p>
 <p>当然，随着区块链社区的发展，以太坊已经发展出了不需要浪费算力的投票机制（权益证明PoS），本文主要讲比特币，所以PoS也暂且不表。</p>
 <h3 id="矿工为什么要挖矿"><a href="#矿工为什么要挖矿" class="headerlink" title="矿工为什么要挖矿"></a>矿工为什么要挖矿</h3><p>矿工为什么要浪费大量的算力去挖矿呢？难道是geek心爆棚，无偿帮助社区所有的交易打包到区块？显然不是。为了维护社区的繁荣，当矿工打包交易到区块中，系统会奖励第一个计算出符合难度要求的nonce的矿工，不只是允许这个矿工把交易打包成区块发布到区块链上，更重要的是，还会给这些矿工发放BTC奖励。</p>
 <p>这种奖励和转账交易不一样，它没有输入，<strong>而是“凭空”生成新的比特币</strong>——这也就是我们常说的<strong>铸币交易</strong>。通过这种铸币交易，比特币也就具备了货币发行的特性。</p>
@@ -289,10 +289,10 @@
 <li><u>假如Alice之前因为挖矿获得了 10 BTC的出块奖励，之前已经转给了Bob 10 BTC，过了一段时候后又转给了Bob 10 BTC，区块该如何拒</u>绝？</li>
 </ol>
 <h3 id="交易指针"><a href="#交易指针" class="headerlink" title="交易指针"></a>交易指针</h3><p>办法很简单，比特币要求，转账人在发布交易的时候，需要通过hash指针的方法，将交易指向发送者获之前获得比特币的交易。如图所示：</p>
-<p><img src="https://cdn.nlark.com/yuque/0/2025/png/719664/1757691123865-2ec86672-659d-4a46-83c6-f6a64362b38a.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/22a079e5_btc_img_12.png"></p>
 <p>这样一来，打包该交易的节点就可以通过hash指针轻松的找到Alice获取BTC的那一笔交易用来验证。“Alice转账20BTC给Bob，但是Alice之前只获得了10BTC”，有问题，验证失败，问题一解决。</p>
 <p>但是，问题二还没解决。假如TX1完成后，Alice紧接着创建了一笔TX2，又给Bob转了10BTC（如下所示），这种情况单靠交易指针是验证不出来这种“双花交易”的。这种时候，我们就需要在节点中维护一个状态，记录每一笔交易输出的BTC是否被花出。</p>
-<p><img src="https://cdn.nlark.com/yuque/0/2025/png/719664/1757691502973-79624676-88ae-4d74-9001-76088ea761e0.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/fd9c71b0_btc_img_13.png"></p>
 <h3 id="UTXO"><a href="#UTXO" class="headerlink" title="UTXO"></a>UTXO</h3><p>这种记录交易输出是否被花出的数据结构叫做Unspend Transaction Output（UTXO）。</p>
 <p>UTXO可以理解成是以交易和收款人为key的map，value是当前交易的输出是否被其他交易花掉。以上图举例，TX0给了Alice 10 BTC的出块奖励，那么包含TX0区块的UTXO就是<code>{&#39;TX0:Alice&#39;: false}</code>，代表TX0交易的输出未被花掉。当TX1被打包到区块中后，那么包含TX0区块的UTXO就会变成<code>{&#39;TX0:Alice&#39;: true}</code>，代表TX0交易的输出已经被花掉。之后，如果TX2再指向TX0，节点验证时发现TX0的输出已经被花掉了，就会判断TX2是笔非法交易，不会把TX2打包到区块中。</p>
 <p>与区块链不可变性质不同的是，这个UTXO是可以被改变的，它不属于区块链的一部分（也不参与hash的计算）。每个节点<strong>不会</strong>通过网络把自己区块的UTXO同步给其他节点，而是需要节点在更新区块的时候自行本地构建UTXO。随着新增区块的增加，UTXO会根据区块链中交易的情况进行动态改变。</p>
@@ -302,17 +302,17 @@
 <h3 id="如何验证区块合法"><a href="#如何验证区块合法" class="headerlink" title="如何验证区块合法"></a>如何验证区块合法</h3><p>当节点把区块发布到网络上后，其他节点会对这个区块进行PoW验证（即对区块头的nonce，pre hash，Merkle root等计算hash值，判断是否符合挖矿难度）。如果工作量证明符合要求，会对该新区块的每个交易通过交易指针和UTXO进行验证，当区块中的所有交易都合法的时候，其他节点才会承认该区块是合法的。</p>
 <p>但是，区块合法不代表其他节点一定会接收这个新区块。</p>
 <p>考虑一种情况，节点新产生了一个合法区块A（区块中的交易也是合法的），但是这个合法区块A中的pre hash是一个几年前的区块hash（如下所示），这个区块会被其他节点接收么？</p>
-<p><img src="https://cdn.nlark.com/yuque/0/2025/png/719664/1757742276374-365d4cbd-3aac-4436-bca7-72a822655932.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/72ca1d6d_btc_img_14.png"></p>
 <p>答案是不会的，比特币中的区块链可能会有多个分叉，因为无法保证每个分叉中交易的不同，所以不可能多个分支都是有效的。在比特币中只有唯一一条区块链是有效的，它就是最长（累计工作量最大）的那条。所以当一个指向很久以前的区块A被发布到网络中的时候，其他节点会把该区块在区块链中的工作难度和自己本地链的工作难度之和做比较，如果没自己链难的话，区块A是会被无情抛弃的，这样区块A中的交易也无法被比特币网络达成共识，产生区块A的节点也就白挖矿了。</p>
 <p>所以要避免这种情况，就是每个矿工在发现网络中有比自己长的区块链时，立刻修改打包区块的pre hash，重新计算nonce等参数完成PoW。</p>
 <h3 id="同时产生合法区块怎么办"><a href="#同时产生合法区块怎么办" class="headerlink" title="同时产生合法区块怎么办"></a>同时产生合法区块怎么办</h3><p>但是，因为挖矿是不确定的，所以有可能会出现两个节点同时挖出来了相同工作量的合法区块，如下所示：</p>
-<p><img src="https://cdn.nlark.com/yuque/0/2025/png/719664/1757742528914-38576d2d-25b5-47ea-9fd7-5631babf27f5.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/d01e1eab_btc_img_15.png"></p>
 <p>此时其他节点会接收A和B两个区块（因为他们的工作量一样大），但是，因为网络的不确定性，一定有一些节点是从BLOCK A 开始挖，有些节点是从 BLOCK B开始挖。假如BLOCK A后面先挖到了一个新区块，那么其他节点就认为以BLOCK A的那条链是最长合法链，从而丢弃BLOCK B。BLOCK B被丢弃后，它里面发放给对应账户的铸币交易也会失效。</p>
 <p>为了防止两个节点同时出现不知道以哪个节点交易为准的情况发生，在现实真实的支付场景中，比特币规定，只有BLOCK A后面新增六个区块后，才会认为BLOCK A中的交易是有效的。</p>
-<p><img src="https://cdn.nlark.com/yuque/0/2025/png/719664/1757744992062-16dacb16-44f5-4a1a-87f6-ce437d57e60e.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/853decfb_btc_img_16.png"></p>
 <p>所以，<strong>比特币是一个靠社区所有节点决定的共识游戏，而不是由某一个中心机构决策的主权游戏</strong>。这或许就是去中心化魅力吧。</p>
 <h1 id="一笔比特币交易的产生过程"><a href="#一笔比特币交易的产生过程" class="headerlink" title="一笔比特币交易的产生过程"></a>一笔比特币交易的产生过程</h1><p>通过本文讲述的共识机制和比特币数据结构，我们来尝试复原一下，当“Alice给Bob转账10 BTC”时，比特币网络中的所有节点，是如何变化的：</p>
-<p><img src="https://cdn.nlark.com/yuque/__puml/093120dfebb8d07583b501eead4008d0.svg"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/9fd2ee78_btc_img_17.svg"></p>
 
             </div>
           
@@ -331,9 +331,9 @@
         
   <nav class="post-nav">
     
-      <a class="prev" href="/2025/09/17/what-is-digtal-rmb/">
+      <a class="prev" href="/2025/10/07/why-graduated-to-hkust/">
         <i class="iconfont icon-left"></i>
-        <span class="prev-text nav-default">有了在线支付，为什么需要数字人民币</span>
+        <span class="prev-text nav-default">为什么很多人都想去香港读书？</span>
         <span class="prev-text nav-mobile">Prev</span>
       </a>
     

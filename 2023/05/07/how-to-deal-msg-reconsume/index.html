@@ -12,7 +12,7 @@
 
 
 
-  <meta name="description" content="分析消息队列消费幂等问题，针对同一时间内多条状态变更消息导致重复消费的解决方案。"/>
+  <meta name="description" content="针对消息队列同一时间重复投递导致重复消费落库的幂等问题，系统梳理四种解决方案：基于Redis的分布式锁（用户维度加锁+查重）、利用数据库唯一索引捕获Duplicate entry异常、使用insert ignore/replace into/on duplicate key update等特殊SQL语句，以及事务+select for update排他锁方案，并深入分析MySQL在RR隔离级别下主键索引、无索引、索引未命中三种场景中加锁范围与意向锁的作用机制。"/>
 
 
 
@@ -35,18 +35,18 @@
 <link rel="canonical" href="https://wxxlamp.cn/2023/05/07/how-to-deal-msg-reconsume/"/>
 
 
-<meta name="description" content="分析消息队列消费幂等问题，针对同一时间内多条状态变更消息导致重复消费的解决方案。">
+<meta name="description" content="针对消息队列同一时间重复投递导致重复消费落库的幂等问题，系统梳理四种解决方案：基于Redis的分布式锁（用户维度加锁+查重）、利用数据库唯一索引捕获Duplicate entry异常、使用insert ignore&#x2F;replace into&#x2F;on duplicate key update等特殊SQL语句，以及事务+select for update排他锁方案，并深入分析MySQL在RR隔离级别下主">
 <meta property="og:type" content="article">
 <meta property="og:title" content="如何解决消息幂等问题">
 <meta property="og:url" content="https://wxxlamp.cn/2023/05/07/how-to-deal-msg-reconsume/index.html">
 <meta property="og:site_name" content="王星星的魔灯">
-<meta property="og:description" content="分析消息队列消费幂等问题，针对同一时间内多条状态变更消息导致重复消费的解决方案。">
+<meta property="og:description" content="针对消息队列同一时间重复投递导致重复消费落库的幂等问题，系统梳理四种解决方案：基于Redis的分布式锁（用户维度加锁+查重）、利用数据库唯一索引捕获Duplicate entry异常、使用insert ignore&#x2F;replace into&#x2F;on duplicate key update等特殊SQL语句，以及事务+select for update排他锁方案，并深入分析MySQL在RR隔离级别下主">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/d2b6d8dd_how-to-deal-msg-reconsume-2.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/62261fbf_how-to-deal-msg-reconsume-1.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/d7aa5d63_how-to-deal-msg-reconsume-3.png">
 <meta property="article:published_time" content="2023-05-07T02:36:00.000Z">
-<meta property="article:modified_time" content="2026-03-15T08:43:33.864Z">
+<meta property="article:modified_time" content="2026-03-16T13:56:19.634Z">
 <meta property="article:author" content="Wxx">
 <meta property="article:tag" content="DB">
 <meta name="twitter:card" content="summary">
@@ -231,9 +231,9 @@
         
   <nav class="post-nav">
     
-      <a class="prev" href="/2023/06/11/when-change-db-route-key/">
+      <a class="prev" href="/2023/07/09/how-to-process-hot-data/">
         <i class="iconfont icon-left"></i>
-        <span class="prev-text nav-default">当修改分库分表键时</span>
+        <span class="prev-text nav-default">如何处理热点数据问题</span>
         <span class="prev-text nav-mobile">Prev</span>
       </a>
     

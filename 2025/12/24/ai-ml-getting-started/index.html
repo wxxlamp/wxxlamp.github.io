@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="从后端开发视角系统入门机器学习，厘清AI、ML、DL、LLM的关系与区别。详解神经元与神经网络原理、全连接网络、CNN卷积神经网络、RNN循环神经网络的工作机制，以及Embedding词嵌入、前向传播与反向传播等核心概念。通过Python代码示例和数学公式，帮助开发者建立对大模型底层技术的直观理解。"/>
+
+
+
+
+  <meta name="keywords" content="AI,Machine Learning,LLM," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="王星星的魔灯" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="https://wxxlamp.cn/2025/12/24/ai-ml-getting-started/"/>
+
+
+<meta name="description" content="从后端开发视角系统入门机器学习，厘清AI、ML、DL、LLM的关系与区别。详解神经元与神经网络原理、全连接网络、CNN卷积神经网络、RNN循环神经网络的工作机制，以及Embedding词嵌入、前向传播与反向传播等核心概念。通过Python代码示例和数学公式，帮助开发者建立对大模型底层技术的直观理解。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="大模型时代，7000字帮后端开发入门机器学习">
+<meta property="og:url" content="https://wxxlamp.cn/2025/12/24/ai-ml-getting-started/index.html">
+<meta property="og:site_name" content="王星星的魔灯">
+<meta property="og:description" content="从后端开发视角系统入门机器学习，厘清AI、ML、DL、LLM的关系与区别。详解神经元与神经网络原理、全连接网络、CNN卷积神经网络、RNN循环神经网络的工作机制，以及Embedding词嵌入、前向传播与反向传播等核心概念。通过Python代码示例和数学公式，帮助开发者建立对大模型底层技术的直观理解。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/0faf3c20_img1.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/7b498439_img2.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/a97f77f1_img3.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/f8365a77_img4.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/b849170f_img5.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/e0204d08_img6.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/53f822d5_img7.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/8f5c1f10_img8.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/25f4cfb9_img9.png">
+<meta property="article:published_time" content="2025-12-24T13:50:00.000Z">
+<meta property="article:modified_time" content="2026-03-16T13:56:19.633Z">
+<meta property="article:author" content="Wxx">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="LLM">
+<meta property="article:tag" content="Machine Learning">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/0faf3c20_img1.png">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/syst/dist/SmileySans-Oblique/result.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/syst/dist/SmileySans-Oblique/result.css"></noscript>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> 大模型时代，7000字帮后端开发入门机器学习 - 王星星的魔灯 </title>
+  <meta name="generator" content="Hexo 8.1.1"></head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">王星星的魔灯</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="menu-item menu-item-resume">
+                        <a href="/resume" class="resume-nav-label" onclick="event.preventDefault()">Resume</a>
+                        <ul class="resume-lang-dropdown">
+                            <li><a href="/resume">中文简历</a></li>
+                            <li><a href="/resume-en">English</a></li>
+                        </ul>
+                    </li>
+                    
+                
+                <li class="menu-item">
+                    <a href="/atom.xml">RSS</a>
+                </li>
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          大模型时代，7000字帮后端开发入门机器学习
+        
+      </h1>
+
+      <time class="post-time">
+          12月 24 2025
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/0faf3c20_img1.png"></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>从2017年Transformer架构横空出世，再到2022年GPT的出现，人们愈发发现大模型的重要性，每一年仿佛都是LLM元年。在逐步步入AI时代的过程中，我感觉到十分的焦虑，担心被大模型替代，也感觉到兴奋，希望能通过LM做更多的事情。</p>
+<p>但是我能够通过LLM做什么呢？我又需要了解什么呢？</p>
+<p>在大模型时代以前，后端程序员一般需要掌握开发语言（Java、Go、Js等）、Mysql、Redis的架构知识就可以上手开发软件了。但是在AI时代，或者说是大模型时代，显然只掌握一般的开发语言已经不够看了。</p>
+<p>LLM工程一句话说完就是使用各种PROMPT调用LLM，与此而来的有MCP、RAG等各种工程能力。如果想要快速的将LM能力嵌入到业务场景中，本质上和上古时期的CURD程序员一样，直接调用大模型厂商的开放接口即可。</p>
+<p>但是只调用模型的API，如水中观月、镜里看花，始终是看不透本质和系统全貌的。私以为，对于后端程序员来说，要想融入AI时代，首先要做的不是调用LLM相关的API，而是要了解传统人工智能和机器学习相关的概念和原理，比如ML和DL到底是啥关系？CNN、RNN、Transformer这些架构是怎么演化的？。如果不了解这些基本的知识，就如同开发时代不了解操作系统、计算机网络一样——可以完成基本的编程，但是无法更进一步地窥到计算机世界的奇妙。</p>
+<p>所以我花了一点时间，借助一些常见的问题，梳理了一下我对于人工智能和机器学习的理解。</p>
+<h1 id="你的AI我的AI好像不一样"><a href="#你的AI我的AI好像不一样" class="headerlink" title="你的AI我的AI好像不一样"></a>你的AI我的AI好像不一样</h1><p><font style="color:rgb(31, 31, 31);">这几年随着大模型的兴起，一切皆AI。狭义来说，AI就是人工智能，实现AI的核心人群被称为”算法工程师”（常常被称作调参侠）。大模型时代，很多人会直接用大模型代指AI，譬如罗永浩一贯的观点就是23年才迎来真正的AI时代。那么人工智能、机器学习、深度学习、大模型，它们之间的关系和区别在哪里呢？</font></p>
+<p><font style="color:rgb(31, 31, 31);">根据李宏毅的理论，我们常认为人工智能（Artificial Intelligence, AI）是最终要达到的目标，而主要手段则是机器学习（Machine Learning, ML）。计算机视觉（Computer Vision, CV）、自然语言处理（Natural Language Processing, NLP）等则是一些具体的应用。</font></p>
+<p><font style="color:rgb(31, 31, 31);">从一个外行的角度出发，ML是一个泛称，其核心逻辑是”通过数据训练模型，让计算机自主学习规律以完成特定任务”。在ML的技术分支中，深度学习（Deep Learning, DL）是当前最核心、最主流的方向。深度学习以”深度神经网络”为核心架构，拥有多层多个神经元进行学习，神经网络从基础到复杂，分为基本的前馈神经网络（Feedforward Neural Network, FNN）、处理序列数据的循环神经网络（Recurrent Neural Network, RNN）、处理空间数据的卷积神经网络（Convolutional Neural Network, CNN）等。Google提出的Transformer架构则重构了原来RNN和CNN序列式处理的原则，采用Self Attention机制，解决了序列依赖的问题，使得模型不仅可以感知token之间的关系，也具备并行训练的能力。</font></p>
+<p><font style="color:rgb(31, 31, 31);">至于大模型（Large Models, LM），它的大不仅是指的训练模型的参数大，也是指的训练依赖的数据多。正是借助于Transformer的能力，才使得模型变”大”成为了可能。大模型最开始的一个分支是大语言模型（Large Language Models, LLM），起源于NLP领域，适用于文生文等各种NLP的传统任务。不过随着LM多模态的发展，目前LM也不仅局限于NLP领域，而是为了实现AI这个目标触及到了应用的各个方面。</font></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/7b498439_img2.png"></p>
+<h1 id="机器学习能干什么事"><a href="#机器学习能干什么事" class="headerlink" title="机器学习能干什么事"></a>机器学习能干什么事</h1><p>虽然从应用的领域来讲，基于ML的LLM具备文生文、文生图、图生文等能力。但是追其根本，所有的应用层任务都会回归到”回归（Regression）”和”分类（classification）”两种任务上来。</p>
+<p>所谓回归，类似于y&#x3D;kx+b，根据输入的不同，会输出不同的值。回归任务常用于预测（如天气预报、房价和股票走势等）。 而分类则是在回归的基础上，通过激活或者分类函数，将结果分成某几类（譬如正数和负数两类）。分类任务常用于打标签等。</p>
+<p>我们常说的搜推广中的推荐，就属于分类任务。而众所周知，大模型虽然会根据预测的概率生成文字，但其本质是在词表中（譬如50000个单词）预测下一个词（Token），所以大模型属于分类任务。</p>
+<h1 id="模型到底是个什么东东"><a href="#模型到底是个什么东东" class="headerlink" title="模型到底是个什么东东"></a>模型到底是个什么东东</h1><p>随着大模型的普及，几乎每个人都听说过”模型”两个字。那么模型究竟是什么。</p>
+<p>从宏观上理解，模型是一个黑盒。通过为模型提供输入，模型内部通过计算后，最后输出得到最终的输出结果。</p>
+<p>从huggingface的开源模型库中可以看到，模型长这样：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/a97f77f1_img3.png"></p>
+<p>模型内部是一系列的参数（weight），模型思考的过程，本质上就是结合输入的token进行一系列的向量运算（<strong>主要是矩阵乘法</strong>）。在大模型时代，我们可以更加聚焦一点，认为模型内部就是由一堆神经元组成的神经网络。那么，神经元又是个什么东东？</p>
+<h1 id="神经元和神经网络"><a href="#神经元和神经网络" class="headerlink" title="神经元和神经网络"></a>神经元和神经网络</h1><h2 id="神经元"><a href="#神经元" class="headerlink" title="神经元"></a>神经元</h2><p>神经元简单理解就是一个计算单元。假定输入为x，神经元可以是wx+b。经过神经元计算的输出就可以是y。只不过x不是高中数学中学到的一个变量，而是和输入相关的n个变量组成的一个一维向量：</p>
+<p>$ y &#x3D; \sigma(w_1 x_1 + w_2 x_2 + b) $，即：</p>
+<p>$ y &#x3D; \sigma([w_1, w_2] \cdot \begin{bmatrix} x_1 \ x_2 \end{bmatrix} + b) $</p>
+<p>在上面的表达式中，$ x_1 $和$ x_2 $是指输入的特征，譬如针对一个天气预报预测模型，$ x_1 $可能是湿度，$ x_2 $可能是温度。$ w_1 $和$ w_2 $指的是变量的权重，也是我们平常说的”参数”，所谓的训练，就是不断调整$ w $（和其他参数）的值，使得输出$ y $更贴近于真实值（loss更低）。$ b $指的是偏置（通俗一点说就是截距），可以对计算数据进行增加或者减少。括号外面的符号是sigma ($ \sigma $)，它用来表示激活函数，常见的激活函数有 Sigmoid（$ \sigma(x) \in (0,1) $）、ReLU（$ relu(x) &#x3D; max(0,x) $）等。激活函数用来控制输出，使得结果变得不再线性。</p>
+<p>形象化的神经元如下所示：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/f8365a77_img4.png"></p>
+<p>简单神经元使用python代码表达如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">simple_neuron_torch</span>(<span class="params">x, w, b, activation=torch.sigmoid</span>):</span><br><span class="line">    z = torch.dot(x, w) + b  <span class="comment"># 点积是标量</span></span><br><span class="line">    <span class="keyword">return</span> activation(z) <span class="comment"># 通过sigmoid激活</span></span><br><span class="line"></span><br><span class="line">x = torch.tensor([<span class="number">28.0</span>, <span class="number">75.0</span>])  <span class="comment"># 今天：温度28°C，湿度75%</span></span><br><span class="line">w = torch.tensor([<span class="number">0.5</span>, <span class="number">0.5</span>])   <span class="comment"># 权重：高温抑制下雨(-0.5)，高湿度促进下雨(+0.8)</span></span><br><span class="line">b = torch.tensor(-<span class="number">15.0</span>)         <span class="comment"># 偏置：基准阈值</span></span><br><span class="line"></span><br><span class="line">output = simple_neuron_torch(x, w, b)  <span class="comment"># 得到最后的下雨概率（0.9999）</span></span><br></pre></td></tr></table></figure>
+
+<p>假设训练出来的参数为 $ w_1&#x3D;0.5, w_2&#x3D;0.5, b&#x3D;-40 $，即：$ y &#x3D; \sigma(0.5 x_1 + 0.5 x_2 - 40) $。我们会得到预测趋势如图所示：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/b849170f_img5.png"></p>
+<p>从上的图中，我们会得到结论：温度越高、湿度越大、越容易下雨。下面我们来分析：</p>
+<ul>
+<li>情况 A (桑拿天): $ 0.9 \times 0.5 + 0.9 \times 0.5 &#x3D; 0.9 $ (预测下雨，正确 ✅)</li>
+<li>情况 B (沙漠): $ 0.9 \times 0.5 + 0.0 \times 0.5 &#x3D; 0.45 $ (预测不下雨，正确 ✅)</li>
+<li>情况 C (极端高温干燥): 假设温度超级高 $ x_1&#x3D;2.0 $：<ul>
+<li>$ 2.0 \times 0.5 + 0.0 \times 0.5 &#x3D; 1.0 $ (预测下雨，错误 ❌)</li>
+</ul>
+</li>
+</ul>
+<p>我们发现，即使训练出来的w和b是最优的，得到的一定是一个线性的结果。但是，天气预报不是一件线性预测的事情。所以我们就需要尝试其他工具来解决问题。</p>
+<h2 id="全连接神经网络"><a href="#全连接神经网络" class="headerlink" title="全连接神经网络"></a>全连接神经网络</h2><p>可以发现，简单的神经元只能做线性回归。但是世界其实是很复杂的，所以我们就需要尝试将多个神经元链接在一起，执行更复杂的任务。</p>
+<p>所以从天气预报的例子我们可以得知，天气预报不是一件线性预测的事情。预测天气的特征之间是有关系的，而我们无法通过单一的神经元获取到这些关系。从工程的角度来讲，遇事不决就加一个中间层。既然温度和湿度之间是有关系的，我们就把温度和湿度进行关联，形成多个中间特征，再由这些中间特征产生最后的结果。如下图表示：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/e0204d08_img6.png"></p>
+<p>转换成简单的数学公式，如下：</p>
+<p>$ h_1 &#x3D; \sigma(w_{11} x_1 + w_{12} x_2 + b_1) \<br>h_2 &#x3D; \sigma(w_{21} x_1 + w_{22} x_2 + b_2) \<br>h_3 &#x3D; \sigma(w_{31} x_1 + w_{32} x_2 + b_3) \<br>y_{final} &#x3D; \sigma(v_1 h_1 + v_{2} h_2 + v_3 h_3 + b_4)</p>
+<p> $</p>
+<p>因为上面的公式可以尽可能的将$ x_1, x_2 $全部关联起来，所以我们把上面的网络称为全连接神经网络（Fully connected network），它是目前深度学习的基础。如果把上面的FCN带入到我们湿度和温度的例子中，我们令$ h_1 $负责桑拿天属性、$ h_2 $负责湿冷天属性、$ h_3 $负责干热天属性，假定训练结果如下：</p>
+<p>$ h_1 &#x3D; \sigma(x_1 + x_2 -1.2) \<br>h_2 &#x3D; \sigma(-x_1 + x_2 -0.5) \<br>h_3 &#x3D; \sigma(x_1 - x_2 - 1.0) \<br>y_{final} &#x3D; \sigma(2 h_1 + 0.5 h_2 - h_3 -1)</p>
+<p> $</p>
+<p>我们可以得到如下的预测图：可以发现经过中间层之后，就不会再出现”高温干燥”也会下雨的情况了。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/53f822d5_img7.png"></p>
+<p>回到数学公式中来看，如果有多个特征、多层神经元，上面的表达未免太过复杂，所以借助矩阵相乘的空间变换特性（旋转、缩放、扭曲），我们可以把上述的中间隐藏层做如下转换：</p>
+<p>$ h &#x3D; \begin{bmatrix} h_1 \ h_2 \ h_3 \end{bmatrix} &#x3D; \begin{bmatrix}<br>\sigma(w_{1,1}x_1 + w_{1,2}x_2 + b_1) \<br>\sigma(w_{2,1}x_1 + w_{2,2}x_2 + b_2) \<br>\sigma(w_{3,1}x_1 + w_{3,2}x_2 + b_3)<br>\end{bmatrix} &#x3D; \sigma(\begin{bmatrix}<br>w_{1,1} &amp; w_{1,2} \<br>w_{2,1} &amp; w_{2,2} \<br>w_{3,1} &amp; w_{3,2}<br>\end{bmatrix} \cdot \begin{bmatrix} x_1 \ x_2 \end{bmatrix} + \begin{bmatrix} b_1 \ b_2 \ b_3 \end{bmatrix}) &#x3D; \sigma(Wx + b) $，</p>
+<p>所以可以得到最终的输出为：</p>
+<p>$ y_{final} &#x3D; \sigma( \underbrace{\begin{bmatrix} v_1 &amp; v_2 &amp; v_3 \end{bmatrix}}<em>{W_2} \cdot \underbrace{\begin{bmatrix} h_1 \ h_2 \ h_3 \end{bmatrix}}</em>{h} + b_4 ) $。</p>
+<p>但是，在用代码训练的时候，我们要尽可能的并行做训练，所以就有分批这个概念。即，我们不会每次只算一条特征，而是把特征打批，一次计算多个，公式如下：</p>
+<p>$ \begin{bmatrix}<br>h_{1,1} &amp; h_{1,2} &amp; h_{1,3} \<br>h_{2,1} &amp; h_{2,2} &amp; h_{2,3} \<br>h_{3,1} &amp; h_{3,2} &amp; h_{3,3} \<br>h_{4,1} &amp; h_{4,2} &amp; h_{4,3} \<br>h_{5,1} &amp; h_{5,2} &amp; h_{5,3}<br>\end{bmatrix} &#x3D; \begin{bmatrix}<br>x_{1,1} &amp; x_{1,2} \<br>x_{2,1} &amp; x_{2,2} \<br>x_{3,1} &amp; x_{3,2} \<br>x_{4,1} &amp; x_{4,2} \<br>x_{5,1} &amp; x_{5,2}<br>\end{bmatrix}<em>{\text{Data (5 days)}}<br>\cdot<br>\begin{bmatrix}<br>w</em>{1,1} &amp; w_{2,1} &amp; w_{3,1} \<br>w_{1,2} &amp; w_{2,2} &amp; w_{3,2}<br>\end{bmatrix}<em>{W^T}<br>+<br>\begin{bmatrix}<br>b_1 &amp; b_2 &amp; b_3<br>\end{bmatrix}</em>{\text{Bias}} $，</p>
+<p>即：</p>
+<p>$ h_{\text{单层输出}} &#x3D; xW^T + b $</p>
+<p>用代码表达如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">SimpleFCN</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">super</span>(SimpleFCN, <span class="variable language_">self</span>).__init__()</span><br><span class="line">        <span class="variable language_">self</span>.fc1 = nn.Linear(<span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">        <span class="variable language_">self</span>.fc2 = nn.Linear(<span class="number">3</span>, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">        x = torch.sigmoid(<span class="variable language_">self</span>.fc1(x))</span><br><span class="line">        x = torch.sigmoid(<span class="variable language_">self</span>.fc2(x))</span><br><span class="line">        <span class="keyword">return</span> x</span><br></pre></td></tr></table></figure>
+
+<h2 id="CNN和RNN"><a href="#CNN和RNN" class="headerlink" title="CNN和RNN"></a>CNN和RNN</h2><p>有了FCN之后，理论上我们可以通过大量的数据训练出任何我们想要得到的结果。但是因为FCN是全连接的，这里面主要会有<strong>三个</strong>缺点：</p>
+<ol>
+<li><strong>参数冗余与计算量大</strong>：默认所有的神经元与上一层所有神经元都有连接，这会导致参数量的急剧增加。特别是当<strong>输入数据的维度很高</strong>（如高分辨率图像）或网络层数加深时，容易引起<strong>参数爆炸</strong>，直接撑爆计算机的内存。</li>
+<li><strong>忽略局部特征</strong>：因为FCN每次计算必须感知所有输入，它没有”<strong>空间局部性</strong>“的概念。这意味着它无法像人眼一样，先关注局部的特征（如图像中的线条、纹理），再组合成整体，而是”囫囵吞枣”地处理所有信息。</li>
+<li><strong>没办法感知”顺序”</strong>：在FCN的逻辑里，所有的输入特征是平行的，没办法感知哪个”先来”，哪个”后到”。 譬如当我们把一个Sentence作为Input丢到FCN里，FCN<strong>无法有效捕捉到Token前后的时序依赖关系</strong>，难以理解上下文的语义。</li>
+</ol>
+<h3 id="CNN"><a href="#CNN" class="headerlink" title="CNN"></a>CNN</h3><p>CNN即卷积神经网络（Convolutional Neural Network），它的核心是有一个卷积层，这个卷积层不会像FCN一样每个神经元都连接所有的参数，而是”选择性”地连接。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/8f5c1f10_img8.png"></p>
+<p>假如说有一张3<em>3像素的图片，如果我们使用FCN来识别该图片，就只能把3</em>3的像素铺平成9个参数，然后让这个9个参数进行全连接的线性运算，单一神经元的数学表达如下：</p>
+<p>$ \begin{bmatrix}<br>  x_1 &amp; x_2 &amp; x_3 \<br>  x_4 &amp; x_5 &amp; x_6 \<br>  x_7 &amp; x_8 &amp; x_9<br>  \end{bmatrix}<br>  \xrightarrow{\text{Flatten}}<br>  [x_1, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9] $,</p>
+<p>$ h &#x3D; \sigma(w_{1} x_1 + w_{2} x_2 + … + w_n x_n + … + w_9 x_9 + b) \ $</p>
+<p>因为铺平的原因，导致参数之间几乎丧失了位置和空间信息，所以用FCN不仅会导致参数爆炸，同时也会使得识别参数的精确度受到影响。</p>
+<p>对于图片来说，要想保留位置信息，我们就不能把输入像素铺平，而是要考虑像素参数之间的关系，同时为了防止每次计算都计算所有像素点，我们需要设置一个窗口，每个神经元只计算窗口内的值，假定我们的窗口是2x2，那么可以用如下表示：</p>
+<p>$ \text{Kernel} &#x3D;<br>  \begin{bmatrix}<br>  w_{1,1} &amp; w_{1,2} \<br>  w_{2,1} &amp; w_{2,2}<br>  \end{bmatrix} $</p>
+<p>这里的Kernel即为卷积核，此时神经元的表达如下：</p>
+<p>$ h &#x3D; \sigma(w_{1,1} x_1 + w_{1,2} x_2 + w_{2,1} x_4 + w_{2,2} x_5 + b) \ $</p>
+<p>可以看到，对于卷积核的神经元来说，有两个特点，第一是不会识别所有的参数；第二是可以精确感知到位置相关的信息。</p>
+<p>卷积核的核心就是关心局部的特征而不是所有的特征。我们可以把卷积核理解成一个局部特征，假如说$ K_h $拥有2<em>2的参数，他的作用是专门识别”竖线”。$ K_h $会上下左右平移遍历每一个2</em>2的像素点，找到可能是”竖线”的像素图块。</p>
+<p>一张图片不止有一个特征，所以我们会有多个卷积核（$ K_1,…, K_n $），每个卷积核分别代表不同的特征，譬如有些卷积核负责识别线条、有些负责识别颜色，等等。</p>
+<p>一个简单的CNN代码如下所示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">CNN_Model</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 1. 卷积层 (眼睛)</span></span><br><span class="line">        <span class="comment"># in_channels=1: 因为是黑白图，只有1层深</span></span><br><span class="line">        <span class="comment"># out_channels=32: 我们用 32 个不同的卷积核(手电筒)去扫描，提取32种不同的特征</span></span><br><span class="line">        <span class="comment"># kernel_size=3: 卷积核大小是 3x3</span></span><br><span class="line">        <span class="variable language_">self</span>.conv1 = nn.Conv2d(in_channels=<span class="number">1</span>, out_channels=<span class="number">32</span>, kernel_size=<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 2. 激活函数 (当然还要用 ReLU)</span></span><br><span class="line">        <span class="variable language_">self</span>.relu = nn.ReLU()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 3. 池化层 (压缩)</span></span><br><span class="line">        <span class="comment"># 2x2 的窗口，把图片长宽各缩小一半</span></span><br><span class="line">        <span class="variable language_">self</span>.pool = nn.MaxPool2d(kernel_size=<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 4. 全连接层 (大脑)</span></span><br><span class="line">        <span class="comment"># 经过上面的卷积和池化，图片变小了，但在深度上变厚了(32层)</span></span><br><span class="line">        <span class="comment"># 这里需要算一下剩下的特征数量，连接到分类器</span></span><br><span class="line">        <span class="variable language_">self</span>.fc = nn.Linear(in_features=<span class="number">32</span> * <span class="number">13</span> * <span class="number">13</span>, out_features=<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">        <span class="comment"># 保持图片的 2D 结构进行处理</span></span><br><span class="line">        x = <span class="variable language_">self</span>.conv1(x)  <span class="comment"># 扫描</span></span><br><span class="line">        x = <span class="variable language_">self</span>.relu(x)   <span class="comment"># 激活</span></span><br><span class="line">        x = <span class="variable language_">self</span>.pool(x)   <span class="comment"># 压缩</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 展平，交给全连接层做最后决定</span></span><br><span class="line">        x = x.view(x.size(<span class="number">0</span>), -<span class="number">1</span>)</span><br><span class="line">        x = <span class="variable language_">self</span>.fc(x)</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line"></span><br><span class="line">model = CNN_Model()</span><br><span class="line"><span class="built_in">print</span>(model)</span><br></pre></td></tr></table></figure>
+
+<h3 id="RNN"><a href="#RNN" class="headerlink" title="RNN"></a>RNN</h3><p>FCN将用户输入的特征二次加工成通用特征、CNN进一步处理了部分特征关联的问题。但是FCN和CNN都没有解决不同时间特征关联的问题。请考虑下面一个场景：</p>
+<blockquote>
+<p>在做机器翻译的时候，我们尝试将”Book a hotel” 和 “I like book” 翻译成中文</p>
+</blockquote>
+<p>如果我们直接使用FCN训练上面的句子，那就需要把 “Book a hotel” 的每个token都作为参数进行训练，这固然是可行的，但是一旦翻译的句子变成了 “I like book”，原来训练的FCN模型就完全不可用（这是因为FCN的入参是固定的）。所以在输入变化的场景，只靠FCN是完全不行的。</p>
+<p>既然整个句子训练不可行，所以我们就必须将句子拆分开成单词来训练，即模型的输入不能像FCN一样全部输入，而是滚动的输入。但是因为 “book” 在不同句子中语义是不一样的，所以我们在输入当前单词的时候，也需要把前面一些单词记录下来，也作为输入给到模型。</p>
+<p>所以，我们能否设计一个 1）动态感知输入token；2）不仅能够感知当前token，还可以感知到以前的token。这个就是 <strong>RNN (Recurrent Neural Network)</strong>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/25f4cfb9_img9.png"></p>
+<p>所谓的RNN，核心就是在原来FCN的基础上，增加了循环的机制，可以感知上一次的输出。它的数学表达如下：</p>
+<p>$ h_{t-1} &#x3D; \sigma(W_{xh} \cdot x_{t-1} + b )\<br>h_t &#x3D; \sigma(\underbrace{W_{xh} \cdot x_t}<em>{\text{处理当前输入}} + \underbrace{W</em>{hh} \cdot h_{t-1}}_{\text{处理过去记忆}} + b)<br> $</p>
+<p>通过数学公式可以看出来，RNN的核心就是将上一次的输入计算的结果作为下一次的输入代入进来。Python代码如下所示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"></span><br><span class="line"><span class="comment"># --- 设定参数 ---</span></span><br><span class="line">input_size = <span class="number">10</span>   <span class="comment"># 输入特征维度 (比如今天的10个财经指标)</span></span><br><span class="line">hidden_size = <span class="number">20</span>  <span class="comment"># 记忆容量 (隐藏层神经元数量)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># --- 定义权重 (这就是 RNN 模型本体) ---</span></span><br><span class="line"><span class="comment"># 1. 处理输入的权重 (对应 x_t)</span></span><br><span class="line">W_xh = nn.Linear(input_size, hidden_size)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 处理记忆的权重 (对应 h_t-1) &lt;--- RNN 独有的！</span></span><br><span class="line">W_hh = nn.Linear(hidden_size, hidden_size)</span><br><span class="line"></span><br><span class="line"><span class="comment"># --- 模拟时间序列数据 (Sequence) ---</span></span><br><span class="line"><span class="comment"># 假设有 5 天的数据 (Time steps = 5)</span></span><br><span class="line">inputs = [torch.randn(<span class="number">1</span>, input_size) <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">5</span>)]</span><br><span class="line"></span><br><span class="line"><span class="comment"># --- 初始化记忆 (h_0) ---</span></span><br><span class="line"><span class="comment"># 一开始脑子是空的</span></span><br><span class="line">h_t = torch.zeros(<span class="number">1</span>, hidden_size)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;开始时间循环...\n&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># --- RNN 的核心循环 ---</span></span><br><span class="line"><span class="keyword">for</span> i, x_t <span class="keyword">in</span> <span class="built_in">enumerate</span>(inputs):</span><br><span class="line">    <span class="comment"># 公式: h_t = tanh( W_xh * x + W_hh * h_prev )</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 1. 现在的输入产生的反应</span></span><br><span class="line">    current_input_effect = W_xh(x_t)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 2. 过去的记忆产生的反应</span></span><br><span class="line">    past_memory_effect = W_hh(h_t) <span class="comment"># 注意这里用的是上一轮的 h_t</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 3. 融合 (相加) 并 激活</span></span><br><span class="line">    <span class="comment"># Tanh 是 RNN 最常用的激活函数，因为它输出在 -1 到 1 之间，能防止数值爆炸</span></span><br><span class="line">    h_t = torch.tanh(current_input_effect + past_memory_effect)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;第 <span class="subst">&#123;i+<span class="number">1</span>&#125;</span> 天: 更新了隐藏状态 (记忆)。部分数值: <span class="subst">&#123;h_t[<span class="number">0</span>][:<span class="number">3</span>].detach().numpy()&#125;</span>...&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\n循环结束。最终的 h_t 包含了过去 5 天的所有累积信息。&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>但是有一个细节，<strong>假如权重是0.9</strong>，那么随着传递层数的增加，$ 0.9^{n} $<strong>会趋近于0</strong>。说明RNN不能记忆太长的输入，过长的输入会令RNN”遗忘”（这被称为梯度消失问题）。所以又诞生了 <strong>LSTM</strong> 来通过 <strong>Input Gate、Output Gate、Forget Gate</strong> 来决策记忆的存储时机，更加精准地控制模型的遗忘频率。</p>
+<h1 id="模型的参数究竟是什么？"><a href="#模型的参数究竟是什么？" class="headerlink" title="模型的参数究竟是什么？"></a>模型的参数究竟是什么？</h1><p>从上面的FCN、CNN和RNN模型，我们可以知道，模型本质上就是$ y &#x3D; \sigma(kx+b) $，所以，所谓的参数就是$ k $（权重，即 w）和 b（偏置）。只不过真实的模型有 n 个 x，和 m 个 y。当 n$和 m（以及中间的隐层神经元）越多，权重和偏置就越多，经过训练的模型也就<strong>越</strong>“聪明”，这就是后来业界”大模型”的通俗理解。</p>
+<p>训练模型，也就是通过各种数学方案，计算出最有效的权重和偏置。拿GPT-3举例，它有175B（<strong>1750亿</strong>）的参数，说明它的各个神经元中的 w 和 b加到一起是1750亿个。</p>
+<p><strong>TODO-超参数。</strong></p>
+<h1 id="模型是如何理解自然语言的？"><a href="#模型是如何理解自然语言的？" class="headerlink" title="模型是如何理解自然语言的？"></a>模型是如何理解自然语言的？</h1><p>到目前为止，我们知道了模型是如何做推理的——即给定一个x的输入（x为张量），通过一系列公式的运算，得到一个输出。那么问题来了，无论是FCN、RNN还是CNN，它们只能做浮点运算，限定的输入都一定是一组数字，这对于普通的数学预测还好说。但是，对于目前如火如荼的自然语言处理来说，我们如何把自然语言转化成数字让模型理解呢？</p>
+<h2 id="One-Hot"><a href="#One-Hot" class="headerlink" title="One-Hot"></a>One-Hot</h2><p>最简单的理解方式，就是我们可以通过boolean数组的映射解决。给定一个固定长度的boolean数组，通过在不同的index上标识为true来定义不同的token。假设你的词表里只有5个词：<code>[&quot;我&quot;, &quot;爱&quot;, &quot;学习&quot;, &quot;AI&quot;, &quot;猫&quot;]</code>。 “学习”这个词的表示就是：<code>[0, 0, 1, 0, 0]</code>。</p>
+<p>One-hot有两个致命问题，导致它无法用于 LLM：</p>
+<ol>
+<li><strong>稀疏性与维度灾难：</strong> 真实的词表有几万甚至几十万个词。每个词都是一个长度为 50,000 的向量，里面有 49,999 个 0。这极其浪费计算资源。</li>
+<li><strong>由于没有语义关联（Semantic Meaning）：</strong> 在 One-Hot 空间里，所有词之间的距离都是一样的。**”猫”<strong>和</strong>“狗”<strong>的距离，与</strong>“猫”<strong>和</strong>“冰箱”**的距离一样远。模型无法知道”猫”和”狗”是相似的。</li>
+</ol>
+<h2 id="Embedding"><a href="#Embedding" class="headerlink" title="Embedding"></a>Embedding</h2><p>我们可以通过embedding的方式，将one-hot的高维稀疏向量压缩成一个低维稠密向量。 例如，将”猫”映射到一个 512 维的向量中：</p>
+<p>$ \text{Embedding(cat)} &#x3D; [0.21, -0.54, 0.03, …, 0.99] $</p>
+<p>在这个新的向量空间中，<strong>语义相似的词，在几何空间上的距离会更近</strong>。举个例子，我们可以近似的认为</p>
+<p>$ “国王” - “男人” + “女人” \approx “女王” $</p>
+<p>那么，我们如何得到这样一组能记住词汇关系的稠密向量呢？方法很简单，就是通过FCN进行无监督训练和转换即可。下面举一个例子：</p>
+<blockquote>
+<p>计算”机器 学习 改变 了 世界”的5维one-hot向量，转为3维的稠密向量</p>
+</blockquote>
+<ol>
+<li>定义这五个token的one-hot向量，如_学习_的one-hot向量是$ x &#x3D; [0, 1, 0, 0, 0] $</li>
+<li>定义一个线性回归网络，W为5x3结构，将”学习”的x代入如下：</li>
+</ol>
+<p>$ h &#x3D; x \cdot W_{in} &#x3D; [0, 1, 0, 0, 0] \cdot<br>\begin{bmatrix}<br>w_{0,0} &amp; w_{0,1} &amp; w_{0,2} \<br>\mathbf{w_{1,0}} &amp; \mathbf{w_{1,1}} &amp; \mathbf{w_{1,2}} \<br>w_{2,0} &amp; w_{2,1} &amp; w_{2,2} \<br>\vdots &amp; \vdots &amp; \vdots \<br>w_{4,0} &amp; w_{4,1} &amp; w_{4,2}<br>\end{bmatrix}_{w初始为随机浮点数} $</p>
+<ol start="3">
+<li>接着，通过$ h $与另外一个转置矩阵$ W_{out} $计算点积：</li>
+</ol>
+<p>$ z &#x3D; \sigma(h \cdot W_{out} &#x3D; h \cdot [u_0, u_1, u_2, u_3, u_4]) $</p>
+<ol start="4">
+<li>此时能够得到”学习”与原句子每个token之间关联的概率。假如说算出来的点积结果如下：</li>
+</ol>
+<p>$ \hat{z} &#x3D; [0.05, \quad 0.02, \quad \mathbf{0.80}, \quad 0.01, \quad 0.12] $</p>
+<p>则表明”学习”后面接”改变”的概率是80%，但是我们希望是100%，此时就需要通过反向传播更新W的数值。最后，经过多轮训练后，$ W_{input} $即是我们最终的embedding向量。</p>
+<h1 id="机器是如何学习的？"><a href="#机器是如何学习的？" class="headerlink" title="机器是如何学习的？"></a>机器是如何学习的？</h1><p>在前面，我们已经多次强调过，我们需要训练模型让模型自主学习。那么模型是如何学习的呢？</p>
+<p>在深入了解模型的学习逻辑之前，我们要先理解两个术语。分别是前向传播（Forward Propagation）和反向传播（Backpropagation）。</p>
+<h2 id="前向传播"><a href="#前向传播" class="headerlink" title="前向传播"></a>前向传播</h2><p>前向传播的解释其实很简单，我们在上文中进行FCN、CNN、RNN的过程，就叫前向传播，用公式表示如下：</p>
+<p>$ y_{pred} &#x3D; \text{Model}(x) $</p>
+<p>在前向传播的计算过程中，参数（Weight 和 bias）都是已知和给定的。事实上，当我们在使用GPT或者Gemini的时候，模型在输出答案的过程，就叫前向传播。</p>
+<h2 id="反向传播"><a href="#反向传播" class="headerlink" title="反向传播"></a>反向传播</h2><p>反向传播与前向传播相反，指的是再已知$ y_{pred},y_{true},LearningRate $的情况下，计算出参数$ Weight, Bais $的过程。</p>
+<p>为了定义$ y_{pred} $和$ y_{true} $之间究竟相差多少，我们一般通过损失函数（Loss Function）来衡量，也就是我们训练模型常说的Loss，Loss越大，说明模型的结果越差。常见的损失函数就是均方误差(Meaning Squre Error)：</p>
+<p>$ Loss &#x3D; (y_{pred} - y_{true})^2 $</p>
+<p>为了让Loss变小，我们就需要反向传播，利用梯度下降（Gradient Descent）算法，通过微分计算出新的权重，公式如下：</p>
+<p>$ W_{new} &#x3D; W_{old} - \text{learning_rate} \times \text{Gradient} $</p>
+<p>Learning_rate就是变化的步长，决定了每次训练权重的变化幅度。关于Gradient如何计算，大家可以自行搜索，此处不详细描述，一个反向传播的例子如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"><span class="keyword">import</span> torch.optim <span class="keyword">as</span> optim</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"><span class="comment"># --- 1. 准备数据 (真值) ---</span></span><br><span class="line"><span class="comment"># 假设真实规律是: y = x * 0.5 + 0.2</span></span><br><span class="line"><span class="comment"># 我们生成 100 个数据点</span></span><br><span class="line">X = torch.rand(<span class="number">100</span>, <span class="number">1</span>)  <span class="comment"># 随机生成 0~1 之间的温度</span></span><br><span class="line">y_true = X * <span class="number">0.5</span> + <span class="number">0.2</span>  <span class="comment"># 这是我们要逼近的&quot;靶心&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># --- 2. 搭建模型 (射手) ---</span></span><br><span class="line"><span class="comment"># 一个最简单的线性层: y = w * x + b</span></span><br><span class="line"><span class="comment"># 初始时，w 和 b 都是随机生成的，它根本不知道 0.5 和 0.2 是什么</span></span><br><span class="line">model = nn.Linear(<span class="number">1</span>, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;初始随机权重 w: <span class="subst">&#123;model.weight.item():<span class="number">.4</span>f&#125;</span>, 偏置 b: <span class="subst">&#123;model.bias.item():<span class="number">.4</span>f&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># --- 3. 定义工具 ---</span></span><br><span class="line"><span class="comment"># Loss Function (裁判): 均方误差</span></span><br><span class="line">criterion = nn.MSELoss()</span><br><span class="line"><span class="comment"># Optimizer (教练): 随机梯度下降 (SGD)，学习率 lr=0.1</span></span><br><span class="line">optimizer = optim.SGD(model.parameters(), lr=<span class="number">0.1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># --- 4. 开始训练循环 (练习射箭 100 次) ---</span></span><br><span class="line">loss_history = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">100</span>):</span><br><span class="line">    <span class="comment"># A. 前向传播 (射出一箭)</span></span><br><span class="line">    y_pred = model(X)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># B. 计算 Loss (测量差距)</span></span><br><span class="line">    loss = criterion(y_pred, y_true)</span><br><span class="line">    loss_history.append(loss.item())</span><br><span class="line"></span><br><span class="line">    <span class="comment"># C. 反向传播 (寻找原因)</span></span><br><span class="line">    <span class="comment"># 这行代码会自动计算所有权重的梯度</span></span><br><span class="line">    optimizer.zero_grad() <span class="comment"># 清空上一次的梯度</span></span><br><span class="line">    loss.backward()       <span class="comment"># &lt;--- 核心！反向传播发生在这里</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># D. 更新权重 (纠正姿势)</span></span><br><span class="line">    optimizer.step()</span><br><span class="line"></span><br><span class="line"><span class="comment"># --- 5. 结果展示 ---</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;训练后学到的权重 w: <span class="subst">&#123;model.weight.item():<span class="number">.4</span>f&#125;</span> (真实值是 0.5)&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;训练后学到的偏置 b: <span class="subst">&#123;model.bias.item():<span class="number">.4</span>f&#125;</span> (真实值是 0.2)&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 画图：Loss 是如何下降的</span></span><br><span class="line">plt.figure(figsize=(<span class="number">8</span>, <span class="number">4</span>))</span><br><span class="line">plt.plot(loss_history, color=<span class="string">&#x27;red&#x27;</span>)</span><br><span class="line">plt.title(<span class="string">&#x27;Loss Curve: Error drops as the model learns&#x27;</span>)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;Training Iterations (Epochs)&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;Loss (Error)&#x27;</span>)</span><br><span class="line">plt.grid(<span class="literal">True</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<h1 id="为什么得显卡者得天下？"><a href="#为什么得显卡者得天下？" class="headerlink" title="为什么得显卡者得天下？"></a>为什么得显卡者得天下？</h1><p>在探究这个问题之前，我们先分清楚CPU和GPU的区别：</p>
+<ol>
+<li><strong>CPU</strong>：CPU的核心少而强大（如我们平常的服务器核心是8核），负责复杂的计算和逻辑分支处理（在计算单元的基础上增加cache和控制单元等）。</li>
+<li><strong>GPU</strong>：GPU的核心多而简单（随便一个就是4096核），每个核心能力有限，只能负责简单的加减乘除，无法处理复杂逻辑。</li>
+</ol>
+<p>从模型推理和模型训练可以得知，无论是前向传播还是反向传播，都会涉及到大量的向量乘积运算、以及微分（求导）—— 它们本质上都是简单的浮点运算。这些简单的浮点运算基本不会<strong>互相</strong>干扰，所以它们天生就是可以被”并行”计算的，所以它极适合GPU架构。</p>
+<p>举个例子，如果我们要计算两个 <strong>1000x1000</strong> 的矩阵，这意味着我们要进行 <strong>10亿次级别</strong> 的乘加运算。对于一个8线程的CPU来讲，即使8个并行处理，它也还要处理非常久。而GPU拥有更多的核心，所以处理显然也就更快。</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ol>
+<li>李宏毅资料：<a target="_blank" rel="noopener" href="https://www.youtube.com/playlist?list=PLJV_el3uVTsMhtt7_Y6sgTHGHp1Vb2P2J">油管</a>,、<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1TAtwzTE1S/?spm_id_from=333.337.search-card.all.click&vd_source=f22e07c1e9ae0985f92cf3a4f47ea7f8">B站</a><ol>
+<li>ml:<a target="_blank" rel="noopener" href="https://speech.ee.ntu.edu.tw/~hylee/ml/2021-spring.php">https://speech.ee.ntu.edu.tw/~hylee&#x2F;ml&#x2F;2021-spring.php</a></li>
+<li>generative: <a target="_blank" rel="noopener" href="https://speech.ee.ntu.edu.tw/~hylee/genai/2024-spring.php">https://speech.ee.ntu.edu.tw/~hylee&#x2F;genai&#x2F;2024-spring.php</a></li>
+<li>ML 2025: <a target="_blank" rel="noopener" href="https://speech.ee.ntu.edu.tw/~hylee/ml/2025-spring.php">https://speech.ee.ntu.edu.tw/~hylee&#x2F;ml&#x2F;2025-spring.php</a></li>
+</ol>
+</li>
+<li>Gemini</li>
+<li>datawhale：<a target="_blank" rel="noopener" href="https://github.com/datawhalechina">https://github.com/datawhalechina</a></li>
+</ol>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/AI/">AI</a>
+		  
+			<a href="/tags/Machine-Learning/">Machine Learning</a>
+		  
+			<a href="/tags/LLM/">LLM</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+    
+      <a class="next" href="/2025/10/07/why-graduated-to-hkust/">
+        <span class="next-text nav-default">为什么很多人都想去香港读书？</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    
+
+<div class="github-comments">
+  <div class="comments-title">💬 Comments</div>
+  <p style="color: #666; font-size: 0.9em; margin-bottom: 1em;">
+    Comments require <a href="https://github.com/apps/giscus" target="_blank" rel="noopener">Giscus App</a> installed on your GitHub repository.
+  </p>
+  <script src="https://giscus.app/client.js"
+    data-repo="wxxlamp/wxxlamp.github.io"
+    data-repo-id="R_kgDOCiYteA"
+    data-category="General"
+    data-category-id="DIC_kwDOCiYteM4CelIo"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="light"
+    data-lang="en"
+    crossorigin="anonymous"
+    async>
+  </script>
+</div>
+
+
+
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+    
+
+<div class="toc-container" id="toc-container">
+  <div class="toc-title">Contents</div>
+  <ul class="toc-list" id="toc-list">
+    
+  </ul>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Generate TOC from post content
+  const content = document.querySelector('.post-content');
+  const tocList = document.getElementById('toc-list');
+
+  if (!content || !tocList) return;
+
+  const headings = content.querySelectorAll('h1, h2, h3, h4');
+
+  if (headings.length < 2) {
+    document.getElementById('toc-container').style.display = 'none';
+    return;
+  }
+
+  headings.forEach(function(heading, index) {
+    // Add ID to heading if not exists
+    if (!heading.id) {
+      heading.id = 'heading-' + index;
+    }
+
+    const li = document.createElement('li');
+    li.className = 'toc-' + heading.tagName.toLowerCase();
+
+    const a = document.createElement('a');
+    a.href = '#' + heading.id;
+    a.textContent = heading.textContent;
+    a.onclick = function(e) {
+      e.preventDefault();
+      heading.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    li.appendChild(a);
+    tocList.appendChild(li);
+  });
+
+  // Active section highlighting
+  const tocItems = tocList.querySelectorAll('li');
+
+  function updateActiveToc() {
+    const scrollPos = window.scrollY + 100;
+
+    headings.forEach(function(heading, index) {
+      const top = heading.offsetTop;
+      const bottom = top + heading.offsetHeight;
+
+      if (scrollPos >= top && scrollPos < bottom) {
+        tocItems.forEach(function(item) {
+          item.classList.remove('active');
+        });
+        if (tocItems[index]) {
+          tocItems[index].classList.add('active');
+        }
+      }
+    });
+  }
+
+  window.addEventListener('scroll', updateActiveToc);
+  updateActiveToc();
+});
+</script>
+
+
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2014 -
+    
+    2026
+    <span class="footer-author">Wxx.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> and <a class="theme-link" target="_blank" rel="noopener" href="https://github.com/frostfan/hexo-theme-polarbear">Polar Bear</a>
+    </span>
+</span>
+<span class="site-stats" style="display: block; margin-top: 8px; font-size: 0.85rem; color: #666;">
+    Total Visits: <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> ·
+    Unique Visitors: <span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>
+</span>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>

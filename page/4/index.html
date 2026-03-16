@@ -132,84 +132,6 @@
     <header class="post-header">
       <h1 class="post-title">
         
-          <a class="post-link" href="/2021/10/31/talk-about-javafx/">漫谈JavaFX</a>
-        
-      </h1>
-
-      <time class="post-time">
-          10月 31 2021
-      </time>
-    </header>
-
-
-
-    
-        <div class="post-excerpt">
-            JavaFX桌面应用开发经历分享，记录使用JavaFX开发GUI应用的体验与思考。
-        </div>
-          
-
-    
-  </article>
-
-        
-            
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2021/09/21/app-learning-quick-start/">新人快速上手应用指北</a>
-        
-      </h1>
-
-      <time class="post-time">
-          9月 21 2021
-      </time>
-    </header>
-
-
-
-    
-        <div class="post-excerpt">
-            微服务架构下新人如何快速上手一个应用，从数据模型、接口链路等方面系统化学习。
-        </div>
-          
-
-    
-  </article>
-
-        
-            
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2021/09/19/frontless-operate-platform/">无前端运营方案</a>
-        
-      </h1>
-
-      <time class="post-time">
-          9月 19 2021
-      </time>
-    </header>
-
-
-
-    
-        <div class="post-excerpt">
-            设计无前端运营平台的思路，解决业务快速增长期运营工具资源不足的问题。
-        </div>
-          
-
-    
-  </article>
-
-        
-            
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
           <a class="post-link" href="/2021/08/22/java-8-lambda/">Java8的函数式编程</a>
         
       </h1>
@@ -223,7 +145,7 @@
 
     
         <div class="post-excerpt">
-            Java 8 Lambda表达式详解，涵盖函数式接口、方法引用、Stream API、Optional等新特性的使用。
+            本文系统介绍Java 8函数式编程与Lambda表达式的核心知识，从Lambda的数学起源讲起，详细解析Function、Consumer、Supplier三大基础函数式接口的用法及其在JDK中的应用，并展示如何自定义函数式接口。同时结合责任链模式、观察者模式、策略模式等常见设计模式，演示Lambda如何大幅简化代码，帮助读者将Lambda从被动调用提升为主动设计。
         </div>
           
 
@@ -249,7 +171,7 @@
 
     
         <div class="post-excerpt">
-            记录RocketMQ消费成功率异常的排查过程，分析并发消费场景下的问题与解决方案。
+            记录一次RocketMQ消费成功率骤降至30%的线上事故排查过程。通过排除系统资源瓶颈与业务代码逻辑，最终在MQ日志中定位到ConcurrentModificationException。深入分析ArrayList的fail-fast机制：多线程同时对同一List执行sort（写操作）和forEach（读操作）时，modCount校验不一致触发异常。总结出三条多线程消费场景下保证线程安全的实践原则。
         </div>
           
 
@@ -275,7 +197,7 @@
 
     
         <div class="post-excerpt">
-            LeetCode初级算法数组篇题解，包含删除重复项、旋转数组、两数之和等经典题目的解题思路。
+            LeetCode初级算法数组篇完整题解，涵盖11道经典题目。详细讲解双指针法删除重复项、移动零，利用异或特性求只出现一次的数字，贪心策略解决买股票最佳时机，以及旋转数组、加一、两数组交集、两数之和（HashMap优化）、有效数独（三集合法）和旋转图像（转置+翻转）等题目的解题思路与Java实现。
         </div>
           
 
@@ -301,7 +223,7 @@
 
     
         <div class="post-excerpt">
-            深入分析Spring AOP代理与循环依赖的冲突问题，通过debug源码揭示Bean初始化异常的根因。
+            本文针对一个真实生产问题展开深度分析：某二方库通过BeanPostProcessor对Bean进行手动AOP代理，当被代理的Bean存在循环依赖时会抛出初始化异常。作者结合Spring三级缓存机制（singletonObjects、earlySingletonObjects、singletonFactory），逐步追踪Bean创建的完整源码调用链，揭示问题根因——手动代理时机滞后导致二级缓存中存入的是原始Bean而非代理Bean，与后续exposedObject不一致进而触发异常。提供了使用原生AOP注解和@Lazy两种解决方案。
         </div>
           
 
@@ -327,7 +249,7 @@
 
     
         <div class="post-excerpt">
-            消息队列消费端多业务分支处理方案，用策略模式等方式解决if-else过多的代码设计问题。
+            针对MQ消费端面对多种bizCode时if-else分支泛滥的问题，系统介绍三种设计模式解决方案。策略模式通过BeanPostProcessor构建Handler路由Map，实现O(1)的bizCode分发；责任链模式结合@Order注解与模板方法，支持自定义处理顺序和提前终止；模板方法模式则将多消费者公共流程（异常处理、消息解析）抽象为抽象类，让子类只关注业务逻辑，三种方案各有侧重，可按场景灵活选用。
         </div>
           
 
@@ -353,7 +275,7 @@
 
     
         <div class="post-excerpt">
-            应届毕业生租房实用攻略，涵盖租房渠道选择、看房技巧、合同注意事项等经验分享。
+            本文为初次租房的应届毕业生提供全方位实用指南，涵盖22条核心建议。内容包括：如何辨别真房东与二房东、整租与合租的利弊权衡、毕业季租房供需紧张的应对策略、如何识别隔断房与辨别民用水电、看房时的录像与采光检查技巧、中介费与房租的砍价方法，以及合同签订时物业费、维修费、退房赔付等关键条款的注意事项，帮助租房新手少走弯路。
         </div>
           
 
@@ -366,12 +288,12 @@
     <header class="post-header">
       <h1 class="post-title">
         
-          <a class="post-link" href="/2021/07/11/travel-strategy/">旅行攻略</a>
+          <a class="post-link" href="/2021/05/30/my-interview/">给自己加餐[不定期更新]</a>
         
       </h1>
 
       <time class="post-time">
-          7月 11 2021
+          5月 30 2021
       </time>
     </header>
 
@@ -379,7 +301,85 @@
 
     
         <div class="post-excerpt">
-            出行旅游实用攻略，涵盖行李准备、交通出行、住宿选择等经验总结。
+            个人收集的一批有深度、有趣且超出常规八股范畴的面试题合集，不定期更新。题目涵盖内存与CPU极限压测程序设计、操作系统位数含义、并发编程手段、事务实现原理、高性能系统构建方法论、.class文件格式、分库分表路由策略、多线程模型以及操作系统IO阻塞机制等多个维度，适合有一定基础的开发者自我检验与拓展思维。
+        </div>
+          
+
+    
+  </article>
+
+        
+            
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          <a class="post-link" href="/2021/04/29/my-university-leaning/">我在大学所建立的技术体系</a>
+        
+      </h1>
+
+      <time class="post-time">
+          4月 29 2021
+      </time>
+    </header>
+
+
+
+    
+        <div class="post-excerpt">
+            大学四年所学知识的全面总结，分为专业能力、沟通能力和学习能力三大板块。专业能力从硬件、操作系统、编程语言、程序到业务逐层展开，深入讲解CPU/内存/IO原理、进程线程协程调度、C与Java内存模型对比及系统四大质量目标；沟通能力强调主动性与owner意识；学习能力则提倡带着目的、总结抽象、付诸实践的三步循环学习法。
+        </div>
+          
+
+    
+  </article>
+
+        
+            
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          <a class="post-link" href="/2021/04/04/spring-user-guide/">Spring高效开发</a>
+        
+      </h1>
+
+      <time class="post-time">
+          4月 04 2021
+      </time>
+    </header>
+
+
+
+    
+        <div class="post-excerpt">
+            本文聚焦Spring IOC与AOP的高效使用技巧，不讲原理只谈实践。IOC部分深入讲解Bean生命周期中各Aware接口的调用时机、BeanPostProcessor与BeanFactoryPostProcessor的扩展方式，并给出优雅路由、策略模式、特征发现、获取Bean、事件监听者模式等五个实战场景的完整代码示例。AOP部分则展示统一日志处理、统一异常拦截、统一参数校验三种切面实践方案，帮助开发者写出更丝滑的Spring工程代码。
+        </div>
+          
+
+    
+  </article>
+
+        
+            
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          <a class="post-link" href="/2021/03/29/mybatis-mapping-object/">MyBatis中实体类和关系的映射原理</a>
+        
+      </h1>
+
+      <time class="post-time">
+          3月 29 2021
+      </time>
+    </header>
+
+
+
+    
+        <div class="post-excerpt">
+            深入剖析MyBatis将JDBC ResultSet自动映射为Java实体类的核心原理。介绍ResultSetHandler、ResultSetWrapper、TypeHandler、MetaObject等关键组件的职责分工，梳理从获取ResultSet、构建包装类、反射生成实体、类型映射到多行数据处理的完整流程，并总结Wrapper设计、Context上下文、策略模式等可借鉴的框架设计思路，适合希望理解ORM底层机制的Java开发者。
         </div>
           
 
@@ -410,14 +410,14 @@
     
     <section id="tags" class="widget-area widget_categories">
         <h3 class="widget-title">Categories</h3>
-        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%85%B6%E4%BB%96%E7%9F%A5%E8%AF%86/">其他知识</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/">区块链</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9C%BA%E6%99%AF%E5%AE%9E%E8%B7%B5/">场景实践</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9F%BA%E7%A1%80%E5%A4%AF%E5%AE%9E/">基础夯实</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9E%B6%E6%9E%84%E6%80%9D%E8%80%83/">架构思考</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/">源码剖析</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%9F%E6%B4%BB%E6%84%9F%E6%82%9F/">生活感悟</a><span class="category-list-count">16</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%87%87%E5%9D%91%E8%AE%B0%E5%BD%95/">采坑记录</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9D%A2%E8%AF%95%E7%BB%8F%E9%AA%8C/">面试经验</a><span class="category-list-count">14</span></li></ul>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%85%B6%E4%BB%96%E7%9F%A5%E8%AF%86/">其他知识</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/">区块链</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9C%BA%E6%99%AF%E5%AE%9E%E8%B7%B5/">场景实践</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9F%BA%E7%A1%80%E5%A4%AF%E5%AE%9E/">基础夯实</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E5%AD%A6%E4%B9%A0/">技术学习</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9E%B6%E6%9E%84%E6%80%9D%E8%80%83/">架构思考</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/">源码剖析</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%9F%E6%B4%BB%E6%84%9F%E6%82%9F/">生活感悟</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%87%87%E5%9D%91%E8%AE%B0%E5%BD%95/">采坑记录</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9D%A2%E8%AF%95%E7%BB%8F%E9%AA%8C/">面试经验</a><span class="category-list-count">13</span></li></ul>
     </section>
 
 
     
     <section id="tags" class="widget-area widget_tags">
         <h3 class="widget-title">Tags</h3>
-        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jvm/" rel="tag">Jvm</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a><span class="tag-list-count">25</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Film-Critics/" rel="tag">Film Critics</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Life/" rel="tag">Life</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Internships/" rel="tag">Internships</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Book-Critics/" rel="tag">Book-Critics</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringMVC/" rel="tag">SpringMVC</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Campus-Recruitment/" rel="tag">Campus Recruitment</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web-Security/" rel="tag">Web Security</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HEXO/" rel="tag">HEXO</a><span class="tag-list-count">1</span></li></ul>
+        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jvm/" rel="tag">Jvm</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a><span class="tag-list-count">25</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/" rel="tag">AI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-Learning/" rel="tag">Machine Learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LLM/" rel="tag">LLM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Internships/" rel="tag">Internships</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Book-Critics/" rel="tag">Book-Critics</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Life/" rel="tag">Life</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringMVC/" rel="tag">SpringMVC</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Campus-Recruitment/" rel="tag">Campus Recruitment</a><span class="tag-list-count">4</span></li></ul>
     </section>
 
 

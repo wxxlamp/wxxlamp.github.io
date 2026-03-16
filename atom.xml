@@ -11,7 +11,22 @@
   <rights>All rights reserved 2026, Wxx</rights>
   <subtitle>记录技术成长与生活感悟</subtitle>
   <title>王星星的魔灯</title>
-  <updated>2026-03-15T08:43:33.869Z</updated>
+  <updated>2026-03-16T13:56:19.633Z</updated>
+  <entry>
+    <author>
+      <name>Wxx</name>
+    </author>
+    <category term="技术学习" scheme="https://wxxlamp.cn/categories/%E6%8A%80%E6%9C%AF%E5%AD%A6%E4%B9%A0/"/>
+    <category term="AI" scheme="https://wxxlamp.cn/tags/AI/"/>
+    <category term="Machine Learning" scheme="https://wxxlamp.cn/tags/Machine-Learning/"/>
+    <category term="LLM" scheme="https://wxxlamp.cn/tags/LLM/"/>
+    <id>https://wxxlamp.cn/2025/12/24/ai-ml-getting-started/</id>
+    <link href="https://wxxlamp.cn/2025/12/24/ai-ml-getting-started/"/>
+    <published>2025-12-24T13:50:00.000Z</published>
+    <summary>从后端开发视角系统入门机器学习，厘清AI、ML、DL、LLM的关系与区别。详解神经元与神经网络原理、全连接网络、CNN卷积神经网络、RNN循环神经网络的工作机制，以及Embedding词嵌入、前向传播与反向传播等核心概念。通过Python代码示例和数学公式，帮助开发者建立对大模型底层技术的直观理解。</summary>
+    <title>大模型时代，7000字帮后端开发入门机器学习</title>
+    <updated>2026-03-16T13:56:19.633Z</updated>
+  </entry>
   <entry>
     <author>
       <name>Wxx</name>
@@ -21,22 +36,9 @@
     <id>https://wxxlamp.cn/2025/10/07/why-graduated-to-hkust/</id>
     <link href="https://wxxlamp.cn/2025/10/07/why-graduated-to-hkust/"/>
     <published>2025-10-07T02:36:00.000Z</published>
-    <summary>从小镇做题家到香港科技大学读研的一年回顾，分享在港学习生活的独特体验与感悟。</summary>
+    <summary>作者以工作后赴港就读香港科技大学一周年为契机，从小镇做题家的视角，深度对比香港与内地在制度、金融、社会福利、规则意识等方面的差异，并聚焦两地高校教育体系的异同：信息化程度、课堂教学理念、兼职教师制度、学习设施及创业氛围，全方位呈现香港留学的真实体验，为有意赴港深造的读者提供第一手参考。</summary>
     <title>为什么很多人都想去香港读书？</title>
-    <updated>2026-03-15T08:43:33.869Z</updated>
-  </entry>
-  <entry>
-    <author>
-      <name>Wxx</name>
-    </author>
-    <category term="区块链" scheme="https://wxxlamp.cn/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
-    <category term="Blockchain" scheme="https://wxxlamp.cn/tags/Blockchain/"/>
-    <id>https://wxxlamp.cn/2025/09/17/what-is-digtal-rmb/</id>
-    <link href="https://wxxlamp.cn/2025/09/17/what-is-digtal-rmb/"/>
-    <published>2025-09-17T02:36:00.000Z</published>
-    <summary>深入解析数字人民币的本质与技术原理，对比传统支付网络和稳定币的异同。</summary>
-    <title>有了在线支付，为什么需要数字人民币</title>
-    <updated>2026-03-15T08:43:33.868Z</updated>
+    <updated>2026-03-16T13:56:19.640Z</updated>
   </entry>
   <entry>
     <author>
@@ -47,9 +49,9 @@
     <id>https://wxxlamp.cn/2025/09/07/what-is-bitcion-and-blockchain/</id>
     <link href="https://wxxlamp.cn/2025/09/07/what-is-bitcion-and-blockchain/"/>
     <published>2025-09-07T02:36:00.000Z</published>
-    <summary>面向技术和小白用户的区块链与比特币科普，从去中心化概念到技术原理的通俗解读。</summary>
+    <summary>本文面向技术和非技术读者，系统科普区块链与比特币的核心原理。从中心化与去中心化货币的优劣对比出发，深入讲解区块链的链式结构、Hash指针与不可篡改性，进而阐述比特币的非对称加密、账户体系、Merkle Tree、UTXO防双花机制，以及工作量证明（PoW）共识机制与挖矿激励的完整逻辑，最后梳理一笔比特币交易从发起到上链的全流程。</summary>
     <title>万字长文，从零科普比特币</title>
-    <updated>2026-03-15T08:43:33.868Z</updated>
+    <updated>2026-03-16T13:56:19.640Z</updated>
   </entry>
   <entry>
     <author>
@@ -60,9 +62,9 @@
     <id>https://wxxlamp.cn/2025/03/07/my-2024/</id>
     <link href="https://wxxlamp.cn/2025/03/07/my-2024/"/>
     <published>2025-03-07T12:19:00.000Z</published>
-    <summary>2024年终总结，新鲜、充实和迷茫的一年，接触新环境与新挑战的思考与感悟。</summary>
+    <summary>2024年终总结：新鲜、充实与迷茫交织的一年。成功晋升、参加首次半马跑出1小时46分PB；收到港科大MSc录取后几经权衡，最终选择转岗深圳实现工作与读书兼顾，开启港深双城通勤生活；学期末三门课全拿A，也因此被动积累了大量金融与跨境支付知识，在全新的环境与挑战中持续摸索自己真正想走的方向。</summary>
     <title>我的2024</title>
-    <updated>2026-03-15T08:43:33.866Z</updated>
+    <updated>2026-03-16T13:56:19.637Z</updated>
   </entry>
   <entry>
     <author>
@@ -73,22 +75,9 @@
     <id>https://wxxlamp.cn/2025/02/16/ali-3-years-thought/</id>
     <link href="https://wxxlamp.cn/2025/02/16/ali-3-years-thought/"/>
     <published>2025-02-16T12:19:00.000Z</published>
-    <summary>入职阿里三年的回顾与思考，从企业金融到ICBU技术部的经历，分享职场成长感悟。</summary>
+    <summary>在阿里工作三年后的非技术向深度复盘。文章围绕业务与技术的平衡、主动借力的勇气、预期与项目管理、知识分享、面对职场内卷的心态、拥抱组织变化以及与高P相处之道等七个维度，分享了从校招新人成长为有经验开发者的真实感悟，观点坦诚接地气，适合即将入职或刚入职互联网大厂的同学参考。</summary>
     <title>我在阿里这三年，聊点非技术的</title>
-    <updated>2026-03-15T08:43:33.864Z</updated>
-  </entry>
-  <entry>
-    <author>
-      <name>Wxx</name>
-    </author>
-    <category term="生活感悟" scheme="https://wxxlamp.cn/categories/%E7%94%9F%E6%B4%BB%E6%84%9F%E6%82%9F/"/>
-    <category term="Life" scheme="https://wxxlamp.cn/tags/Life/"/>
-    <id>https://wxxlamp.cn/2024/01/22/my-2023/</id>
-    <link href="https://wxxlamp.cn/2024/01/22/my-2023/"/>
-    <published>2024-01-22T12:19:00.000Z</published>
-    <summary>2023年终总结，一个字累，两个字充实。平和、有意思、突破自我但也不够坚持的一年。</summary>
-    <title>我的2023</title>
-    <updated>2026-03-15T08:43:33.866Z</updated>
+    <updated>2026-03-16T13:56:19.633Z</updated>
   </entry>
   <entry>
     <author>
@@ -99,9 +88,11 @@
     <id>https://wxxlamp.cn/2023/08/04/generic-and-ext/</id>
     <link href="https://wxxlamp.cn/2023/08/04/generic-and-ext/"/>
     <published>2023-08-04T14:38:00.000Z</published>
-    <summary>探讨Java泛型通配符与扩展字段的使用，分析泛型类型擦除导致的编译问题及解决方案。</summary>
+    <summary>
+      <![CDATA[从一个Map参数类型不匹配导致编译失败的实际问题出发，逐步探讨Java泛型通配符的三种用法（下界通配符? super T、上界通配符? extends T、无界通配符?），最终通过? extends Object简化解决类型兼容问题；进而提出扩展字段的规范写法，通过引入带泛型参数的ExtendInfoKey<T>和工具类ExtendInfoUtils，在保留扩展字段灵活性的同时避免类型强转导致的NPE和语义不清晰等维护难题。]]>
+    </summary>
     <title>泛型通配符和扩展字段</title>
-    <updated>2026-03-15T08:43:33.864Z</updated>
+    <updated>2026-03-16T13:56:19.634Z</updated>
   </entry>
   <entry>
     <author>
@@ -113,22 +104,9 @@
     <id>https://wxxlamp.cn/2023/07/09/how-to-process-hot-data/</id>
     <link href="https://wxxlamp.cn/2023/07/09/how-to-process-hot-data/"/>
     <published>2023-07-09T02:36:00.000Z</published>
-    <summary>以秒杀场景为例，讨论查询热点和写入热点数据的处理方案，涵盖缓存策略和流量控制。</summary>
+    <summary>以秒杀场景为例，分别从查询热点和写入热点两个维度讨论热点数据处理方案：查询热点方面，通过缓存预热将数据同步至Redis，并在流量极大时采用大key分片、多级缓存（浏览器/CDN/本地/Redis）和分段预加载策略；写入热点方面，针对库存扣减高并发场景，分析库存分库、Redis扣减异步落库、明细异步汇总、应用层限流及独立热点库等多种方案，同时强调乐观锁保证扣减一致性以及延迟双删维护缓存一致性的重要性。</summary>
     <title>如何处理热点数据问题</title>
-    <updated>2026-03-15T08:43:33.864Z</updated>
-  </entry>
-  <entry>
-    <author>
-      <name>Wxx</name>
-    </author>
-    <category term="采坑记录" scheme="https://wxxlamp.cn/categories/%E9%87%87%E5%9D%91%E8%AE%B0%E5%BD%95/"/>
-    <category term="DB" scheme="https://wxxlamp.cn/tags/DB/"/>
-    <id>https://wxxlamp.cn/2023/06/11/when-change-db-route-key/</id>
-    <link href="https://wxxlamp.cn/2023/06/11/when-change-db-route-key/"/>
-    <published>2023-06-11T11:36:00.000Z</published>
-    <summary>记录分库分表场景下修改路由键引发的数据查询异常，分析bigint与字符串类型的路由差异。</summary>
-    <title>当修改分库分表键时</title>
-    <updated>2026-03-15T08:43:33.869Z</updated>
+    <updated>2026-03-16T13:56:19.634Z</updated>
   </entry>
   <entry>
     <author>
@@ -139,9 +117,9 @@
     <id>https://wxxlamp.cn/2023/05/07/how-to-deal-msg-reconsume/</id>
     <link href="https://wxxlamp.cn/2023/05/07/how-to-deal-msg-reconsume/"/>
     <published>2023-05-07T02:36:00.000Z</published>
-    <summary>分析消息队列消费幂等问题，针对同一时间内多条状态变更消息导致重复消费的解决方案。</summary>
+    <summary>针对消息队列同一时间重复投递导致重复消费落库的幂等问题，系统梳理四种解决方案：基于Redis的分布式锁（用户维度加锁+查重）、利用数据库唯一索引捕获Duplicate entry异常、使用insert ignore/replace into/on duplicate key update等特殊SQL语句，以及事务+select for update排他锁方案，并深入分析MySQL在RR隔离级别下主键索引、无索引、索引未命中三种场景中加锁范围与意向锁的作用机制。</summary>
     <title>如何解决消息幂等问题</title>
-    <updated>2026-03-15T08:43:33.864Z</updated>
+    <updated>2026-03-16T13:56:19.634Z</updated>
   </entry>
   <entry>
     <author>
@@ -152,9 +130,9 @@
     <id>https://wxxlamp.cn/2023/05/05/juanjing-review/</id>
     <link href="https://wxxlamp.cn/2023/05/05/juanjing-review/"/>
     <published>2023-05-05T02:36:00.000Z</published>
-    <summary>精子库捐精体验记录，从报名体检到捐献的全过程分享与科普。</summary>
+    <summary>本文记录了作者亲历浙江省精子库捐精的全过程，包括捐精的人道主义意义与个人动机、苛刻的精子质量筛选标准（容量、浓度、活力、形态），以及预约、体检、捐献的详细流程与补助政策。文章还结合数据分析我国男性精子质量持续下降的趋势，指出熬夜、久坐、压力等程序员高发因素的危害，并科学列举改善精子质量的生活建议，兼具科普价值与生活感悟。</summary>
     <title>捐精有感</title>
-    <updated>2026-03-15T08:43:33.865Z</updated>
+    <updated>2026-03-16T13:56:19.636Z</updated>
   </entry>
   <entry>
     <author>
@@ -165,9 +143,9 @@
     <id>https://wxxlamp.cn/2023/04/25/metaq-consumer-heap-up/</id>
     <link href="https://wxxlamp.cn/2023/04/25/metaq-consumer-heap-up/"/>
     <published>2023-04-25T13:36:00.000Z</published>
-    <summary>排查MetaQ(RocketMQ)消费者堆积问题，从Spring Cloud Stream迁移到原生配置导致的消费异常分析。</summary>
+    <summary>记录一次将Spring Cloud Stream迁移至MetaQ原生配置时引发消费堆积的真实排查过程。通过分析MetaQ控制台发现灰度发布期间订阅关系不一致，进而深入阅读MQClientInstance源码，揭示同一ConsumerGroup只能映射一个MQConsumerInner的根本限制，从而解释了原生MetaQ注册会覆盖Spring Cloud Stream订阅关系的根因，最终通过拆分ConsumerGroup ID彻底解决问题。</summary>
     <title>MetaQ消费堆积问题排查</title>
-    <updated>2026-03-15T08:43:33.865Z</updated>
+    <updated>2026-03-16T13:56:19.636Z</updated>
   </entry>
   <entry>
     <author>
@@ -178,9 +156,9 @@
     <id>https://wxxlamp.cn/2023/03/13/view-of-shanghai/</id>
     <link href="https://wxxlamp.cn/2023/03/13/view-of-shanghai/"/>
     <published>2023-03-13T11:36:00.000Z</published>
-    <summary>两次上海之行的感悟对比，从初次震撼到五年后再访的心境变化与思考。</summary>
+    <summary>本文记录了作者两次上海之行的对比感悟。第一次是大一暑假，因误会被教官羞辱后愤然退出国旗队，随即与同学穷游上海，初次见到陆家嘴高楼时满心震撼。时隔五年再访，繁华依旧，但心中却再难泛起波澜，反而倍感疲惫。两次迥异的体验引发了对青春流逝与心境变化的深刻感慨——年少时的穷游虽苦，却充满活力；如今条件改善，却失去了那份对世界的好奇与激动。</summary>
     <title>我对上海的印象</title>
-    <updated>2026-03-15T08:43:33.868Z</updated>
+    <updated>2026-03-16T13:56:19.639Z</updated>
   </entry>
   <entry>
     <author>
@@ -191,9 +169,9 @@
     <id>https://wxxlamp.cn/2023/02/18/test-in-spring-project/</id>
     <link href="https://wxxlamp.cn/2023/02/18/test-in-spring-project/"/>
     <published>2023-02-18T11:36:00.000Z</published>
-    <summary>Spring项目中的测试实践指南，涵盖单元测试和集成测试的方法论与常用工具。</summary>
+    <summary>系统讲解Spring项目中单元测试与集成测试的实践方法。单元测试部分介绍JUnit、Mockito、PowerMock三大框架的定位与配合，涵盖简单测试、依赖测试（@Mock/@InjectMocks/@Spy）、多模块构造器注入测试以及静态方法和私有方法Mock；集成测试部分对比SpringTest与SpringBootTest的差异，详解H2内存数据库数据源Mock、外部RPC接口的统一Mock与定制化Mock方案，以及测试容器Bean的排除与引入策略，帮助开发者在Spring项目中建立完善的测试体系。</summary>
     <title>Test In Spring Project</title>
-    <updated>2026-03-15T08:43:33.868Z</updated>
+    <updated>2026-03-16T13:56:19.639Z</updated>
   </entry>
   <entry>
     <author>
@@ -204,9 +182,9 @@
     <id>https://wxxlamp.cn/2023/02/07/zero-copy/</id>
     <link href="https://wxxlamp.cn/2023/02/07/zero-copy/"/>
     <published>2023-02-07T02:36:00.000Z</published>
-    <summary>零拷贝技术详解，从操作系统IO流程出发，分析mmap、sendfile等零拷贝实现方案。</summary>
+    <summary>本文系统讲解零拷贝技术的原理与实现方案。从操作系统普通IO流程出发，分析内核态与用户态之间4次数据拷贝和4次上下文切换的开销，进而逐一介绍DMA（减少CPU参与物理拷贝）、mmap（内核与用户态内存映射共享，减少至3次拷贝）、sendfile（纯内核传输，上下文切换降至2次）以及sendfile结合DMA Scatter/Gather（真正零CPU拷贝）、Direct I/O（绕过内核缓存直达磁盘）等方案的原理、适用场景与局限性。</summary>
     <title>零拷贝</title>
-    <updated>2026-03-15T08:43:33.869Z</updated>
+    <updated>2026-03-16T13:56:19.640Z</updated>
   </entry>
   <entry>
     <author>
@@ -217,22 +195,9 @@
     <id>https://wxxlamp.cn/2023/01/31/spring-festival-log-1/</id>
     <link href="https://wxxlamp.cn/2023/01/31/spring-festival-log-1/"/>
     <published>2023-01-31T12:19:00.000Z</published>
-    <summary>春节返乡随笔，关于过年的期盼与感悟，记录与家人团聚的温暖时光。</summary>
+    <summary>这是一篇写于2023年春节的返乡随笔。作者记录了帮父亲摆摊卖对联时偶遇颤巍老人的温情瞬间，感慨城乡岁月流逝速度的差异；忆及儿时玩伴如今各奔东西、难以再聚的落寞；也讲述了陪父亲就医时体会到的成长与责任。文章以细腻笔触穿插对亲情、友情与时代变迁的感悟，既有对父母日渐老去的不舍，也有对自我慢慢长大的释然，在琐碎日常中流露出温暖又淡淡忧伤的生活底色。</summary>
     <title>春节回家记</title>
-    <updated>2026-03-15T08:43:33.867Z</updated>
-  </entry>
-  <entry>
-    <author>
-      <name>Wxx</name>
-    </author>
-    <category term="生活感悟" scheme="https://wxxlamp.cn/categories/%E7%94%9F%E6%B4%BB%E6%84%9F%E6%82%9F/"/>
-    <category term="Life" scheme="https://wxxlamp.cn/tags/Life/"/>
-    <id>https://wxxlamp.cn/2023/01/22/my-2022/</id>
-    <link href="https://wxxlamp.cn/2023/01/22/my-2022/"/>
-    <published>2023-01-22T12:19:00.000Z</published>
-    <summary>2022年终总结，迷茫与成长交织的一年，经历裁员、组织调整后的思考与沉淀。</summary>
-    <title>我的2022</title>
-    <updated>2026-03-15T08:43:33.866Z</updated>
+    <updated>2026-03-16T13:56:19.638Z</updated>
   </entry>
   <entry>
     <author>
@@ -243,9 +208,9 @@
     <id>https://wxxlamp.cn/2023/01/10/netty-useful-doc/</id>
     <link href="https://wxxlamp.cn/2023/01/10/netty-useful-doc/"/>
     <published>2023-01-10T02:36:00.000Z</published>
-    <summary>Netty框架可用性剖析，探讨Netty在网络编程中的优势及其对NIO、TCP粘包拆包等问题的处理。</summary>
+    <summary>从可用性视角全面剖析Netty框架的核心优势。文章依次介绍Netty三层逻辑架构（通信层/职责链层/业务层）、Bootstrap脚手架对比Java原生BIO/NIO的易用性提升、基于过滤器模式的Handler责任链解耦机制、TCP粘包拆包的根本原因及四种解决方案、ByteBuf相对于原生ByteBuffer的动态扩缩容与读写双指针改进，以及内置多种序列化方案（如ProtoBuf）的实用支持。</summary>
     <title>Netty可用性剖析</title>
-    <updated>2026-03-15T08:43:33.867Z</updated>
+    <updated>2026-03-16T13:56:19.638Z</updated>
   </entry>
   <entry>
     <author>
@@ -256,9 +221,9 @@
     <id>https://wxxlamp.cn/2023/01/06/teacher_note_4_it/</id>
     <link href="https://wxxlamp.cn/2023/01/06/teacher_note_4_it/"/>
     <published>2023-01-06T02:36:00.000Z</published>
-    <summary>高中信息技术教师资格证面试笔记，包含结构化面试、试讲技巧和答辩准备要点。</summary>
+    <summary>高中信息技术教师资格证面试备考笔记，系统整理结构化面试、教案设计与真题分析三大模块。结构化面试涵盖从教动机、学生顶撞与课堂突发情况处理等典型情景应答策略；教案设计梳理教学目标（知识技能、过程方法、情感价值观）、教学重难点与五步教学过程；课本部分详解必修一数据与计算（信息特征、二进制转换）和必修二信息系统（IP地址识别与分类、表格加工）等核心章节的具体试讲思路与引导话术。</summary>
     <title>高中信息技术面试笔记</title>
-    <updated>2026-03-15T08:43:33.868Z</updated>
+    <updated>2026-03-16T13:56:19.639Z</updated>
   </entry>
   <entry>
     <author>
@@ -269,8 +234,48 @@
     <id>https://wxxlamp.cn/2022/12/10/multi-thread-hashmap-put/</id>
     <link href="https://wxxlamp.cn/2022/12/10/multi-thread-hashmap-put/"/>
     <published>2022-12-10T06:36:00.000Z</published>
-    <summary>分析HashMap在多线程并发put场景下的安全问题，通过源码解读揭示并发环境下的潜在风险。</summary>
+    <summary>通过复现实验揭示HashMap在并发put场景下的两类线程安全问题。第一类：扩容时新数组先赋给table，其他线程写入新元素后，老线程继续复制老桶数据会将新插入的值覆盖，导致元素丢失且size与实际数量不符；第二类：两线程同时判断同一桶为null后并发插入，后执行线程覆盖先执行线程的值。同时澄清1.8已修复并发死循环问题，给出ConcurrentHashMap等替代方案。</summary>
     <title>HashMap的并发put问题</title>
-    <updated>2026-03-15T08:43:33.866Z</updated>
+    <updated>2026-03-16T13:56:19.636Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>Wxx</name>
+    </author>
+    <category term="场景实践" scheme="https://wxxlamp.cn/categories/%E5%9C%BA%E6%99%AF%E5%AE%9E%E8%B7%B5/"/>
+    <category term="Concurrent" scheme="https://wxxlamp.cn/tags/Concurrent/"/>
+    <id>https://wxxlamp.cn/2022/10/30/multi-rpc-return/</id>
+    <link href="https://wxxlamp.cn/2022/10/30/multi-rpc-return/"/>
+    <published>2022-10-30T06:36:00.000Z</published>
+    <summary>探讨微服务Facade层聚合多个互不依赖的RPC调用时，如何将串行改为并行以降低响应时间。对比三种实现方案：基于Callable+Future的线程池轮询（代码繁琐）、CompletableFuture的声明式编排（推荐）以及Spring Event结合@Async的后置通知模式。重点分析后置场景下调用失败的最终一致性保障、自定义线程池防OOM，以及超时失败时落库重试的工程实践。</summary>
+    <title>当调用多个IO操作时</title>
+    <updated>2026-03-16T13:56:19.636Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>Wxx</name>
+    </author>
+    <category term="采坑记录" scheme="https://wxxlamp.cn/categories/%E9%87%87%E5%9D%91%E8%AE%B0%E5%BD%95/"/>
+    <category term="Java" scheme="https://wxxlamp.cn/tags/Java/"/>
+    <category term="Concurrent" scheme="https://wxxlamp.cn/tags/Concurrent/"/>
+    <id>https://wxxlamp.cn/2022/08/09/java-threadpool-throw-ex/</id>
+    <link href="https://wxxlamp.cn/2022/08/09/java-threadpool-throw-ex/"/>
+    <published>2022-08-09T15:36:00.000Z</published>
+    <summary>本文通过实际踩坑，深入分析Java线程池在execute、submit、schedule三种提交方式下任务抛出异常时的不同行为表现：execute会直接抛出并销毁Worker线程后重建；submit通过FutureTask吞掉异常，需调用get方法才能感知；schedule任务抛异常后不再重新入队导致定时任务静默停止。文章结合ThreadPoolExecutor源码逐一解析原因，并给出任务内捕获异常、设置UncaughtExceptionHandler、显式调用get等解决方案。</summary>
+    <title>当线程池的任务抛出异常...</title>
+    <updated>2026-03-16T13:56:19.635Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>Wxx</name>
+    </author>
+    <category term="采坑记录" scheme="https://wxxlamp.cn/categories/%E9%87%87%E5%9D%91%E8%AE%B0%E5%BD%95/"/>
+    <category term="Java" scheme="https://wxxlamp.cn/tags/Java/"/>
+    <id>https://wxxlamp.cn/2022/07/31/java-map-value-is-null/</id>
+    <link href="https://wxxlamp.cn/2022/07/31/java-map-value-is-null/"/>
+    <published>2022-07-31T02:36:00.000Z</published>
+    <summary>本文记录了一个由HashMap允许value为null引发的线上诡异Bug排查过程。代码通过containsKey判断key存在后取值，但偶发打印出null；而使用JSON序列化打印map时，因Fastjson默认不输出value为null的键值对，导致排查方向偏差。文章揭示了HashMap、HashTable与ConcurrentHashMap对null值处理的差异，并给出不put空值、以get结果是否为null替代contains判断等实用解决建议，是一次深刻的踩坑总结。</summary>
+    <title>当Map的值为NULL</title>
+    <updated>2026-03-16T13:56:19.635Z</updated>
   </entry>
 </feed>

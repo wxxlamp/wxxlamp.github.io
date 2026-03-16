@@ -5,7 +5,7 @@ tags:
 categories:
    - 场景实践
 date: 2023-05-07 10:36
-description: "分析消息队列消费幂等问题，针对同一时间内多条状态变更消息导致重复消费的解决方案。"
+description: "针对消息队列同一时间重复投递导致重复消费落库的幂等问题，系统梳理四种解决方案：基于Redis的分布式锁（用户维度加锁+查重）、利用数据库唯一索引捕获Duplicate entry异常、使用insert ignore/replace into/on duplicate key update等特殊SQL语句，以及事务+select for update排他锁方案，并深入分析MySQL在RR隔离级别下主键索引、无索引、索引未命中三种场景中加锁范围与意向锁的作用机制。"
 ---
 
 最近业务对接的时候，发现了一个问题：

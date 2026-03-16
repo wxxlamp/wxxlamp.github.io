@@ -7,7 +7,7 @@ tags:
 categories:
    - 源码剖析
 date: 2020-09-21 10:36
-description: "WebSocket协议详解及其在Tomcat中的实现，包含SpringBoot集成WebSocket的实践方案。"
+description: "深入剖析WebSocket协议在SpringBoot+Tomcat中的使用方式与底层实现原理。使用层面介绍@ServerEndpoint注解及@OnOpen、@OnClose、@OnMessage、@OnError等生命周期方法的配置与前后端完整示例代码；源码层面逐步分析启动流程（ServerEndpointExporter注册端点、WsServerContainer装载配置、PojoMethodMapping处理注解方法映射）和执行流程（WsFilter协议升级、WsHttpUpgradeHandler初始化Session、反射调用业务逻辑），并总结建造者模式、过滤器模式、模板方法模式和适配器模式等在其中的应用。"
 ---
 
 
@@ -163,7 +163,7 @@ public class TomcatSocket {
 #### 1. 启动流程
 
 首先我们自定义了一个配置类，把 `ServerEndpointExporter` 注册为bean，然后这个bean在初始化的时候会进入registerEndPoints方法，找到包含@ServerEndPoint注解或者实现了ServerEndPointConfig接口的bean，然后把他们放入ServerContainer中
-![image.png](https://cdn.nlark.com/yuque/0/2020/png/719664/1602315579052-3cf8b89e-2603-4664-9de5-1e1f582c253b.png#align=left&display=inline&height=421&margin=%5Bobject%20Object%5D&name=image.png&originHeight=841&originWidth=1509&size=1861040&status=done&style=none&width=754.5)
+![image](https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/35b692e6_tomcat-ws-img1.png)
 可以发现，我们使用websocket的类都被注册到ServerContainer这个接口的实现类当中了，所以下一步的分析就是去找它的实现类（WsServerContainer）了，看它是如何处理这些注解的
 
 
@@ -171,9 +171,9 @@ public class TomcatSocket {
 
 
 那么下一步，就是去处理ServerPointConfig的配置了。处理那些配置呢？我们不妨想一下，肯定会处理方法中OnOpen这些注解（下图中进入PojoMethodMapping类中去处理方法的映射）：
-![image.png](https://cdn.nlark.com/yuque/0/2020/png/719664/1602318358999-2720fc7f-0d0f-4b09-aef0-0c4eb3b4480e.png#align=left&display=inline&height=413&margin=%5Bobject%20Object%5D&name=image.png&originHeight=825&originWidth=1583&size=1941207&status=done&style=none&width=791.5)
+![image](https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/a6fd85e1_tomcat-ws-img2.png)
 如下图，PojoMethodMapping确实是为了处理存放每个注解的方法以及他们的参数    
-![image.png](https://cdn.nlark.com/yuque/0/2020/png/719664/1602319241475-818569ee-f82e-4893-864e-05617e7c26aa.png#align=left&display=inline&height=436&margin=%5Bobject%20Object%5D&name=image.png&originHeight=872&originWidth=1309&size=370084&status=done&style=none&width=654.5)
+![image](https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/281061d9_tomcat-ws-img3.png)
 
 > 那么这里引入一个问题，如果A继承了B，然后A有@OnClose，B有@OnOpen，这样该如何选择呢？又或者，如果A和B都有@OnOpen，那么改选则哪一个呢？又或者，A有两个@OnClose，那么该怎么办呢？这个先不予解答，希望大家看下PojoMehodMapping的构造方法
 
@@ -210,17 +210,17 @@ public class TomcatSocket {
 
 那么，我们就从WsFilter开始去看它的执行流程把~
 首先在handshake之前，会进入WsFilter中去升级协议（即给client的响应中协商改变协议）。在升级的过程中，它会把uri对应的ServerEndPointConfig，request，二阶段协商内容等等装入PojoEndpointServer中，这里面调用的是WsHttpUpgradeHandler的preinit方法。
-![image.png](https://cdn.nlark.com/yuque/0/2020/png/719664/1602474298163-80e51ac5-c78a-48b7-add5-3ebc733cc1b7.png#align=left&display=inline&height=538&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1075&originWidth=1917&size=2097470&status=done&style=none&width=958.5)
+![image](https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/cc6b06c5_tomcat-ws-img4.png)
 当WsFilter执行完之后，因为需要升级协议，所以他会在upgradeToken那里打上标记，记得之前执行了handler的preinit方法吗，这时，它就会去执行init方法，把这些配置全放到session中。
-![image.png](https://cdn.nlark.com/yuque/0/2020/png/719664/1602474956910-852fba7a-9743-4b2d-b03f-eb2bee651094.png#align=left&display=inline&height=540&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1080&originWidth=1920&size=2136439&status=done&style=none&width=960)
+![image](https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/eee80285_tomcat-ws-img5.png)
 注意之前的PojoEndpointServer，它是执行我们自定义SocketServer的容器。在这个过程中，我们把自定义的pojo，即我们自己的socket放到了PojoEndpointServer，便于它进行最后的反射调用
-![image.png](https://cdn.nlark.com/yuque/0/2020/png/719664/1602475701584-05fdb95f-f9a6-405a-b0bd-2ffcdb5f3988.png#align=left&display=inline&height=540&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1080&originWidth=1920&size=2113335&status=done&style=none&width=960)
+![image](https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/0e2a37b3_tomcat-ws-img6b.png)
 以上就是OnOpen的执行流程。
 
 那么下面分析OnMessage的执行流程：
 首先我们回忆一下在执行流程中的onOpen阶段（即上图第50行），他会把含有OnMessage注解的Handler放到session中。
 记得我们之前有一个WsHttpUpgradeHandler类吗，tomcat会根据连接的状态去调用WsHttpUpgradeHandler#upgradeDispatch的方法，然后这个方法会去通过WsFrameBase到session中拿到之前注册的handler（这里是ojoMessageHandlerWholeText），然后调用其onMessage方法，让后在这个方法中会通过反射调用其中的OnMessage方法，执行我们自己的逻辑
-![image.png](https://cdn.nlark.com/yuque/0/2020/png/719664/1602495381349-a98a41b1-5348-44a6-a63f-2f08881fba22.png#align=left&display=inline&height=540&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1080&originWidth=1919&size=2098332&status=done&style=none&width=959.5)
+![image](https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/675956fa_tomcat-ws-img7.png)
 
 #### 3. 总结
 

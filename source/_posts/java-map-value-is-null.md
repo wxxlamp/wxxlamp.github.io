@@ -5,7 +5,7 @@ tags:
 categories:
    - 采坑记录
 date: 2022-07-31 10:36
-description: "排查Java中Map值为NULL引发的诡异问题，揭示不同Map实现对null值处理的差异。"
+description: "本文记录了一个由HashMap允许value为null引发的线上诡异Bug排查过程。代码通过containsKey判断key存在后取值，但偶发打印出null；而使用JSON序列化打印map时，因Fastjson默认不输出value为null的键值对，导致排查方向偏差。文章揭示了HashMap、HashTable与ConcurrentHashMap对null值处理的差异，并给出不put空值、以get结果是否为null替代contains判断等实用解决建议，是一次深刻的踩坑总结。"
 ---
 
 最近在开发过程中遇到了一个非常令人费解的情况，排查了将近一早上还没找到头绪，还是在师兄的帮助下，才发现了问题。

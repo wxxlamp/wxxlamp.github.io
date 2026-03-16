@@ -5,7 +5,7 @@ tags:
    - Netty
 categories:
    - 面试经验
-description: "Netty框架可用性剖析，探讨Netty在网络编程中的优势及其对NIO、TCP粘包拆包等问题的处理。"
+description: "从可用性视角全面剖析Netty框架的核心优势。文章依次介绍Netty三层逻辑架构（通信层/职责链层/业务层）、Bootstrap脚手架对比Java原生BIO/NIO的易用性提升、基于过滤器模式的Handler责任链解耦机制、TCP粘包拆包的根本原因及四种解决方案、ByteBuf相对于原生ByteBuffer的动态扩缩容与读写双指针改进，以及内置多种序列化方案（如ProtoBuf）的实用支持。"
 ---
 
 Netty使用起来非常简单，不用像写Java原生的NIO一样， 各种Select的监听和处理；同时，也无需处理Java NIO自身的各种BUG；以及网络编程中的各种坑，如TCP的沾包拆包问题等。

@@ -5,7 +5,7 @@ tags:
 categories:
    - 区块链
 date: 2025-09-17 10:36
-description: "深入解析数字人民币的本质与技术原理，对比传统支付网络和稳定币的异同。"
+description: "本文从传统在线支付的信息流与资金流分离说起，厘清交易、清分、结算、交割四个核心概念，揭示支付宝"秒到账"背后T+1结算的真相，进而阐述数字人民币基于央行区块链实现信息流与资金流同步的底层逻辑，对比其与比特币的本质差异，并分析数字人民币在跨境支付、B2B智能合约、G2B财政拨款等场景的战略价值，最后探讨稳定币在大陆的机会与局限。"
 ---
 
 # 前言
@@ -29,15 +29,15 @@ description: "深入解析数字人民币的本质与技术原理，对比传统
 ## 信息流与资金流
 在线交易没有普及以前，大家都是用人民币直接线下交易的，<font style="color:rgb(15, 17, 21);">当我们把现金交给商家时，资金与货物的交割瞬间同步完成，这就是我们常说的“</font>**<font style="color:rgb(15, 17, 21);">钱货两清</font>**<font style="color:rgb(15, 17, 21);">”，交易的信息流和资金流也是同步完成的。</font>
 
-![](https://cdn.nlark.com/yuque/0/2025/png/719664/1758450657106-669f8f27-72a3-4ff2-8aae-d673bd90f507.png)
+![](https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/91a95a98_nlark_img1.png)
 
 <font style="color:rgb(15, 17, 21);">但是，手里一直存储现金总是不方便，所以人们的大部分钱都在银行存储。当需要购买商品的时候，去银行取钱，然后再进行线下交易，这确实很麻烦。很自然的，我们就希望通过银行直接在线支付，加快支付的便捷性。如下所示：</font>
 
-![](https://cdn.nlark.com/yuque/0/2025/png/719664/1758450657184-17c0bc72-f13d-42c6-94fe-4b05a874a6c9.png)
+![](https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/95ed4685_nlark_img2.png)
 
 <font style="color:rgb(15, 17, 21);">但解决方案真的有这么简单吗？如果李四的账号在另外一个银行怎么收款呢？假设如下图所示：</font>
 
-![](https://cdn.nlark.com/yuque/0/2025/png/719664/1758466867697-cc948074-1f2e-44d8-a1c1-c1594966b6b0.png)
+![](https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/3777b175_nlark_img3.png)
 
 银行A需要真的把张三存的10块钱给银行B，我们成为“资金交割”，资金交割肯定不能用简单的指令完成，所以跨行转账就会非常慢。有没有办法提高跨行转账的速度呢？
 
@@ -55,7 +55,7 @@ description: "深入解析数字人民币的本质与技术原理，对比传统
 1. **<font style="color:rgb(15, 17, 21);">信息流</font>**<font style="color:rgb(15, 17, 21);">：支付机构或银行内部进行记账操作，冻结相应转账资金，完成初步处理。</font>
 2. **<font style="color:rgb(15, 17, 21);">资金流</font>**<font style="color:rgb(15, 17, 21);">：通过央行清算系统实际划转资金，此时资金才真正完成所有权转移。</font>
 
-![](https://cdn.nlark.com/yuque/0/2025/png/719664/1758450657305-e7766422-6fdf-4f73-8af8-d8092bedc47f.png)
+![](https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/266325f4_nlark_img4.png)
 
 这就是支付常说的信息流和资金流。可以发现，在线支付并没有我们想象的那么简单，整体的流程相当复杂。这么复杂的流程，能秒级完成么？
 
@@ -91,7 +91,7 @@ description: "深入解析数字人民币的本质与技术原理，对比传统
 
 <font style="color:rgb(15, 17, 21);">我们可以通过流程图更生动的观察整个在线支付的资金流转：</font>
 
-![](https://cdn.nlark.com/yuque/__puml/2c6b9e08ef4139d38eacdfd7e132e0a2.svg)
+![](https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/610f57ff_nlark_img5.svg)
 
 ## 在线支付的缺点
 传统人民币本质是上现金，在线支付是数字化这些现金的手段。但是普通人是没有办法数字化现金和在线交易的，所以只能通过先把钱存入银行，然后在通过银行或者支付机构这些中间商来完成在线转账交易。
@@ -118,7 +118,7 @@ description: "深入解析数字人民币的本质与技术原理，对比传统
 
 一句话说明：传统人民币的在线交易（网银、支付宝支付等），是信息流先完成，资金流后完成的分离过程。但是数字人民币的在线交易和传统人民币的线下交易一样，信息流和资金流完全统一，同步完成。
 
-![](https://cdn.nlark.com/yuque/0/2025/png/719664/1758464920345-898dc5c2-a413-4f54-9cc5-adff4f013e8b.png)
+![](https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/2a1aec14_nlark_img6.png)
 
 ### 区块链与智能合约
 数字人民币是基于区块链的，区块链是什么？
@@ -156,7 +156,7 @@ description: "深入解析数字人民币的本质与技术原理，对比传统
 ### 跨境场景
 首先，超美股或者港股的朋友可能都知道，国内银行到国外银行的转账是都通swift体系完成的，这背后资金需要经过美元、欧元或者人民币所在央行来进行资金清算。同时还要经过多个中间行进行资金的流转。资金每经过一个银行，就要在一个银行做停留，同时也会被这个银行收取一定比例（或者固定金额）的清算手续费。
 
-![](https://cdn.nlark.com/yuque/0/2025/png/719664/1758460148213-e7921606-9471-4658-97ef-f61f8c27f634.png)
+![](https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/58c18f2d_nlark_img7.png)
 
 一般情况下，国际跨行转账到账时效最少T+1，转账手续费抽成一般在5%左右。如果使用数字人民币，排除风控审核等因素，因为不存在任何中间行，所以数字人民币是实时到账的，同时手续费也会非常低。这对于三驾马车之一的跨境来说，绝对是重大利好。
 
@@ -171,7 +171,7 @@ description: "深入解析数字人民币的本质与技术原理，对比传统
 
 但是有了数字人民币将完全不一样。基于智能合约，A公司可以和B公司通过代码的方式在智能合约上创建协议。协议约定当有物流公司的消息通知到智能合约后，智能合约就会自动把B公司的数字人民币100万元转移到A公司的账户上。这样就避免了公司赖账行为的产生。
 
-![](https://cdn.nlark.com/yuque/0/2025/png/719664/1758465248792-84c14429-f730-4038-9cf3-787c7b698f03.png)
+![](https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/c22de5e6_nlark_img8.png)
 
 不过需要注意的是，商业是复杂的。<u>并不是所有的验收标准都可以数字化，如果甲方拖着不验收，智能合约也就无法被系统触发，甲方账户的数字人民币依然无法结算给乙方</u>。而这些，也不是单靠技术就可以解决的问题。
 

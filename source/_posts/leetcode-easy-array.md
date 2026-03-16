@@ -5,7 +5,7 @@ tags:
 categories:
    - 基础夯实
 date: 2021-08-07 10:36
-description: "LeetCode初级算法数组篇题解，包含删除重复项、旋转数组、两数之和等经典题目的解题思路。"
+description: "LeetCode初级算法数组篇完整题解，涵盖11道经典题目。详细讲解双指针法删除重复项、移动零，利用异或特性求只出现一次的数字，贪心策略解决买股票最佳时机，以及旋转数组、加一、两数组交集、两数之和（HashMap优化）、有效数独（三集合法）和旋转图像（转置+翻转）等题目的解题思路与Java实现。"
 ---
 
 [点击查看题目网址](https://leetcode-cn.com/explore/featured/card/top-interview-questions-easy/1/array/)

@@ -6,7 +6,7 @@ tags:
    - Internships
 categories:
    - 面试经验
-description: "蚂蚁金服实习面试复盘，涵盖Java基础、操作系统、数据库等技术面试题目。"
+description: "蚂蚁金服实习三轮面试详细复盘。一面考察JVM内存结构、双亲委派、G1优点、MySQL隔离级别、Redis跳表与IO多路复用；二面深入Java并发（volatile、ConcurrentHashMap）、JMM工作内存和B+树；三面为晚9点电话突袭，涉及Nginx反向代理与负载均衡原理、两阶段提交及线程池执行策略。三轮均过但最终因综合考量放弃该offer。"
 ---
 
 其实复盘完了之后发现蚂蚁金服项目也没有问的太深入，为什么我感觉挺坑呢淦，仔细想了一想可能是关于操作方面问的比较多把~。

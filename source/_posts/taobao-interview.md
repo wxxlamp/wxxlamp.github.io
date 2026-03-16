@@ -6,7 +6,7 @@ tags:
    - Internships
 categories:
    - 面试经验
-description: "淘宝用户增长团队秋招提前批面试经验，涵盖Java基础、集合框架等相关问题。"
+description: "记录淘宝西溪用户增长团队秋招提前批两轮面试的完整经过，一面深入考察Java基础（hashCode、集合框架、AIO/BIO、ABA问题、线程池、JVM内存结构、GC机制）、MyBatis、Spring Bean生命周期、MySQL隔离级别与优化、分布式主键生成方案、Session与Cookie、SSO单点登录、Redis与MySQL一致性保障以及MQ幂等性等核心知识点；二面重点围绕秒杀系统设计、令牌桶漏桶算法、Nginx负载均衡及云原生前沿技术展开讨论。"
 ---
 
 淘宝这边是西溪的用户增长团队，因为是秋招提前批，前两面过了之后需要录系统，我觉得不稳，然后就溜了

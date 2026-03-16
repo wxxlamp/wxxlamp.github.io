@@ -5,7 +5,7 @@ tags:
 categories:
    - 采坑记录
 date: 2023-04-25 21:36
-description: "排查MetaQ(RocketMQ)消费者堆积问题，从Spring Cloud Stream迁移到原生配置导致的消费异常分析。"
+description: "记录一次将Spring Cloud Stream迁移至MetaQ原生配置时引发消费堆积的真实排查过程。通过分析MetaQ控制台发现灰度发布期间订阅关系不一致，进而深入阅读MQClientInstance源码，揭示同一ConsumerGroup只能映射一个MQConsumerInner的根本限制，从而解释了原生MetaQ注册会覆盖Spring Cloud Stream订阅关系的根因，最终通过拆分ConsumerGroup ID彻底解决问题。"
 ---
 
 

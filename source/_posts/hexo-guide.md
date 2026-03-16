@@ -5,7 +5,7 @@ tags:
    - Hexo
 categories:
    - 采坑记录
-description: "Hexo博客搭建完整指南，包含安装配置、主题选择、部署踩坑及解决方案。"
+description: "Hexo博客从零搭建的完整实战指南，涵盖Node.js与npm环境准备、Hexo CLI安装初始化、_config.yml核心配置、GitHub Pages部署（hexo d命令与直接git push两种方式）及主题更换全流程，同时收录了ejs安装失败、fsevents平台警告、缺少Git Deployer、部署后CSS丢失、node-sass源配置等常见坑点及对应解决方案，并汇总了常用npm与hexo命令速查表。"
 ---
 
 最近用了hexo搭建博客，踩了许多坑，所以想总结一篇文章。包括每一步的做法，以及可能踩的坑，以及应对的办法

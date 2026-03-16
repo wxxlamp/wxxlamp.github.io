@@ -34,3 +34,4 @@ temp/
 *.pem
 .env
 .env.local
+.claude/skills/yuque-fetcher/browser-data/storage_state.json

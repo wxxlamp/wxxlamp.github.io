@@ -6,7 +6,7 @@ tags:
    - Spring
 categories:
    - 场景实践
-description: "Spring框架实用指南，分享让工程代码更加优雅的Spring使用技巧与最佳实践。"
+description: "本文聚焦Spring IOC与AOP的高效使用技巧，不讲原理只谈实践。IOC部分深入讲解Bean生命周期中各Aware接口的调用时机、BeanPostProcessor与BeanFactoryPostProcessor的扩展方式，并给出优雅路由、策略模式、特征发现、获取Bean、事件监听者模式等五个实战场景的完整代码示例。AOP部分则展示统一日志处理、统一异常拦截、统一参数校验三种切面实践方案，帮助开发者写出更丝滑的Spring工程代码。"
 ---
 
 不知道身为读者的你是否用过Java？也不知道使用Java的你是否使用过Spring？

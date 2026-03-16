@@ -6,7 +6,7 @@ tags:
 categories:
    - 源码剖析
 date: 2021-03-29 21:36
-description: "借鉴MyBatis实现JDBC结果集到Java对象的自动映射工具，深入理解ORM框架的核心原理。"
+description: "深入剖析MyBatis将JDBC ResultSet自动映射为Java实体类的核心原理。介绍ResultSetHandler、ResultSetWrapper、TypeHandler、MetaObject等关键组件的职责分工，梳理从获取ResultSet、构建包装类、反射生成实体、类型映射到多行数据处理的完整流程，并总结Wrapper设计、Context上下文、策略模式等可借鉴的框架设计思路，适合希望理解ORM底层机制的Java开发者。"
 ---
 
 这个东西我好久就想写了，之前在阿里实习时，所有MySQL的数据都会以D1的频率备份到ODPS上，而我负责的项目需要查询ODPS里面的数据，但是ODPS的Java SDK版本类似于JDBC一样配置多且难用，所以我就诞生了写一个针对于ODPS的工具类以方便后来者操作ODPS，在写的过程中，我发现最难的就是映射那一块，所以拖了好久，今天终于拿出时间来分析下这一块的东西。

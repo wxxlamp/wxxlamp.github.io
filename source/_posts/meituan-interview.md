@@ -6,7 +6,7 @@ tags:
 categories:
    - 面试经验
 date: 2020-08-20 10:36
-description: "美团基础架构部实习面试经验，涵盖HashMap、JVM、MySQL、Redis等Java后端核心知识点。"
+description: "美团基础架构部实习秋招三轮面试经验复盘。一面考查HashMap与ConcurrentHashMap原理、JVM内存结构、线程池参数、sleep与wait区别及Redis五种数据结构；二面深入TCP状态机、数据库聚簇索引与SQL优化、GCRoot对象；三面与HR面聚焦技术热情、学习方法和个人成长，并附两道算法题（翻转链表与删除字符串中特定字符）详解。"
 ---
 
 从公司实习结束后回来的下一周就开始面开水团，部门是基础架构部，进度算是我现在面试流程中最快的一个了。

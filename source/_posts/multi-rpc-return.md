@@ -5,7 +5,7 @@ tags:
 categories:
    - 场景实践
 date: 2022-10-30 14:36
-description: "探讨微服务Facade层聚合多个互不依赖的RPC调用时，如何将串行改为并行以降低响应时间。对比三种实现方案：基于Callable+Future的线程池轮询（代码繁琐）、CompletableFuture的声明式编排（推荐）以及Spring Event结合@Async的后置通知模式。重点分析后置场景下调用失败的最终一致性保障、自定义线程池防OOM，以及超时失败时落库重试的工程实践。"
+description: "探讨微服务Facade层聚合多RPC调用时如何将串行改为并行。对比Callable+Future、CompletableFuture、Spring Event三种方案，分析最终一致性保障及线程池配置实践。"
 ---
 
 ## 0. 前言

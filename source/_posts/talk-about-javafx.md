@@ -6,7 +6,7 @@ tags:
    - JavaFX
 categories:
    - 基础夯实
-description: "作者因一个桌面工具小需求而试用JavaFX，本文系统介绍了JavaFX的核心特性（FXML布局、CSS样式、数据绑定、Native Compiling）与Stage/Scene/Nodes设计模型，并给出快速上手步骤。在工程化层面，作者坦率指出JavaFX的三大短板：组件化体系落后导致复用和通信困难、FXML动态渲染能力不足、生态薄弱需要大量造轮子，并与前端JavaScript生态进行对比。文章最后梳理大前端各平台主流技术栈，从界面构建的本质视角统一理解前端开发。"
+description: "介绍JavaFX的核心特性与设计模型，分析其在组件化、动态渲染和生态方面的不足，并与前端JavaScript生态对比，最后梳理大前端技术栈的本质共性。"
 ---
 
 从接触软件工程到现在，我依次使用过C/Cpp/Java/Php/Python/JavaScript等编程语言，也使用过它们的一些工程化的框架，如Java系的Spring，Js系的Vue和React。因为机缘巧合，我对Java接触的更多一点，用Spring写过Web，用Jsoup写过爬虫，用Swing写过桌面，用Netty写过IM，恰好最近有一个开发桌面端工具的小需求，所以就试用了一把号称`next generation client application platform for desktop, mobile and embedded systems based on JavaSE` 的JavaFX

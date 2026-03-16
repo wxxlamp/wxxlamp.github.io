@@ -6,11 +6,11 @@ tags:
    - Machine Learning
    - LLM
 categories:
-   - 技术学习
-description: "从后端开发视角系统入门机器学习，厘清AI、ML、DL、LLM的关系与区别。详解神经元与神经网络原理、全连接网络、CNN卷积神经网络、RNN循环神经网络的工作机制，以及Embedding词嵌入、前向传播与反向传播等核心概念。通过Python代码示例和数学公式，帮助开发者建立对大模型底层技术的直观理解。"
+   - 基础知识
+description: "从后端开发视角入门机器学习，厘清AI、ML、DL、LLM的关系，详解神经网络、CNN、RNN原理及Embedding、前反向传播等核心概念，附Python代码示例。"
 ---
 
-![](https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/0faf3c20_img1.png)
+![](https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/imayesges/0faf3c20_img1.png)
 
 # 前言
 从2017年Transformer架构横空出世，再到2022年GPT的出现，人们愈发发现大模型的重要性，每一年仿佛都是LLM元年。在逐步步入AI时代的过程中，我感觉到十分的焦虑，担心被大模型替代，也感觉到兴奋，希望能通过LM做更多的事情。

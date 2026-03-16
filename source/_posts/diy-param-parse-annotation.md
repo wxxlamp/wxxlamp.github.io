@@ -6,7 +6,7 @@ tags:
    - SpringMVC
 categories:
    - 场景实践
-description: "针对Spring MVC中@RequestBody无法将请求体映射到多个独立参数的局限，通过实现HandlerMethodArgumentResolver接口自定义参数解析器，结合自定义注解@RequestBodyParam，复用AbstractMessageConverterMethodArgumentResolver的消息转换能力，实现将POST请求body中的JSON字段精准映射到多个String类型方法参数的功能，从实验出发到完整代码实现，并说明其在公司全POST接口场景下的实际应用背景。"
+description: "解决Spring MVC中@RequestBody无法映射到多个参数的问题，通过自定义HandlerMethodArgumentResolver和注解，实现JSON字段到多参数的精准映射。"
 ---
 
 在公司实习中，公司原有代码的RESTful请求中，GET和POST居多。我们知道，对于URL携带的参数来说，我们需要用`@PathVariable`，`@RequestParam`来进行解析和映射。对于POST的body来说，我们可以通过`@RequestBody`来把body映射到参数中，Spring默认的反序列化方式是通过Jackson，我们也可以通过converter来改变。

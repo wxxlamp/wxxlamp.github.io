@@ -5,7 +5,7 @@ tags:
    - Java
 categories:
    - 场景实践
-description: "从一个Map参数类型不匹配导致编译失败的实际问题出发，逐步探讨Java泛型通配符的三种用法（下界通配符? super T、上界通配符? extends T、无界通配符?），最终通过? extends Object简化解决类型兼容问题；进而提出扩展字段的规范写法，通过引入带泛型参数的ExtendInfoKey<T>和工具类ExtendInfoUtils，在保留扩展字段灵活性的同时避免类型强转导致的NPE和语义不清晰等维护难题。"
+description: "探讨Java泛型通配符的三种用法解决类型兼容问题，并提出扩展字段的规范写法，通过泛型工具类避免类型强转导致的维护难题。"
 ---
 
 

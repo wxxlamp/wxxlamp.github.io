@@ -6,7 +6,7 @@ tags:
 categories:
    - 采坑记录
 date: 2021-8-07 14:36
-description: "记录一次RocketMQ消费成功率骤降至30%的线上事故排查过程。通过排除系统资源瓶颈与业务代码逻辑，最终在MQ日志中定位到ConcurrentModificationException。深入分析ArrayList的fail-fast机制：多线程同时对同一List执行sort（写操作）和forEach（读操作）时，modCount校验不一致触发异常。总结出三条多线程消费场景下保证线程安全的实践原则。"
+description: "记录RocketMQ消费成功率骤降的线上事故排查。定位到ConcurrentModificationException，分析ArrayList的fail-fast机制及多线程下sort与forEach并发问题，总结线程安全实践原则。"
 ---
 
 第一次项目发布到灰度的机器就出问题了，记录一下：

@@ -7,7 +7,7 @@ tags:
 categories:
    - 源码剖析
 date: 2020-09-21 10:36
-description: "深入剖析WebSocket协议在SpringBoot+Tomcat中的使用方式与底层实现原理。使用层面介绍@ServerEndpoint注解及@OnOpen、@OnClose、@OnMessage、@OnError等生命周期方法的配置与前后端完整示例代码；源码层面逐步分析启动流程（ServerEndpointExporter注册端点、WsServerContainer装载配置、PojoMethodMapping处理注解方法映射）和执行流程（WsFilter协议升级、WsHttpUpgradeHandler初始化Session、反射调用业务逻辑），并总结建造者模式、过滤器模式、模板方法模式和适配器模式等在其中的应用。"
+description: "剖析WebSocket在SpringBoot+Tomcat中的使用与原理，涵盖注解配置、前后端示例，以及启动流程和执行流程的源码分析。"
 ---
 
 

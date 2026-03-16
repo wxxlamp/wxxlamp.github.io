@@ -5,7 +5,7 @@ tags:
    - HEXO
 categories:
    - 采坑记录
-description: "介绍Hexo博客主题二次开发的核心原理与实践方法，从Hexo工作原理（md变量解析→模板引擎渲染→HTML生成）出发，剖析主题的构成要素（模板引擎、CSS/SCSS、JS、图片、字体、国际化文件），并以Anatole-Core主题为基础，说明如何为其添加文章分类、文章目录、访问统计、打赏功能和友情链接，为有定制化需求的博主提供改造思路。"
+description: "介绍Hexo主题二次开发原理与实践，从Hexo工作流程出发，剖析主题构成要素，并说明如何添加分类、目录、统计等定制功能。"
 ---
 
 为什么会写这篇文章呢？如你所见，我的博客使用hexo驱动，使用的主题是[Anatole-core](https://github.com/mrcore/hexo-theme-Anatole-Core)，它简洁美观，易于使用，感谢作者的开源，resp。

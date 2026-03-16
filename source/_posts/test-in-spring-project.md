@@ -5,7 +5,7 @@ tags:
 categories:
    - 场景实践
 date: 2023-02-18 19:36
-description: "系统讲解Spring项目中单元测试与集成测试的实践方法。单元测试部分介绍JUnit、Mockito、PowerMock三大框架的定位与配合，涵盖简单测试、依赖测试（@Mock/@InjectMocks/@Spy）、多模块构造器注入测试以及静态方法和私有方法Mock；集成测试部分对比SpringTest与SpringBootTest的差异，详解H2内存数据库数据源Mock、外部RPC接口的统一Mock与定制化Mock方案，以及测试容器Bean的排除与引入策略，帮助开发者在Spring项目中建立完善的测试体系。"
+description: "讲解Spring项目单元测试与集成测试实践，涵盖JUnit、Mockito、PowerMock框架使用，以及数据源、外部RPC接口Mock和测试容器配置策略。"
 ---
 
 ## 概述

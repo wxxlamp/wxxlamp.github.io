@@ -6,7 +6,7 @@ tags:
 date: 2021-08-22 9:52
 categories:
    - 基础夯实
-description: "本文系统介绍Java 8函数式编程与Lambda表达式的核心知识，从Lambda的数学起源讲起，详细解析Function、Consumer、Supplier三大基础函数式接口的用法及其在JDK中的应用，并展示如何自定义函数式接口。同时结合责任链模式、观察者模式、策略模式等常见设计模式，演示Lambda如何大幅简化代码，帮助读者将Lambda从被动调用提升为主动设计。"
+description: "介绍Java 8函数式编程与Lambda表达式，解析Function、Consumer、Supplier三大函数式接口，结合责任链、观察者、策略等设计模式演示Lambda简化代码的技巧。"
 ---
 
 Java8发布了一系列高效的操作方式，其中lambda就是一个很重要的特性。譬如我们可以利用lambda代替匿名内部类，可以更方便的创建线程，更方便的使用接口。同时Java8还结合lambda定义了一系列常用且高效的api，如forEach，Stream，Optional等等。

@@ -6,7 +6,7 @@ tags:
 categories:
    - 源码剖析
 date: 2021-01-27 10:36
-description: "深入剖析SpringMVC中@RequestBody注解的底层原理。文章追踪完整执行链路：从DispatcherServlet路由到HandlerMethod，再到HandlerMethodArgumentResolverComposite选择对应的RequestResponseBodyMethodProcessor，通过MessageConverter解析HTTP请求体并映射到方法参数；同时分析解析器的注册流程、策略+工厂+组合设计模式应用及缓存优化机制，并附常见MVC参数注解对比。"
+description: "深入剖析SpringMVC中@RequestBody注解的底层原理，追踪执行链路、参数解析器注册流程，分析设计模式应用及缓存优化机制，附常见MVC参数注解对比。"
 ---
 
 通过Http传递参数一般有两种方式，一种是通过url解析参数，一种是通过body来解决，那么我们本次说的RequestBody就是去解析请求体然后映射到我们的参数，那 么它该如何解析body呢？这就是本篇博客诞生的目的。

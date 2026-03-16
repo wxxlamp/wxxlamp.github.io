@@ -6,7 +6,7 @@ tags:
 categories:
    - 采坑记录
 date: 2022-08-09 23:36
-description: "本文通过实际踩坑，深入分析Java线程池在execute、submit、schedule三种提交方式下任务抛出异常时的不同行为表现：execute会直接抛出并销毁Worker线程后重建；submit通过FutureTask吞掉异常，需调用get方法才能感知；schedule任务抛异常后不再重新入队导致定时任务静默停止。文章结合ThreadPoolExecutor源码逐一解析原因，并给出任务内捕获异常、设置UncaughtExceptionHandler、显式调用get等解决方案。"
+description: "分析线程池execute、submit、schedule三种提交方式下任务抛异常的不同行为：execute直接抛出并重建线程，submit需调用get感知异常，schedule导致定时任务静默停止。结合源码解析原因与解决方案。"
 ---
 
 最近在应用场景中需要用线程池开多线程，但是有时候通过日志和监控会发现，异步线程的任务突然停止，搞得我排查起来一脸懵逼，无从下手，后来师兄帮我翻业务代码才发现，原来是新线程里的任务抛出运行时异常了，导致我开的用户线程直接“跪”了。那么为什么线程池中的线程不会将异常抛出来呢，抛出异常的线程又会是什么状态呢？此贴特地分析一下

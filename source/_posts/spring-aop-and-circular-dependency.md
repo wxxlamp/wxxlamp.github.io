@@ -7,7 +7,7 @@ tags:
    - Aop
 categories:
    - 采坑记录
-description: "本文针对一个真实生产问题展开深度分析：某二方库通过BeanPostProcessor对Bean进行手动AOP代理，当被代理的Bean存在循环依赖时会抛出初始化异常。作者结合Spring三级缓存机制（singletonObjects、earlySingletonObjects、singletonFactory），逐步追踪Bean创建的完整源码调用链，揭示问题根因——手动代理时机滞后导致二级缓存中存入的是原始Bean而非代理Bean，与后续exposedObject不一致进而触发异常。提供了使用原生AOP注解和@Lazy两种解决方案。"
+description: "分析BeanPostProcessor手动AOP代理导致循环依赖异常的根因，结合Spring三级缓存机制追踪源码，提供原生AOP和@Lazy解决方案。"
 ---
 
 *组里有一个二方库TEST，通过实现BeanPostProcessor来对bean进行拦截，同时，在拦截的过程中对bean进行手动的aop代理，但是在开发环境中，当被代理的bean被循环依赖时，会初始化异常，特此debug一下*

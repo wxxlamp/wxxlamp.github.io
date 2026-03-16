@@ -7,7 +7,7 @@ tags:
 categories:
    - 源码剖析
 date: 2021-02-17 22:44
-description: "本文系统解析SpringMVC的核心架构与工作原理，涵盖主要模块、执行流程、启动流程与初始化流程四个维度。详细介绍DispatcherServlet、HandlerMapping、HandlerAdapter、HandlerExecutionChain、HandlerMethodArgumentResolver等关键组件的职责与协作关系，并追踪从HTTP请求进入Tomcat到最终响应渲染的完整调用链。同时分析SpringMVC大量运用的工厂模式、策略模式、责任链模式等设计思想，并与Tomcat过滤器链设计进行对比，附源码片段辅助理解。"
+description: "系统解析SpringMVC核心架构与工作原理，涵盖关键组件、执行流程、启动初始化流程及设计模式运用，附源码分析。"
 ---
 
 前几天看了分析了@RequestBody的原理，并且DIY了一个参数解析器，今天趁热打铁，分析下SpringMVC的原理，主要包括启动流程和执行流程以及其设计思路。

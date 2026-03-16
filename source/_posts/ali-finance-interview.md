@@ -6,7 +6,7 @@ tags:
    - Internships
 categories:
    - 面试经验
-description: "阿里企业金融实习完整面试复盘，覆盖P7至HR共五轮流程。技术面涉及Java并发（HashMap、ConcurrentHashMap）、Spring Bean生命周期与AOP原理、动态代理、MySQL索引与隔离级别、Redis主从哨兵机制、MQ消息消费保障，以及多线程场景编程题；复盘中坦言二面面试官风格非常规，险过后最终选择该BU实习。"
+description: "阿里企业金融实习五轮面试复盘，涵盖Java并发、Spring原理、MySQL、Redis、MQ等技术点，及多线程编程题，分享面试经历与最终选择。"
 ---
 
 面试流程是p7 -> p8 -> p9 -> p9（交叉）-> HR

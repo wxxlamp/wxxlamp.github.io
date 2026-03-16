@@ -6,7 +6,7 @@ tags:
 categories:
    - 面试经验
 date: 2019-12-21 10:36
-description: "本文整理了Java并发编程的高频面试题，涵盖原子性、有序性、可见性等线程安全基本特性，JMM内存模型与Happens-before规则，ThreadLocal原理与内存泄漏防护，线程池七大参数及任务执行流程，synchronized与ReentrantLock的实现与对比，AQS框架及Semaphore、CountDownLatch、CyclicBarrier等工具类，以及CAS原理、分布式锁实现等核心内容，并附有生产者消费者、顺序打印等实操题。"
+description: "整理Java并发编程高频面试题，涵盖线程安全特性、JMM内存模型、线程池原理、synchronized与ReentrantLock、AQS框架、CAS原理及分布式锁实现等核心内容。"
 ---
 
 

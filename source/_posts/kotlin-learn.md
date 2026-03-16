@@ -5,7 +5,7 @@ tags:
    - Kotlin
 categories:
    - 基础夯实
-description: "Kotlin入门学习笔记，梳理其发展历史并与Java进行对比分析。内容涵盖简洁性（data class、lambda、扩展函数、懒加载）、空安全（编译期NPE检测、?操作符）以及与Java的互操作性三大核心特点，并通过丰富的代码示例展示val/var、when表达式、let/apply等语法糖，帮助Java开发者快速掌握Kotlin的独到之处。"
+description: "Kotlin入门笔记，介绍其发展历史及与Java的对比。涵盖简洁性、空安全、互操作性三大特点，通过代码示例展示data class、lambda、扩展函数等语法糖，帮助Java开发者快速上手。"
 ---
 
 作为一门Jvm的衍生语言，Kotlin在安卓阵营大放异彩，Google官方在19年IO大会上宣布全局支持Kotlin，究竟是人性的扭曲还是道德的沦丧？昨天组内安卓大神分享了Kotlin，今天我又参考了Google官方的文档，特来整理一下。

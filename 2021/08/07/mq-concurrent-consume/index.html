@@ -43,7 +43,7 @@
 <meta property="og:description" content="记录一次RocketMQ消费成功率骤降至30%的线上事故排查过程。通过排除系统资源瓶颈与业务代码逻辑，最终在MQ日志中定位到ConcurrentModificationException。深入分析ArrayList的fail-fast机制：多线程同时对同一List执行sort（写操作）和forEach（读操作）时，modCount校验不一致触发异常。总结出三条多线程消费场景下保证线程安全的实践原则">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-08-07T06:36:00.000Z">
-<meta property="article:modified_time" content="2026-03-16T13:56:19.636Z">
+<meta property="article:modified_time" content="2026-03-16T14:04:10.440Z">
 <meta property="article:author" content="Wxx">
 <meta property="article:tag" content="Concurrent">
 <meta property="article:tag" content="MQ">

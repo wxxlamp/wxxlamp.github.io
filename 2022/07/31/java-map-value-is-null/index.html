@@ -43,7 +43,7 @@
 <meta property="og:description" content="本文记录了一个由HashMap允许value为null引发的线上诡异Bug排查过程。代码通过containsKey判断key存在后取值，但偶发打印出null；而使用JSON序列化打印map时，因Fastjson默认不输出value为null的键值对，导致排查方向偏差。文章揭示了HashMap、HashTable与ConcurrentHashMap对null值处理的差异，并给出不put空值、以get">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-07-31T02:36:00.000Z">
-<meta property="article:modified_time" content="2026-03-16T13:56:19.635Z">
+<meta property="article:modified_time" content="2026-03-16T14:04:10.439Z">
 <meta property="article:author" content="Wxx">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">

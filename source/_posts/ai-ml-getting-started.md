@@ -10,7 +10,7 @@ categories:
 description: "从后端开发视角入门机器学习，厘清AI、ML、DL、LLM的关系，详解神经网络、CNN、RNN原理及Embedding、前反向传播等核心概念，附Python代码示例。"
 ---
 
-![](https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/imayesges/0faf3c20_img1.png)
+![](https://github.com/wxxlamp/blog-img-repo/tree/main/imayesges/0faf3c20_img1.png)
 
 # 前言
 从2017年Transformer架构横空出世，再到2022年GPT的出现，人们愈发发现大模型的重要性，每一年仿佛都是LLM元年。在逐步步入AI时代的过程中，我感觉到十分的焦虑，担心被大模型替代，也感觉到兴奋，希望能通过LM做更多的事情。
@@ -109,9 +109,7 @@ output = simple_neuron_torch(x, w, b)  # 得到最后的下雨概率（0.9999）
 $ h_1 = \sigma(w_{11} x_1 + w_{12} x_2 + b_1) \\
 h_2 = \sigma(w_{21} x_1 + w_{22} x_2 + b_2) \\
 h_3 = \sigma(w_{31} x_1 + w_{32} x_2 + b_3) \\
-y_{final} = \sigma(v_1 h_1 + v_{2} h_2 + v_3 h_3 + b_4)
-
- $
+y_{final} = \sigma(v_1 h_1 + v_{2} h_2 + v_3 h_3 + b_4)$
 
 因为上面的公式可以尽可能的将$ x_1, x_2 $全部关联起来，所以我们把上面的网络称为全连接神经网络（Fully connected network），它是目前深度学习的基础。如果把上面的FCN带入到我们湿度和温度的例子中，我们令$ h_1 $负责桑拿天属性、$ h_2 $负责湿冷天属性、$ h_3 $负责干热天属性，假定训练结果如下：
 
@@ -119,8 +117,7 @@ $ h_1 = \sigma(x_1 + x_2 -1.2) \\
 h_2 = \sigma(-x_1 + x_2 -0.5) \\
 h_3 = \sigma(x_1 - x_2 - 1.0) \\
 y_{final} = \sigma(2 h_1 + 0.5 h_2 - h_3 -1)
-
- $
+$
 
 我们可以得到如下的预测图：可以发现经过中间层之后，就不会再出现"高温干燥"也会下雨的情况了。
 
@@ -140,7 +137,7 @@ w_{3,1} & w_{3,2}
 
 所以可以得到最终的输出为：
 
-$ y_{final} = \sigma( \underbrace{\begin{bmatrix} v_1 & v_2 & v_3 \end{bmatrix}}_{W_2} \cdot \underbrace{\begin{bmatrix} h_1 \\ h_2 \\ h_3 \end{bmatrix}}_{h} + b_4 ) $。
+$ y_{final} = \sigma( \underbrace{\begin{bmatrix} v_1 & v_2 & v_3 \end{bmatrix}}_{W_2} \cdot \underbrace{\begin{bmatrix} h_1 \\ h_2 \\ h_3 \end{bmatrix}}_{h} + b_4 ) $ 。
 
 但是，在用代码训练的时候，我们要尽可能的并行做训练，所以就有分批这个概念。即，我们不会每次只算一条特征，而是把特征打批，一次计算多个，公式如下：
 

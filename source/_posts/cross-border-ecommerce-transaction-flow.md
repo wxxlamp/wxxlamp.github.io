@@ -1,6 +1,6 @@
 ---
 title: "你网购的钱是如何到商家口袋的？——跨境交易全流程解析"
-date: 2026-03-23 14:16
+date: 2026-01-04 14:16
 tags:
    - 跨境电商
    - 支付
@@ -25,18 +25,18 @@ description: "深入解析跨境电商平台交易履约全流程，从买卖家
 ## 买卖家视角——交易的生命周期
 从买卖家视角来看，全链路视图如下：
 
-![](https://cdn.nlark.com/yuque/0/2026/png/719664/1767518916683-356e6c00-2de9-4eb6-896b-5c99a1ae399f.png)
+![](https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/5606db74_ab1a042e.png)
 
 从上面的图我们就可以看出来，买家付款完成后，中间有一个“**放款**”的动作。这说明货款是不可能直接直接到商家账户的，因为我们没办法保证商家后续会正常履约。所以如果你有留意的话，当你在淘宝平台确认收货的时候，会让你输入支付密码（或者支付宝人脸认证），这就是因为对于淘宝来说，只有在确认收获的时候，你的钱才真正支付给商家。
 
 从商家和买家视角来看，核心有如下几个行动点：
 
-![](https://cdn.nlark.com/yuque/0/2026/png/719664/1767446584342-95893ada-215b-4e78-974e-431c70a78112.png)
+![](https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/59b28626_e8a5f5e5.png)
 
 ## 平台视角——平台在交易中的角色
 从平台视角来看，我们要核心串联起在交易和资金环节，不同业务领域的流程。一个简化的流程图如下所示：
 
-![](https://cdn.nlark.com/yuque/0/2026/png/719664/1767518919910-c86c02ae-ac3b-400b-8ef0-ebca095a88c4.png)
+![](https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/3ebf4508_2a52ab59.png)
 
 # 电商的参与主体和盈利模式
 ## 参与主体——交易背后的很多双眼睛
@@ -44,11 +44,11 @@ description: "深入解析跨境电商平台交易履约全流程，从买卖家
 
 以一个基础的跨境在线交易平台举例，如果平台没有资质感知买家的资金，除了买卖家、平台之外，还需要有一个额外的资金中心。协议如下：
 
-![](https://cdn.nlark.com/yuque/0/2026/png/719664/1767518916155-b3ef50da-a72f-43eb-a160-1be660cf9377.png)
+![](https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/1afff81c_7693194e.png)
 
 当平台具备持有资金的拍照后，为了增强对资金的把控能力，往往让收单机构把钱结算给平台，然后平台再把钱通过出金机构结算给全球的卖家。
 
-![](https://cdn.nlark.com/yuque/0/2026/png/719664/1767518916324-e4f0c9d1-fc11-4ad8-9e54-aa50fda38412.png)
+![](https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/367b905e_407deea6.png)
 
 参与的每一个主体之间都应该有一个协议来约束。
 
@@ -74,7 +74,7 @@ description: "深入解析跨境电商平台交易履约全流程，从买卖家
 6. 物流维度
     1. 商家发货会给平台缴纳物流费，费用与物流公司分成
 
-![](https://cdn.nlark.com/yuque/0/2026/png/719664/1767518923045-149c0505-7a69-4d93-aade-bc6b891cce47.png)
+![](https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/88f308d8_55e4f92c.png)
 
 # 跨境资金清结算
 交易代表信息流，另外一个重要部分就是资金流。所谓资金流，最底层的就是资金机构之间的资金调拨，伴随而生的是账户之间的记贷关系。基于资金调拨和记账，上游衍生出了商户入驻、支付、结算、提现、调拨、外汇等业务场景。
@@ -84,7 +84,7 @@ description: "深入解析跨境电商平台交易履约全流程，从买卖家
 
 资金流图示如下：
 
-![](https://cdn.nlark.com/yuque/0/2026/png/719664/1767518918083-f7702954-85a2-4512-89e0-8775a6f22436.png)
+![](https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/129fbdba_99a72499.png)
 
 **第一阶段：**全球的买家在下单之后，进入支付流程。通过CREDIT CARD、GOOGLE PAY、APPLY PAY、PAYPAL和其他本地化支付方式把钱打给收单机构（譬如说Adyen）。然后Adyen内部会进行币种的汇兑，之后等待T+1把钱结算给平台主体。
 
@@ -109,7 +109,7 @@ description: "深入解析跨境电商平台交易履约全流程，从买卖家
 
 这里捞了一个经典的流程图（包含正逆向的），可以详细了解下：
 
-![](https://cdn.nlark.com/yuque/0/2026/png/719664/1767518919716-b3334641-5f20-422b-b6a2-43a6fcbd0be5.png)
+![](https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/b01fb88d_b3430345.png)
 
 
 

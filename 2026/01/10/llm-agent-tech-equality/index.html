@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="通过一次Git分支污染事件，探讨大模型和Agent如何实现技术平权，让非专业开发者也能高效解决复杂技术问题。"/>
+
+
+
+
+  <meta name="keywords" content="大模型,Agent,Git," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="王星星的魔灯" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="https://wxxlamp.cn/2026/01/10/llm-agent-tech-equality/"/>
+
+
+<meta name="description" content="通过一次Git分支污染事件，探讨大模型和Agent如何实现技术平权，让非专业开发者也能高效解决复杂技术问题。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="大模型和Agent正在实现技术平权">
+<meta property="og:url" content="https://wxxlamp.cn/2026/01/10/llm-agent-tech-equality/index.html">
+<meta property="og:site_name" content="王星星的魔灯">
+<meta property="og:description" content="通过一次Git分支污染事件，探讨大模型和Agent如何实现技术平权，让非专业开发者也能高效解决复杂技术问题。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2026/png/719664/1768027326715-a3178946-c3bf-4c98-90b2-989713eaa6b3.png">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2026/png/719664/1768027329950-107f2c33-43fb-424e-9ca2-56a7299ba000.png">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2026/png/719664/1768027338974-13594c7a-98c5-4bb8-8486-ff3fd22b01a9.png">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2026/png/719664/1768027322312-0e1e67fd-f8b7-4f3d-a275-d56d587b80f6.png">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2026/png/719664/1768027330022-f1bae3ff-48cf-4254-a264-efd60db30c19.png">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2026/png/719664/1768027330465-1313df90-d037-4932-b30b-c98235d02077.png">
+<meta property="article:published_time" content="2026-01-10T07:42:00.000Z">
+<meta property="article:modified_time" content="2026-03-23T06:54:32.131Z">
+<meta property="article:author" content="Wxx">
+<meta property="article:tag" content="Agent">
+<meta property="article:tag" content="Git">
+<meta property="article:tag" content="大模型">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.nlark.com/yuque/0/2026/png/719664/1768027326715-a3178946-c3bf-4c98-90b2-989713eaa6b3.png">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/syst/dist/SmileySans-Oblique/result.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/syst/dist/SmileySans-Oblique/result.css"></noscript>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+    }
+  };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+
+  
+
+
+
+    <title> 大模型和Agent正在实现技术平权 - 王星星的魔灯 </title>
+  <meta name="generator" content="Hexo 8.1.1"></head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">王星星的魔灯</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="menu-item menu-item-resume">
+                        <a href="/resume" class="resume-nav-label" onclick="event.preventDefault()">Resume</a>
+                        <ul class="resume-lang-dropdown">
+                            <li><a href="/resume">中文简历</a></li>
+                            <li><a href="/resume-en">English</a></li>
+                        </ul>
+                    </li>
+                    
+                
+                <li class="menu-item">
+                    <a href="/atom.xml">RSS</a>
+                </li>
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          大模型和Agent正在实现技术平权
+        
+      </h1>
+
+      <time class="post-time">
+          1月 10 2026
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>我对git确实不算了解。</p>
+<p>之前校招面试的时候虽然把面试官哄成胎盘，<code>merge</code>、<code>revert</code>指令在电话中信手拈来。但是不得不说，其实没怎么用过。</p>
+<p>工作四年多，只会<code>pull</code>、<code>add</code>、<code>commit</code>、<code>checkout</code>、<code>push</code>五剑客，复杂的git指令和协作流程日常也没怎么用到，所以工作之后也就没有动力仔细了解过其他复杂的git指令。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/719664/1768027326715-a3178946-c3bf-4c98-90b2-989713eaa6b3.png"></p>
+<hr>
+<p>但是常在路边走，哪有不湿鞋。</p>
+<p>昨天晚上10点左右，组里一个同事小A像往常一样<code>commit</code>、<code>push</code>分支需求的代码。但是<code>push</code>到测试分支之后，意料之中的发现了冲突——接近年底，不下五个需求分支被合并到了测试分支等待部署到测试环境测试。</p>
+<p>这种情况也很常见，小A把测试分支从远程拉了下来，本意是将自己的需求分支合并到测试分支中，但是没想到，一手抖——将测试分支的几百个<code>commit</code>全部合并到了自己的需求分支上。</p>
+<p>此时小A还没有意识到事情的严重性，或者说他还没有意识到问题，继续在本地的需求分支上提交代码。</p>
+<p>当他终于本地提交了几轮，确定本地代码没问题后，准备<code>push</code>到远程测试分支的时候，才突然发现，自己的分支已经被测试分支污染了——而他第二天就要提测和发布了，怎么可能将别人的测试分支也发布上线呢？</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/719664/1768027329950-107f2c33-43fb-424e-9ca2-56a7299ba000.png"></p>
+<hr>
+<p>小A有点慌了。</p>
+<p>但是小A和我一样，也对git不算太过了解，折腾了一小时，还是没有把本地的需求分支的污染分支删掉。</p>
+<p>没办法，小A基于原来的分支和以前的提交数据，<code>cherry-pick</code>了一个新的分支。弄完之后，一看表已经凌晨了，拖着疲惫的身体，踩着月色，小A打了个车，回家了。</p>
+<p>事情到此，没有出什么大影响，但是我想，一定有方法将原来分支的垃圾<code>commit</code>数据删除，所以第二天一早我打开了GPT。</p>
+<p>正当我敲入问题“A分支误<code>merge</code>了B分支，如何将B分支的多个<code>commit</code>数据删除”，准备按下回车键时，突然想到：“能不能直接让claude帮我操作？”</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/719664/1768027338974-13594c7a-98c5-4bb8-8486-ff3fd22b01a9.png"></p>
+<hr>
+<p>所以就发生了我和claude的如下对话：</p>
+<p>我：</p>
+<blockquote>
+<p><font style="color:rgba(0, 0, 0, 0.88);">我的git分支不小心merge了其他分支，请帮我回退到commiter&#x3D;小A，最新一次提交的代码的那次提交</font></p>
+</blockquote>
+<p>CLAUDE：</p>
+<blockquote>
+<p><font style="color:rgba(0, 0, 0, 0.88);">收到。我需要先查找“小A”的最新提交哈希，并检查当前工作区的状态。 </font><br><font style="color:rgba(0, 0, 0, 0.88);">检测到目标提交为 </font><font style="color:rgb(38, 38, 38);background-color:rgba(0, 0, 0, 0.06);">commit_hash_A</font><font style="color:rgba(0, 0, 0, 0.88);">。同时发现当前正处于一个交互式 rebase 操作中，且存在合并冲突。为了安全回退，我需要先中止当前的 rebase，再执行硬重置。</font></p>
+</blockquote>
+<p>我：</p>
+<blockquote>
+<p><font style="color:rgba(0, 0, 0, 0.88);">帮我回退到这里：a3a8f43dfa8eac801e804f76cf2c36450c717479</font></p>
+</blockquote>
+<p>CLAUDE：</p>
+<blockquote>
+<p><font style="color:rgba(0, 0, 0, 0.88);">没问题，直接将 HEAD 指针重置到该节点。</font></p>
+</blockquote>
+<p><font style="color:rgba(0, 0, 0, 0.88);">我：</font></p>
+<blockquote>
+<p><font style="color:rgba(0, 0, 0, 0.88);">能帮我把本地分支强制push到远程仓库吗</font></p>
+</blockquote>
+<p>CLAUDE：</p>
+<blockquote>
+<p><font style="color:rgba(0, 0, 0, 0.88);">好的，确认当前分支为 </font><font style="color:rgb(38, 38, 38);background-color:rgba(0, 0, 0, 0.06);">feature_1</font><font style="color:rgba(0, 0, 0, 0.88);">。由于刚才进行了回退操作，本地落后于远程，需要执行强制推送。</font></p>
+</blockquote>
+<p><font style="color:rgba(0, 0, 0, 0.88);">我：</font></p>
+<blockquote>
+<p><font style="color:rgba(0, 0, 0, 0.88);">我发现远程仓库还有之前merge的提交，和我本地的不一样，如何消除？</font></p>
+</blockquote>
+<p><font style="color:rgba(0, 0, 0, 0.88);">CLAUDE：</font></p>
+<blockquote>
+<p><font style="color:rgba(0, 0, 0, 0.88);">让我对比一下本地 </font><font style="color:rgb(38, 38, 38);background-color:rgba(0, 0, 0, 0.06);">feature_1</font><font style="color:rgba(0, 0, 0, 0.88);"> 和远程分支的提交历史差异。</font></p>
+<p><font style="color:rgba(0, 0, 0, 0.88);">分析发现：虽然本地指针是对的，但远程历史中包含了大量非线性的 Merge Commit（由构建系统自动产生）。我们需要清理时间线。</font></p>
+<p><font style="color:rgba(0, 0, 0, 0.88);">请确认你的清洗策略：</font></p>
+<ol>
+<li><strong><font style="color:rgba(0, 0, 0, 0.88);">彻底丢弃</font></strong><font style="color:rgba(0, 0, 0, 0.88);">目标节点之后的所有提交？</font></li>
+<li><font style="color:rgba(0, 0, 0, 0.88);">还是</font><strong><font style="color:rgba(0, 0, 0, 0.88);">保留</font></strong><font style="color:rgba(0, 0, 0, 0.88);">目标节点后的正常代码提交，仅剔除那些 Merge 节点？</font></li>
+</ol>
+</blockquote>
+<p>我：</p>
+<blockquote>
+<p><font style="color:rgba(0, 0, 0, 0.88);">想要保留 a3a8f43dfa 之后的正常提交，只删除那些 merge 提交（非“小A”的提交）</font></p>
+</blockquote>
+<p><font style="color:rgba(0, 0, 0, 0.88);">CLAUDE：</font></p>
+<blockquote>
+<p><font style="color:rgba(0, 0, 0, 0.88);">明白了。这是一个复杂的“变基清洗”任务。 </font><strong><font style="color:rgba(0, 0, 0, 0.88);">策略</font></strong><font style="color:rgba(0, 0, 0, 0.88);">：基于干净的节点创建一个临时分支，从旧分支中“捡出（Cherry-pick）”属于小A的有效提交，拼接到新分支上，最后替换原分支。</font></p>
+<ol>
+<li><strong><font style="color:rgba(0, 0, 0, 0.88);">创建备份与临时分支</font></strong></li>
+<li><strong><font style="color:rgba(0, 0, 0, 0.88);">筛选并迁移小A的提交</font></strong></li>
+<li><strong><font style="color:rgba(0, 0, 0, 0.88);">替换主分支并推送</font></strong></li>
+</ol>
+</blockquote>
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/719664/1768027322312-0e1e67fd-f8b7-4f3d-a275-d56d587b80f6.png"></p>
+<hr>
+<p>从给claude提问，到claude完全完成，总共时间不超过十分钟，而且又快又好，那一瞬间，真的让我觉得实现了技术平权。</p>
+<p>人们对大模型的应用，不应当只停留在了对话的阶段，通过MCP、RAG各种能力集成的Agent，在prompt得当的时候，真的可以帮我们完成很多事情。</p>
+<p>在公司内部，我们也基于大模型和Coder Agent完成了自主的生码能力，同时，很多团队也在积极探索基于大模型和agent的工单自主排查、自主联调等能力。</p>
+<p>对于个人用户来讲，也应该利用agent来完成很多琐事的自动处理。在以后，我们的工作范式甚至会发生变化，学会如何和agent说话，如何监控agent可能是一个重要的命题。</p>
+<p>在未来，大模型的基础能力很重要，也就是我们常说的pre-training。有的人会说post-training也很重要，这个我不否认，<strong>但是消费市场，agent的能力才是很多人工智能产品决胜的关键</strong>。</p>
+<p>我想这也是为什么Meta花费十亿美元收购一家不做model training、只做agent公司的原因，同时，这也是为什么阿里Qwen明明已经全球开源第一了，却也还是干不够豆包的原因之一。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/719664/1768027330022-f1bae3ff-48cf-4254-a264-efd60db30c19.png"></p>
+<hr>
+<p>最后回到今天的话题，如何快速的把git merge的分支删除呢？请看下图：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/719664/1768027330465-1313df90-d037-4932-b30b-c98235d02077.png"></p>
+<blockquote>
+<p>注：本文图片采用Gemini Nano Banana Pro生成</p>
+</blockquote>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a>
+		  
+			<a href="/tags/Agent/">Agent</a>
+		  
+			<a href="/tags/Git/">Git</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+    
+      <a class="next" href="/2026/01/04/cross-border-ecommerce-transaction-flow/">
+        <span class="next-text nav-default">你网购的钱是如何到商家口袋的？——跨境交易全流程解析</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    
+
+<div class="github-comments">
+  <div class="comments-title">💬 Comments</div>
+  <p style="color: #666; font-size: 0.9em; margin-bottom: 1em;">
+    Comments require <a href="https://github.com/apps/giscus" target="_blank" rel="noopener">Giscus App</a> installed on your GitHub repository.
+  </p>
+  <script src="https://giscus.app/client.js"
+    data-repo="wxxlamp/wxxlamp.github.io"
+    data-repo-id="R_kgDOCiYteA"
+    data-category="General"
+    data-category-id="DIC_kwDOCiYteM4CelIo"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="light"
+    data-lang="en"
+    crossorigin="anonymous"
+    async>
+  </script>
+</div>
+
+
+
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+    
+
+<div class="toc-container" id="toc-container">
+  <div class="toc-title">Contents</div>
+  <ul class="toc-list" id="toc-list">
+    
+  </ul>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Generate TOC from post content
+  const content = document.querySelector('.post-content');
+  const tocList = document.getElementById('toc-list');
+
+  if (!content || !tocList) return;
+
+  const headings = content.querySelectorAll('h1, h2, h3, h4');
+
+  if (headings.length < 2) {
+    document.getElementById('toc-container').style.display = 'none';
+    return;
+  }
+
+  headings.forEach(function(heading, index) {
+    // Add ID to heading if not exists
+    if (!heading.id) {
+      heading.id = 'heading-' + index;
+    }
+
+    const li = document.createElement('li');
+    li.className = 'toc-' + heading.tagName.toLowerCase();
+
+    const a = document.createElement('a');
+    a.href = '#' + heading.id;
+    a.textContent = heading.textContent;
+    a.onclick = function(e) {
+      e.preventDefault();
+      heading.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    li.appendChild(a);
+    tocList.appendChild(li);
+  });
+
+  // Active section highlighting
+  const tocItems = tocList.querySelectorAll('li');
+
+  function updateActiveToc() {
+    const scrollPos = window.scrollY + 100;
+
+    headings.forEach(function(heading, index) {
+      const top = heading.offsetTop;
+      const bottom = top + heading.offsetHeight;
+
+      if (scrollPos >= top && scrollPos < bottom) {
+        tocItems.forEach(function(item) {
+          item.classList.remove('active');
+        });
+        if (tocItems[index]) {
+          tocItems[index].classList.add('active');
+        }
+      }
+    });
+  }
+
+  window.addEventListener('scroll', updateActiveToc);
+  updateActiveToc();
+});
+</script>
+
+
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2014 -
+    
+    2026
+    <span class="footer-author">Wxx.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> and <a class="theme-link" target="_blank" rel="noopener" href="https://github.com/frostfan/hexo-theme-polarbear">Polar Bear</a>
+    </span>
+</span>
+<span class="site-stats" style="display: block; margin-top: 8px; font-size: 0.85rem; color: #666;">
+    Total Visits: <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> ·
+    Unique Visitors: <span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>
+</span>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>

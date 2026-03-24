@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="从[面试造飞机、工作拧螺丝]现象出发，构建个人能力与业务关系的四层模型，剖析面试与工作能力的差异，给出提升团队协作、业务迭代、代码可读性等实践能力的建议。"/>
+
+
+
+
+  <meta name="keywords" content="Growth," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="王星星的魔灯" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="https://wxxlamp.cn/2020/12/21/individual-and-bussiness/"/>
+
+
+<meta name="description" content="从[面试造飞机、工作拧螺丝]现象出发，构建个人能力与业务关系的四层模型，剖析面试与工作能力的差异，给出提升团队协作、业务迭代、代码可读性等实践能力的建议。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="论[工作拧螺丝]">
+<meta property="og:url" content="https://wxxlamp.cn/2020/12/21/individual-and-bussiness/index.html">
+<meta property="og:site_name" content="王星星的魔灯">
+<meta property="og:description" content="从[面试造飞机、工作拧螺丝]现象出发，构建个人能力与业务关系的四层模型，剖析面试与工作能力的差异，给出提升团队协作、业务迭代、代码可读性等实践能力的建议。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/92541ab4_individual-and-bussiness.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/95a8a213_weixinopen.png">
+<meta property="article:published_time" content="2020-12-21T02:36:00.000Z">
+<meta property="article:modified_time" content="2026-03-24T02:02:41.256Z">
+<meta property="article:author" content="Wxx">
+<meta property="article:tag" content="Growth">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/92541ab4_individual-and-bussiness.png">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/syst/dist/SmileySans-Oblique/result.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/syst/dist/SmileySans-Oblique/result.css"></noscript>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+    }
+  };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+
+  
+
+
+
+    <title> 论[工作拧螺丝] - 王星星的魔灯 </title>
+  <meta name="generator" content="Hexo 8.1.1"></head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">王星星的魔灯</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="menu-item menu-item-resume">
+                        <a href="/resume" class="resume-nav-label" onclick="event.preventDefault()">Resume</a>
+                        <ul class="resume-lang-dropdown">
+                            <li><a href="/resume">中文简历</a></li>
+                            <li><a href="/resume-en">English</a></li>
+                        </ul>
+                    </li>
+                    
+                
+                <li class="menu-item">
+                    <a href="/atom.xml">RSS</a>
+                </li>
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          论[工作拧螺丝]
+        
+      </h1>
+
+      <time class="post-time">
+          12月 21 2020
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>很多人都在抱怨“面试造飞机，工作拧螺丝”的现象，透过这种现象，我们不妨想一下，<strong>为什么面试需要造飞机，同时，我们在工作中，拧的到底是什么螺丝呢？</strong></p>
+<p>这篇文章的诞生经历比较神奇，是因为我昨天晚上躺上床，闭上眼睛，突然想到的一种个人和公司业务的一种关系。然后今天来就想把这种关系表达一下。因为个人能力和见识的原因，下面的解释不一定准确，但是对于新人来说，还是有一定的参考能力的。</p>
+<h3 id="1-从一个问题开始"><a href="#1-从一个问题开始" class="headerlink" title="1. 从一个问题开始"></a>1. 从一个问题开始</h3><p>首先抛出这样一个问题，<strong>公司招人的目的是什么？<strong>相信不难回答，无论公司的业务扩张，还是公司想招聘某些特殊人才，不容置疑的是，公司招人的目的就是让应聘者为公司</strong>创造价值</strong>的。</p>
+<p>所以，我们可以很容易得到一个等式：</p>
+<center>个人能力 + 已有业务 = 公司利益</center>
+
+<p>这也是我要说的一个点，即：我们如何通过我们的个人能力和公司的已有业务，来为公司创造价值和利益。</p>
+<h3 id="2-个人拙见"><a href="#2-个人拙见" class="headerlink" title="2. 个人拙见"></a>2. 个人拙见</h3><p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/92541ab4_individual-and-bussiness.png" alt="个人和业务"></p>
+<p>整个结构分为四层，从下到上，从里到外，从个人能力到集体盈利，这张图从层级关系上来解释了个人和公司盈利的关系。</p>
+<p>分层来说，下层是上层的支撑。如果我们把层次理解成一个圆环的话，那么，底层就是圆环的核心，而上层的，就是圆环的外壳，同时，也是我们在工作中，最容易用到的知识和能力，也是我们做事情的结果。</p>
+<p>譬如，第一层的“个人品质与能力”是最抽象的特质，它支撑了我们整个人的发展。第二层的“表达和沟通”、“技术”则是我们在工作中最常用到的个人能力。第三层的每个点则是我们在工作中能力的具象化，是可以切实体会到的能力。而第四层，就是我们做事的结果，也是我们最终的目的。</p>
+<h3 id="3-要点分析"><a href="#3-要点分析" class="headerlink" title="3. 要点分析"></a>3. 要点分析</h3><h4 id="第一层"><a href="#第一层" class="headerlink" title="第一层"></a>第一层</h4><ol>
+<li>个人品质与能力：指的是个人潜在的能力，也指的是个人未来的价值。这种能力，很难具象化，它包括但不限于：学习力，持续发展力，思考能力。你的技术和各种直观能力，全是基于个人的品质才能获得的。这种能力很抽象，但是我们展现出的所有能力都是以这一层为核心的。这个是面试时必考的一个点，譬如，相信大家面试的时候都被问过这样一个问题：“你最近再看什么书？”，这个问题，面试官是想考察你的学习力和对技术的热爱程度。</li>
+</ol>
+<h4 id="第二层"><a href="#第二层" class="headerlink" title="第二层"></a>第二层</h4><ol>
+<li>技术：指的是我们广义上的技术，并且更侧重于基础知识，如计算机网络，操作系统，语言掌握，架构思考等等。面试时候的很多问题，其实就是问的这一层的问题，“屠龙之技”的修炼，就是靠的这一层。</li>
+<li>表达和沟通：这个面试的时候不会有特定的问题，字如其意，面试官会从你们几十分钟的交流中去判断你的表达和沟通。</li>
+</ol>
+<h4 id="第三层"><a href="#第三层" class="headerlink" title="第三层"></a>第三层</h4><ol>
+<li>团队协作：团队协作是以交流沟通和技术为基础的，技术方面会借用git等程序，是HR和技术面试官要考察的内容。</li>
+<li>代码可读性：这个面试不容易考察，但是对平时工作有很大帮助。可以参考《重构-改善代码既有的设计》这本书，Java的也推荐《阿里巴巴编码规范》和《Effective Java》。</li>
+<li>技术支持：这个比较宽泛，既指的是中间件理解，如对中间件的二次封装等，或者重新开发一个中间件系统&#x2F;插件；也指对一些语言新特性的掌握并在工作中使用，或者是一些提高性能的代码的最佳实践等等。之所以把这些归并到一块，是因为在工作中用到的其实比较少，但是如果真的用到，也一定是值得津津乐道的一个KPI。</li>
+<li>架构设计：大到系统的架构设计，包括高可用，高性能，可扩展，小到每次业务迭代的需求设计，都是架构设计的一部分</li>
+<li>业务迭代：即是结合对业务的理解，写出更符合业务需求的代码，更好的赋能业务，推动业务发展</li>
+</ol>
+<h3 id="4-问题解答"><a href="#4-问题解答" class="headerlink" title="4. 问题解答"></a>4. 问题解答</h3><ol>
+<li>为什么面试需要造飞机？正如大家所想，互联网行业不断的内卷和应聘人数的增加，为了增加区分度，导致了问的问题越来越偏，问的点越来越难。但除了增加区分度外，面试官还是想考察个人的核心能力。同时，参考我刚才的图片，那是在第二层的“技术”模块中。换句话说，这是在考察应聘者的当前价值和未来价值。</li>
+<li>真实工作中到底拧的什么螺丝？拧螺丝只是一个代称，其实调侃的背后，表现出来的是真实的工作并没有挑战性，或者说真实的工作太过重复并且简单。究其原因，参考我上面画的图片，是因为团队协作，业务理解，代码可读性，这三点几乎每个人都具备，但是它们的区分度不是很高，导致大家几乎都差不多；而又因为大家平时对Debug这些所谓的琐事没有系统的衡量，所以Debug的快慢也慢慢被大家忽略；至于架构设计和技术支持，更是基础程序员百年难遇的事情。所以综上所述，产生了大家拧螺丝的错觉。但是如果我们仔细去想，针对这几点，努力把它们做好，你还是在拧螺丝吗？</li>
+</ol>
+<blockquote>
+<p>PS：和上级交流汇报的时候，要体现出来两点，一个是个人的现有价值，一个是个人的将来价值。现有价值包括自己目前完成了哪些工作，实现了哪些目标；将来价值指的是个人潜力，学习力，以及其他可能对将来公司业务创造价值的东西。</p>
+</blockquote>
+<h3 id="5-更好的拧螺丝"><a href="#5-更好的拧螺丝" class="headerlink" title="5. 更好的拧螺丝"></a>5. 更好的拧螺丝</h3><p>通过我刚才建立的模型中，我们可以发现：面试更偏重于第二层，工作和晋升更偏向于第三层。</p>
+<p>所以，在工作当中，我们不妨有意无意地去锻炼自己第三层的能力，譬如业务迭代的时候想想有没有更好的设计。同时，即使我们没有架构设计的机会，我们也可以努力学习和借鉴公司已有的架构设计，把它们吃透理解透。随着工作的深入，我们也可以在开发过程中发现现有阶段的不足，然后补充，这都是拧螺丝的一部分。</p>
+<p>在平时，我们还是需要夯实第二层，虽然基础性知识不容易忘记，但是算法和八股这些东西，总有生疏的时候。</p>
+<p>其实，随着年龄的增长，我们要学会在具体的场景中抽象出来方法论，然后再将方法论发散为具体的场景，这便是一个升华的过程。同时在学习的过程中，我们要努力形成 学习-&gt;思考-&gt;借鉴-&gt;使用 这样一种迭代关系，这样我们造的飞机，才不至于无处可用。</p>
+<h3 id="6-未来补充"><a href="#6-未来补充" class="headerlink" title="6. 未来补充"></a>6. 未来补充</h3><p>当然，这个图还是有一定局限性的，譬如它只是针对初级程序员来说的。</p>
+<p>根据我的了解，对于阿里的社招来说，没有特殊情况下，在高级开发工程师（P6）的要求中，“个人能力”模块还包括之前的业务经历。即对于社招来说，个人和业务就应该有轻微的耦合关系，这也是为什么大多数JD中都表明了一点：有相关从业经历者优先</p>
+<p>对于阿里的高级技术专家(P8)来说，上图中对业务那一块的处理就不是很合适。对于他们来说，“业务和场景”模块的上一层，可能还会包括“创新业务”。“代码可读性”在它们的技术上，占比会缩小，相反，“团队协作”模块会扩大，并且还会增加“团队管理”模块。</p>
+<p>而这些我为什么没画出来呢？一方面是因为这张图是针对新人（我）的，另一方面就是我没经历过，不敢妄加评断。</p>
+<p>最后：</p>
+<p>打个广告，欢迎关注我的公众号“王星星的魔灯”，内推，面试等你来撩~</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/95a8a213_weixinopen.png" alt="公众号"></p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/Growth/">Growth</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2020/12/22/diy-param-parse-annotation/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">DIY一个参数解析器</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2020/12/17/java-memory/">
+        <span class="next-text nav-default">类在内存中的存储方式</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    
+
+<div class="github-comments">
+  <div class="comments-title">💬 Comments</div>
+  <p style="color: #666; font-size: 0.9em; margin-bottom: 1em;">
+    Comments require <a href="https://github.com/apps/giscus" target="_blank" rel="noopener">Giscus App</a> installed on your GitHub repository.
+  </p>
+  <script src="https://giscus.app/client.js"
+    data-repo="wxxlamp/wxxlamp.github.io"
+    data-repo-id="R_kgDOCiYteA"
+    data-category="General"
+    data-category-id="DIC_kwDOCiYteM4CelIo"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="light"
+    data-lang="en"
+    crossorigin="anonymous"
+    async>
+  </script>
+</div>
+
+
+
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+    
+
+<div class="toc-container" id="toc-container">
+  <div class="toc-title">Contents</div>
+  <ul class="toc-list" id="toc-list">
+    
+  </ul>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Generate TOC from post content
+  const content = document.querySelector('.post-content');
+  const tocList = document.getElementById('toc-list');
+
+  if (!content || !tocList) return;
+
+  const headings = content.querySelectorAll('h1, h2, h3, h4');
+
+  if (headings.length < 2) {
+    document.getElementById('toc-container').style.display = 'none';
+    return;
+  }
+
+  headings.forEach(function(heading, index) {
+    // Add ID to heading if not exists
+    if (!heading.id) {
+      heading.id = 'heading-' + index;
+    }
+
+    const li = document.createElement('li');
+    li.className = 'toc-' + heading.tagName.toLowerCase();
+
+    const a = document.createElement('a');
+    a.href = '#' + heading.id;
+    a.textContent = heading.textContent;
+    a.onclick = function(e) {
+      e.preventDefault();
+      heading.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    li.appendChild(a);
+    tocList.appendChild(li);
+  });
+
+  // Active section highlighting
+  const tocItems = tocList.querySelectorAll('li');
+
+  function updateActiveToc() {
+    const scrollPos = window.scrollY + 100;
+
+    headings.forEach(function(heading, index) {
+      const top = heading.offsetTop;
+      const bottom = top + heading.offsetHeight;
+
+      if (scrollPos >= top && scrollPos < bottom) {
+        tocItems.forEach(function(item) {
+          item.classList.remove('active');
+        });
+        if (tocItems[index]) {
+          tocItems[index].classList.add('active');
+        }
+      }
+    });
+  }
+
+  window.addEventListener('scroll', updateActiveToc);
+  updateActiveToc();
+});
+</script>
+
+
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2014 -
+    
+    2026
+    <span class="footer-author">Wxx.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> and <a class="theme-link" target="_blank" rel="noopener" href="https://github.com/frostfan/hexo-theme-polarbear">Polar Bear</a>
+    </span>
+</span>
+<span class="site-stats" style="display: block; margin-top: 8px; font-size: 0.85rem; color: #666;">
+    Total Visits: <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> ·
+    Unique Visitors: <span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>
+</span>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>

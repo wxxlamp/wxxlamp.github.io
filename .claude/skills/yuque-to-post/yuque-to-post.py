@@ -56,6 +56,88 @@ def extract_title_from_content(content: str) -> str:
     return ""
 
 
+def suggest_english_filename(title: str) -> str:
+    """根据中文标题内容建议一个简短的英文文件名"""
+    import unicodedata
+
+    # 如果已经是英文，则返回标准化版本
+    if not any('\u4e00' <= char <= '\u9fff' for char in title):
+        filename = re.sub(r'[<>:"/\\|?*]', '', title)
+        filename = re.sub(r'\s+', '-', filename)
+        filename = re.sub(r'[^a-zA-Z0-9\-_.]', '', filename)
+        filename = filename.strip('-').lower()
+        return filename if filename else "untitled"
+
+    # 对于中文标题，提供一个建议的英文名称
+    # 首先定义一些常见的中文到英文的映射
+    common_phrases = {
+        "我的": "my",
+        "的": "",
+        "年": "-year",
+        "目标": "-goals",
+        "达成": "-achievement",
+        "情况": "-status",
+        "总结": "-summary",
+        "回顾": "-retrospective",
+        "计划": "-plan",
+        "工作": "-work",
+        "学习": "-learning",
+        "技术": "-tech",
+        "分享": "-share",
+        "心得": "-insights",
+        "经验": "-experience",
+        "博客": "-blog",
+        "文章": "-post",
+        "2025": "2025",
+        "2026": "2026",
+        "2024": "2024",
+        "2023": "2023",
+        "2022": "2022",
+        "2021": "2021",
+        "2020": "2020",
+        "上半年": "-first-half",
+        "下半年": "-second-half",
+        "上半年总结": "-first-half-summary",
+        "下半年总结": "-second-half-summary",
+        "年终": "-year-end",
+        "年初": "-year-start",
+        "心得体会": "-reflections",
+        "年终总结": "-year-end-summary",
+        "年度总结": "-annual-review",
+        "个人": "-personal",
+        "成长": "-growth",
+        "反思": "-reflection",
+        "复盘": "-review",
+        "感悟": "-thoughts",
+        "历程": "-journey",
+        "思考": "-thoughts",
+        "想法": "-ideas"
+    }
+
+    # 对标题进行简单的中文分词替代
+    processed_title = title
+    for chinese, english in sorted(common_phrases.items(), key=lambda x: len(x[0]), reverse=True):
+        processed_title = processed_title.replace(chinese, english)
+
+    # 移除多余空格并使用连字符连接
+    filename = re.sub(r'\s+', '-', processed_title)
+    filename = re.sub(r'[<>:"/\\|?*,.，。！？【】「」\[\]{}]', '', filename)
+    filename = re.sub(r'-+', '-', filename)  # 合并多个连续的连字符
+    filename = filename.strip('-').lower()
+
+    # 防止出现多个连续的连字符
+    filename = re.sub(r'-+', '-', filename)
+
+    # 如果处理后的结果仍然包含中文或者太复杂，使用通用名称加哈希
+    if any('\u4e00' <= char <= '\u9fff' for char in filename) or len(filename) > 50:
+        # 创建一个简短的基于内容的标识符
+        import hashlib
+        hash_suffix = hashlib.md5(title.encode('utf-8')).hexdigest()[:8]
+        return f"blog-post-{hash_suffix}"
+
+    return filename if filename else "untitled"
+
+
 def extract_description_from_content(content: str, max_length: int = 50) -> str:
     """从 Markdown 内容中提取描述（备用方案）"""
     # 移除 Markdown 格式
@@ -143,11 +225,29 @@ def process_markdown(input_file: str, output_file: str, tags: list, categories: 
 
 
 def sanitize_filename(title: str) -> str:
-    """将标题转换为安全的文件名"""
-    # 移除或替换不安全的字符
-    filename = re.sub(r'[<>:"/\\|?*]', '', title)
-    filename = re.sub(r'\s+', '-', filename)
-    filename = filename.strip('-')
+    """将标题转换为安全的文件名，优先使用英文"""
+    import unicodedata
+
+    # 检测是否包含中文字符
+    if any('\u4e00' <= char <= '\u9fff' for char in title):
+        print(f"检测到中文标题: {title}")
+        print("提示: 为了更好的SEO和URL可读性，建议使用 --filename 参数指定简短的英文文件名")
+
+        # 对于中文标题，使用原逻辑，但提供更好的提示
+        filename = re.sub(r'[<>:"/\\|?*]', '', title)
+        filename = re.sub(r'\s+', '-', filename)
+        filename = filename.strip('-')
+
+        # 如果生成的文件名仍然包含中文字符，建议用户使用英文名
+        if any('\u4e00' <= char <= '\u9fff' for char in filename):
+            print("警告: 文件名包含中文字符，可能会影响URL可读性")
+    else:
+        # 对于英文标题的处理
+        filename = re.sub(r'[<>:"/\\|?*]', '', title)
+        filename = re.sub(r'\s+', '-', filename)
+        filename = re.sub(r'[^a-zA-Z0-9\-_.]', '', filename)  # 只保留字母、数字、连字符、下划线和点
+        filename = filename.strip('-')
+
     return filename if filename else "untitled"
 
 
@@ -285,7 +385,18 @@ def main():
         if not safe_title.endswith('.md'):
             safe_title = safe_title.rstrip('.')
     else:
-        safe_title = sanitize_filename(title)
+        # 先尝试生成建议的英文文件名
+        suggested_name = suggest_english_filename(title)
+
+        # 如果建议的英文名看起来合理，优先使用它
+        if suggested_name and suggested_name != "untitled" and not suggested_name.startswith("blog-post-"):
+            safe_title = suggested_name
+            print(f"使用建议的英文文件名: {suggested_name}")
+        else:
+            safe_title = sanitize_filename(title)
+            # 显示建议但不自动使用
+            print(f"建议的英文文件名: {suggested_name}")
+            print(f"提示: 如需使用英文文件名，可在命令中添加 --filename '{suggested_name}'")
 
     output_file = SOURCE_POSTS_DIR / f"{safe_title}.md"
 

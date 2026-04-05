@@ -69,6 +69,7 @@ python3 .claude/skills/yuque-to-post/yuque-to-post.py \
 python3 .claude/skills/yuque-to-post/yuque-to-post.py \
   https://www.yuque.com/user/repo/slug \
   --desc "深入解析 Java 8 Stream API 的核心原理与使用技巧，包含常见操作示例与性能优化建议。" \
+  --filename "java-stream-api-tutorial" \
   --tags "Java,Stream" \
   --categories "技术随笔"
 ```
@@ -77,18 +78,26 @@ python3 .claude/skills/yuque-to-post/yuque-to-post.py \
 
 - `<yuque_url>`: 语雀文档 URL (必需)
 - `--desc`: 文章描述 (必需，由 Claude 生成)
-- `--filename`: 英文文件名，小写连字符格式，如 `llm-agent-tech-equality` (默认使用标题转义)
+- `--filename`: 英文文件名，简短小写连字符格式，如 `my-blog-post` (默认使用标题转义，如果是中文标题则会尝试自动转换为英文)
 - `--tags`: 文章标签，逗号分隔 (默认: 未分类)
 - `--categories`: 文章分类，逗号分隔 (默认: 技术随笔)
 - `--commit`: 生成后自动执行 `git add` 和 `git commit`
 - `--preview`: 仅预览内容，不生成文件
+
+## 文件名优化功能
+
+当文档标题为中文时，技能会自动尝试将其转换为简短的英文文件名：
+- "我的2025" → "my2025"
+- "2025年目标达成情况" → "2025-year-goals-achievement-status"
+- "技术分享心得" → "tech-share-insights"
+- "年终总结" → "year-end-summary"
 
 ## 生成的 Front Matter 格式
 
 ```yaml
 ---
 title: "文章标题"
-date: 2026-03-22 14:30
+date: 2026-04-05 17:04
 tags:
    - 标签1
    - 标签2
@@ -102,5 +111,5 @@ description: "Claude生成的智能描述，约50字左右..."
 
 1. **首次使用 yuque-fetcher**: 会弹出浏览器窗口要求登录语雀
 2. **描述生成**: 由 Claude 基于文档内容智能生成，非简单提取
-3. **文件名**: 基于文章标题自动生成，冲突时添加序号后缀
+3. **文件名**: 优先使用英文文件名以提升SEO友好性；如未指定 --filename 参数，将尝试从中文标题自动生成英文文件名
 4. **图片**: 通过 yuque-fetcher 自动处理并上传到图床

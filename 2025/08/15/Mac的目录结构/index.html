@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="详细介绍MacOS系统目录结构及作为开发工具的最佳实践，涵盖常用命令、环境配置和系统管理技巧，帮助开发者更好地使用Mac进行开发工作。"/>
+
+
+
+
+  <meta name="keywords" content="MacOS,开发工具,系统管理,环境配置," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="王星星的魔灯" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="https://wxxlamp.cn/2025/08/15/Mac的目录结构/"/>
+
+
+<meta name="description" content="详细介绍MacOS系统目录结构及作为开发工具的最佳实践，涵盖常用命令、环境配置和系统管理技巧，帮助开发者更好地使用Mac进行开发工作。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="程序员如何配置MBP">
+<meta property="og:url" content="https://wxxlamp.cn/2025/08/15/Mac%E7%9A%84%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84/index.html">
+<meta property="og:site_name" content="王星星的魔灯">
+<meta property="og:description" content="详细介绍MacOS系统目录结构及作为开发工具的最佳实践，涵盖常用命令、环境配置和系统管理技巧，帮助开发者更好地使用Mac进行开发工作。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/b7b51d7e_mac_folders.png">
+<meta property="article:published_time" content="2025-08-15T04:05:00.000Z">
+<meta property="article:modified_time" content="2026-04-05T07:19:32.897Z">
+<meta property="article:author" content="Wxx">
+<meta property="article:tag" content="MacOS">
+<meta property="article:tag" content="开发工具">
+<meta property="article:tag" content="环境配置">
+<meta property="article:tag" content="系统管理">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/b7b51d7e_mac_folders.png">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/syst/dist/SmileySans-Oblique/result.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/syst/dist/SmileySans-Oblique/result.css"></noscript>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+    }
+  };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+
+  
+
+
+
+    <title> 程序员如何配置MBP - 王星星的魔灯 </title>
+  <meta name="generator" content="Hexo 8.1.1"></head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">王星星的魔灯</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="menu-item menu-item-resume">
+                        <a href="/resume" class="resume-nav-label" onclick="event.preventDefault()">Resume</a>
+                        <ul class="resume-lang-dropdown">
+                            <li><a href="/resume">中文简历</a></li>
+                            <li><a href="/resume-en">English</a></li>
+                        </ul>
+                    </li>
+                    
+                
+                <li class="menu-item">
+                    <a href="/atom.xml">RSS</a>
+                </li>
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          程序员如何配置MBP
+        
+      </h1>
+
+      <time class="post-time">
+          8月 15 2025
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>一转眼在公司四周年了，公司给我换了一个mbp14作为新的主子。</p>
+<p>因为四年前刚接触Mac，所以不管安装什么都是下一步，导致有时候会发生莫名其妙的环境问题，什么mvn命令找不到，python版本不一致等等。正好趁着mbp13正式退役，抽时间了解下MAC系统。</p>
+<p>同时，自己也不清楚安装的各种数据究竟存储在哪里。所以，借用这个机会，系统性的整理和学习下MacOS的基本概念和操作。</p>
+<p>使用姿势可以直接看第二部分</p>
+<h1 id="Mac的目录结构"><a href="#Mac的目录结构" class="headerlink" title="Mac的目录结构"></a>Mac的目录结构</h1><p>类unix系统，不用像windows一样进行磁盘分区，所以我们也不用担心C盘垃圾数据太多影响操作系统的运行。在MAC中下载数据的时候，我们也不用考虑究竟要下载到哪个磁盘，这无疑降低了我们的决策成本。但是作为新手，还是要先粗略的了解下MAC的目录结构。</p>
+<h2 id="1-1-系统目录"><a href="#1-1-系统目录" class="headerlink" title="1.1 系统目录"></a>1.1 系统目录</h2><p>系统目录在平时的使用中几乎接触不到，常见的可能有以下几个：</p>
+<p><code>/Applications</code>一些所有用户共享的app会安装在本目录下（使用homebrew会默认安装应用到该系统）</p>
+<p>下面的表格中是一些系统目录常见的功能，其中前四个是与日常开发和使用相关的，其他的关系不大。</p>
+<table>
+<thead>
+<tr>
+<th><strong>目录名</strong></th>
+<th><strong>主要功能</strong></th>
+<th><strong>特点</strong></th>
+<th><strong>权限要求</strong></th>
+<th><strong>常见用法</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&#x2F;Applications</td>
+<td>系统级应用程序</td>
+<td>所有用户共享</td>
+<td>需要管理员权限</td>
+<td>安装供所有用户使用的应用</td>
+</tr>
+<tr>
+<td>&#x2F;bin</td>
+<td>基本系统命令</td>
+<td>核心可执行文件</td>
+<td>系统级保护</td>
+<td>ls, cp, mv等基础命令</td>
+</tr>
+<tr>
+<td>&#x2F;Volumes</td>
+<td>挂载点</td>
+<td>外部设备挂载</td>
+<td>系统管理</td>
+<td>USB、网络驱动器访问点</td>
+</tr>
+<tr>
+<td>&#x2F;opt</td>
+<td>第三方软件包</td>
+<td>可选软件安装</td>
+<td>需要管理员权限</td>
+<td>Homebrew等包管理器使用</td>
+</tr>
+<tr>
+<td>&#x2F;System</td>
+<td>macOS核心系统文件</td>
+<td>系统保护，只读</td>
+<td>系统级保护</td>
+<td>⚠️ 不要修改，系统运行必需</td>
+</tr>
+<tr>
+<td>&#x2F;Library</td>
+<td>系统级库和配置</td>
+<td>系统共享资源</td>
+<td>需要管理员权限</td>
+<td>系统框架、插件、字体等</td>
+</tr>
+<tr>
+<td>&#x2F;Users</td>
+<td>所有用户主目录</td>
+<td>包含所有用户文件夹</td>
+<td>系统管理</td>
+<td>用户数据存储根目录</td>
+</tr>
+<tr>
+<td>&#x2F;sbin</td>
+<td>系统管理命令</td>
+<td>管理员专用命令</td>
+<td>需要root权限</td>
+<td>系统维护和配置工具</td>
+</tr>
+<tr>
+<td>&#x2F;usr</td>
+<td>用户程序和库</td>
+<td>用户级系统程序</td>
+<td>部分需要管理员权限</td>
+<td>编程工具、库文件</td>
+</tr>
+<tr>
+<td>&#x2F;etc</td>
+<td>系统配置文件</td>
+<td>全局配置</td>
+<td>需要管理员权限</td>
+<td>系统服务配置、网络设置</td>
+</tr>
+<tr>
+<td>&#x2F;var</td>
+<td>可变数据文件</td>
+<td>动态变化的文件</td>
+<td>混合权限</td>
+<td>日志文件、缓存、邮件队列</td>
+</tr>
+<tr>
+<td>&#x2F;tmp</td>
+<td>临时文件</td>
+<td>重启后清除</td>
+<td>所有用户可写</td>
+<td>临时数据存储</td>
+</tr>
+<tr>
+<td>&#x2F;dev</td>
+<td>设备文件</td>
+<td>硬件设备接口</td>
+<td>系统管理</td>
+<td>硬件设备访问接口</td>
+</tr>
+<tr>
+<td>&#x2F;private</td>
+<td>私有系统文件</td>
+<td>系统内部文件</td>
+<td>系统级保护</td>
+<td>⚠️ 系统内部使用，勿修改</td>
+</tr>
+<tr>
+<td>&#x2F;home</td>
+<td>用户目录符号链接</td>
+<td>指向&#x2F;Users</td>
+<td>系统管理</td>
+<td>兼容Unix系统的用户目录</td>
+</tr>
+<tr>
+<td>&#x2F;cores</td>
+<td>核心转储文件</td>
+<td>程序崩溃信息</td>
+<td>系统生成</td>
+<td>调试崩溃程序使用</td>
+</tr>
+</tbody></table>
+<h2 id="1-2-用户目录"><a href="#1-2-用户目录" class="headerlink" title="1.2 用户目录"></a>1.2 用户目录</h2><p>日常的工作区基本都在 <code>/Users/$user/</code>目录下。所以我们日常数据的读写基本都在该目录下面。和windows系统一样，Mac推荐了一些常见的使用目录，供我们存放数据：</p>
+<table>
+<thead>
+<tr>
+<th><strong>目录名</strong></th>
+<th><strong>主要功能</strong></th>
+<th><strong>特点</strong></th>
+<th><strong>推荐用法</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>~&#x2F;Applications</td>
+<td>用户个人应用</td>
+<td>仅当前用户可用</td>
+<td>✅ <strong>安装个人应用的最佳位置</strong></td>
+</tr>
+<tr>
+<td>~&#x2F;Documents</td>
+<td>个人文档</td>
+<td>用户主要工作区</td>
+<td>✅ <strong>存储个人文档、项目文件、代码</strong></td>
+</tr>
+<tr>
+<td>~&#x2F;Downloads</td>
+<td>下载文件</td>
+<td>浏览器默认下载位置</td>
+<td>✅ <strong>下载文件的默认存储位置</strong></td>
+</tr>
+<tr>
+<td>~&#x2F;Desktop</td>
+<td>桌面文件</td>
+<td>桌面显示的文件</td>
+<td>桌面快捷方式、临时文件</td>
+</tr>
+<tr>
+<td>~&#x2F;Library</td>
+<td>用户配置和数据</td>
+<td>应用程序配置</td>
+<td>✅ <strong>开发者配置文件存储位置</strong></td>
+</tr>
+<tr>
+<td>~&#x2F;Pictures</td>
+<td>图片和照片</td>
+<td>媒体文件管理</td>
+<td>个人照片、截图、图片素材</td>
+</tr>
+<tr>
+<td>~&#x2F;Movies</td>
+<td>视频文件</td>
+<td>视频媒体库</td>
+<td>个人视频收藏</td>
+</tr>
+<tr>
+<td>~&#x2F;Music</td>
+<td>音乐文件</td>
+<td>音频媒体库</td>
+<td>音乐库、音频文件</td>
+</tr>
+</tbody></table>
+<h2 id="1-3-常用配置文件"><a href="#1-3-常用配置文件" class="headerlink" title="1.3 常用配置文件"></a>1.3 常用配置文件</h2><p>除了常见的目录外，用户根目录还有一些很重要的配置文件，这些文件会在终端session更新的时候加载，我们常见的非系统命令（如java、mvn、node）等都是通过这些文件在session初始化时更细的。</p>
+<p>其中在Mac Catalina之前，使用的是.bash_profile和.bashrc，现在这两个文件只作为兼容保留，推荐在Mac Catalina之后使用.zprofile和.zshrc。他们有什么作用呢？</p>
+<p>当我们打开terminal.app时，系统会默认执行一遍.bash_profile和.zprofile里面的脚本</p>
+<p>具体的执行顺序如下：</p>
+<p><code>login → /etc/zshenv → ~/.zshenv → /etc/zprofile → ~/.zprofile → /etc/zshrc → ~/.zshrc → /etc/zlogin → ~/.zlogin</code></p>
+<p>总的来说，第一次打开时，执行.zprofile，以后新开窗口（如在vscode中打开terminal）时执行.zshrc。所以推荐将全局变量和PATH写到.zprofile中，将函数、alias写到.zshrc中。注意，不建议把PATH或者JAVA_HOME写到.zprofile中，这样有可能会导致PATH路径重复且特别长，影响which查找效率。同时，GUI程序也会默认读取.zprofile的配置</p>
+<p>具体的分类如下：</p>
+<table>
+<thead>
+<tr>
+<th><strong>文件名</strong></th>
+<th><strong>Shell类型</strong></th>
+<th><strong>加载时机</strong></th>
+<th><strong>主要用途</strong></th>
+<th><strong>当前状态</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>.zprofile</strong></td>
+<td>Zsh</td>
+<td>登录时加载一次</td>
+<td>登录初始化、GUI读取</td>
+<td>🟢 推荐使用</td>
+</tr>
+<tr>
+<td><strong>.zshrc</strong></td>
+<td>Zsh</td>
+<td>每次新终端会话</td>
+<td>Zsh交互式会话配置</td>
+<td>🟢主要配置文件</td>
+</tr>
+<tr>
+<td><strong>.bash_profile</strong></td>
+<td>Bash</td>
+<td>登录时加载一次</td>
+<td>Bash shell环境配置</td>
+<td>🟡 兼容性保留</td>
+</tr>
+</tbody></table>
+<p>如果我们希望脚本的配置生效，只需要执行下面的命令即可：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-4-隐秘的文件夹"><a href="#1-4-隐秘的文件夹" class="headerlink" title="1.4 隐秘的文件夹"></a>1.4 隐秘的文件夹</h2><p>在MAC的用户根目录中，有很多配置文件夹，以<code>.xx</code>开头，他们一般是存储各种程序（pyenv,git,nvm,vscode等）的基础配置，如下：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/b7b51d7e_mac_folders.png" alt="Mac隐秘文件夹结构"></p>
+<h1 id="如何下载常用的工具"><a href="#如何下载常用的工具" class="headerlink" title="如何下载常用的工具"></a>如何下载常用的工具</h1><p>Mac的下载工具方式大体和windows一样，都包含app store和通过浏览器下载安装包两种方式。但是除此之外，Mac作为类unix系统，还是有一些更“高效”的下载方式</p>
+<h2 id="常用的下载工具"><a href="#常用的下载工具" class="headerlink" title="常用的下载工具"></a>常用的下载工具</h2><p>把mac作为开发工具，一定会下载很多没有GUI的程序，这种情况下，就不推荐用浏览器下载了。一般可以通过homebrew和curl下载。比较推荐homebrew，他是Mac专门用来管理软件包的工具，我们可以通过这个工具对常见的软件进行包管理、安装、删除、升级等，避免自己将来在删除程序的时候有删除不干净的情况。但是，请注意，homebrew无法安装同一软件的多个版本。譬如电脑上既存在python2和python3，这借助homebrew的能力是实现不了的，可以通过pyenv等专用工具实现，这个下文会讲到</p>
+<table>
+<thead>
+<tr>
+<th><strong>使用场景</strong></th>
+<th><strong>推荐工具</strong></th>
+<th><strong>原因</strong></th>
+<th><strong>存储目录</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>日常文件下载</td>
+<td>Safari&#x2F;Chrome</td>
+<td>简单易用，安全可靠</td>
+<td><del>&#x2F;Downloads&#x2F;和</del>&#x2F;Library&#x2F;Application Support&#x2F;Google&#x2F;Chrome和~&#x2F;Applications&#x2F;Chrome Apps&#x2F;</td>
+</tr>
+<tr>
+<td>批量&#x2F;自动化下载</td>
+<td>curl</td>
+<td>脚本化，可定制</td>
+<td>通过<code>-o</code>制定目录</td>
+</tr>
+<tr>
+<td>UI软件安装</td>
+<td>App Store</td>
+<td>官方集成</td>
+<td><del>&#x2F;Library&#x2F;Application Support&#x2F;App Store&#x2F;和</del>&#x2F;Applications&#x2F;</td>
+</tr>
+<tr>
+<td>命令行工具下载</td>
+<td>Homebrew</td>
+<td>包统一管理，类似于apt,pyenv,nvm</td>
+<td>&#x2F;opt&#x2F;homebrew&#x2F;</td>
+</tr>
+</tbody></table>
+<h2 id="常见的homebrew命令"><a href="#常见的homebrew命令" class="headerlink" title="常见的homebrew命令"></a>常见的homebrew命令</h2><p>先列举下homebrew的常见命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看Homebrew安装路径</span></span><br><span class="line">brew --prefix</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看某个包的安装位置</span></span><br><span class="line">brew --prefix &lt;package-name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 清理缓存</span></span><br><span class="line">brew cleanup</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看Homebrew占用空间</span></span><br><span class="line"><span class="built_in">du</span> -sh $(brew --prefix)</span><br><span class="line"></span><br><span class="line"><span class="comment">#删除缓存文件</span></span><br><span class="line"><span class="built_in">rm</span> -rf <span class="string">&quot;<span class="subst">$(brew --cache)</span>&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#重新安装损坏的软件</span></span><br><span class="line">brew reinstall git</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看安装的软件及版本</span></span><br><span class="line">brew list --versions</span><br><span class="line"></span><br><span class="line"><span class="comment">#每日维护例程</span></span><br><span class="line">brew update &amp;&amp; brew upgrade &amp;&amp; brew cleanup</span><br><span class="line"></span><br><span class="line"><span class="comment">#搜索并安装软件</span></span><br><span class="line">brew search python</span><br><span class="line">brew info python@3.11</span><br><span class="line">brew install python@3.11</span><br><span class="line"></span><br><span class="line"><span class="comment"># 服务管理</span></span><br><span class="line">brew install mysql</span><br><span class="line">brew services start mysql</span><br><span class="line">brew services list</span><br></pre></td></tr></table></figure>
+
+<p>如果使用homebrew的话，要注意设置国内的镜像。</p>
+<h1 id="常用的Mac-App"><a href="#常用的Mac-App" class="headerlink" title="常用的Mac App"></a>常用的Mac App</h1><p>这里列举下常用的app以及他们的安装方式</p>
+<h2 id="日常"><a href="#日常" class="headerlink" title="日常"></a>日常</h2><table>
+<thead>
+<tr>
+<th>应用名称</th>
+<th>作用</th>
+<th>安装方式</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Chrome</td>
+<td>浏览器&#x2F;主</td>
+<td>brew、浏览器、appStore</td>
+<td>主浏览器使用</td>
+</tr>
+<tr>
+<td>Firefox</td>
+<td>浏览器&#x2F;备</td>
+<td>brew、浏览器、appStore</td>
+<td>特殊情况双开浏览器</td>
+</tr>
+<tr>
+<td>搜狗输入法</td>
+<td>习惯了</td>
+<td>brew、浏览器、appStore</td>
+<td>记忆比mac自带好，但是要小心泄露</td>
+</tr>
+<tr>
+<td>微信</td>
+<td>通讯</td>
+<td>brew、浏览器、appStore</td>
+<td>Mac可以双开</td>
+</tr>
+<tr>
+<td>maccy</td>
+<td>剪切板</td>
+<td>brew、github</td>
+<td>存储近50条粘贴的记录</td>
+</tr>
+<tr>
+<td>Scroll Reverser</td>
+<td>鼠标翻转</td>
+<td><a target="_blank" rel="noopener" href="https://scroll-reverser.macupdate.com/">浏览器</a></td>
+<td>外接鼠标的滚轮方向和windows一致</td>
+</tr>
+</tbody></table>
+<h2 id="效率工具"><a href="#效率工具" class="headerlink" title="效率工具"></a>效率工具</h2><table>
+<thead>
+<tr>
+<th>应用名称</th>
+<th>作用</th>
+<th>安装方式</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Item2</td>
+<td>终端</td>
+<td>brew、浏览器</td>
+<td>比Mac自带的Terminal好用</td>
+</tr>
+<tr>
+<td>ohmyzsh</td>
+<td>zsh自定义</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/ohmyzsh/ohmyzsh">github</a></td>
+<td>更换主题，安装高亮、自动补全、快捷跳转目录</td>
+</tr>
+<tr>
+<td>Idea</td>
+<td>Java开发</td>
+<td>浏览器、Jetbrain Toolbox</td>
+<td>Jetbrains Jvm系开发全家桶（rainbow插件）</td>
+</tr>
+<tr>
+<td>Pycharm</td>
+<td>Pyhon开发</td>
+<td>浏览器、Jetbrain Toolbox</td>
+<td>Jetbrains Python开发全家桶</td>
+</tr>
+<tr>
+<td>WebStorm</td>
+<td>Js开发</td>
+<td>浏览器、Jetbrain Toolbox</td>
+<td>Jetbrains Web开发全家桶</td>
+</tr>
+<tr>
+<td>vscode</td>
+<td>编辑文本</td>
+<td>brew、浏览器</td>
+<td>python、Js开发（命令行直接code xx唤醒超方便）</td>
+</tr>
+<tr>
+<td>light proxy</td>
+<td>代理工具</td>
+<td>github</td>
+<td>开发流量监控</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/bannedbook/ClashX">clashX</a></td>
+<td></td>
+<td><a target="_blank" rel="noopener" href="https://github.com/bannedbook/ClashX">github</a></td>
+<td>代理</td>
+</tr>
+<tr>
+<td>Docker</td>
+<td>虚拟化</td>
+<td>brew</td>
+<td>cask和命令行都可以</td>
+</tr>
+</tbody></table>
+<p>对于ohmyzsh来说，需要安装一些插件才可以更好的使用：</p>
+<blockquote>
+<p>更换<a target="_blank" rel="noopener" href="https://github.com/spaceship-prompt/spaceship-prompt">spaceship主题</a>，安装<a target="_blank" rel="noopener" href="https://github.com/zsh-users/zsh-syntax-highlighting/tree/master">zsh-syntax-highlighting</a>插件，高亮显示命令等；安装<a target="_blank" rel="noopener" href="https://github.com/zsh-users/zsh-autosuggestions">zsh-autosuggestions</a>插件，历史命令自动补全；安装<a target="_blank" rel="noopener" href="https://github.com/wting/autojump">autojump</a>插件，快捷跳转目录</p>
+</blockquote>
+<h2 id="开发环境"><a href="#开发环境" class="headerlink" title="开发环境"></a>开发环境</h2><h3 id="git支持多仓库"><a href="#git支持多仓库" class="headerlink" title="git支持多仓库"></a>git支持多仓库</h3><ol>
+<li>通过ssh工具，生成两个git秘钥和公钥，将生成后的公钥复制到对应的多个仓库设置中</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -b 4096 -C &quot;wxxlamp@foxmail.com&quot; -f ~/.ssh/id_rsa_person</span><br><span class="line">ssh-keygen -t rsa -b 4096 -C &quot;wxxlamp@work.com&quot; -f ~/.ssh/id_rsa_work</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>同时将这两个密钥分别配置在gitlab仓库和github后台上，然后配置.ssh&#x2F;config如下</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># GitHub</span></span><br><span class="line">Host github.com</span><br><span class="line">    HostName github.com</span><br><span class="line">    User wxx</span><br><span class="line"></span><br><span class="line"><span class="comment"># 对应工作仓库</span></span><br><span class="line">Host gitlab.work.com</span><br><span class="line">    HostName gitlab.work.com</span><br><span class="line">    User work</span><br><span class="line">    IdentityFile ~/.ssh/id_rsa_work</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>使用<code>ssh -T@github.com</code>进行联通性测试</li>
+</ol>
+<h3 id="Java-Maven-Runtime"><a href="#Java-Maven-Runtime" class="headerlink" title="Java&amp;Maven Runtime"></a>Java&amp;Maven Runtime</h3><p>因为homebrew不支持单app多版本，所以像Java、Python、Node等环境需要特殊的工具配置。</p>
+<p>对于Jvm系来说，可以使用sdkman全局管理不同版本的Java和maven配置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 安装 SDKMAN</span></span><br><span class="line">curl -s <span class="string">&quot;https://get.sdkman.io&quot;</span> | bash</span><br><span class="line"><span class="built_in">source</span> <span class="string">&quot;<span class="variable">$HOME</span>/.sdkman/bin/sdkman-init.sh&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 查询并安装 Java 21</span></span><br><span class="line">sdk list java</span><br><span class="line">sdk install java 21.0.4-tem</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 设为默认</span></span><br><span class="line">sdk default java 21.0.4-tem</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 安装 Maven 最新版</span></span><br><span class="line">sdk install maven</span><br><span class="line"></span><br><span class="line"><span class="comment"># 5. 查看结果</span></span><br><span class="line">sdk current</span><br></pre></td></tr></table></figure>
+
+<p>常见的sdkman命令</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+<th>示例 &#x2F; 备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>查看所有可装 candidate</strong></td>
+<td>列出支持的语言&#x2F;工具</td>
+<td><code>sdk list</code></td>
+</tr>
+<tr>
+<td><strong>查看某个 candidate 的所有版本</strong></td>
+<td>例如 java</td>
+<td><code>sdk list java</code></td>
+</tr>
+<tr>
+<td><strong>安装指定版本</strong></td>
+<td>安装 openjdk 17</td>
+<td><code>sdk install java 17.0.12</code></td>
+</tr>
+<tr>
+<td><strong>安装并使用最新稳定版</strong></td>
+<td>省略版本号即可</td>
+<td><code>sdk install maven</code></td>
+</tr>
+<tr>
+<td><strong>切换到已安装的某个版本</strong></td>
+<td>仅对当前 shell 生效</td>
+<td><code>sdk use java 21.0.4-tem</code></td>
+</tr>
+<tr>
+<td><strong>设置默认版本</strong></td>
+<td>全局生效（写入 ~&#x2F;.sdkmanrc）</td>
+<td><code>sdk default java 21.0.4-tem</code></td>
+</tr>
+<tr>
+<td><strong>查看当前正在使用的版本</strong></td>
+<td>列出所有 candidate 的当前版本</td>
+<td><code>sdk current</code></td>
+</tr>
+<tr>
+<td><strong>查看单个 candidate 当前版本</strong></td>
+<td>只看 java</td>
+<td><code>sdk current java</code></td>
+</tr>
+<tr>
+<td><strong>卸载某个版本</strong></td>
+<td>彻底删除本地副本</td>
+<td><code>sdk uninstall java 11.0.25</code></td>
+</tr>
+<tr>
+<td><strong>查看环境变量路径</strong></td>
+<td>调试&#x2F;脚本中常用</td>
+<td><code>sdk home java 17.0.12-tem</code></td>
+</tr>
+</tbody></table>
+<h3 id="Python-runtime"><a href="#Python-runtime" class="headerlink" title="Python runtime"></a>Python runtime</h3><p>python市面上的管理器是在太多了。同时，要注意，MAC出厂就会自带python运行时，在<code>/usr/bin/python3</code>目录下。所以如果不是开发python项目，使用Mac自带即可。但是很多程序对python的版本都有要求，所以我们要通过第三方工具来完成python版本的切换和包管理。令人遗憾的是，许多其他的python版本和包管理工具，对于初学者来说，不眼花缭乱是不可能的，如下所示：</p>
+<table>
+<thead>
+<tr>
+<th align="left"><strong>工具</strong></th>
+<th align="left"><strong>核心作用</strong></th>
+<th align="left"><strong>管理范围</strong></th>
+<th align="left"><strong>典型场景</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">venv</td>
+<td align="left">轻量级虚拟环境管理</td>
+<td align="left">仅虚拟环境（依赖隔离）</td>
+<td align="left">简单项目，依赖 Python 3.3 + 内置功能</td>
+</tr>
+<tr>
+<td align="left">virtualenv</td>
+<td align="left">增强版虚拟环境管理</td>
+<td align="left">仅虚拟环境（依赖隔离）</td>
+<td align="left">多项目依赖隔离，支持 Python 2&#x2F;3</td>
+</tr>
+<tr>
+<td align="left">pyenv</td>
+<td align="left">Python 版本管理</td>
+<td align="left">仅 Python 解释器版本</td>
+<td align="left">多版本 Python 共存切换</td>
+</tr>
+<tr>
+<td align="left">conda</td>
+<td align="left">环境管理（不止 Python）</td>
+<td align="left">版本管理 + 虚拟环境 + 包管理</td>
+<td align="left">数据科学、跨语言项目</td>
+</tr>
+</tbody></table>
+<p>一句话解释，pyenv是用来切换python版本的，virtualenv是提供虚拟环境，各个环境下载的python依赖相互隔离。conda是virtualenv的增强版，可以管理除了python以外其他科学计算的包</p>
+<p>推荐：使用pyenv做全局的python版本管理，同时使用pyenv-virtualenv做python的虚拟环境管理。除此之外，把conda作为pyenv的一个虚拟环境，如果项目需要使用非python包，则通过pyenv切换到conda环境。</p>
+<blockquote>
+<p>这里可以稍微聊下几种工具提供虚拟环境的机制。</p>
+<p>对于pyenv来说，首先要保证python的PATH指向pyenv，如果设置global的python版本，本质是在<code>~/.pyenv/version</code>文件中设置python版本。如果是设置local的python版本，说明只在当前文件夹生效，本质是在文件夹的根目录创建一个<code>.python-version</code>的文件，里面记录了python的版本</p>
+<p>对于virtualenv来说，当我们激活当前虚拟环境，他会在当前目录新建一个venv目录，该目录会存储当前虚拟环境的所有依赖（python版本仍然使用的pyenv指定的版本，不会新copy一份）。如果关闭shell，下次打开需要重新激活环境</p>
+<p>对于conda来说，当我们激活当前虚拟环境，他会在conda安装目录新建一个虚拟环境目录，并且会copy一份python版本，同时后续的所有依赖也会存储在该目录。如果关闭shell，下次打开需要重新激活环境</p>
+</blockquote>
+<p>常见命令行如下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">确认当前python的路径</span></span><br><span class="line">which python3</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">======= pyenv <span class="built_in">command</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">List all installed Python versions <span class="keyword">in</span> pyenv</span></span><br><span class="line">pyenv versions</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Install a specific Python version (<span class="keyword">if</span> not already installed):</span></span><br><span class="line">pyenv install 3.11.4</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">set</span> the python system or current versions</span></span><br><span class="line">pyenv global 3.11.4  </span><br><span class="line"></span><br><span class="line">cd /path/to/your/project</span><br><span class="line">pyenv local 3.10.8  # Creates a .python-version file in the project</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">======= conda <span class="built_in">command</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">通过pyenv管理conda环境</span></span><br><span class="line">pyenv install miniconda3-latest</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">shell级别切换python版本</span></span><br><span class="line">pyenv shell miniconda3-latest</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">List all conda environments:</span></span><br><span class="line">conda env list</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Create a new environment with a specific Python version</span></span><br><span class="line">conda create --name myenv python=3.9 </span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Activate an environment</span> </span><br><span class="line">conda activate myenv</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看当前pip安装的依赖地址</span></span><br><span class="line">pip show pip | grep Location</span><br></pre></td></tr></table></figure>
+
+<h3 id="Node-runtime"><a href="#Node-runtime" class="headerlink" title="Node runtime"></a>Node runtime</h3><p>可以使用nvm进行管理node的版本。nvm推荐直接使用curl下载</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash</span><br><span class="line">nvm install --lts     # 安装最新的 LTS 版本</span><br><span class="line">nvm install 20.12.2   # 安装指定版本</span><br><span class="line">nvm use 20.12.2       # 切换到指定版本</span><br><span class="line">nvm current</span><br><span class="line">nvm list</span><br></pre></td></tr></table></figure>
+
+
+
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/MacOS/">MacOS</a>
+		  
+			<a href="/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a>
+		  
+			<a href="/tags/%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86/">系统管理</a>
+		  
+			<a href="/tags/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">环境配置</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2025/09/07/what-is-bitcion-and-blockchain/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">万字长文，从零科普比特币</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2025/03/07/my-2024/">
+        <span class="next-text nav-default">我的2024</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    
+
+<div class="github-comments">
+  <div class="comments-title">💬 Comments</div>
+  <p style="color: #666; font-size: 0.9em; margin-bottom: 1em;">
+    Comments require <a href="https://github.com/apps/giscus" target="_blank" rel="noopener">Giscus App</a> installed on your GitHub repository.
+  </p>
+  <script src="https://giscus.app/client.js"
+    data-repo="wxxlamp/wxxlamp.github.io"
+    data-repo-id="R_kgDOCiYteA"
+    data-category="General"
+    data-category-id="DIC_kwDOCiYteM4CelIo"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="light"
+    data-lang="en"
+    crossorigin="anonymous"
+    async>
+  </script>
+</div>
+
+
+
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+    
+
+<div class="toc-container" id="toc-container">
+  <div class="toc-title">Contents</div>
+  <ul class="toc-list" id="toc-list">
+    
+  </ul>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Generate TOC from post content
+  const content = document.querySelector('.post-content');
+  const tocList = document.getElementById('toc-list');
+
+  if (!content || !tocList) return;
+
+  const headings = content.querySelectorAll('h1, h2, h3, h4');
+
+  if (headings.length < 2) {
+    document.getElementById('toc-container').style.display = 'none';
+    return;
+  }
+
+  headings.forEach(function(heading, index) {
+    // Add ID to heading if not exists
+    if (!heading.id) {
+      heading.id = 'heading-' + index;
+    }
+
+    const li = document.createElement('li');
+    li.className = 'toc-' + heading.tagName.toLowerCase();
+
+    const a = document.createElement('a');
+    a.href = '#' + heading.id;
+    a.textContent = heading.textContent;
+    a.onclick = function(e) {
+      e.preventDefault();
+      heading.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    li.appendChild(a);
+    tocList.appendChild(li);
+  });
+
+  // Active section highlighting
+  const tocItems = tocList.querySelectorAll('li');
+
+  function updateActiveToc() {
+    const scrollPos = window.scrollY + 100;
+
+    headings.forEach(function(heading, index) {
+      const top = heading.offsetTop;
+      const bottom = top + heading.offsetHeight;
+
+      if (scrollPos >= top && scrollPos < bottom) {
+        tocItems.forEach(function(item) {
+          item.classList.remove('active');
+        });
+        if (tocItems[index]) {
+          tocItems[index].classList.add('active');
+        }
+      }
+    });
+  }
+
+  window.addEventListener('scroll', updateActiveToc);
+  updateActiveToc();
+});
+</script>
+
+
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2014 -
+    
+    2026
+    <span class="footer-author">Wxx.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> and <a class="theme-link" target="_blank" rel="noopener" href="https://github.com/frostfan/hexo-theme-polarbear">Polar Bear</a>
+    </span>
+</span>
+<span class="site-stats" style="display: block; margin-top: 8px; font-size: 0.85rem; color: #666;">
+    Total Visits: <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> ·
+    Unique Visitors: <span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>
+</span>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>

@@ -34,22 +34,22 @@ python3 .claude/skills/md-image-migrator/md-image-migrator.py <markdown文件> [
 ### 参数
 
 - `<file>`: Markdown 文件路径 (必需)
-- `--provider`: 图床提供商 - `imgur` | `smms` | `github` (默认: `imgur`)
+- `--provider`: 图床提供商 - `imgur` | `smms` | `github` (默认: `github`)
 - `--dry-run`: 预览模式，只显示找到的图片，不执行下载和上传
 
 ### 示例
 
-**基础用法** (使用默认 Imgur):
+**基础用法** (使用默认 GitHub 图床):
 ```bash
 python3 .claude/skills/md-image-migrator/md-image-migrator.py \
   source/_posts/cross-border-ecommerce-transaction-flow.md
 ```
 
-**使用 GitHub 图床**:
+**使用 Imgur 图床**:
 ```bash
 python3 .claude/skills/md-image-migrator/md-image-migrator.py \
   source/_posts/article.md \
-  --provider github
+  --provider imgur
 ```
 
 **预览模式** (查看有哪些图片):
@@ -75,11 +75,11 @@ python3 .claude/skills/md-image-migrator/md-image-migrator.py \
 
 [1/9] 处理: https://cdn.nlark.com/yuque/0/2026/png/719664/1767518916...
   ✅ 已下载: a1b2c3d4.png
-  ✅ 已上传: https://i.imgur.com/xyz12345.png
+  ✅ 已上传: https://cdn.jsdelivr.net/gh/username/repo/image/xyz12345.png
 
 [2/9] 处理: https://cdn.nlark.com/yuque/0/2026/png/719664/1767518919...
   ✅ 已下载: e5f6g7h8.png
-  ✅ 已上传: https://i.imgur.com/abc67890.png
+  ✅ 已上传: https://cdn.jsdelivr.net/gh/username/repo/image/abc67890.png
 
 ==================================================
 ✅ 完成! 已替换 9 个图片链接

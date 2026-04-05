@@ -67,7 +67,7 @@ def download_image(url: str, temp_dir: Path) -> Path:
         return None
 
 
-def upload_image(local_path: Path, provider: str = "imgur") -> str:
+def upload_image(local_path: Path, provider: str = "github") -> str:
     """使用 img-uploader 上传图片"""
     if not IMG_UPLOADER.exists():
         print(f"  ❌ 找不到 img-uploader: {IMG_UPLOADER}")
@@ -104,7 +104,7 @@ def upload_image(local_path: Path, provider: str = "imgur") -> str:
         return None
 
 
-def migrate_markdown_images(md_file: str, provider: str = "imgur", dry_run: bool = False):
+def migrate_markdown_images(md_file: str, provider: str = "github", dry_run: bool = False):
     """迁移 Markdown 文件中的图片"""
     md_path = Path(md_file)
     if not md_path.exists():
@@ -187,9 +187,9 @@ def main():
         """
     )
     parser.add_argument('file', help='Markdown 文件路径')
-    parser.add_argument('--provider', default='imgur',
+    parser.add_argument('--provider', default='github',
                         choices=['imgur', 'smms', 'github'],
-                        help='图床提供商 (默认: imgur)')
+                        help='图床提供商 (默认: github)')
     parser.add_argument('--dry-run', action='store_true',
                         help='预览模式，不执行实际下载和上传')
 

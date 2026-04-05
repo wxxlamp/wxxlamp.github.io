@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="本文详细记录了一次Maven编译时遇到Malformed \uxxxx异常的排查过程，通过分析堆栈、调试源码，最终定位到是本地Maven仓库中resolver-status.properties文件的编码问题，并提供了有效的解决方案。"/>
+
+
+
+
+  <meta name="keywords" content="Java,Maven,Debug," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="王星星的魔灯" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="https://wxxlamp.cn/2025/06/18/maven-malformed-exception-solution/"/>
+
+
+<meta name="description" content="本文详细记录了一次Maven编译时遇到Malformed \uxxxx异常的排查过程，通过分析堆栈、调试源码，最终定位到是本地Maven仓库中resolver-status.properties文件的编码问题，并提供了有效的解决方案。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="问题现象">
+<meta property="og:url" content="https://wxxlamp.cn/2025/06/18/maven-malformed-exception-solution/index.html">
+<meta property="og:site_name" content="王星星的魔灯">
+<meta property="og:description" content="本文详细记录了一次Maven编译时遇到Malformed \uxxxx异常的排查过程，通过分析堆栈、调试源码，最终定位到是本地Maven仓库中resolver-status.properties文件的编码问题，并提供了有效的解决方案。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/70c01355_c527162f.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/7a0d93ee_c4ed09dd.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/f866f3f1_0e220e30.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/c8d7adad_db686eae.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/0bfcdf39_005cedd1.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/13d2a10b_9c90a981.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/5da8029e_88a7ecd2.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/c0625668_fba539ac.png">
+<meta property="article:published_time" content="2025-06-18T10:30:00.000Z">
+<meta property="article:modified_time" content="2026-04-05T10:55:04.998Z">
+<meta property="article:author" content="Wxx">
+<meta property="article:tag" content="Debug">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="Maven">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/70c01355_c527162f.png">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/syst/dist/SmileySans-Oblique/result.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/syst/dist/SmileySans-Oblique/result.css"></noscript>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+    }
+  };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+
+  
+
+
+
+    <title> 问题现象 - 王星星的魔灯 </title>
+  <meta name="generator" content="Hexo 8.1.1"></head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">王星星的魔灯</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="menu-item menu-item-resume">
+                        <a href="/resume" class="resume-nav-label" onclick="event.preventDefault()">Resume</a>
+                        <ul class="resume-lang-dropdown">
+                            <li><a href="/resume">中文简历</a></li>
+                            <li><a href="/resume-en">English</a></li>
+                        </ul>
+                    </li>
+                    
+                
+                <li class="menu-item">
+                    <a href="/atom.xml">RSS</a>
+                </li>
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          问题现象
+        
+      </h1>
+
+      <time class="post-time">
+          6月 18 2025
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <h1 id="问题现象"><a href="#问题现象" class="headerlink" title="问题现象"></a>问题现象</h1><p>笔者在一次需求迭代的时候，从仓库拉下来了一个分支，然后肌肉记忆般的使用mvn reimport重新sync其他的依赖。本来以为这个已经点了几千次的操作会像往常一样顺利加载依赖，然后进入我最开心的写代码环节。结果却出现了下面的异常：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/70c01355_c527162f.png"></p>
+<p>看到这个异常一脸懵逼，难道是新拉下来的分支pom文件的编码有问题？</p>
+<p>伴随着这个怀疑，开始了问题排查之旅。</p>
+<h1 id="问题排查"><a href="#问题排查" class="headerlink" title="问题排查"></a>问题排查</h1><h2 id="Step-1-确认代码是否有问题"><a href="#Step-1-确认代码是否有问题" class="headerlink" title="Step 1. 确认代码是否有问题"></a>Step 1. 确认代码是否有问题</h2><p>打开应用的pom文件，发现没有修改过。同时为了double check，将该分支在aone上重新部署，没有出现编译异常，说明远程仓库的代码没有问题，是自己环境的问题。</p>
+<h2 id="Step-2-确认是否是IDE问题"><a href="#Step-2-确认是否是IDE问题" class="headerlink" title="Step 2. 确认是否是IDE问题"></a>Step 2. 确认是否是IDE问题</h2><p>既然代码没有问题，那就可能是IDE的缓存导致的，所以将IDE的缓存进行清空并且restart。为了保险起见，还特意删除了应用本地的仓库，重新git clone。但是不幸的是，依然没有解决这个问题。</p>
+<h2 id="Step-3-确认是否是依赖问题"><a href="#Step-3-确认是否是依赖问题" class="headerlink" title="Step 3. 确认是否是依赖问题"></a>Step 3. 确认是否是依赖问题</h2><p>现在回过头来思考，既然工程代码没有编码问题、IDE缓存也没有问题，那使用mvn refresh为什么要抛出<code>Malformed \uxxxx</code>异常呢？是否是加载其他二方包依赖的时候，解析二方包的文件导致的？</p>
+<p>带着这个问题，尝试google了下错误的内容，果然在stackflow中找到了解决方案，基本确定是maven解析repo依赖产生了问题</p>
+<h1 id="问题原因"><a href="#问题原因" class="headerlink" title="问题原因"></a>问题原因</h1><p>使用 <code>mvn compile -e</code>查看具体的堆栈，发现maven在解析的时候有问题：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/7a0d93ee_c4ed09dd.png"></p>
+<p>借用IDEA自带的maven debug功能，进入<code>java.util.Properties</code>开始debug</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/f866f3f1_0e220e30.png"></p>
+<p>发现确实有的依赖是乱码：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/c8d7adad_db686eae.png"></p>
+<p>往上找堆栈，发现下面这个文件确实有问题：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/0bfcdf39_005cedd1.png"></p>
+<p>打开文件一看，果然有下面的乱码：<br><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/13d2a10b_9c90a981.png"></p>
+<p>将这个文件删除就好了。</p>
+<p>然后重新import后，这个文件会重新生成：<br><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/5da8029e_88a7ecd2.png"></p>
+<p>发现已经没有这些乱码了。受到影响的项目也可以顺利build了，完结撒花。</p>
+<h1 id="问题思考"><a href="#问题思考" class="headerlink" title="问题思考"></a>问题思考</h1><ol>
+<li>大部分遇到的问题，Google和GPT都能处理。举一反三，内部中间件问题搜索下语雀和ATA可能也会有意想不到的收获。</li>
+<li>印象中大学时候应该遇到过这个问题，当时只是简单的删除了repo重新refresh就OK了，没有深入排查。同时，更加深刻地理解了好记性不如烂笔头，遇到问题还是到记录一下。</li>
+<li>resolver-status.properties的作用是什么？为什么删除resolver-status.properties就OK了？LLM答案如下：</li>
+</ol>
+<blockquote>
+<p><font style="color:rgba(0, 0, 0, 0.88);">resolver-status.properties文件是Maven依赖解析器的元数据文件，主要用于</font><strong><font style="color:rgba(0, 0, 0, 0.88);">跟踪依赖解析状态、缓存解析结果、记录仓库来源并优化构建性能</font></strong><font style="color:rgba(0, 0, 0, 0.88);">。</font></p>
+</blockquote>
+<blockquote>
+<p><font style="color:rgba(0, 0, 0, 0.88);">文件中出现\u0000（null字符）表示文件损坏，可能由</font><strong><font style="color:rgba(0, 0, 0, 0.88);">构建中断、磁盘空间不足、并发访问冲突或文件系统问题导致</font></strong><font style="color:rgba(0, 0, 0, 0.88);">。重新生成的文件正常是因为Maven会根据当前依赖信息重新创建正确的元数据，不包含损坏数据，这种自我修复机制确保了构建的健壮性。</font></p>
+</blockquote>
+<ol start="4">
+<li>如何避免避免mvn构建过程中的resolver-status.properties问题？如果系统都正常的话，可能是并发构建导致，此时可以在IDE中设置如下参数，保证构建线程数为1，亲测对于中型工程来说，构建速度并没有减少太多</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/c0625668_fba539ac.png"></p>
+<ol start="5">
+<li>之前没用过IDEA对MVN的构建过程进行debug，这次正好尝试一下，后面涉及到MVN命令的异常，又多了一种解决途径。</li>
+</ol>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/17043037/ant-malformed-uxxxx-encoding-in-propertyfile-task">https://stackoverflow.com/questions/17043037/ant-malformed-uxxxx-encoding-in-propertyfile-task</a></p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/Java/">Java</a>
+		  
+			<a href="/tags/Maven/">Maven</a>
+		  
+			<a href="/tags/Debug/">Debug</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2025/08/15/how-to-use-mac/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">程序员如何配置MBP</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2025/03/07/my-2024/">
+        <span class="next-text nav-default">我的2024</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    
+
+<div class="github-comments">
+  <div class="comments-title">💬 Comments</div>
+  <p style="color: #666; font-size: 0.9em; margin-bottom: 1em;">
+    Comments require <a href="https://github.com/apps/giscus" target="_blank" rel="noopener">Giscus App</a> installed on your GitHub repository.
+  </p>
+  <script src="https://giscus.app/client.js"
+    data-repo="wxxlamp/wxxlamp.github.io"
+    data-repo-id="R_kgDOCiYteA"
+    data-category="General"
+    data-category-id="DIC_kwDOCiYteM4CelIo"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="light"
+    data-lang="en"
+    crossorigin="anonymous"
+    async>
+  </script>
+</div>
+
+
+
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+    
+
+<div class="toc-container" id="toc-container">
+  <div class="toc-title">Contents</div>
+  <ul class="toc-list" id="toc-list">
+    
+  </ul>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Generate TOC from post content
+  const content = document.querySelector('.post-content');
+  const tocList = document.getElementById('toc-list');
+
+  if (!content || !tocList) return;
+
+  const headings = content.querySelectorAll('h1, h2, h3, h4');
+
+  if (headings.length < 2) {
+    document.getElementById('toc-container').style.display = 'none';
+    return;
+  }
+
+  headings.forEach(function(heading, index) {
+    // Add ID to heading if not exists
+    if (!heading.id) {
+      heading.id = 'heading-' + index;
+    }
+
+    const li = document.createElement('li');
+    li.className = 'toc-' + heading.tagName.toLowerCase();
+
+    const a = document.createElement('a');
+    a.href = '#' + heading.id;
+    a.textContent = heading.textContent;
+    a.onclick = function(e) {
+      e.preventDefault();
+      heading.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    li.appendChild(a);
+    tocList.appendChild(li);
+  });
+
+  // Active section highlighting
+  const tocItems = tocList.querySelectorAll('li');
+
+  function updateActiveToc() {
+    const scrollPos = window.scrollY + 100;
+
+    headings.forEach(function(heading, index) {
+      const top = heading.offsetTop;
+      const bottom = top + heading.offsetHeight;
+
+      if (scrollPos >= top && scrollPos < bottom) {
+        tocItems.forEach(function(item) {
+          item.classList.remove('active');
+        });
+        if (tocItems[index]) {
+          tocItems[index].classList.add('active');
+        }
+      }
+    });
+  }
+
+  window.addEventListener('scroll', updateActiveToc);
+  updateActiveToc();
+});
+</script>
+
+
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2014 -
+    
+    2026
+    <span class="footer-author">Wxx.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> and <a class="theme-link" target="_blank" rel="noopener" href="https://github.com/frostfan/hexo-theme-polarbear">Polar Bear</a>
+    </span>
+</span>
+<span class="site-stats" style="display: block; margin-top: 8px; font-size: 0.85rem; color: #666;">
+    Total Visits: <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> ·
+    Unique Visitors: <span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>
+</span>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>

@@ -1,7 +1,7 @@
 ---
 title: "当Map的值为NULL"
 tags:
-   - Java
+   - JAVA
 categories:
    - 采坑记录
 date: 2022-07-31 10:36

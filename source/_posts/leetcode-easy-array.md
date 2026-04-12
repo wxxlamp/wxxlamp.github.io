@@ -1,7 +1,7 @@
 ---
 title: "LeetCode初级算法-数组篇"
 tags:
-   - Algorithm
+   - 算法
 categories:
    - 基础夯实
 date: 2021-08-07 10:36

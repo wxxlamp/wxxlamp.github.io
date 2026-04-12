@@ -1,8 +1,8 @@
 ---
 title: "类在内存中的存储方式"
 tags:
-   - Java
-   - Jvm
+   - JAVA
+   - JVM
 categories:
    - 基础夯实
 date: 2020-12-17 10:36

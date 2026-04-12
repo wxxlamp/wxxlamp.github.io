@@ -1,8 +1,8 @@
 ---
 title: "Jvm常见面试题"
 tags:
-   - Jvm
-   - Java
+   - JVM
+   - JAVA
 categories:
    - 面试经验
 date: 2020-02-01 10:36

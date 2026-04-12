@@ -1,7 +1,7 @@
 ---
 title: "Java编程技巧"
 tags:
-   - Java
+   - JAVA
 categories:
    - 基础夯实
 date: 2022-03-22 10:36

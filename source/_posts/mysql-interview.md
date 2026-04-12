@@ -1,8 +1,8 @@
 ---
 title: "MySQL常见面试题"
 tags:
-   - MySQL
-   - DB
+   - MYSQL
+   - 数据库
 categories:
    - 面试经验
 date: 2019-11-24 10:36

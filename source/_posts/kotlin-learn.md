@@ -2,7 +2,7 @@
 title: "Kotlin学习笔记"
 date: 2020-12-24 18:26
 tags:
-   - Kotlin
+   - KOTLIN
 categories:
    - 基础夯实
 description: "Kotlin入门笔记，介绍其发展历史及与Java的对比。涵盖简洁性、空安全、互操作性三大特点，通过代码示例展示data class、lambda、扩展函数等语法糖，帮助Java开发者快速上手。"

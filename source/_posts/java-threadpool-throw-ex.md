@@ -1,8 +1,8 @@
 ---
 title: "当线程池的任务抛出异常..."
 tags:
-   - Java
-   - Concurrent	
+   - JAVA
+   - 并发编程
 categories:
    - 采坑记录
 date: 2022-08-09 23:36

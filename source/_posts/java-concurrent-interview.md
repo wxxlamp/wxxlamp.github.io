@@ -1,8 +1,8 @@
 ---
 title: "Java并发常见面试题"
 tags:
-   - Concurrent
-   - Java
+   - 并发编程
+   - JAVA
 categories:
    - 面试经验
 date: 2019-12-21 10:36

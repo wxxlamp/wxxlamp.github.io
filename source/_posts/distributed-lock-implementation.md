@@ -2,11 +2,11 @@
 title: "制作和测试一把锁"
 date: 2024-06-15 18:39
 tags:
-   - Java
-   - Distributed
-   - SystemDesign
+   - JAVA
+   - 分布式
+   - 系统设计
 categories:
-   - 技术分享
+   - 架构思考
 description: "本文详细介绍分布式锁的实现要点，涵盖可重试、可续期、加锁释放锁一致性等关键设计，包含完整的加锁业务逻辑和Redis连接异常处理策略，并提供Java实现代码示例。"
 ---
 

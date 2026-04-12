@@ -2,11 +2,11 @@
 title: "大模型时代，7000字帮后端开发入门机器学习"
 date: 2025-12-24 21:50
 tags:
-   - AI
-   - Machine Learning
-   - LLM
+   - 人工智能
+   - 机器学习
+   - 大语言模型
 categories:
-   - 基础知识
+   - 基础夯实
 description: "从后端开发视角入门机器学习，厘清AI、ML、DL、LLM的关系，详解神经网络、CNN、RNN原理及Embedding、前反向传播等核心概念，附Python代码示例。"
 ---
 

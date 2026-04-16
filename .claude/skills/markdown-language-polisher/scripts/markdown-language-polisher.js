@@ -224,15 +224,28 @@ function applyGeneralPolishing(content) {
   polished = polished.replace(/\bneural[ _-]?M络\b/gi, 'neural network'); // Fix the example from requirements
   polished = polished.replace(/\bNeural[ _-]?M络\b/g, 'Neural Network');
 
-  // Wrap command-line examples in code blocks
-  polished = polished.replace(/(`)?\b([a-z0-9_-]+(?:-[a-z0-9_-]*)*)\s+('[^']*'|"[^"]*"|[^\s`]+)/gi, (match, hasBacktick, cmd, args) => {
-    if (hasBacktick) return match; // Already wrapped
-    return `\`${cmd} ${args}\``;
+  // More conservative approach for command-line examples - only wrap actual commands
+  // Look for specific patterns that are likely to be commands
+  // Common command prefixes: npm, yarn, git, docker, python, node, etc.
+  const commandPrefixes = ['npm', 'yarn', 'git', 'docker', 'python', 'node', 'bash', 'sh', 'curl', 'wget', 'make', 'gcc', 'javac', 'java'];
+
+  // For each known command prefix, wrap the entire command in backticks if not already
+  commandPrefixes.forEach(cmd => {
+    // Match the command followed by options or arguments
+    const regex = new RegExp(`\\b(${cmd}(?:\\s+[\\w\\-_.]+)+)\\b`, 'gi');
+    polished = polished.replace(regex, (match) => {
+      // Don't wrap if already in backticks or in a code block
+      if (!/^`[^`]+`$/.test(match) && !/```.+```/.test(match)) {
+        return `\`${match}\``;
+      }
+      return match;
+    });
   });
 
-  // Additional command-line pattern recognition
-  polished = polished.replace(/\b([a-z0-9_-]+(?:-[a-z0-9_-]*)*)\s+"([^"]*)"/g, '`$1 "$2"`');
-  polished = polished.replace(/\b([a-z0-9_-]+(?:-[a-z0-9_-]*)*)\s+'([^']*)'/g, "`$1 '$2'`");
+  // Additionally, wrap things that look like explicit command-line syntax (those preceded by $)
+  polished = polished.replace(/\$\s+([^\n]+)/g, (match, cmd) => {
+    return `$ \`${cmd.trim()}\``;
+  });
 
   // Improve spacing and punctuation
   polished = polished.replace(/\s+/g, ' ').trim();
@@ -375,9 +388,18 @@ function main() {
     result += '---\n';
     Object.entries(frontmatter).forEach(([key, value]) => {
       if (Array.isArray(value)) {
-        result += `${key}: [${value.map(v => `"${v}"`).join(', ')}]\n`;
+        // Preserve the original array format from the input
+        result += `${key}:\n`;
+        value.forEach(item => {
+          result += `   - ${item}\n`;
+        });
       } else {
-        result += `${key}: "${value}"\n`;
+        // Preserve the original string format from the input
+        if (typeof value === 'string' && (value.includes('"') || value.includes("'"))) {
+          result += `${key}: "${value}"\n`;
+        } else {
+          result += `${key}: ${value}\n`;
+        }
       }
     });
     result += '---\n\n';

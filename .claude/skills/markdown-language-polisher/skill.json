@@ -1,0 +1,26 @@
+{
+  "skill": {
+    "name": "markdown-language-polisher",
+    "version": "1.0.0",
+    "description": "Automatically polishes markdown articles by learning from your blog's category-specific language patterns"
+  },
+  "hooks": {
+    "onNewArticle": {
+      "type": "filesystem",
+      "watch": "source/_posts",
+      "events": ["create"],
+      "run": "node scripts/markdown-language-polisher.js --refresh-model",
+      "description": "Refreshes the language model when new articles are added to the blog"
+    }
+  },
+  "usage": {
+    "command": "/markdown-language-polisher <path-to-markdown-file>",
+    "examples": [
+      "/markdown-language-polisher source/_posts/new-article.md",
+      "/markdown-language-polisher source/_posts/my-post.md --category=\"技术分享\""
+    ]
+  },
+  "dependencies": [
+    "node >= 14.0.0"
+  ]
+}

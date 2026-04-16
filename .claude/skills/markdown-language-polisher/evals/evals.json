@@ -1,0 +1,23 @@
+{
+  "skill_name": "markdown-language-polisher",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Polish this blog post about JavaScript best practices",
+      "expected_output": "Markdown file with improved language flow, proper code formatting, and category-specific style applied",
+      "files": ["source/_posts/js-best-practices.md"]
+    },
+    {
+      "id": 2,
+      "prompt": "Improve this technical article about Docker containers",
+      "expected_output": "Technical article with enhanced terminology consistency and proper command formatting",
+      "files": ["source/_posts/docker-tutorial.md"]
+    },
+    {
+      "id": 3,
+      "prompt": "Fix errors in this article about neural networks",
+      "expected_output": "Article with corrected technical terminology and improved sentence structure",
+      "files": ["source/_posts/neural-networks-overview.md"]
+    }
+  ]
+}

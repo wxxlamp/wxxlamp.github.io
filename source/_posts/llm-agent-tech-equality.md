@@ -6,7 +6,7 @@ tags:
    - Agent
    - Git
 categories:
-   - 技术随笔
+   - 业务学习
 description: "通过一次Git分支污染事件，探讨大模型和Agent如何实现技术平权，让非专业开发者也能高效解决复杂技术问题。"
 ---
 

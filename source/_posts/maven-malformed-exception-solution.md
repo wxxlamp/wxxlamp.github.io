@@ -1,5 +1,5 @@
 ---
-title: "问题现象"
+title: "踩坑及思考：mvn compile抛出`Malformed \\uxxxx`异常（使用IDEA进行maven debug）"
 date: 2025-06-18 18:30
 tags:
    - Maven

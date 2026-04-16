@@ -37,7 +37,7 @@
 
 <meta name="description" content="本文详细记录了一次Maven编译时遇到Malformed \uxxxx异常的排查过程，通过分析堆栈、调试源码，最终定位到是本地Maven仓库中resolver-status.properties文件的编码问题，并提供了有效的解决方案。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="问题现象">
+<meta property="og:title" content="踩坑及思考：mvn compile抛出&#96;Malformed \uxxxx&#96;异常（使用IDEA进行maven debug）">
 <meta property="og:url" content="https://wxxlamp.cn/2025/06/18/maven-malformed-exception-solution/index.html">
 <meta property="og:site_name" content="王星星的魔灯">
 <meta property="og:description" content="本文详细记录了一次Maven编译时遇到Malformed \uxxxx异常的排查过程，通过分析堆栈、调试源码，最终定位到是本地Maven仓库中resolver-status.properties文件的编码问题，并提供了有效的解决方案。">
@@ -51,7 +51,7 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/5da8029e_88a7ecd2.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/c0625668_fba539ac.png">
 <meta property="article:published_time" content="2025-06-18T10:30:00.000Z">
-<meta property="article:modified_time" content="2026-04-13T13:46:45.688Z">
+<meta property="article:modified_time" content="2026-04-16T14:22:50.792Z">
 <meta property="article:author" content="Wxx">
 <meta property="article:tag" content="Debug">
 <meta property="article:tag" content="Java">
@@ -100,7 +100,7 @@
 
 
 
-    <title> 问题现象 - 王星星的魔灯 </title>
+    <title> 踩坑及思考：mvn compile抛出`Malformed \uxxxx`异常（使用IDEA进行maven debug） - 王星星的魔灯 </title>
   <meta name="generator" content="Hexo 8.1.1"></head>
 
   <body>
@@ -163,7 +163,7 @@
     <header class="post-header">
       <h1 class="post-title">
         
-          问题现象
+          踩坑及思考：mvn compile抛出`Malformed \uxxxx`异常（使用IDEA进行maven debug）
         
       </h1>
 

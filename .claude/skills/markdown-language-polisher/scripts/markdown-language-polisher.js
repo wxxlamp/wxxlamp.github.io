@@ -247,9 +247,11 @@ function applyGeneralPolishing(content) {
     return `$ \`${cmd.trim()}\``;
   });
 
-  // Improve spacing and punctuation
-  polished = polished.replace(/\s+/g, ' ').trim();
-  polished = polished.replace(/\s+([,.!?;:])/g, '$1');
+  // Improve spacing and punctuation - but PRESERVE paragraph breaks
+  // Only normalize single-line whitespace, not line breaks
+  polished = polished.replace(/ +/g, ' '); // Multiple spaces to single space within lines
+  polished = polished.replace(/\t+/g, '  '); // Tabs to 2 spaces
+  polished = polished.replace(/ ([,.!?;:])/g, '$1'); // Space before punctuation
 
   return polished;
 }

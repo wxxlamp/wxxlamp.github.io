@@ -1,0 +1,77 @@
+#!/bin/bash
+
+# polish-md-with-claude command
+# Uses Claude directly to polish markdown files based on category-specific patterns
+
+TARGET_FILE="$1"
+CATEGORY_ARG="$2"
+
+if [ -z "$TARGET_FILE" ]; then
+    echo "Usage: $0 <path-to-markdown-file> [category]"
+    exit 1
+fi
+
+if [ ! -f "$TARGET_FILE" ]; then
+    echo "Error: File $TARGET_FILE does not exist."
+    exit 1
+fi
+
+# Extract category from frontmatter if not provided
+if [ -z "$CATEGORY_ARG" ]; then
+    # Try to extract category from the frontmatter
+    CATEGORY=$(sed -n '/^---$/,/^---$/p' "$TARGET_FILE" | grep 'categories:' -A 2 | grep '^ *[[:space:]]*-' | head -1 | sed 's/^[[:space:]]*-[[:space:]]*"\?\([^"]*\)"\?/\1/' | xargs)
+    if [ -z "$CATEGORY" ]; then
+        # Alternative approach to extract first category from multi-line format
+        CATEGORY=$(sed -n '/^---$/,/^---$/p' "$TARGET_FILE" | awk '/categories:/,/^[^-]/ { if ($0 ~ / - /) { gsub(/^[[:space:]]*- /, ""); gsub(/"/, ""); print $0; exit } }' | head -1)
+    fi
+    if [ -z "$CATEGORY" ]; then
+        echo "Error: Could not determine category from frontmatter and none provided."
+        exit 1
+    fi
+else
+    CATEGORY="$CATEGORY_ARG"
+fi
+
+echo "Processing file: $TARGET_FILE"
+echo "Target category: $CATEGORY"
+
+# Read the content
+CONTENT=$(cat "$TARGET_FILE")
+
+# Create a temporary file with the Claude prompt
+TEMP_PROMPT="/tmp/polish_prompt_$$"
+
+cat > "$TEMP_PROMPT" << 'EOF'
+Please polish the following markdown content according to the patterns and style typical of "$CATEGORY$" articles in a technical blog. Apply these principles:
+
+1. MAINTAIN ALL EXISTING MARKDOWN FORMATTING including headers, lists, code blocks, links, images, and paragraph breaks exactly as they were
+2. Improve sentence flow and readability while keeping the "$CATEGORY$" category-appropriate tone
+3. Fix any spelling errors or typos (e.g., "神经王络" should be "神经网络")
+4. Ensure proper code/command formatting with backticks where appropriate
+5. Enhance logical coherence while preserving the original meaning
+6. Keep the same frontmatter structure with title, date, tags, categories, and description
+7. DO NOT change the semantic meaning of the content
+8. DO NOT add or remove substantial content
+9. DO NOT modify the document structure significantly
+
+Here is the content to polish:
+
+$CONTENT$
+
+Please provide the fully polished content with all markdown formatting preserved.
+EOF
+
+# Replace placeholders with actual values
+sed -i '' "s|\$CATEGORY\$|$CATEGORY|g" "$TEMP_PROMPT"
+sed -i '' "s|\$CONTENT\$|$(printf '%s\n' "$CONTENT" | sed -e 's/[[\.*^$()+?{|]/\\&/g')|g" "$TEMP_PROMPT"
+
+# Run Claude to polish the content
+OUTPUT_FILE="${TARGET_FILE%.md}-polished.md"
+
+# Call Claude with the prepared prompt
+claude -p "$(cat "$TEMP_PROMPT")" > "$OUTPUT_FILE"
+
+# Clean up
+rm "$TEMP_PROMPT"
+
+echo "Polishing complete. Output saved to: $OUTPUT_FILE"

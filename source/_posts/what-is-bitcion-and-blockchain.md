@@ -1,7 +1,7 @@
 ---
 title: "万字长文，从零科普比特币"
 tags:
-   - Blockchain
+   - 区块链
 categories:
    - 基础夯实
 date: 2025-09-07 10:36

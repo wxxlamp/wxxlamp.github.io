@@ -1,8 +1,8 @@
 ---
 title: "百度三轮游"
 tags:
-   - Java
-   - Campus Recruitment
+   - JAVA
+   - 校园招聘
 categories:
    - 面试经验
 date: 2020-10-15 10:36

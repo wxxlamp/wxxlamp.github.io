@@ -1,8 +1,8 @@
 ---
 title: "如何处理热点数据问题"
 tags:
-   - DB
-   - CACHE
+   - 数据库
+   - 缓存
 categories:
    - 场景实践
 date: 2023-07-09 10:36

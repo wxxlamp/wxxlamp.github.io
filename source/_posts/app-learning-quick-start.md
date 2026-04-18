@@ -1,7 +1,7 @@
 ---
 title: "新人快速上手应用指北"
 tags:
-   - Campus Recruitment
+   - 校园招聘
 categories:
    - 采坑记录
 date: 2021-09-21 10:36

@@ -1,9 +1,9 @@
 ---
 title: "Tomcat中websocket的使用和原理"
 tags:
-   - Tomcat
-   - Websocket
-   - Java
+   - TOMCAT
+   - WEBSOCKET
+   - JAVA
 categories:
    - 源码剖析
 date: 2020-09-21 10:36

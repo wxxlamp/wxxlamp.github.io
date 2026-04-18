@@ -2,8 +2,8 @@
 title: "搞Java，来这就对了！"
 date: 2021-02-25:10:36
 tags:
-   - Java
-   - Internships
+   - JAVA
+   - 实习
 categories:
    - 面试经验
 description: "阿里巴巴场景金融技术部22届暑期实习内推帖，介绍部门业务、团队氛围、面试流程及薪资待遇，作者曾实习转正，提供简历投递与模拟面试联系方式。"

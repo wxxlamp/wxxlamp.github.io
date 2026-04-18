@@ -2,7 +2,7 @@
 title: "Hexo使用指南"
 date: 2020-12-16 19:53
 tags:
-   - Hexo
+   - 静态博客
 categories:
    - 采坑记录
 description: "Hexo博客从零搭建实战指南，涵盖环境准备、安装配置、GitHub Pages部署及主题更换，收录常见坑点及解决方案。"

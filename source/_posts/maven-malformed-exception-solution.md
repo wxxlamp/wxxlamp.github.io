@@ -2,9 +2,8 @@
 title: "踩坑及思考：mvn compile抛出`Malformed \\uxxxx`异常（使用IDEA进行maven debug）"
 date: 2025-06-18 18:30
 tags:
-   - Maven
-   - Debug
-   - Java
+   - JAVA
+   - 环境配置
 categories:
    - 采坑记录
 description: "本文详细记录了一次Maven编译时遇到Malformed \\uxxxx异常的排查过程，通过分析堆栈、调试源码，最终定位到是本地Maven仓库中resolver-status.properties文件的编码问题，并提供了有效的解决方案。"

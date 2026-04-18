@@ -2,8 +2,8 @@
 title: "无前端运营方案"
 date: 2021-09-19 22:38
 tags:
-   - Spring
-   - Java
+   - SPRING
+   - JAVA
 categories:
    - 场景实践
 description: "面向后端的无前端运营平台方案，将运营操作抽象为四步流程，通过注解和策略模式使后端只需实现接口即可自动生成运营页面。"

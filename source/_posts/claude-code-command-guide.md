@@ -1,12 +1,11 @@
 ---
-title: "Claude Code常用命令指北【官网版】"
+title: Claude Code常用命令指北【官网版】
 date: 2026-04-13 22:00
 tags:
    - 大语言模型
-   - AI编程
 categories:
    - 场景实践
-description: "深入解析Claude Code的核心概念与常用命令，涵盖Command、Skill、Rule、Subagent等关键功能的详细介绍与使用技巧，助您掌握现代化AI编程工作流。"
+description: 深入解析Claude Code的核心概念与常用命令，涵盖Command、Skill、Rule、Subagent等关键功能的详细介绍与使用技巧，助您掌握现代化AI编程工作流。
 ---
 
 Work agent在25年风头无两，其中以Claude Code最为显眼。Claude Code一直走在coding agent的最前列，提出了skills、subagent等多种已经成为事实标准的概念。
@@ -160,4 +159,3 @@ claude mcp add --transport http hubspot --scope user https://mcp.hubspot.com/ant
 Plugin顾名思义，就是插件。它是commands、skill、subagent等的集合。Plugin面向的是一件事务的解决方案。
 
 本篇文章暂不赘述，后续我将创建一个从 语雀网站拉取博客，到自动发布微信公众号、个人网站、小红书的plugin，到时候再演示plugin的打包能力。
-

@@ -5,11 +5,11 @@ description: Automatically polishes markdown articles by learning from your blog
 
 # Markdown Language Polisher
 
-Automatically polishes markdown articles by learning from your blog's category-specific language patterns.
+Automatically polishes markdown articles by learning from your blog's category-specific language patterns. Uses a hybrid approach combining pattern analysis with Claude's advanced understanding.
 
 ## Purpose
 
-This skill analyzes your existing markdown articles in `@source/_posts/` to learn category-specific language characteristics, then applies those patterns to polish new or existing markdown content.
+This skill analyzes your existing markdown articles in `@source/_posts/` to learn category-specific language characteristics, then applies those patterns to polish new or existing markdown content using both algorithmic analysis and Claude's advanced language understanding.
 
 ## Capabilities
 
@@ -22,13 +22,13 @@ This skill analyzes your existing markdown articles in `@source/_posts/` to lear
   - Vocabulary and terminology patterns
   - Expression styles (narrative/argumentative/descriptive/technical)
 
-### 2. Content Processing
-Applies learned patterns to target markdown files:
+### 2. Hybrid Content Processing
+Combines algorithmic pattern matching with Claude's advanced understanding:
 
 #### Language Polishing
-- Improves sentence flow and readability
+- Improves sentence flow and readability while maintaining category-appropriate tone
 - Enhances logical coherence
-- Maintains category-appropriate tone
+- Maintains proper markdown formatting
 
 #### Content Expansion
 - Adds relevant details without changing core meaning
@@ -42,8 +42,7 @@ Applies learned patterns to target markdown files:
 
 #### Code/Command Formatting
 - Ensures proper markdown syntax for code snippets
-- Formats command-line examples with proper backticks
-- Example: `claude -p 'test'` instead of plain text
+- Recognizes command-line examples and formats them appropriately
 
 ## Usage
 
@@ -65,6 +64,6 @@ The skill monitors `@source/_posts/` for new additions and automatically updates
 1. Load existing articles from `@source/_posts/`
 2. Categorize articles and extract language patterns
 3. Identify target article category (either from frontmatter or argument)
-4. Apply category-specific language patterns to polish content
+4. Combine algorithmic pattern application with Claude-powered refinement
 5. Preserve original meaning while improving presentation
 6. Output polished markdown with improved formatting

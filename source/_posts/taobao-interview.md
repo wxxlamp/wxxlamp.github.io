@@ -2,8 +2,8 @@
 title: "淘宝实习面试"
 date: 2020-03-15 9:52
 tags:
-   - Java
-   - Internships
+   - JAVA
+   - 校园招聘
 categories:
    - 面试经验
 description: "记录淘宝用户增长团队秋招面试经历，涵盖Java基础、JVM、Spring、MySQL、分布式主键、SSO、Redis与MQ等核心知识点，以及秒杀系统和云原生技术讨论。"

@@ -2,8 +2,8 @@
 title: "DIY一个参数解析器"
 date: 2020-12-22 18:26
 tags:
-   - Java
-   - SpringMVC
+   - JAVA
+   - SPRING MVC
 categories:
    - 场景实践
 description: "解决Spring MVC中@RequestBody无法映射到多个参数的问题，通过自定义HandlerMethodArgumentResolver和注解，实现JSON字段到多参数的精准映射。"

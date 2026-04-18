@@ -1,7 +1,7 @@
 ---
 title: "最近小感"
 tags:
-   - Life	
+   - 生活
 date: 2020-11-15 9:52
 categories:
    - 生活感悟

@@ -2,8 +2,8 @@
 title: "蚂蚁实习面试"
 date: 2020-04-01 10:36
 tags:
-   - Java
-   - Internships
+   - JAVA
+   - 校园招聘
 categories:
    - 面试经验
 description: "蚂蚁金服实习三轮面试复盘，涵盖JVM、MySQL、Redis、Java并发、Nginx负载均衡等技术点，记录面试问题与答题思路，最终放弃offer。"

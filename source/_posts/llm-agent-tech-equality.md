@@ -2,9 +2,8 @@
 title: "大模型和Agent正在实现技术平权"
 date: 2026-01-10 15:42
 tags:
-   - 大模型
-   - Agent
-   - Git
+   - 大语言模型
+   - GIT
 categories:
    - 业务学习
 description: "通过一次Git分支污染事件，探讨大模型和Agent如何实现技术平权，让非专业开发者也能高效解决复杂技术问题。"

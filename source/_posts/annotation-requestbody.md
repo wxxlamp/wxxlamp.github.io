@@ -1,8 +1,8 @@
 ---
 title: "@RequestBody的原理"
 tags:
-   - Java
-   - SpringMVC
+   - JAVA
+   - SPRING MVC
 categories:
    - 源码剖析
 date: 2021-01-27 10:36

@@ -2,7 +2,7 @@
 title: "HEXO主题修改指北"
 date: 2021-03-22 19:38
 tags:
-   - HEXO
+   - 静态博客
 categories:
    - 采坑记录
 description: "介绍Hexo主题二次开发原理与实践，从Hexo工作流程出发，剖析主题构成要素，并说明如何添加分类、目录、统计等定制功能。"

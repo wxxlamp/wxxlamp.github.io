@@ -1,7 +1,7 @@
 ---
 title: "捐精有感"
 tags:
-   - Life
+   - 生活
 categories:
    - 生活感悟
 date: 2023-05-05 10:36

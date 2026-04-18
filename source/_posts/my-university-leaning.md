@@ -1,7 +1,7 @@
 ---
 title: "我在大学所建立的技术体系"
 tags:
-   - Growth
+   - 成长
 categories:
    - 基础夯实
 date: 2021-04-29 10:36

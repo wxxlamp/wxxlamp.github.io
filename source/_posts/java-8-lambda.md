@@ -1,8 +1,8 @@
 ---
 title: "Java8的函数式编程"
 tags:
-   - Java
-   - Lambda
+   - JAVA
+   - 函数式编程
 date: 2021-08-22 9:52
 categories:
    - 基础夯实

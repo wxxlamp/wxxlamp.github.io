@@ -1,7 +1,7 @@
 ---
 title: "我的大学"
 tags:
-   - Life
+   - 生活
 categories:
    - 生活感悟
 date: 2020-10-17 10:36

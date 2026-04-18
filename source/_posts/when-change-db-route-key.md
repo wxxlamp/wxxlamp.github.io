@@ -1,7 +1,7 @@
 ---
 title: "当修改分库分表键时"
 tags:
-   - DB
+   - 数据库
 categories:
    - 采坑记录
 date: 2023-06-11 19:36

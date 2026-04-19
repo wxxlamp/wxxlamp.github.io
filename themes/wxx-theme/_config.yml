@@ -33,6 +33,7 @@ widget:
   Tags: true
   Categories: true
   Custom: false
+  TagCategoryCloud: true
 
 widget_custom:
     title: Test

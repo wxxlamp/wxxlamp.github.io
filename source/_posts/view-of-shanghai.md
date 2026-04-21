@@ -1,7 +1,7 @@
 ---
 title: "我对上海的印象"
 tags:
-   - Life
+   - LIFE
 categories:
    - 生活感悟
 date: 2023-03-13 19:36

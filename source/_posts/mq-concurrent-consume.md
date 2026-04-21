@@ -1,7 +1,7 @@
 ---
 title: "RocketMQ多线程消费问题分析"
 tags:
-   - Concurrent
+   - CONCURRENT
    - MQ
 categories:
    - 采坑记录

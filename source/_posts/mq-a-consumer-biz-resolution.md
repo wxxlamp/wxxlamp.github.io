@@ -2,7 +2,7 @@
 title: "MQ消费多业务场景的实践"
 date: 2021-07-19 22:36
 tags:
-   - Spring
+   - SPRING
    - MQ
 categories:
    - 场景实践

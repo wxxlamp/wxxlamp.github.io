@@ -1,7 +1,7 @@
 ---
 title: "有了在线支付，为什么需要数字人民币"
 tags:
-   - Blockchain
+   - BLOCKCHAIN
 categories:
    - 区块链
 date: 2025-09-17 10:36

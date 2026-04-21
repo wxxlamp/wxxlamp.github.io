@@ -3,7 +3,7 @@ title: "Spring高效开发"
 date: 2021-04-04 14:26
 tags:
    - JAVA
-   - Spring
+   - SPRING
 categories:
    - 场景实践
 description: "聚焦Spring IOC与AOP高效使用技巧，讲解Bean生命周期、扩展接口及优雅路由、策略模式等实战场景，附日志、异常、参数校验切面方案。"

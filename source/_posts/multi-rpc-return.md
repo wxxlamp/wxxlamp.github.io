@@ -1,7 +1,7 @@
 ---
 title: "当调用多个IO操作时"
 tags:
-   - Concurrent
+   - CONCURRENT
 categories:
    - 场景实践
 date: 2022-10-30 14:36

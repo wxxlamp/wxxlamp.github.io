@@ -1,7 +1,7 @@
 ---
 title: "我的技术体系变迁史"
 tags:
-   - Growth
+   - GROWTH
 date: 2022-01-21 9:52
 categories:
    - 架构思考

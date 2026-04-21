@@ -1,7 +1,7 @@
 ---
 title: "旅行攻略"
 tags:
-   - Life
+   - LIFE
 categories:
    - 采坑记录
 date: 2021-07-11 15:50

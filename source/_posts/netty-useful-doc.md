@@ -2,7 +2,7 @@
 title: "Netty可用性剖析"
 date: 2023-01-10 10:36
 tags:
-   - Netty
+   - NETTY
 categories:
    - 面试经验
 description: "剖析Netty框架核心优势：三层逻辑架构、Bootstrap脚手架、Handler责任链、TCP粘包拆包解决方案、ByteBuf动态扩缩容与序列化支持。"

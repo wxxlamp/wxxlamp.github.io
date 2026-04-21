@@ -1,8 +1,8 @@
 ---
 title: "开水团面试"
 tags:
-   - Java
-   - Campus Recruitment
+   - JAVA
+   - CAMPUS RECRUITMENT
 categories:
    - 面试经验
 date: 2020-08-20 10:36

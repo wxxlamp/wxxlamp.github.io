@@ -2,9 +2,9 @@
 title: "BeanPostProcessor在循环依赖情况下导致的Spring初始化异常"
 date: 2021-07-31 18:36
 tags:
-   - Java
-   - Spring
-   - Aop
+   - JAVA
+   - SPRING
+   - AOP
 categories:
    - 采坑记录
 description: "分析BeanPostProcessor手动AOP代理导致循环依赖异常的根因，结合Spring三级缓存机制追踪源码，提供原生AOP和@Lazy解决方案。"

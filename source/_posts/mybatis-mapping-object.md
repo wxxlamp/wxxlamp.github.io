@@ -1,8 +1,8 @@
 ---
 title: "MyBatis中实体类和关系的映射原理"
 tags:
-   - Mybatis
-   - Java
+   - MYBATIS
+   - JAVA
 categories:
    - 源码剖析
 date: 2021-03-29 21:36

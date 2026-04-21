@@ -2,8 +2,8 @@
 title: "漫谈JavaFX"
 date: 2021-10-31 19:52
 tags:
-   - Java
-   - JavaFX
+   - JAVA
+   - JAVAFX
 categories:
    - 基础夯实
 description: "介绍JavaFX的核心特性与设计模型，分析其在组件化、动态渲染和生态方面的不足，并与前端JavaScript生态对比，最后梳理大前端技术栈的本质共性。"

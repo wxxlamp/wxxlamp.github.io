@@ -2,7 +2,7 @@
 title: "这可能不仅仅是篇面经"
 date: 2020-04-10 10:36
 tags:
-   - Life
+   - LIFE
 categories:
    - 面试经验
 description: "211本科生分享同时斩获阿里、腾讯offer的经历，涵盖考研就业抉择、Java学习路径、项目积累及面试准备，附核心知识点与实用建议。"

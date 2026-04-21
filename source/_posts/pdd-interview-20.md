@@ -1,8 +1,8 @@
 ---
 title: "拼多多两轮游"
 tags:
-   - Java
-   - Campus Recruitment
+   - JAVA
+   - CAMPUS RECRUITMENT
 categories:
    - 面试经验
 date: 2020-12-29 21:36

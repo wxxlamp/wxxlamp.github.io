@@ -1,8 +1,8 @@
 ---
 title: "技术PM处女贴"
 tags:
-   - Owner
-   - Pm
+   - OWNER
+   - PM
 categories:
    - 采坑记录
 date: 2022-01-16 10:36

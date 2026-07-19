@@ -30,8 +30,12 @@ temp/
 # Sensitive configuration files
 # DO NOT commit API tokens or credentials
 .claude/skills/img-uploader/config.json
+.agent/skills/img-uploader/config.json
+.agents/skills/img-uploader/config.json
 *.key
 *.pem
 .env
 .env.local
 .claude/skills/yuque-fetcher/browser-data/storage_state.json
+.agent/skills/yuque-fetcher/browser-data/storage_state.json
+.agents/skills/yuque-fetcher/browser-data/storage_state.json

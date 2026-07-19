@@ -1,0 +1,14 @@
+{
+  "name": "markdown-language-polisher",
+  "description": "Monitors the _posts directory for new articles and updates the language model automatically",
+  "hook": {
+    "type": "filesystem",
+    "path": "source/_posts",
+    "events": ["create"],
+    "command": "node scripts/markdown-language-polisher.js --refresh-model"
+  },
+  "dependencies": {
+    "fileSystemMonitoring": true,
+    "readWriteAccess": true
+  }
+}

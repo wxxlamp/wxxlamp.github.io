@@ -39,3 +39,7 @@ temp/
 .claude/skills/yuque-fetcher/browser-data/storage_state.json
 .agent/skills/yuque-fetcher/browser-data/storage_state.json
 .agents/skills/yuque-fetcher/browser-data/storage_state.json
+
+# Yuque multichannel publisher local state and credentials
+*/yuque-multichannel-publisher/**/browser-data/storage_state.json
+*/yuque-multichannel-publisher/**/config.json

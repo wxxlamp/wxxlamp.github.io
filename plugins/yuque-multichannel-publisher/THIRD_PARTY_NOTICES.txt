@@ -1,0 +1,12 @@
+This plugin includes reworked functionality derived from the repository's
+yuque-fetcher and img-uploader skills.
+
+yuque-fetcher
+Copyright: wxx
+License: Apache-2.0
+
+img-uploader
+Copyright: crossoverJie and contributors
+License: Apache-2.0
+
+The derived modules are distributed under the plugin's Apache-2.0 license.

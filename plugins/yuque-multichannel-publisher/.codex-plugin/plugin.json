@@ -1,0 +1,28 @@
+{
+  "name": "yuque-multichannel-publisher",
+  "version": "0.3.0",
+  "description": "自包含地将语雀文档加工为可恢复的博客、微信公众号和小红书多平台发布项目。",
+  "author": {
+    "name": "wxx"
+  },
+  "license": "Apache-2.0",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "语雀多平台发布",
+    "shortDescription": "从语雀到博客、公众号和小红书的一体化内容流水线",
+    "longDescription": "一个可独立复制的内容发布插件：内置语雀拉取、原图迁移和图床上传，学习工作区既有文章语气完成深度润色，生成封面、章节图和小红书配图，最终落盘为 Hexo、微信公众号和小红书发布包。用户缓存和凭据只保存在工作区 .codex 中。",
+    "developerName": "wxx",
+    "category": "Productivity",
+    "capabilities": [
+      "Read",
+      "Write",
+      "Interactive"
+    ],
+    "brandColor": "#2563EB",
+    "defaultPrompt": [
+      "把这篇语雀文档加工成博客、公众号和小红书发布包。",
+      "继续上次中断的内容发布项目。",
+      "检查多平台内容是否已满足发布条件。"
+    ]
+  }
+}

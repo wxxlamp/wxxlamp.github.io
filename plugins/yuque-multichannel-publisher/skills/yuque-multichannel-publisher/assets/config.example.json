@@ -1,0 +1,12 @@
+{
+  "posts_dir": "source/_posts",
+  "content_projects_dir": "content-projects",
+  "wechat_dir": "wechat",
+  "rednote_dir": "rednote",
+  "image_provider": "imgur",
+  "github_owner": "",
+  "github_repo": "",
+  "github_path": "images",
+  "github_branch": "main",
+  "github_cdn": "jsdelivr"
+}

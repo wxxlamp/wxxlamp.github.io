@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import datetime as dt
 import hashlib
+import html as html_lib
 import json
 import os
 import re
@@ -14,26 +15,55 @@ import struct
 import subprocess
 import sys
 import tempfile
+from difflib import SequenceMatcher
 from pathlib import Path
 from typing import Any
 
-from workspace import DEFAULT_CONFIG, configured_path, config_path, find_workspace_root, load_config, posts_dir
+from workspace import DEFAULT_CONFIG, configured_path, config_path, find_workspace_root, load_config, posts_dir, state_dir
 
 STAGES = [
     "initialized",
     "fetched",
     "polished",
     "illustrated",
-    "persisted",
     "reviewed",
+    "persisted",
     "drafted",
     "published",
 ]
+CHANNELS = ("blog", "wechat", "rednote")
+EDIT_MODES = ("correction-only", "polish-expand")
 SLUG_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 IMAGE_RE = re.compile(r"!\[([^\]]*)\]\((https://[^)\s]+)(?:\s+['\"][^'\"]*['\"])?\)")
 H1_RE = re.compile(r"^#\s+(.+?)\s*$", re.MULTILINE)
 FRONT_MATTER_RE = re.compile(r"\A---\s*\n.*?\n---\s*\n?", re.DOTALL)
 SCRIPT_DIR = Path(__file__).resolve().parent
+AI_TONE_CHECKS = {
+    "template_opening",
+    "empty_abstractions",
+    "mechanical_transitions",
+    "negative_parallelism",
+    "rule_of_three",
+    "excessive_parallelism",
+    "repetitive_summaries",
+    "generic_conclusion",
+    "manufactured_punchline",
+    "inflated_claims",
+    "uniform_sentence_rhythm",
+    "vague_attribution",
+    "chatbot_artifacts",
+}
+AI_TONE_PATTERNS = {
+    "模板化时代开场": re.compile(r"在当今.{0,12}(?:时代|背景下)|随着.{0,16}(?:发展|普及|演进)"),
+    "结论套话": re.compile(r"综上所述|总而言之|由此可见|不难发现"),
+    "空泛商业黑话": re.compile(r"赋能|抓手|闭环|底层逻辑|降本增效"),
+    "机械提示语": re.compile(r"值得注意的是|需要指出的是|接下来(?:我们)?(?:将|来)"),
+    "否定对照句": re.compile(r"不是.{0,30}而是|不(?:只是|仅仅|仅).{0,30}(?:更是|而是)"),
+    "聊天机器人残留": re.compile(r"作为(?:一个|一名)?AI|希望以上(?:内容|回答)|如果你(?:还有|有)任何问题"),
+}
+VOICE_REFERENCE_FINGERPRINT = "a1098d0f36299efcd5f5101dc5e369b855e10c88f8726b170c5a9047526b756d"
+REDNOTE_CROSS_REFERENCE_RE = re.compile(r"上一轮|下一轮|上[一篇文]|前文|见前文|接着上次")
+SECTION_IMAGE_FIELDS = {"section_claim", "visual_type", "must_show", "avoid", "prompt", "review_status"}
 
 
 def now_iso() -> str:
@@ -134,14 +164,27 @@ def update_stage(
 def command_setup(args: argparse.Namespace) -> None:
     root = find_workspace_root()
     path = config_path(root)
-    if path.exists():
-        print(path)
-        return
-    config = dict(DEFAULT_CONFIG)
-    for key in ("posts_dir", "content_projects_dir", "wechat_dir", "rednote_dir", "image_provider"):
+    config = load_config(root) if path.exists() else dict(DEFAULT_CONFIG)
+    for key in (
+        "posts_dir",
+        "content_projects_dir",
+        "wechat_dir",
+        "rednote_dir",
+        "image_provider",
+        "cover_ratio",
+        "wechat_cover_ratio",
+        "lead_image_style",
+        "wechat_similarity_min",
+        "rednote_images_min",
+        "rednote_images_max",
+    ):
         value = getattr(args, key)
-        if value:
+        if value is not None:
             config[key] = value
+    if int(config["rednote_images_min"]) > int(config["rednote_images_max"]):
+        raise SystemExit("rednote_images_min 不能大于 rednote_images_max")
+    if not 0.5 <= float(config["wechat_similarity_min"]) <= 1:
+        raise SystemExit("wechat_similarity_min 必须在 0.5–1 之间")
     atomic_json(path, config)
     posts_dir(root, config).mkdir(parents=True, exist_ok=True)
     print(path)
@@ -155,16 +198,26 @@ def command_init(args: argparse.Namespace) -> None:
     for relative in ("raw", "draft/rednote", "images", ".codex"):
         (project / relative).mkdir(parents=True, exist_ok=True)
     created = now_iso()
+    config = load_config(repo)
+    final_outputs = expected_outputs(repo, args.project)
     metadata = {
         "project": args.project,
         "yuque_url": args.yuque_url,
         "title": args.title or "",
+        "edit_mode": args.edit_mode,
+        "channels": list(dict.fromkeys(args.channels)),
+        "cover_ratio": str(config.get("cover_ratio") or "21:9"),
+        "wechat_cover_ratio": str(config.get("wechat_cover_ratio") or "2.35:1"),
+        "lead_image_style": str(config.get("lead_image_style") or "ghibli-inspired"),
+        "wechat_similarity_min": float(config.get("wechat_similarity_min", 0.9)),
         "description": "",
         "tags": [],
         "categories": [],
         "cover_image": {},
+        "wechat_cover_image": {},
         "section_images": {},
         "rednote_images": {},
+        "ai_tone_review": {},
         "created_at": created,
     }
     state = {
@@ -175,12 +228,17 @@ def command_init(args: argparse.Namespace) -> None:
         "created_at": created,
         "updated_at": created,
         "checkpoints": [{"stage": "initialized", "at": created, "note": "project created"}],
+        "planned_outputs": {
+            "blog": str(final_outputs["blog"]),
+            "wechat": str(final_outputs["wechat_markdown"].parent),
+            "rednote": str(final_outputs["rednote_root"]),
+        },
         "outputs": {},
     }
     atomic_json(metadata_path(project), metadata)
     atomic_json(state_path(project), state)
     append_event(project, {"type": "initialized", "yuque_url": args.yuque_url})
-    print(project)
+    print(json.dumps({"staging_project": str(project), "final_targets": state["planned_outputs"]}, ensure_ascii=False, indent=2))
 
 
 def command_resume(args: argparse.Namespace) -> None:
@@ -189,6 +247,12 @@ def command_resume(args: argparse.Namespace) -> None:
     current = state.get("current_stage", "initialized")
     index = stage_rank(current)
     next_stage = STAGES[index + 1] if index + 1 < len(STAGES) else "complete"
+    final_outputs = expected_outputs(repo, args.project)
+    planned_outputs = state.get("planned_outputs") or {
+        "blog": str(final_outputs["blog"]),
+        "wechat": str(final_outputs["wechat_markdown"].parent),
+        "rednote": str(final_outputs["rednote_root"]),
+    }
     payload = {
         "project_dir": str(project),
         "current_stage": current,
@@ -203,6 +267,7 @@ def command_resume(args: argparse.Namespace) -> None:
             "images": str(project / "images"),
         },
         "outputs": state.get("outputs", {}),
+        "final_targets": planned_outputs,
     }
     print(json.dumps(payload, ensure_ascii=False, indent=2))
 
@@ -238,6 +303,33 @@ def command_fetch(args: argparse.Namespace) -> None:
     if result.returncode:
         raise SystemExit(result.returncode)
     update_stage(project, state, "fetched", "Yuque source fetched", output)
+    print(output)
+
+
+def command_ingest(args: argparse.Namespace) -> None:
+    """Persist Markdown obtained through the logged-in Browser Controller."""
+    repo = find_workspace_root()
+    project, state, metadata = load_project(repo, args.project)
+    source = Path(args.input).expanduser()
+    if not source.is_absolute():
+        source = (repo / source).resolve()
+    if not source.is_file():
+        raise SystemExit(f"浏览器导出的 Markdown 不存在：{source}")
+    markdown = source.read_text(encoding="utf-8")
+    if not markdown.strip():
+        raise SystemExit("浏览器导出的 Markdown 为空")
+    if args.migrate_images:
+        from yuque_fetcher import YuqueSession, migrate_images
+
+        session = YuqueSession(state_dir(repo) / "browser-data" / "storage_state.json")
+        markdown = migrate_images(markdown, session=session, root=repo, provider=args.provider)
+    output = project / "raw" / "source.md"
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(markdown.rstrip() + "\n", encoding="utf-8")
+    if args.title:
+        metadata["title"] = args.title
+        atomic_json(metadata_path(project), metadata)
+    update_stage(project, state, "fetched", "Yuque Markdown ingested from Browser Controller", output)
     print(output)
 
 
@@ -280,9 +372,26 @@ def image_dimensions(path: Path) -> tuple[int, int] | None:
     return None
 
 
-def require_image_ratio(path: Path, kind: str) -> tuple[int, int] | None:
+def ratio_value(raw: str) -> float:
+    match = re.fullmatch(r"\s*(\d+(?:\.\d+)?)\s*:\s*(\d+(?:\.\d+)?)\s*", raw)
+    if not match or float(match.group(2)) == 0:
+        raise SystemExit(f"无效图片比例：{raw}")
+    return float(match.group(1)) / float(match.group(2))
+
+
+def require_image_ratio(
+    path: Path,
+    kind: str,
+    cover_ratio: str = "21:9",
+    wechat_cover_ratio: str = "2.35:1",
+) -> tuple[int, int] | None:
     dimensions = image_dimensions(path)
-    expected = {"cover": 23 / 9, "section": 16 / 9}.get(kind)
+    expected = {
+        "cover": ratio_value(cover_ratio),
+        "wechat-cover": ratio_value(wechat_cover_ratio),
+        "section": 16 / 9,
+        "rednote": 3 / 4,
+    }.get(kind)
     if expected is None:
         return dimensions
     if dimensions is None:
@@ -290,7 +399,13 @@ def require_image_ratio(path: Path, kind: str) -> tuple[int, int] | None:
     width, height = dimensions
     actual = width / height
     if abs(actual - expected) / expected > 0.01:
-        label = "23:9" if kind == "cover" else "16:9"
+        labels = {
+            "cover": cover_ratio,
+            "wechat-cover": wechat_cover_ratio,
+            "section": "16:9",
+            "rednote": "3:4",
+        }
+        label = labels[kind]
         raise SystemExit(f"{kind} 图片尺寸为 {width}x{height}，不符合 {label}（允许 1% 误差）")
     return dimensions
 
@@ -303,7 +418,9 @@ def command_upload_image(args: argparse.Namespace) -> None:
         image = (repo / image).resolve()
     if not image.is_file():
         raise SystemExit(f"图片不存在：{image}")
-    dimensions = require_image_ratio(image, args.kind)
+    configured_cover_ratio = str(metadata.get("cover_ratio") or "21:9")
+    configured_wechat_cover_ratio = str(metadata.get("wechat_cover_ratio") or "2.35:1")
+    dimensions = require_image_ratio(image, args.kind, configured_cover_ratio, configured_wechat_cover_ratio)
     uploader = SCRIPT_DIR / "image_uploader.py"
     command = [sys.executable, str(uploader), str(image)]
     if args.provider:
@@ -317,9 +434,15 @@ def command_upload_image(args: argparse.Namespace) -> None:
     record = {"url": url, "local": str(image), "uploaded_at": now_iso()}
     if dimensions:
         record["width"], record["height"] = dimensions
+    if args.style:
+        record["style"] = args.style
     if args.kind == "cover":
-        record["ratio"] = "23:9"
+        record["ratio"] = configured_cover_ratio
+        record.setdefault("style", str(metadata.get("lead_image_style") or "ghibli-inspired"))
         metadata["cover_image"] = record
+    elif args.kind == "wechat-cover":
+        record["ratio"] = configured_wechat_cover_ratio
+        metadata["wechat_cover_image"] = record
     elif args.kind == "section":
         record["ratio"] = "16:9"
         metadata.setdefault("section_images", {})[args.key] = record
@@ -339,6 +462,51 @@ def strip_front_matter(markdown: str) -> str:
     return FRONT_MATTER_RE.sub("", markdown, count=1).lstrip()
 
 
+def selected_channels(metadata: dict[str, Any]) -> set[str]:
+    raw = metadata.get("channels") or list(CHANNELS)
+    channels = {str(value) for value in raw}
+    unknown = channels - set(CHANNELS)
+    if unknown:
+        raise SystemExit(f"metadata.json 含未知渠道：{', '.join(sorted(unknown))}")
+    return channels
+
+
+def heading_numbered(level: int, title: str) -> bool:
+    return re.match(rf"^(?:\d+\.){{{level}}}\s+\S", title) is not None
+
+
+def normalized_prose(text: str, *, html: bool = False) -> str:
+    """Normalize prose for channel-fidelity checks without rewriting it."""
+    value = strip_front_matter(text)
+    if html:
+        value = re.sub(r"<[^>]+>", "", value)
+        value = html_lib.unescape(value)
+    value = re.sub(r"!\[[^\]]*\]\([^)]*\)", "", value)
+    value = re.sub(r"\[([^\]]+)\]\([^)]*\)", r"\1", value)
+    value = re.sub(r"https?://\S+", "", value)
+    return re.sub(r"[\W_]+", "", value, flags=re.UNICODE)
+
+
+def content_similarity(left: str, right: str, *, right_is_html: bool = False) -> float:
+    normalized_left = normalized_prose(left)
+    normalized_right = normalized_prose(right, html=right_is_html)
+    if not normalized_left and not normalized_right:
+        return 1.0
+    if not normalized_left or not normalized_right:
+        return 0.0
+    return SequenceMatcher(None, normalized_left, normalized_right, autojunk=False).ratio()
+
+
+def rednote_round_number(path: Path) -> int | None:
+    match = re.fullmatch(r"round([1-9]\d*)", path.parent.name)
+    return int(match.group(1)) if match else None
+
+
+def ai_tone_risks(markdown: str) -> list[str]:
+    prose = strip_front_matter(markdown)
+    return [label for label, pattern in AI_TONE_PATTERNS.items() if pattern.search(prose)]
+
+
 def validate_draft(project: Path, metadata: dict[str, Any]) -> tuple[list[str], list[str]]:
     errors: list[str] = []
     warnings: list[str] = []
@@ -346,48 +514,208 @@ def validate_draft(project: Path, metadata: dict[str, Any]) -> tuple[list[str], 
     if not polished_path.is_file():
         return [f"缺少 {polished_path}"], warnings
     polished = strip_front_matter(polished_path.read_text(encoding="utf-8"))
+    channels = selected_channels(metadata)
+    if "{{" in polished or "}}" in polished:
+        errors.append("polished.md 仍含未替换占位符")
     for field in ("title", "description"):
         if not str(metadata.get(field, "")).strip():
             errors.append(f"metadata.json 缺少 {field}")
+    if metadata.get("edit_mode") == "polish-expand":
+        tone_review = metadata.get("ai_tone_review")
+        if not isinstance(tone_review, dict) or tone_review.get("status") != "passed":
+            errors.append("polish-expand 必须由 AI 完成去 AI 味复审，并记录 ai_tone_review.status=passed")
+        else:
+            checks = {str(value) for value in tone_review.get("checks", [])}
+            missing_checks = AI_TONE_CHECKS - checks
+            if missing_checks:
+                errors.append(f"ai_tone_review 缺少检查项：{', '.join(sorted(missing_checks))}")
+            fingerprint = str(tone_review.get("corpus_fingerprint", ""))
+            if not re.fullmatch(r"[0-9a-f]{64}", fingerprint):
+                errors.append("ai_tone_review 必须记录当前 author-voice.md 的 64 位语料指纹")
+            voice_reference = str(tone_review.get("voice_reference", ""))
+            expected_voice_path = ".codex/yuque-multichannel-publisher/style-profiles/author-voice.md"
+            if not voice_reference.endswith(expected_voice_path):
+                errors.append("ai_tone_review 必须记录工作区 .codex 中的 author-voice.md，个人语气不得来自插件目录")
+        for risk in ai_tone_risks(polished):
+            warnings.append(f"去 AI 味复审仍检测到“{risk}”风险；由 AI 结合上下文确认或重写")
     cover_url = metadata.get("cover_image", {}).get("url", "")
     if not cover_url:
         errors.append("metadata.json 缺少 cover_image.url")
+    elif not str(cover_url).startswith("https://"):
+        errors.append("metadata.json 的 cover_image.url 必须是公开 HTTPS 地址")
     elif cover_url not in "\n".join(polished.splitlines()[:20]):
         errors.append("封面 URL 必须出现在 polished.md 开头 20 行内")
-    if metadata.get("cover_image", {}).get("ratio") != "23:9":
-        errors.append("metadata.json 的 cover_image.ratio 必须为 23:9")
+    expected_cover_ratio = str(metadata.get("cover_ratio") or "21:9")
+    if metadata.get("cover_image", {}).get("ratio") != expected_cover_ratio:
+        errors.append(f"metadata.json 的 cover_image.ratio 必须为 {expected_cover_ratio}")
+    expected_lead_style = str(metadata.get("lead_image_style") or "ghibli-inspired")
+    if metadata.get("cover_image", {}).get("style") != expected_lead_style:
+        errors.append(f"正文首图必须记录 style={expected_lead_style}，并由 AI review 实际画面")
     headings = H1_RE.findall(polished)
     if not headings:
         warnings.append("正文没有一级标题，无法验证章节配图")
     lines = polished.splitlines()
     for index, line in enumerate(lines):
+        any_heading = re.match(r"^(#{1,6})\s+(.+?)\s*$", line)
+        if any_heading and not heading_numbered(len(any_heading.group(1)), any_heading.group(2)):
+            errors.append(f"标题“{any_heading.group(2)}”缺少 {len(any_heading.group(1))} 级数字序号")
         match = re.match(r"^#\s+(.+?)\s*$", line)
         if not match:
             continue
         following = [value.strip() for value in lines[index + 1 :] if value.strip()][:3]
-        if not any(IMAGE_RE.fullmatch(value) for value in following):
+        following_images = [IMAGE_RE.fullmatch(value) for value in following]
+        following_images = [value for value in following_images if value]
+        if not following_images:
             errors.append(f"一级标题“{match.group(1)}”后 3 个非空行内缺少 HTTPS 图片")
         section_record = metadata.get("section_images", {}).get(match.group(1), {})
         if section_record.get("ratio") != "16:9":
             errors.append(f"metadata.json 缺少一级标题“{match.group(1)}”的 16:9 section_images 记录")
-    wechat = project / "draft" / "wechat.md"
-    if not wechat.is_file():
-        errors.append(f"缺少 {wechat}")
-    wechat_html = project / "draft" / "wechat.html"
-    if not wechat_html.is_file():
-        errors.append(f"缺少 AI 排版产物 {wechat_html}")
-    rounds = sorted((project / "draft" / "rednote").glob("round*/post.md"))
-    if not rounds:
-        errors.append("至少需要一个 draft/rednote/roundN/post.md")
-    for round_path in rounds:
-        text = strip_front_matter(round_path.read_text(encoding="utf-8"))
-        visible = re.sub(r"[#*`>\[\]()!https:/._-]", "", text)
-        if len(visible) > 1200:
-            warnings.append(f"{round_path.parent.name} 可见字符约 {len(visible)}，建议压缩到 900 以内")
-        if not IMAGE_RE.search(text):
-            errors.append(f"{round_path.parent.name} 缺少 HTTPS 配图")
-        if not re.search(r"(?m)^#[^#]", text):
-            warnings.append(f"{round_path.parent.name} 建议用一级标题作为发布标题")
+        elif following_images and section_record.get("url") != following_images[0].group(2):
+            errors.append(f"一级标题“{match.group(1)}”的正文图片与 metadata.json URL 不一致")
+        missing_visual_fields = SECTION_IMAGE_FIELDS - set(section_record)
+        if missing_visual_fields:
+            errors.append(
+                f"一级标题“{match.group(1)}”的视觉 brief 缺少：{', '.join(sorted(missing_visual_fields))}"
+            )
+        elif section_record.get("review_status") != "passed":
+            errors.append(f"一级标题“{match.group(1)}”的章节图必须经过 AI 视觉复审")
+        if not isinstance(section_record.get("must_show"), list) or len(section_record.get("must_show", [])) < 2:
+            errors.append(f"一级标题“{match.group(1)}”的 must_show 至少需要两个具体元素或关系")
+    if "wechat" in channels:
+        wechat_cover = metadata.get("wechat_cover_image", {})
+        expected_wechat_ratio = str(metadata.get("wechat_cover_ratio") or "2.35:1")
+        if not str(wechat_cover.get("url", "")).startswith("https://"):
+            errors.append("metadata.json 缺少微信公众号公开 HTTPS 封面地址")
+        if wechat_cover.get("ratio") != expected_wechat_ratio:
+            errors.append(f"微信公众号封面比例必须为 {expected_wechat_ratio}")
+        if not 8 <= len(str(wechat_cover.get("title", "")).strip()) <= 14:
+            errors.append("微信公众号封面必须记录 8–14 字短标题")
+        if not str(wechat_cover.get("title_safe_area", "")).strip():
+            errors.append("微信公众号封面必须记录标题安全区")
+        if wechat_cover.get("review_status") != "passed":
+            errors.append("微信公众号封面标题必须经过 AI 逐字复审")
+        wechat = project / "draft" / "wechat.md"
+        wechat_text = ""
+        if not wechat.is_file():
+            errors.append(f"缺少 {wechat}")
+        else:
+            wechat_text = wechat.read_text(encoding="utf-8")
+            if "{{" in wechat_text:
+                errors.append("wechat.md 仍含未替换占位符")
+            similarity_min = float(metadata.get("wechat_similarity_min", 0.9))
+            similarity = content_similarity(polished, wechat_text)
+            if similarity < similarity_min:
+                errors.append(
+                    f"wechat.md 与博客正文相似度为 {similarity:.1%}，低于 {similarity_min:.0%}；"
+                    "公众号只应做轻量平台适配，不得重写或删减主体内容"
+                )
+        wechat_html = project / "draft" / "wechat.html"
+        if not wechat_html.is_file():
+            errors.append(f"缺少 AI 排版产物 {wechat_html}")
+        else:
+            html = wechat_html.read_text(encoding="utf-8", errors="replace").lower()
+            if "{{" in html:
+                errors.append("wechat.html 仍含未替换占位符")
+            if any(token in html for token in ("<script", "<link", "<style")):
+                errors.append("wechat.html 只能使用行内样式，不得包含 script、link 或 style 标签")
+            if "style=" not in html:
+                errors.append("wechat.html 缺少 AI 生成的行内样式")
+            if wechat_text:
+                html_similarity = content_similarity(wechat_text, wechat_html.read_text(encoding="utf-8"), right_is_html=True)
+                if html_similarity < 0.9:
+                    errors.append(
+                        f"wechat.html 与 wechat.md 的正文相似度为 {html_similarity:.1%}，排版时不得改写内容"
+                    )
+    if "rednote" in channels:
+        rounds = sorted((project / "draft" / "rednote").glob("round*/post.md"))
+        config = load_config(find_workspace_root(project))
+        minimum_images = int(config.get("rednote_images_min", 3))
+        maximum_images = int(config.get("rednote_images_max", 5))
+        if not rounds:
+            errors.append("小红书至少需要一个由 AI 内容分析得出的 roundN/post.md")
+        round_numbers = [rednote_round_number(path) for path in rounds]
+        if any(number is None for number in round_numbers):
+            errors.append("小红书目录必须使用 round1、round2……格式")
+        elif round_numbers != list(range(1, len(round_numbers) + 1)):
+            errors.append("小红书轮次必须从 round1 开始连续编号，不能跳号")
+        series_plan = project / "draft" / "rednote" / "series-plan.json"
+        if not series_plan.is_file():
+            errors.append(f"缺少小红书系列策划：{series_plan}")
+        else:
+            plan = read_json(series_plan)
+            planned_rounds = plan.get("rounds") if isinstance(plan, dict) else None
+            if not isinstance(planned_rounds, list) or not planned_rounds:
+                errors.append("series-plan.json 至少需要一个由 AI 规划的轮次")
+            elif len(planned_rounds) != len(rounds):
+                errors.append("series-plan.json 的 rounds 必须与实际 roundN 目录一一对应")
+            else:
+                if not str(plan.get("round_count_reason", "")).strip():
+                    errors.append("series-plan.json 必须说明 AI 选择当前轮数的 round_count_reason")
+                planned_names = [str(item.get("round", "")) for item in planned_rounds if isinstance(item, dict)]
+                expected_names = [path.parent.name for path in rounds]
+                if planned_names != expected_names:
+                    errors.append("series-plan.json 的轮次顺序必须与 roundN 目录一致")
+                angles = [str(item.get("angle", "")).strip() for item in planned_rounds if isinstance(item, dict)]
+                if len(angles) != len(rounds) or any(not angle for angle in angles):
+                    errors.append("series-plan.json 每轮必须填写独立 angle")
+                elif len(set(angles)) != len(angles):
+                    errors.append("series-plan.json 各轮 angle 不得重复")
+                for item in planned_rounds:
+                    if not isinstance(item, dict):
+                        continue
+                    round_name = str(item.get("round", "该轮"))
+                    for field in ("subject", "target_reader", "core_viewpoint", "context_brief", "reader_promise", "hook"):
+                        if not str(item.get(field, "")).strip():
+                            errors.append(f"series-plan.json 的 {round_name} 缺少 {field}")
+                    image_plan = item.get("image_plan")
+                    if not isinstance(image_plan, list) or not minimum_images <= len(image_plan) <= maximum_images:
+                        errors.append(
+                            f"series-plan.json 的 {round_name}.image_plan 需要 {minimum_images}–{maximum_images} 项"
+                        )
+        for round_path in rounds:
+            text = strip_front_matter(round_path.read_text(encoding="utf-8"))
+            if "{{" in text:
+                errors.append(f"{round_path.parent.name} 仍含未替换占位符")
+            if REDNOTE_CROSS_REFERENCE_RE.search(text):
+                errors.append(f"{round_path.parent.name} 含跨轮指代，必须改为独立可读的上下文")
+            visible = re.sub(r"[#*`>\[\]()!https:/._-]", "", text)
+            if len(visible) > 1200:
+                warnings.append(f"{round_path.parent.name} 可见字符约 {len(visible)}，建议压缩到 900 以内")
+            image_count = len(IMAGE_RE.findall(text))
+            if not minimum_images <= image_count <= maximum_images:
+                errors.append(
+                    f"{round_path.parent.name} 需要 {minimum_images}–{maximum_images} 张 HTTPS 配图，当前 {image_count} 张"
+                )
+            title_match = re.search(r"(?m)^#\s+([^#].+)$", text)
+            if not title_match:
+                warnings.append(f"{round_path.parent.name} 建议用一级标题作为发布标题")
+            elif len(title_match.group(1).strip()) > 20:
+                warnings.append(f"{round_path.parent.name} 标题超过 20 字，建议缩短")
+            hashtag_count = len(re.findall(r"(?<!\S)#[^\s#]+", text))
+            if not 5 <= hashtag_count <= 8:
+                errors.append(f"{round_path.parent.name} 需要 5–8 个话题标签，当前 {hashtag_count} 个")
+            cards_path = round_path.parent / "cards.json"
+            if not cards_path.is_file():
+                errors.append(f"{round_path.parent.name} 缺少 cards.json 卡片叙事")
+                continue
+            cards_payload = read_json(cards_path)
+            cards = cards_payload.get("cards") if isinstance(cards_payload, dict) else None
+            if not isinstance(cards, list) or not minimum_images <= len(cards) <= maximum_images:
+                errors.append(
+                    f"{round_path.parent.name}/cards.json 需要 {minimum_images}–{maximum_images} 张卡片"
+                )
+                continue
+            for expected_index, card in enumerate(cards, start=1):
+                if not isinstance(card, dict):
+                    errors.append(f"{round_path.parent.name}/cards.json 第 {expected_index} 项必须是对象")
+                    continue
+                if card.get("index") != expected_index:
+                    errors.append(f"{round_path.parent.name}/cards.json 卡片编号必须从 1 连续排列")
+                for field in ("role", "headline", "body", "visual_strategy", "material_ref"):
+                    if not str(card.get(field, "")).strip():
+                        errors.append(f"{round_path.parent.name}/cards.json 第 {expected_index} 张缺少 {field}")
+                if len(str(card.get("body", "")).strip()) > 80:
+                    errors.append(f"{round_path.parent.name}/cards.json 第 {expected_index} 张正文超过 80 个汉字")
     return errors, warnings
 
 
@@ -401,17 +729,32 @@ def expected_outputs(repo: Path, slug: str) -> dict[str, Path]:
     }
 
 
-def validate_materialized(repo: Path, slug: str) -> tuple[list[str], list[str]]:
+def validate_materialized(repo: Path, slug: str, metadata: dict[str, Any]) -> tuple[list[str], list[str]]:
     errors: list[str] = []
     warnings: list[str] = []
     outputs = expected_outputs(repo, slug)
-    for name in ("blog", "wechat_markdown", "wechat_html"):
+    channels = selected_channels(metadata)
+    required = []
+    if "blog" in channels:
+        required.append("blog")
+    if "wechat" in channels:
+        required.extend(("wechat_markdown", "wechat_html"))
+    for name in required:
         if not outputs[name].is_file():
             errors.append(f"缺少 {name}: {outputs[name]}")
-    rounds = sorted(outputs["rednote_root"].glob("round*/post.md"))
-    if not rounds:
-        errors.append(f"缺少小红书轮次：{outputs['rednote_root']}")
-    if outputs["blog"].is_file() and not outputs["blog"].read_text(encoding="utf-8").startswith("---\n"):
+    rounds = sorted(outputs["rednote_root"].glob("round*/post.md")) if "rednote" in channels else []
+    if "rednote" in channels:
+        if not rounds:
+            errors.append(f"小红书最终目录至少需要一个 AI 规划轮次：{outputs['rednote_root']}")
+        round_numbers = [rednote_round_number(path) for path in rounds]
+        if round_numbers != list(range(1, len(round_numbers) + 1)):
+            errors.append(f"小红书最终目录轮次不连续：{outputs['rednote_root']}")
+        if not (outputs["rednote_root"] / "series-plan.json").is_file():
+            errors.append(f"缺少小红书系列策划：{outputs['rednote_root'] / 'series-plan.json'}")
+        for round_path in rounds:
+            if not (round_path.parent / "cards.json").is_file():
+                errors.append(f"小红书最终目录缺少卡片叙事：{round_path.parent / 'cards.json'}")
+    if "blog" in channels and outputs["blog"].is_file() and not outputs["blog"].read_text(encoding="utf-8").startswith("---\n"):
         errors.append("博客文章缺少 front matter")
     return errors, warnings
 
@@ -432,7 +775,7 @@ def command_validate(args: argparse.Namespace) -> None:
     if args.phase == "draft":
         errors, warnings = validate_draft(project, metadata)
     else:
-        errors, warnings = validate_materialized(repo, args.project)
+        errors, warnings = validate_materialized(repo, args.project, metadata)
     print_validation(errors, warnings)
 
 
@@ -444,9 +787,10 @@ def command_materialize(args: argparse.Namespace) -> None:
         print(f"WARN: {warning}")
     if errors and not args.allow_incomplete:
         print_validation(errors, [])
+    if stage_rank(str(state.get("current_stage", "initialized"))) < stage_rank("reviewed") and not args.allow_incomplete:
+        raise SystemExit("必须先完成 AI review，并记录 reviewed 检查点后才能分发")
+    channels = selected_channels(metadata)
     polished = strip_front_matter((project / "draft" / "polished.md").read_text(encoding="utf-8"))
-    wechat_source = strip_front_matter((project / "draft" / "wechat.md").read_text(encoding="utf-8"))
-    wechat_html = (project / "draft" / "wechat.html").read_text(encoding="utf-8")
     title = str(metadata.get("title", "")).strip()
     description = str(metadata.get("description", "")).strip()
     date_value = metadata.get("date") or dt.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -465,24 +809,43 @@ def command_materialize(args: argparse.Namespace) -> None:
         "",
     ]
     outputs = expected_outputs(repo, args.project)
-    outputs["blog"].parent.mkdir(parents=True, exist_ok=True)
-    outputs["blog"].write_text("\n".join(front_matter) + polished.rstrip() + "\n", encoding="utf-8")
-    outputs["wechat_markdown"].parent.mkdir(parents=True, exist_ok=True)
-    outputs["wechat_markdown"].write_text(wechat_source.rstrip() + "\n", encoding="utf-8")
-    outputs["wechat_html"].write_text(wechat_html.rstrip() + "\n", encoding="utf-8")
-    source_rounds = sorted((project / "draft" / "rednote").glob("round*/post.md"))
-    for source in source_rounds:
-        destination = outputs["rednote_root"] / source.parent.name / "post.md"
-        destination.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(source, destination)
+    if "blog" in channels:
+        outputs["blog"].parent.mkdir(parents=True, exist_ok=True)
+        outputs["blog"].write_text("\n".join(front_matter) + polished.rstrip() + "\n", encoding="utf-8")
+    if "wechat" in channels:
+        wechat_source = strip_front_matter((project / "draft" / "wechat.md").read_text(encoding="utf-8"))
+        wechat_html = (project / "draft" / "wechat.html").read_text(encoding="utf-8")
+        outputs["wechat_markdown"].parent.mkdir(parents=True, exist_ok=True)
+        outputs["wechat_markdown"].write_text(wechat_source.rstrip() + "\n", encoding="utf-8")
+        outputs["wechat_html"].write_text(wechat_html.rstrip() + "\n", encoding="utf-8")
+    if "rednote" in channels:
+        source_rounds = sorted((project / "draft" / "rednote").glob("round*/post.md"))
+        for source in source_rounds:
+            destination_dir = outputs["rednote_root"] / source.parent.name
+            destination_dir.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(source, destination_dir / "post.md")
+            cards = source.parent / "cards.json"
+            if cards.is_file():
+                shutil.copy2(cards, destination_dir / "cards.json")
+        series_plan = project / "draft" / "rednote" / "series-plan.json"
+        if series_plan.is_file():
+            outputs["rednote_root"].mkdir(parents=True, exist_ok=True)
+            shutil.copy2(series_plan, outputs["rednote_root"] / "series-plan.json")
     output_records: dict[str, Any] = {}
-    for key in ("blog", "wechat_markdown", "wechat_html"):
+    artifact_keys = []
+    if "blog" in channels:
+        artifact_keys.append("blog")
+    if "wechat" in channels:
+        artifact_keys.extend(("wechat_markdown", "wechat_html"))
+    for key in artifact_keys:
         path = outputs[key]
         output_records[key] = {"path": str(path), "sha256": file_digest(path)}
-    output_records["rednote"] = [
-        {"path": str(path), "sha256": file_digest(path)}
-        for path in sorted(outputs["rednote_root"].glob("round*/post.md"))
-    ]
+    if "rednote" in channels:
+        output_records["rednote"] = [
+            {"path": str(path), "sha256": file_digest(path)}
+            for path in sorted(outputs["rednote_root"].glob("round*/*"))
+            if path.name in {"post.md", "cards.json"}
+        ]
     state["outputs"] = output_records
     update_stage(project, state, "persisted", "materialized blog, WeChat, and RedNote artifacts")
     print(json.dumps(output_records, ensure_ascii=False, indent=2))
@@ -498,12 +861,20 @@ def build_parser() -> argparse.ArgumentParser:
     setup.add_argument("--wechat-dir")
     setup.add_argument("--rednote-dir")
     setup.add_argument("--image-provider", choices=("imgur", "smms", "github", "chevereto"))
+    setup.add_argument("--cover-ratio", choices=("21:9", "23:9"))
+    setup.add_argument("--wechat-cover-ratio", choices=("2.35:1",))
+    setup.add_argument("--lead-image-style", choices=("ghibli-inspired",))
+    setup.add_argument("--wechat-similarity-min", type=float)
+    setup.add_argument("--rednote-images-min", type=int, choices=range(1, 10))
+    setup.add_argument("--rednote-images-max", type=int, choices=range(1, 10))
     setup.set_defaults(handler=command_setup)
 
     init = subparsers.add_parser("init", help="创建内容项目")
     init.add_argument("--project", required=True)
     init.add_argument("--yuque-url", required=True)
     init.add_argument("--title")
+    init.add_argument("--edit-mode", choices=EDIT_MODES, default="polish-expand")
+    init.add_argument("--channels", nargs="+", choices=CHANNELS, default=list(CHANNELS))
     init.set_defaults(handler=command_init)
 
     resume = subparsers.add_parser("resume", help="显示断点和下一阶段")
@@ -517,18 +888,27 @@ def build_parser() -> argparse.ArgumentParser:
     checkpoint.add_argument("--note")
     checkpoint.set_defaults(handler=command_checkpoint)
 
-    fetch = subparsers.add_parser("fetch", help="调用现有 skill 拉取语雀文档")
+    fetch = subparsers.add_parser("fetch", help="通过语雀内部接口拉取（兼容回退模式）")
     fetch.add_argument("--project", required=True)
     fetch.add_argument("--login", action="store_true")
     fetch.add_argument("--no-images", action="store_true")
     fetch.add_argument("--provider", choices=("imgur", "smms", "github", "chevereto"))
     fetch.set_defaults(handler=command_fetch)
 
+    ingest = subparsers.add_parser("ingest", help="接收 Browser Controller 导出的语雀 Markdown")
+    ingest.add_argument("--project", required=True)
+    ingest.add_argument("--input", required=True)
+    ingest.add_argument("--title")
+    ingest.add_argument("--migrate-images", action="store_true")
+    ingest.add_argument("--provider", choices=("imgur", "smms", "github", "chevereto"))
+    ingest.set_defaults(handler=command_ingest)
+
     upload = subparsers.add_parser("upload-image", help="上传并记录项目图片")
     upload.add_argument("--project", required=True)
-    upload.add_argument("--kind", required=True, choices=("cover", "section", "rednote"))
+    upload.add_argument("--kind", required=True, choices=("cover", "wechat-cover", "section", "rednote"))
     upload.add_argument("--key", required=True)
     upload.add_argument("--file", required=True)
+    upload.add_argument("--style")
     upload.add_argument("--provider", choices=("imgur", "smms", "github", "chevereto"))
     upload.set_defaults(handler=command_upload_image)
 

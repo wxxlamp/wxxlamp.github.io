@@ -15,6 +15,12 @@ DEFAULT_CONFIG: dict[str, Any] = {
     "wechat_dir": "wechat",
     "rednote_dir": "rednote",
     "image_provider": "imgur",
+    "cover_ratio": "21:9",
+    "wechat_cover_ratio": "2.35:1",
+    "lead_image_style": "ghibli-inspired",
+    "wechat_similarity_min": 0.9,
+    "rednote_images_min": 3,
+    "rednote_images_max": 9,
     "github_path": "images",
     "github_branch": "main",
     "github_cdn": "jsdelivr",
@@ -72,4 +78,3 @@ def configured_path(root: Path, config: dict[str, Any], key: str) -> Path:
 
 def posts_dir(root: Path, config: dict[str, Any] | None = None) -> Path:
     return configured_path(root, config or load_config(root), "posts_dir")
-

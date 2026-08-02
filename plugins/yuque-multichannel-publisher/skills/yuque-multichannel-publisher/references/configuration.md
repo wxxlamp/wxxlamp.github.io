@@ -33,9 +33,17 @@ YMP_WORKSPACE_ROOT=/absolute/project/path
   "content_projects_dir": "content-projects",
   "wechat_dir": "wechat",
   "rednote_dir": "rednote",
-  "image_provider": "imgur"
+  "image_provider": "imgur",
+  "cover_ratio": "21:9",
+  "wechat_cover_ratio": "2.35:1",
+  "lead_image_style": "ghibli-inspired",
+  "wechat_similarity_min": 0.9,
+  "rednote_images_min": 3,
+  "rednote_images_max": 9
 }
 ```
+
+`cover_ratio` 控制正文首图，默认 `21:9`，需要兼容旧版文章规范时可设为 `23:9`。`wechat_cover_ratio` 固定为 `2.35:1`，用于微信公众号后台封面字段。`lead_image_style` 默认 `ghibli-inspired`，表示正文首图优先采用温暖手绘动画氛围。微信公众号正文默认要求与博客正文至少 90% 相似。小红书轮数由 AI 逐篇分析决定，每轮卡片数校验为 3–9 张，常见为 5–7 张。
 
 目录可修改，但 `posts_dir` 应位于工作区内，以便语气样本使用稳定的相对路径。
 
@@ -73,6 +81,8 @@ GitHub 图床还支持：
 - `.codex/yuque-multichannel-publisher/`
 - `content-projects/`
 - 图床 token
+
+插件不会生成、申请、推断或写入任何密钥。首次使用时只检查用户是否已经通过环境变量或工作区配置提供凭据；缺少时停止对应上传步骤并说明需要配置的字段。语雀、微信公众号和小红书的账号访问依赖用户在浏览器中自行登录，插件不得读取或导出密码。
 - 语雀 `storage_state.json`
 
 接收者在自己的工作区执行 `setup`，首次使用相关分类时由 AI 建立自己的语气档案。

@@ -36,6 +36,8 @@ temp/
 *.pem
 .env
 .env.local
+__pycache__/
+*.pyc
 .claude/skills/yuque-fetcher/browser-data/storage_state.json
 .agent/skills/yuque-fetcher/browser-data/storage_state.json
 .agents/skills/yuque-fetcher/browser-data/storage_state.json
@@ -43,3 +45,5 @@ temp/
 # Yuque multichannel publisher local state and credentials
 */yuque-multichannel-publisher/**/browser-data/storage_state.json
 */yuque-multichannel-publisher/**/config.json
+.codex/yuque-multichannel-publisher/
+content-projects/

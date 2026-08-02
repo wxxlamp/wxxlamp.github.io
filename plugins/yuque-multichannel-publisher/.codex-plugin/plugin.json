@@ -1,16 +1,16 @@
 {
   "name": "yuque-multichannel-publisher",
-  "version": "0.3.0",
-  "description": "自包含地将语雀文档加工为可恢复的博客、微信公众号和小红书多平台发布项目。",
+  "version": "0.4.0+codex.20260802061052",
+  "description": "\u81ea\u5305\u542b\u5730\u5c06\u8bed\u96c0\u6587\u6863\u52a0\u5de5\u4e3a\u53ef\u6062\u590d\u7684\u535a\u5ba2\u3001\u5fae\u4fe1\u516c\u4f17\u53f7\u548c\u5c0f\u7ea2\u4e66\u591a\u5e73\u53f0\u53d1\u5e03\u9879\u76ee\u3002",
   "author": {
     "name": "wxx"
   },
   "license": "Apache-2.0",
   "skills": "./skills/",
   "interface": {
-    "displayName": "语雀多平台发布",
-    "shortDescription": "从语雀到博客、公众号和小红书的一体化内容流水线",
-    "longDescription": "一个可独立复制的内容发布插件：内置语雀拉取、原图迁移和图床上传，学习工作区既有文章语气完成深度润色，生成封面、章节图和小红书配图，最终落盘为 Hexo、微信公众号和小红书发布包。用户缓存和凭据只保存在工作区 .codex 中。",
+    "displayName": "\u8bed\u96c0\u591a\u5e73\u53f0\u53d1\u5e03",
+    "shortDescription": "\u4ece\u8bed\u96c0\u5230\u535a\u5ba2\u3001\u516c\u4f17\u53f7\u548c\u5c0f\u7ea2\u4e66\u7684\u4e00\u4f53\u5316\u5185\u5bb9\u6d41\u6c34\u7ebf",
+    "longDescription": "\u4e00\u4e2a\u53ef\u72ec\u7acb\u590d\u5236\u7684\u5185\u5bb9\u53d1\u5e03\u63d2\u4ef6\uff1a\u5185\u7f6e\u8bed\u96c0\u62c9\u53d6\u3001\u539f\u56fe\u8fc1\u79fb\u548c\u56fe\u5e8a\u4e0a\u4f20\uff0c\u5b66\u4e60\u5de5\u4f5c\u533a\u65e2\u6709\u6587\u7ae0\u8bed\u6c14\u5b8c\u6210\u6df1\u5ea6\u6da6\u8272\uff0c\u751f\u6210\u5c01\u9762\u3001\u7ae0\u8282\u56fe\u548c\u5c0f\u7ea2\u4e66\u914d\u56fe\uff0c\u6700\u7ec8\u843d\u76d8\u4e3a Hexo\u3001\u5fae\u4fe1\u516c\u4f17\u53f7\u548c\u5c0f\u7ea2\u4e66\u53d1\u5e03\u5305\u3002\u7528\u6237\u7f13\u5b58\u548c\u51ed\u636e\u53ea\u4fdd\u5b58\u5728\u5de5\u4f5c\u533a .codex \u4e2d\u3002",
     "developerName": "wxx",
     "category": "Productivity",
     "capabilities": [
@@ -20,9 +20,9 @@
     ],
     "brandColor": "#2563EB",
     "defaultPrompt": [
-      "把这篇语雀文档加工成博客、公众号和小红书发布包。",
-      "继续上次中断的内容发布项目。",
-      "检查多平台内容是否已满足发布条件。"
+      "\u628a\u8fd9\u7bc7\u8bed\u96c0\u6587\u6863\u52a0\u5de5\u6210\u535a\u5ba2\u3001\u516c\u4f17\u53f7\u548c\u5c0f\u7ea2\u4e66\u53d1\u5e03\u5305\u3002",
+      "\u7ee7\u7eed\u4e0a\u6b21\u4e2d\u65ad\u7684\u5185\u5bb9\u53d1\u5e03\u9879\u76ee\u3002",
+      "\u68c0\u67e5\u591a\u5e73\u53f0\u5185\u5bb9\u662f\u5426\u5df2\u6ee1\u8db3\u53d1\u5e03\u6761\u4ef6\u3002"
     ]
   }
 }

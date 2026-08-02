@@ -2,7 +2,7 @@
 
 ## 原则
 
-语气判断始终由 AI 完成。`style_profiles.py` 只负责枚举分类文章、计算内容指纹、选择刷新范围、校验档案结构和持久化，不统计句长、不提取高频词、不改写正文。
+语气判断始终由 AI 完成。先读取工作区 `style-profiles/author-voice.md`；缺少时按 `voice-profile.md` 首次学习并写入工作区。`style_profiles.py` 只负责可选的分类差异：枚举分类文章、计算内容指纹、选择刷新范围、校验档案结构和持久化，不统计句长、不提取高频词、不改写正文。
 
 缓存放在工作区 `.codex/yuque-multichannel-publisher/style-profiles/`，不会随插件复制给其他人。每个分类对应一个不超过 16 KB 的 JSON，只保留抽象写作特征，不保存文章全文。
 

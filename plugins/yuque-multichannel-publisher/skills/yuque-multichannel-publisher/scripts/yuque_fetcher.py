@@ -86,7 +86,10 @@ class YuqueSession:
             browser.close()
 
     def ensure(self, force_login: bool) -> None:
-        if force_login or not self.validate():
+        # Public documents may be readable without cookies. Browser Controller is
+        # the primary authenticated path; only open Playwright when explicitly
+        # requested for this compatibility fetcher.
+        if force_login:
             self.login()
 
 
@@ -107,6 +110,11 @@ class YuqueFetcher:
             headers=self.headers(),
             timeout=30,
         )
+        if response.status_code in (302, 401, 403):
+            raise RuntimeError(
+                "语雀页面需要登录或不允许接口读取；请用 Browser Controller 复制 Markdown，"
+                "再执行 pipeline.py ingest"
+            )
         response.raise_for_status()
         match = re.search(r'decodeURIComponent\("(.+?)"\)', response.text)
         if match:
@@ -188,6 +196,7 @@ def migrate_images(
     urls = image_urls(markdown)
     if not urls:
         return markdown
+    failures: list[str] = []
     with tempfile.TemporaryDirectory(prefix="yuque-images-") as temp:
         destination = Path(temp)
         for index, url in enumerate(urls, 1):
@@ -198,6 +207,9 @@ def migrate_images(
                 print(f"[{index}/{len(urls)}] {uploaded['url']}")
             except (OSError, ValueError, RuntimeError, requests.RequestException) as exc:
                 print(f"WARN: 图片迁移失败 {url}: {exc}", file=sys.stderr)
+                failures.append(url)
+    if failures:
+        raise RuntimeError(f"{len(failures)} 张语雀图片迁移失败，未记录 fetched 检查点")
     return markdown
 
 
@@ -231,4 +243,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

@@ -10,3 +10,18 @@ Copyright: crossoverJie and contributors
 License: Apache-2.0
 
 The derived modules are distributed under the plugin's Apache-2.0 license.
+
+Optional external adapters (not bundled and not copied into this plugin):
+
+md2wechat-skill
+Copyright: geekjourneyx and contributors
+License: Source Available; commercial use and redistribution may require a
+separate license. This plugin only invokes a user-installed executable.
+https://github.com/geekjourneyx/md2wechat-skill
+
+XiaohongshuSkills
+Copyright: white0dew and contributors
+License: MIT
+This plugin only invokes a user-installed preview command and does not bundle
+its browser automation code.
+https://github.com/white0dew/XiaohongshuSkills

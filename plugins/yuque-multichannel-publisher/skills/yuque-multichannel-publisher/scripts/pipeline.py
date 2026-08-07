@@ -31,10 +31,13 @@ STAGES = [
     "drafted",
     "published",
 ]
+CONTENT_STAGES = STAGES[: STAGES.index("drafted")]
+DELIVERY_STATUSES = ("filled_for_review", "draft_saved", "published", "failed")
 CHANNELS = ("blog", "wechat", "rednote")
 EDIT_MODES = ("correction-only", "polish-expand")
 SLUG_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 IMAGE_RE = re.compile(r"!\[([^\]]*)\]\((https://[^)\s]+)(?:\s+['\"][^'\"]*['\"])?\)")
+HTML_IMG_SRC_RE = re.compile(r"(?is)<img\b[^>]*?\bsrc\s*=\s*(['\"])(?P<src>.*?)\1")
 H1_RE = re.compile(r"^#\s+(.+?)\s*$", re.MULTILINE)
 FRONT_MATTER_RE = re.compile(r"\A---\s*\n.*?\n---\s*\n?", re.DOTALL)
 SCRIPT_DIR = Path(__file__).resolve().parent
@@ -111,6 +114,61 @@ def atomic_json(path: Path, payload: dict[str, Any]) -> None:
             os.unlink(temp_name)
 
 
+def redact_adapter_secrets(text: str) -> str:
+    """Keep adapter diagnostics useful without echoing credentials or tokens."""
+    text = re.sub(
+        r"(?i)((?:app_?secret|secret|access_token|token)=)[^&\s\"']+",
+        r"\1<redacted>",
+        text,
+    )
+    return re.sub(
+        r'(?i)(["\'](?:app_?secret|secret|access_token|token)["\']\s*:\s*["\'])[^"\']+(["\'])',
+        r"\1<redacted>\2",
+        text,
+    )
+
+
+def redact_adapter_payload(value: Any) -> Any:
+    if isinstance(value, str):
+        return redact_adapter_secrets(value)
+    if isinstance(value, list):
+        return [redact_adapter_payload(item) for item in value]
+    if isinstance(value, dict):
+        return {key: redact_adapter_payload(item) for key, item in value.items()}
+    return value
+
+
+def adapter_error_message(payload: Any, stderr: str = "") -> str:
+    if isinstance(payload, dict):
+        message = str(payload.get("message") or payload.get("error") or "").strip()
+    else:
+        message = ""
+    message = redact_adapter_secrets(message or stderr.strip() or "外部适配器返回未知错误")
+    if "errcode=40164" in message or "not in whitelist" in message:
+        match = re.search(r"invalid ip\s+([0-9a-fA-F:.]+)", message)
+        ip = f"（{match.group(1)}）" if match else ""
+        return f"微信公众号 API 拒绝当前出口 IP{ip}；请将它加入公众号 IP 白名单后重试"
+    return message
+
+
+def run_adapter_json(command: list[str], *, cwd: Path, timeout: int = 180) -> dict[str, Any]:
+    """Run one adapter command to completion and parse its JSON contract safely."""
+    try:
+        result = subprocess.run(command, cwd=cwd, capture_output=True, text=True, timeout=timeout)
+    except subprocess.TimeoutExpired as exc:
+        raise SystemExit(
+            "外部适配器命令超时，平台侧结果未知；请先检查素材库或草稿箱，避免直接重试产生重复项"
+        ) from exc
+    try:
+        payload: Any = json.loads(result.stdout)
+    except json.JSONDecodeError:
+        message = redact_adapter_secrets(result.stderr.strip() or result.stdout.strip())
+        raise SystemExit(f"外部适配器没有返回有效 JSON：{message or '空响应'}") from None
+    if result.returncode or not isinstance(payload, dict) or payload.get("success") is False:
+        raise SystemExit(f"外部适配器执行失败：{adapter_error_message(payload, result.stderr)}")
+    return payload
+
+
 def append_event(project: Path, event: dict[str, Any]) -> None:
     event = {"at": now_iso(), **event}
     path = project / ".codex" / "events.jsonl"
@@ -177,6 +235,12 @@ def command_setup(args: argparse.Namespace) -> None:
         "wechat_similarity_min",
         "rednote_images_min",
         "rednote_images_max",
+        "md2wechat_executable",
+        "wechat_account",
+        "xiaohongshu_skills_dir",
+        "rednote_account",
+        "rednote_cdp_host",
+        "rednote_cdp_port",
     ):
         value = getattr(args, key)
         if value is not None:
@@ -221,7 +285,7 @@ def command_init(args: argparse.Namespace) -> None:
         "created_at": created,
     }
     state = {
-        "schema_version": 1,
+        "schema_version": 2,
         "project": args.project,
         "repo_root": str(repo),
         "current_stage": "initialized",
@@ -234,6 +298,7 @@ def command_init(args: argparse.Namespace) -> None:
             "rednote": str(final_outputs["rednote_root"]),
         },
         "outputs": {},
+        "deliveries": {},
     }
     atomic_json(metadata_path(project), metadata)
     atomic_json(state_path(project), state)
@@ -245,8 +310,11 @@ def command_resume(args: argparse.Namespace) -> None:
     repo = find_workspace_root()
     project, state, metadata = load_project(repo, args.project)
     current = state.get("current_stage", "initialized")
-    index = stage_rank(current)
-    next_stage = STAGES[index + 1] if index + 1 < len(STAGES) else "complete"
+    if current in CONTENT_STAGES:
+        index = CONTENT_STAGES.index(current)
+        next_stage = CONTENT_STAGES[index + 1] if index + 1 < len(CONTENT_STAGES) else "inspect-delivery-readiness"
+    else:
+        next_stage = "inspect-delivery-readiness"
     final_outputs = expected_outputs(repo, args.project)
     planned_outputs = state.get("planned_outputs") or {
         "blog": str(final_outputs["blog"]),
@@ -267,6 +335,8 @@ def command_resume(args: argparse.Namespace) -> None:
             "images": str(project / "images"),
         },
         "outputs": state.get("outputs", {}),
+        "deliveries": state.get("deliveries", {}),
+        "next_actions": delivery_next_actions(metadata, state),
         "final_targets": planned_outputs,
     }
     print(json.dumps(payload, ensure_ascii=False, indent=2))
@@ -759,6 +829,510 @@ def validate_materialized(repo: Path, slug: str, metadata: dict[str, Any]) -> tu
     return errors, warnings
 
 
+def delivery_next_actions(metadata: dict[str, Any], state: dict[str, Any]) -> list[dict[str, str]]:
+    """Return target-aware actions instead of pretending delivery is one linear stage."""
+    actions: list[dict[str, str]] = []
+    current = str(state.get("current_stage", "initialized"))
+    if current in CONTENT_STAGES and CONTENT_STAGES.index(current) < CONTENT_STAGES.index("persisted"):
+        return [{"target": "content", "action": f"complete-{CONTENT_STAGES[CONTENT_STAGES.index(current) + 1]}"}]
+    deliveries = state.get("deliveries") if isinstance(state.get("deliveries"), dict) else {}
+    for channel in sorted(selected_channels(metadata)):
+        if channel == "blog":
+            actions.append({"target": "blog", "action": "review-repository-diff"})
+            continue
+        channel_records = deliveries.get(channel) if isinstance(deliveries.get(channel), dict) else {}
+        statuses = {
+            str(record.get("status", ""))
+            for record in channel_records.values()
+            if isinstance(record, dict)
+        }
+        action = "review-publish-readiness"
+        if "published" in statuses:
+            action = "verify-published-result"
+        elif "draft_saved" in statuses:
+            action = "review-platform-draft"
+        elif "filled_for_review" in statuses:
+            action = "save-platform-draft-manually"
+        actions.append({"target": channel, "action": action})
+    return actions
+
+
+def resolve_executable(raw: str) -> str | None:
+    candidate = Path(raw).expanduser()
+    if candidate.parent != Path("."):
+        return str(candidate.resolve()) if candidate.is_file() else None
+    return shutil.which(raw)
+
+
+def external_directory(repo: Path, raw: str) -> Path | None:
+    if not raw.strip():
+        return None
+    candidate = Path(raw).expanduser()
+    path = candidate.resolve() if candidate.is_absolute() else (repo / candidate).resolve()
+    return path if path.is_dir() else None
+
+
+def resolve_project_image(repo: Path, project: Path, raw: str) -> Path | None:
+    if not raw.strip():
+        return None
+    candidate = Path(raw).expanduser()
+    candidates = [candidate] if candidate.is_absolute() else [repo / candidate, project / candidate]
+    for path in candidates:
+        resolved = path.resolve()
+        if resolved.is_file():
+            return resolved
+    matches = list((project / "images").rglob(candidate.name)) if candidate.name else []
+    return matches[0].resolve() if len(matches) == 1 else None
+
+
+def metadata_image_sources(repo: Path, project: Path, metadata: dict[str, Any]) -> dict[str, Path]:
+    """Map published image URLs back to their existing local source files."""
+    records: list[dict[str, Any]] = []
+    for key in ("cover_image", "wechat_cover_image"):
+        value = metadata.get(key)
+        if isinstance(value, dict):
+            records.append(value)
+    sections = metadata.get("section_images")
+    if isinstance(sections, dict):
+        records.extend(value for value in sections.values() if isinstance(value, dict))
+    mapping: dict[str, Path] = {}
+    for record in records:
+        url = str(record.get("url") or "").strip()
+        local = resolve_project_image(repo, project, str(record.get("local") or ""))
+        if url and local:
+            mapping[url] = local
+    return mapping
+
+
+def wechat_material_cache_path(project: Path) -> Path:
+    return project / ".codex" / "wechat-materials.json"
+
+
+def load_wechat_material_cache(project: Path) -> dict[str, Any]:
+    path = wechat_material_cache_path(project)
+    if not path.is_file():
+        return {"version": 1, "items": {}}
+    payload = read_json(path)
+    if not isinstance(payload.get("items"), dict):
+        return {"version": 1, "items": {}}
+    return payload
+
+
+def adapter_account_flags(account: str) -> list[str]:
+    return ["--wechat-account", account] if account else []
+
+
+def upload_wechat_material(
+    executable: str,
+    *,
+    repo: Path,
+    project: Path,
+    account: str,
+    source: str,
+    local_path: Path | None = None,
+) -> dict[str, str]:
+    cache = load_wechat_material_cache(project)
+    if local_path:
+        cache_key = f"file:{file_digest(local_path)}"
+        command = [executable, "upload_image", str(local_path), *adapter_account_flags(account), "--json"]
+    else:
+        cache_key = "url:" + hashlib.sha256(source.encode("utf-8")).hexdigest()
+        command = [executable, "download_and_upload", source, *adapter_account_flags(account), "--json"]
+    cached = cache["items"].get(cache_key)
+    if isinstance(cached, dict) and cached.get("media_id") and cached.get("wechat_url"):
+        return {"media_id": str(cached["media_id"]), "wechat_url": str(cached["wechat_url"])}
+    payload = run_adapter_json(command, cwd=repo)
+    data = payload.get("data") if isinstance(payload.get("data"), dict) else {}
+    media_id = str(data.get("media_id") or "").strip()
+    wechat_url = str(data.get("wechat_url") or "").strip()
+    if not media_id or not wechat_url:
+        raise SystemExit("md2wechat 上传素材成功，但响应缺少 media_id 或 wechat_url")
+    record = {"media_id": media_id, "wechat_url": wechat_url, "source": source, "at": now_iso()}
+    cache["items"][cache_key] = record
+    atomic_json(wechat_material_cache_path(project), cache)
+    return {"media_id": media_id, "wechat_url": wechat_url}
+
+
+def prepare_wechat_html(
+    executable: str,
+    *,
+    repo: Path,
+    project: Path,
+    metadata: dict[str, Any],
+    account: str,
+    html: str,
+) -> str:
+    local_sources = metadata_image_sources(repo, project, metadata)
+    replacements: dict[str, str] = {}
+    for match in HTML_IMG_SRC_RE.finditer(html):
+        source = match.group("src").strip()
+        if not source or source in replacements:
+            continue
+        if source.startswith("http://mmbiz.qpic.cn/") or source.startswith("https://mmbiz.qpic.cn/"):
+            replacements[source] = source
+            continue
+        local_path = local_sources.get(source)
+        if not local_path and not source.startswith(("http://", "https://")):
+            raise SystemExit(f"公众号 HTML 图片既不是可用本地文件，也不是远程 URL：{source}")
+        material = upload_wechat_material(
+            executable,
+            repo=repo,
+            project=project,
+            account=account,
+            source=source,
+            local_path=local_path,
+        )
+        replacements[source] = material["wechat_url"]
+
+    def replace(match: re.Match[str]) -> str:
+        source = match.group("src").strip()
+        replacement = replacements.get(source, source)
+        return match.group(0).replace(match.group("src"), replacement, 1)
+
+    return HTML_IMG_SRC_RE.sub(replace, html)
+
+
+def content_metrics(project: Path, metadata: dict[str, Any]) -> dict[str, Any]:
+    path = project / "draft" / "polished.md"
+    if not path.is_file():
+        return {"available": False}
+    markdown = strip_front_matter(path.read_text(encoding="utf-8"))
+    visible = re.sub(r"```.*?```", "", markdown, flags=re.DOTALL)
+    visible = re.sub(r"[#>*_`\[\]()!-]", "", visible)
+    headings = re.findall(r"(?m)^(#{1,6})\s+(.+)$", markdown)
+    return {
+        "available": True,
+        "visible_characters": len(re.sub(r"\s+", "", visible)),
+        "headings": len(headings),
+        "remote_images": len(IMAGE_RE.findall(markdown)),
+        "description_characters": len(str(metadata.get("description", "")).strip()),
+        "ai_tone_phrase_risks": ai_tone_risks(markdown),
+    }
+
+
+def target_readiness(repo: Path, project: Path, metadata: dict[str, Any], channel: str) -> dict[str, Any]:
+    scoped = dict(metadata)
+    scoped["channels"] = [channel]
+    errors, warnings = validate_materialized(repo, str(metadata.get("project") or project.name), scoped)
+    config = load_config(repo)
+    result: dict[str, Any] = {
+        "selected": channel in selected_channels(metadata),
+        "artifact_ready": not errors,
+        "blockers": list(errors),
+        "warnings": list(warnings),
+    }
+    if channel == "blog":
+        result.update({"adapter": "repository-workflow", "verified_status": "materialized"})
+        return result
+    if channel == "wechat":
+        executable = resolve_executable(str(config.get("md2wechat_executable") or "md2wechat"))
+        cover = metadata.get("wechat_cover_image") if isinstance(metadata.get("wechat_cover_image"), dict) else {}
+        cover_path = resolve_project_image(repo, project, str(cover.get("local") or ""))
+        if not executable:
+            result["blockers"].append("未找到 md2wechat；只能使用已登录浏览器手工保存草稿")
+        if not cover_path or not cover_path.is_file():
+            result["blockers"].append("缺少微信公众号本地封面文件；API 草稿写入需要本地封面")
+        result.update(
+            {
+                "adapter": "md2wechat" if executable else "browser-assisted",
+                "adapter_path": executable,
+                "artifact_status": "materialized",
+                "delivery_capability": "draft_saved" if executable else "manual_required",
+                "delivery_mode": "existing-html-direct" if executable else "browser-assisted",
+                "ready": not result["blockers"],
+            }
+        )
+        return result
+    skills_dir = external_directory(repo, str(config.get("xiaohongshu_skills_dir") or ""))
+    script = skills_dir / "scripts" / "publish_pipeline.py" if skills_dir else None
+    if not script or not script.is_file():
+        result["warnings"].append("未配置 XiaohongshuSkills；可改用已登录浏览器逐轮填充")
+    result.update(
+        {
+            "adapter": "xiaohongshu-skills-preview" if script and script.is_file() else "browser-assisted",
+            "adapter_path": str(script) if script and script.is_file() else None,
+            "artifact_status": "materialized",
+            "delivery_capability": "filled_for_review",
+            "server_draft_guaranteed": False,
+            "risk": "CDP 自动化可能触发平台风控；先用测试号并人工复核",
+            "ready": not result["blockers"],
+        }
+    )
+    return result
+
+
+def apply_wechat_probe(target: dict[str, Any], payload: Any, returncode: int) -> None:
+    """Interpret md2wechat doctor readiness instead of trusting its zero exit code."""
+    if returncode or not isinstance(payload, dict) or payload.get("success") is False:
+        target["ready"] = False
+        target["blockers"].append("md2wechat doctor 执行失败")
+        return
+    data = payload.get("data") if isinstance(payload.get("data"), dict) else {}
+    readiness = data.get("readiness") if isinstance(data.get("readiness"), dict) else {}
+    draft_ready = readiness.get("draft") is True
+    format_ready = readiness.get("format_api") is True
+    target["draft_api_ready"] = draft_ready
+    target["format_api_ready"] = format_ready
+    if not draft_ready:
+        target["ready"] = False
+        target["blockers"].append("md2wechat 缺少微信公众号草稿凭据或草稿 API 配置")
+    elif not format_ready:
+        target["warnings"].append(
+            "md2wechat 转换 API 未配置；send-draft 将复用已物化的 article.html 直投草稿，不重新生成正文"
+        )
+
+
+def command_inspect(args: argparse.Namespace) -> None:
+    repo = find_workspace_root()
+    project, state, metadata = load_project(repo, args.project)
+    draft_errors, draft_warnings = validate_draft(project, metadata)
+    targets = {
+        channel: target_readiness(repo, project, metadata, channel)
+        for channel in CHANNELS
+        if channel in selected_channels(metadata)
+    }
+    payload: dict[str, Any] = {
+        "project": args.project,
+        "current_stage": state.get("current_stage", "initialized"),
+        "quality": content_metrics(project, metadata),
+        "draft": {"ready": not draft_errors, "blockers": draft_errors, "warnings": draft_warnings},
+        "targets": targets,
+        "deliveries": state.get("deliveries", {}),
+        "next_actions": delivery_next_actions(metadata, state),
+    }
+    if args.probe and "wechat" in targets and targets["wechat"].get("adapter_path"):
+        command = [str(targets["wechat"]["adapter_path"]), "doctor", "--json"]
+        try:
+            result = subprocess.run(command, cwd=repo, capture_output=True, text=True, timeout=30)
+        except subprocess.TimeoutExpired:
+            returncode = 124
+            probe: Any = {"error": "md2wechat doctor timed out"}
+        else:
+            returncode = result.returncode
+            try:
+                probe = redact_adapter_payload(json.loads(result.stdout))
+            except json.JSONDecodeError:
+                probe = {
+                    "stdout": redact_adapter_secrets(result.stdout.strip()),
+                    "stderr": redact_adapter_secrets(result.stderr.strip()),
+                }
+        targets["wechat"]["probe"] = {"returncode": returncode, "result": probe}
+        apply_wechat_probe(targets["wechat"], probe, returncode)
+    print(json.dumps(payload, ensure_ascii=False, indent=2))
+
+
+def record_delivery(
+    project: Path,
+    state: dict[str, Any],
+    *,
+    channel: str,
+    item: str,
+    status: str,
+    account: str = "",
+    identifier: str = "",
+    note: str = "",
+) -> dict[str, Any]:
+    if channel not in {"wechat", "rednote"}:
+        raise SystemExit("发布状态只支持 wechat 或 rednote")
+    if status not in DELIVERY_STATUSES:
+        raise SystemExit(f"未知发布状态 {status}")
+    record = {
+        "status": status,
+        "at": now_iso(),
+        "account": account,
+        "identifier": identifier,
+        "note": note,
+    }
+    state.setdefault("deliveries", {}).setdefault(channel, {})[item] = record
+    state["updated_at"] = record["at"]
+    atomic_json(state_path(project), state)
+    append_event(project, {"type": "delivery", "channel": channel, "item": item, **record})
+    return record
+
+
+def command_record_delivery(args: argparse.Namespace) -> None:
+    repo = find_workspace_root()
+    project, state, metadata = load_project(repo, args.project)
+    if args.channel not in selected_channels(metadata):
+        raise SystemExit(f"项目没有选择 {args.channel} 渠道")
+    item = args.round or "article"
+    record = record_delivery(
+        project,
+        state,
+        channel=args.channel,
+        item=item,
+        status=args.status,
+        account=args.account or "",
+        identifier=args.identifier or "",
+        note=args.note or "",
+    )
+    print(json.dumps({"channel": args.channel, "item": item, **record}, ensure_ascii=False, indent=2))
+
+
+def markdown_title_and_body(path: Path) -> tuple[str, str, list[str]]:
+    markdown = strip_front_matter(path.read_text(encoding="utf-8"))
+    match = H1_RE.search(markdown)
+    title = match.group(1).strip() if match else ""
+    body = (markdown[: match.start()] + markdown[match.end() :]).strip() if match else markdown.strip()
+    images = [url for _, url in IMAGE_RE.findall(markdown)]
+    return title, body, images
+
+
+def run_checked(command: list[str], *, cwd: Path) -> subprocess.CompletedProcess[str]:
+    result = subprocess.run(command, cwd=cwd, capture_output=True, text=True)
+    if result.stdout:
+        sys.stdout.write(result.stdout)
+    if result.stderr:
+        sys.stderr.write(result.stderr)
+    if result.returncode:
+        raise SystemExit(result.returncode)
+    return result
+
+
+def command_send_draft(args: argparse.Namespace) -> None:
+    if not args.confirm:
+        raise SystemExit("该命令会操作外部平台；确认目标账号后添加 --confirm")
+    repo = find_workspace_root()
+    project, state, metadata = load_project(repo, args.project)
+    if args.channel not in selected_channels(metadata):
+        raise SystemExit(f"项目没有选择 {args.channel} 渠道")
+    readiness = target_readiness(repo, project, metadata, args.channel)
+    if not readiness.get("ready"):
+        raise SystemExit("发布前检查未通过：\n- " + "\n- ".join(readiness.get("blockers", [])))
+    config = load_config(repo)
+    outputs = expected_outputs(repo, args.project)
+    if args.channel == "wechat":
+        executable = str(readiness["adapter_path"])
+        cover = metadata["wechat_cover_image"]
+        cover_path = resolve_project_image(repo, project, str(cover.get("local") or ""))
+        if not cover_path:
+            raise SystemExit("找不到微信公众号本地封面文件")
+        account = args.account or str(config.get("wechat_account") or "")
+        with tempfile.TemporaryDirectory(prefix="ymp-wechat-") as temp:
+            source = Path(temp) / "article.md"
+            body = outputs["wechat_markdown"].read_text(encoding="utf-8")
+            source.write_text(
+                "---\n"
+                f"title: {yaml_string(str(metadata.get('title', '')).strip())}\n"
+                f"description: {yaml_string(str(metadata.get('description', '')).strip())}\n"
+                "---\n\n" + body,
+                encoding="utf-8",
+            )
+            common = [str(source), "--draft", "--cover", str(cover_path)]
+            if account:
+                common.extend(["--wechat-account", account])
+            run_adapter_json([executable, "inspect", *common, "--json"], cwd=repo)
+            doctor = run_adapter_json([executable, "doctor", "--json"], cwd=repo, timeout=30)
+            probe_target = {"ready": True, "blockers": [], "warnings": []}
+            apply_wechat_probe(probe_target, doctor, 0)
+            if not probe_target["ready"]:
+                raise SystemExit("发布前检查未通过：\n- " + "\n- ".join(probe_target["blockers"]))
+
+            cover_material = upload_wechat_material(
+                executable,
+                repo=repo,
+                project=project,
+                account=account,
+                source=str(cover_path),
+                local_path=cover_path,
+            )
+            html = outputs["wechat_html"].read_text(encoding="utf-8")
+            content = prepare_wechat_html(
+                executable,
+                repo=repo,
+                project=project,
+                metadata=metadata,
+                account=account,
+                html=html,
+            )
+            article: dict[str, Any] = {
+                "title": str(metadata.get("title") or "").strip(),
+                "digest": str(metadata.get("description") or "").strip(),
+                "content": content,
+                "thumb_media_id": cover_material["media_id"],
+                "show_cover_pic": 1,
+            }
+            author = str(metadata.get("author") or "").strip()
+            if author:
+                article["author"] = author
+            draft_file = Path(temp) / "draft.json"
+            draft_file.write_text(
+                json.dumps({"articles": [article]}, ensure_ascii=False, indent=2) + "\n",
+                encoding="utf-8",
+            )
+            result = run_adapter_json(
+                [executable, "create_draft", str(draft_file), *adapter_account_flags(account), "--json"],
+                cwd=repo,
+            )
+        result_data = result.get("data") if isinstance(result.get("data"), dict) else {}
+        media_id = str(result_data.get("media_id") or "").strip()
+        if not media_id:
+            raise SystemExit("md2wechat 返回成功，但草稿响应缺少 media_id；未记录 draft_saved")
+        record_delivery(
+            project,
+            state,
+            channel="wechat",
+            item="article",
+            status="draft_saved",
+            account=account,
+            identifier=media_id,
+            note="reused materialized article.html and existing images via md2wechat create_draft; no publish action",
+        )
+        print(
+            json.dumps(
+                {"channel": "wechat", "status": "draft_saved", "identifier": media_id},
+                ensure_ascii=False,
+            )
+        )
+        return
+
+    round_name = args.round or "round1"
+    if not re.fullmatch(r"round[1-9]\d*", round_name):
+        raise SystemExit("--round 必须是 round1、round2……")
+    script = Path(str(readiness.get("adapter_path") or ""))
+    if not script.is_file():
+        raise SystemExit("小红书 CLI 自动填充需要在配置中设置 xiaohongshu_skills_dir")
+    post = outputs["rednote_root"] / round_name / "post.md"
+    if not post.is_file():
+        raise SystemExit(f"找不到小红书轮次：{post}")
+    title, body, images = markdown_title_and_body(post)
+    if not title:
+        raise SystemExit(f"{post} 缺少一级标题，无法填写发布标题")
+    account = args.account or str(config.get("rednote_account") or "")
+    with tempfile.TemporaryDirectory(prefix="ymp-rednote-") as temp:
+        title_file = Path(temp) / "title.txt"
+        content_file = Path(temp) / "content.txt"
+        title_file.write_text(title + "\n", encoding="utf-8")
+        content_file.write_text(body + "\n", encoding="utf-8")
+        command = [
+            sys.executable,
+            str(script),
+            "--preview",
+            "--title-file",
+            str(title_file),
+            "--content-file",
+            str(content_file),
+        ]
+        if images:
+            command.extend(["--image-urls", *images])
+        if account:
+            command.extend(["--account", account])
+        host = str(config.get("rednote_cdp_host") or "").strip()
+        if host:
+            command.extend(["--host", host, "--port", str(config.get("rednote_cdp_port") or 9222)])
+        run_checked(command, cwd=script.parents[1])
+    record_delivery(
+        project,
+        state,
+        channel="rednote",
+        item=round_name,
+        status="filled_for_review",
+        account=account,
+        note="XiaohongshuSkills preview mode filled the editor; server draft is not yet verified",
+    )
+    print(json.dumps({"channel": "rednote", "round": round_name, "status": "filled_for_review"}, ensure_ascii=False))
+
+
 def print_validation(errors: list[str], warnings: list[str]) -> None:
     for warning in warnings:
         print(f"WARN: {warning}")
@@ -867,6 +1441,12 @@ def build_parser() -> argparse.ArgumentParser:
     setup.add_argument("--wechat-similarity-min", type=float)
     setup.add_argument("--rednote-images-min", type=int, choices=range(1, 10))
     setup.add_argument("--rednote-images-max", type=int, choices=range(1, 10))
+    setup.add_argument("--md2wechat-executable")
+    setup.add_argument("--wechat-account")
+    setup.add_argument("--xiaohongshu-skills-dir")
+    setup.add_argument("--rednote-account")
+    setup.add_argument("--rednote-cdp-host")
+    setup.add_argument("--rednote-cdp-port", type=int)
     setup.set_defaults(handler=command_setup)
 
     init = subparsers.add_parser("init", help="创建内容项目")
@@ -883,7 +1463,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     checkpoint = subparsers.add_parser("checkpoint", help="记录阶段检查点")
     checkpoint.add_argument("--project", required=True)
-    checkpoint.add_argument("--stage", required=True, choices=STAGES)
+    checkpoint.add_argument("--stage", required=True, choices=CONTENT_STAGES)
     checkpoint.add_argument("--artifact")
     checkpoint.add_argument("--note")
     checkpoint.set_defaults(handler=command_checkpoint)
@@ -917,10 +1497,33 @@ def build_parser() -> argparse.ArgumentParser:
     validate.add_argument("--phase", choices=("draft", "materialized"), default="draft")
     validate.set_defaults(handler=command_validate)
 
+    inspect = subparsers.add_parser("inspect", help="输出内容质量、渠道产物和发布适配器就绪状态")
+    inspect.add_argument("--project", required=True)
+    inspect.add_argument("--probe", action="store_true", help="调用已安装的公众号适配器执行只读 doctor")
+    inspect.set_defaults(handler=command_inspect)
+
     materialize = subparsers.add_parser("materialize", help="生成三平台最终文件")
     materialize.add_argument("--project", required=True)
     materialize.add_argument("--allow-incomplete", action="store_true")
     materialize.set_defaults(handler=command_materialize)
+
+    send_draft = subparsers.add_parser("send-draft", help="写入公众号草稿，或安全填充小红书编辑器")
+    send_draft.add_argument("--project", required=True)
+    send_draft.add_argument("--channel", required=True, choices=("wechat", "rednote"))
+    send_draft.add_argument("--round", help="小红书轮次，例如 round1")
+    send_draft.add_argument("--account", help="外部适配器中的账号别名")
+    send_draft.add_argument("--confirm", action="store_true", help="确认操作目标平台账号")
+    send_draft.set_defaults(handler=command_send_draft)
+
+    delivery = subparsers.add_parser("record-delivery", help="记录各平台独立的草稿或发布结果")
+    delivery.add_argument("--project", required=True)
+    delivery.add_argument("--channel", required=True, choices=("wechat", "rednote"))
+    delivery.add_argument("--round", help="小红书轮次，例如 round1")
+    delivery.add_argument("--status", required=True, choices=DELIVERY_STATUSES)
+    delivery.add_argument("--account")
+    delivery.add_argument("--identifier")
+    delivery.add_argument("--note")
+    delivery.set_defaults(handler=command_record_delivery)
     return parser
 
 

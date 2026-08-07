@@ -1,56 +1,109 @@
-# 浏览器辅助发布
+# 草稿投递与最终发布
 
-平台页面和规则会变化。发布前使用当前可用的浏览器控制技能检查实际界面，不依赖固定坐标或过期选择器。
+平台能力分为三个明确状态：`filled_for_review`（已填充编辑器）、`draft_saved`（平台草稿已保存）和 `published`（已对外发布）。不得把前一个状态写成后一个状态。
 
 ## 能力边界
 
-- 插件内置的是发布工作流和本地产物契约，不包含微信公众号或小红书的官方发布 API、固定 DOM 脚本或账号凭据。
-- 实际辅助发布由 Codex 在用户已经登录的平台浏览器中操作页面；没有浏览器控制能力或登录态时，只交付本地产物。
-- 默认安全终点是“保存草稿”。群发、立即发布和定时发布都是外部最终动作，必须在展示账号、标题、可见范围和时间后取得用户明确确认。
-- 平台改版、验证码、扫码、人机校验、账号风控或粘贴格式异常时暂停，让用户接管；不得绕过安全校验。
+- 微信公众号可选用外部 `md2wechat` 适配器，经只读检查后写入官方草稿箱。插件不复制其代码，不接触 AppID、Secret 或 API Key。
+- 小红书可选用外部 `XiaohongshuSkills` 的 `--preview` 模式填充标题、正文和图片。该模式不会点击发布，也不能证明服务器草稿已经保存，因此只记录 `filled_for_review`。
+- 小红书没有在本插件中验证过的公开草稿 API。若当前创作后台显示“保存草稿”，应在已登录浏览器中确认保存成功后，再记录 `draft_saved`。
+- CDP 自动化可能触发风控、限流或封号。先用测试账号、控制频率、保留人工复核；验证码、扫码和人机校验必须由用户处理。
+- 群发、立即发布和定时发布属于最终外部动作，必须展示账号、标题、可见范围和时间，并取得用户明确确认。
 
-## 通用顺序
+## 发布前事实检查
 
-1. 运行 `resume` 和 `validate --phase materialized`。
-2. 确认当前浏览器账号、平台和目标身份。
-3. 新建草稿，导入标题、正文和图片。
-4. 逐段检查粘贴后的样式，尤其是代码、列表、链接、图片和 emoji。
-5. 保存草稿。
-6. 用 `checkpoint --stage drafted` 记录平台和草稿标题。
-7. 最终发布前向用户展示账号、标题、可见范围、发布时间与平台预览。
-8. 仅在明确确认后执行最终发布，并用 `checkpoint --stage published` 记录结果。
+每次先运行：
+
+```bash
+python3 <pipeline.py> resume --project <slug>
+python3 <pipeline.py> validate --project <slug> --phase materialized
+python3 <pipeline.py> inspect --project <slug> --probe
+```
+
+`inspect` 的 `targets.*.blockers` 是当前项目的发布就绪事实来源。它同时报告文章字符数、标题层级、远程图片数、描述长度、AI 套话风险、适配器路径和投递能力。实际是否已经保存，以 `deliveries` 为准；不能把“适配器可用”写成 `draft_saved`。
 
 ## 个人博客
 
-- 仅处理 `metadata.json.channels` 选中的博客渠道。
-- materialize 后先展示文章 diff；只有用户明确要求且仓库规则允许时才暂存和提交。
-- commit message 遵循目标仓库规范。push 属于独立外部动作，必须同时满足用户授权和仓库规则；本仓库明确禁止 Codex push，应提示用户手工执行。
+1. 检查 Hexo front matter、正文 diff、链接和图片。
+2. 运行仓库规定的构建或预览命令。
+3. 只有用户明确要求且仓库规则允许时才暂存、提交或推送。本仓库禁止 Codex push，应交给用户手工执行。
+4. 博客 Git 状态与平台草稿状态独立，不使用统一的 `drafted` 阶段覆盖彼此。
 
-## 微信公众号
+## 微信公众号草稿箱
 
-- 在本地浏览器打开 `wechat/<slug>/article.html`，复制渲染后的正文；再进入已登录的微信公众号后台，新建图文草稿并粘贴到编辑器。
-- 公众号正文应与博客正文保持基本一致；平台适配只限于段落长度、极少量称呼和结尾互动，发布前不要临时改写成摘要版。
-- 标题、摘要、作者、封面图需在平台字段中单独填写。封面使用 `metadata.json.wechat_cover_image`，并在上传前确认实际比例为 2.35:1；不要误用正文首图。
-- 检查外链是否被平台限制，检查图片是否已成功转存。
-- “保存草稿”和“群发”是两个独立状态；默认止于保存草稿。
+在工作区配置 `md2wechat_executable`，多账号时可配置 `wechat_account`。先让适配器自身完成 AppID、Secret、账号权限和 IP 白名单设置。Chrome 登录态不能替代官方 API 的 IP 白名单。
 
-## 小红书
+插件已经生成并复审 `article.html`，因此默认直接复用这份 HTML，不再调用转换 API。`MD2WECHAT_API_KEY` 缺失但 `doctor.data.readiness.draft` 为 `true` 时仍可投递；只有草稿凭据不可用才阻断。
 
-- 进入已登录的小红书创作后台，为每个实际存在的 `roundN` 新建一篇图文笔记；上传该轮本地图片，填写标题、正文和话题标签。平台通常要求上传本地图片，不能把 Markdown 图床 URL 当成已经完成平台上传。
-- 先核对 `series-plan.json` 的轮数理由和各轮角度；逐轮处理，不把多轮合并成一篇。
-- 检查标题长度、话题标签、地点/商品等附加字段是否符合用户意图。
-- 默认逐轮保存草稿，不批量点击发布。
-- 用户明确要求定时发布时，逐轮展示标题、账号和计划时间；确认后再设置平台定时任务。
+写入草稿箱：
 
-## 状态记录
+```bash
+python3 <pipeline.py> send-draft \
+  --project <slug> \
+  --channel wechat \
+  --account <optional-alias> \
+  --confirm
+```
 
-检查点备注至少包含：
+命令会：
 
-- `platform`
-- `account`
-- `title`
-- `draft identifier`（页面可见时）
-- `scheduled time`（如有）
-- `result` 与失败原因
+1. 再次校验 materialized 产物和本地 2.35:1 封面；
+2. 创建带标题、摘要 front matter 的临时 Markdown，不修改最终文章；
+3. 先执行 `md2wechat inspect ... --draft --cover ... --json`；
+4. 按 `metadata.json` 将 HTML 中的公开图片 URL 映射回既有本地图片，并通过 `upload_image` 上传封面与正文图片；无法映射的远程图片使用 `download_and_upload`；
+5. 把成功素材的 `media_id` 与 `wechat_url` 缓存在项目 `.codex/wechat-materials.json`，中断后复用，避免重复上传；
+6. 只在临时副本中把正文图片替换为微信素材 URL，再调用 `create_draft`，不改写 `article.html`；
+7. 仅在返回非空草稿 `media_id` 后记录 `wechat/article = draft_saved`。
 
-不要在状态文件记录 cookie、token、验证码或完整账号凭据。
+如果适配器报 `errcode=40164`，展示脱敏后的出口 IP，要求用户将其加入公众号 IP 白名单。适配器超时时不要自动重试：平台侧结果可能已经成功，应先检查素材库或草稿箱，避免重复项。任何错误输出都必须遮蔽 Secret 与 access token。
+
+如果未安装适配器，退回已登录浏览器：打开 `wechat/<slug>/article.html`，复制渲染正文，填写标题、摘要、作者和 `metadata.json.wechat_cover_image.local`，确认平台提示保存成功后再记录状态。
+
+## 小红书编辑器与草稿
+
+配置 `xiaohongshu_skills_dir` 后，逐轮安全填充：
+
+```bash
+python3 <pipeline.py> send-draft \
+  --project <slug> \
+  --channel rednote \
+  --round round1 \
+  --account <optional-alias> \
+  --confirm
+```
+
+插件固定调用外部适配器的 `--preview` 模式，禁止自动追加 `--headless` 或点击发布。成功只表示编辑器已经填充，状态记录为 `filled_for_review`。随后需要：
+
+1. 核对标题、正文、话题和全部本地上传图片；
+2. 确认当前账号与轮次；
+3. 若页面存在草稿保存能力，执行保存并等待成功提示；
+4. 再记录服务器草稿状态：
+
+```bash
+python3 <pipeline.py> record-delivery \
+  --project <slug> \
+  --channel rednote \
+  --round round1 \
+  --status draft_saved \
+  --account <alias> \
+  --identifier <visible-draft-id> \
+  --note "平台已显示保存成功"
+```
+
+没有 `XiaohongshuSkills` 时，使用当前可用的已登录浏览器控制能力完成同样的“填充—复核—保存”流程。平台改版、文件上传权限不足或选择器失效时暂停并让用户接管。
+
+## 最终发布
+
+最终发布前展示：平台、账号、标题、轮次、可见范围、发布时间和预览结果。用户明确确认后才能执行，并逐平台记录：
+
+```bash
+python3 <pipeline.py> record-delivery \
+  --project <slug> \
+  --channel <wechat|rednote> \
+  --round <optional-roundN> \
+  --status published \
+  --account <alias> \
+  --identifier <platform-id>
+```
+
+状态文件只记录账号别名、标题或平台标识、结果和失败原因；绝不记录 Cookie、token、验证码、AppSecret 或完整登录凭据。

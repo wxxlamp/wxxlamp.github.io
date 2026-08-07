@@ -41,6 +41,26 @@ content-projects/<slug>/
 
 `.codex/state.json` 由脚本原子更新，是恢复任务的唯一进度真相。`events.jsonl` 是追加式审计日志。不要把登录 cookie、API token 或浏览器存储复制进项目。
 
+微信公众号素材上传成功后，可在 `.codex/wechat-materials.json` 缓存文件哈希、`media_id` 和微信素材 URL，以便草稿创建中断后复用。缓存不得包含 AppSecret、access token 或完整适配器错误响应。
+
+内容处理阶段止于 `persisted`。平台投递不再改写统一的 `current_stage`，而是按渠道和小红书轮次写入 `deliveries`：
+
+```json
+{
+  "current_stage": "persisted",
+  "deliveries": {
+    "wechat": {
+      "article": {"status": "draft_saved", "account": "account-alias"}
+    },
+    "rednote": {
+      "round1": {"status": "filled_for_review", "account": "account-alias"}
+    }
+  }
+}
+```
+
+允许的投递状态是 `filled_for_review`、`draft_saved`、`published` 和 `failed`。账号字段只保存外部适配器别名，不保存登录凭据。
+
 ## metadata.json
 
 初始化后补全：

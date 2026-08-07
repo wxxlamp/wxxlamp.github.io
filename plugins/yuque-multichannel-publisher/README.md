@@ -1,6 +1,6 @@
 # 语雀多平台发布插件
 
-一个自包含的 Codex Plugin：从语雀读取 Markdown 和原图，由 AI 完成润色、语气匹配、去 AI 味复审、配图、微信公众号排版及小红书改写，再由插件脚本完成图床上传、断点记录、校验和三端落盘。
+一个自包含的 Codex Plugin：从语雀读取 Markdown 和原图，由 AI 完成润色、语气匹配、去 AI 味复审、配图、微信公众号排版及小红书改写，再由插件脚本完成图床上传、断点记录、质量检查、三端落盘和可选草稿适配。
 
 插件不依赖目标仓库的 `.agents/skills`。复制整个 `yuque-multichannel-publisher/` 目录即可分发；用户配置、登录态、个人语气档案和任务进度保存在目标工作区 `.codex/yuque-multichannel-publisher/`，不会随插件复制。
 
@@ -45,6 +45,33 @@ python3 skills/yuque-multichannel-publisher/scripts/pipeline.py resume --project
 ```
 
 `content-projects/<slug>/.codex/state.json` 是任务进度真相。不要手工改状态文件。
+
+## 发布就绪检查与平台草稿
+
+先用一条命令查看内容质量、三端产物和适配器状态：
+
+```bash
+python3 skills/yuque-multichannel-publisher/scripts/pipeline.py inspect \
+  --project <slug> --probe
+```
+
+微信公众号可选接入独立安装的 `md2wechat`。配置好其凭据和本插件的可执行文件路径后，可先检查再写入官方草稿箱：
+
+```bash
+python3 skills/yuque-multichannel-publisher/scripts/pipeline.py send-draft \
+  --project <slug> --channel wechat --confirm
+```
+
+投递会直接复用已经物化的 `article.html`，上传既有封面和正文图片后调用微信草稿 API，不需要再次转换或生成文章。成功素材会缓存在项目 `.codex/`，只有取得草稿 `media_id` 才记录为已保存。
+
+小红书可选接入独立安装的 `XiaohongshuSkills`。插件固定使用其 `--preview` 模式逐轮填充，不自动点击发布，也不把填充成功误报为草稿保存成功：
+
+```bash
+python3 skills/yuque-multichannel-publisher/scripts/pipeline.py send-draft \
+  --project <slug> --channel rednote --round round1 --confirm
+```
+
+平台页面确认保存后，再用 `record-delivery --status draft_saved` 记录。公众号、小红书以及每个小红书轮次的状态彼此独立。
 
 ## 本地开发更新
 

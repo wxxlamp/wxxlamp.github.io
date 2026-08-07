@@ -1,6 +1,6 @@
 ---
 name: yuque-multichannel-publisher
-description: Pull Yuque documents with formatting and re-hosted images, expand and polish incomplete drafts in the repository's established voice, create professional cover/section/social images, and persist resumable Hexo blog, WeChat Official Account, and RedNote publishing packages. Use when a user provides a yuque.com document, asks to turn a draft or outline into publishable multi-channel content, wants blog/微信公众号/小红书 variants, or wants to resume a content project from its local .codex checkpoint.
+description: Pull Yuque documents with formatting and re-hosted images, expand and polish incomplete drafts in the repository's established voice, create professional cover/section/social images, persist resumable Hexo blog, WeChat Official Account, and RedNote packages, inspect publishing readiness, and optionally send content through external draft adapters. Use when a user provides a yuque.com document, asks to turn a draft or outline into publishable multi-channel content, wants blog/微信公众号/小红书 variants or drafts, or wants to resume a content project from its local .codex checkpoint.
 ---
 
 # 语雀多平台发布
@@ -14,7 +14,7 @@ description: Pull Yuque documents with formatting and re-hosted images, expand a
 1. 从当前目录向上寻找工作区。无法自动识别时设置 `YMP_WORKSPACE_ROOT=/absolute/project/path`。
 2. 首次使用或配置图床时阅读 [configuration.md](references/configuration.md)。润色前阅读 [voice-profile.md](references/voice-profile.md)、[style-profile-cache.md](references/style-profile-cache.md) 和 [editorial-guide.md](references/editorial-guide.md)，再读取工作区 `.codex/yuque-multichannel-publisher/style-profiles/author-voice.md`；缺少该文件时，先由 AI 基于当前用户的历史文章创建。生成图片前必须阅读 [visual-direction.md](references/visual-direction.md)。需要生成三端产物时，再阅读 [artifact-contract.md](references/artifact-contract.md)；需要代发时，再阅读 [publishing.md](references/publishing.md)。
 3. 使用本技能的 `scripts/pipeline.py` 管理项目。不要手工修改 `.codex/state.json`。
-4. 首次使用时安装本 Skill 的 `requirements.txt`，并执行 `playwright install chromium`。
+4. 首次使用语雀兼容拉取器时安装本 Skill 的 `requirements.txt`，并执行 `playwright install chromium`。平台发布适配器是可选外部依赖，不能复制进插件或代替用户配置账号。
 5. 将语雀登录态、个人语气档案和图床配置留在工作区 `.codex/yuque-multichannel-publisher/` 或环境变量中，绝不写入插件目录。插件不会创建、猜测或自动申请任何密钥；缺少凭据时提示用户自行配置。
 
 初始化工作区配置：
@@ -153,6 +153,7 @@ python3 <pipeline.py> upload-image \
 python3 <pipeline.py> validate --project <english-slug> --phase draft
 python3 <pipeline.py> materialize --project <english-slug>
 python3 <pipeline.py> validate --project <english-slug> --phase materialized
+python3 <pipeline.py> inspect --project <english-slug>
 ```
 
 `content-projects/<slug>/` 只是可恢复的工作草稿区，不是最终发布目录。只有 `reviewed` 后执行 `materialize`，才算完成持久化。命令默认生成以下最终文件；实际根目录以工作区配置为准：
@@ -168,14 +169,14 @@ python3 <pipeline.py> validate --project <english-slug> --phase materialized
 
 ### 6. 审阅与发布
 
-先记录 `reviewed` 检查点。只有在用户明确要求发布时，才按 [publishing.md](references/publishing.md) 使用已登录浏览器：
+先记录 `reviewed` 检查点并执行 `inspect`。只有在用户明确要求操作外部平台时，才按 [publishing.md](references/publishing.md) 使用外部适配器或已登录浏览器：
 
 1. 博客可在用户明确要求时执行 Git commit；是否 push 必须遵守目标仓库规则。本仓库禁止 Codex push，因此只能交给用户手工 push。
-2. 微信发布时使用 `wechat_cover_image` 填写 2.35:1 封面字段；微信和小红书优先保存到平台草稿箱，小红书可按用户给定时间逐轮设置定时发布。
-3. 保存草稿后记录平台、草稿标识或可见标题。
-4. 在最终“发布/群发”动作前展示标题、账号、可见范围和计划时间。
-5. 只有用户明确确认最终动作后才能点击发布。
-6. 每个平台独立记录成功或失败，失败不得回滚本地产物。
+2. 微信可选用 `md2wechat`：必须先 `inspect --probe`，再执行带 `--confirm` 的 `send-draft --channel wechat`。默认复用已物化的 `article.html`，上传既有封面与正文图片并调用 `create_draft`；不因缺少转换 API Key 重新生成正文。只有返回草稿 `media_id` 后才记录 `draft_saved`。
+3. 小红书可选用 `XiaohongshuSkills`：`send-draft --channel rednote --round roundN` 固定使用 `--preview`，只记录 `filled_for_review`；平台明确提示保存成功后，再用 `record-delivery` 记录 `draft_saved`。
+4. `filled_for_review`、`draft_saved` 与 `published` 是三个不同状态，禁止互相替代。公众号、小红书及每个小红书轮次都独立记录。
+5. 在最终“发布/群发”动作前展示标题、账号、可见范围和计划时间；只有用户明确确认后才能点击。
+6. 每个平台独立记录成功或失败，失败不得回滚本地产物，也不得把整个项目的内容阶段倒退。
 
 ## 质量闸门
 
@@ -188,7 +189,8 @@ python3 <pipeline.py> validate --project <english-slug> --phase materialized
 - 微信 HTML 不依赖外部 CSS；图片均使用可公开访问的 HTTPS URL。
 - 小红书轮数由 AI 根据独立主题数决定，实际 roundN 必须与系列计划一致；每轮开头重建上下文，包含 3–9 张卡片、明确钩子、互动问题和 5–8 个标签，不使用跨轮指代。
 - `validate` 无错误后才进入平台草稿；平台草稿完成不等于已发布。
+- `inspect.targets.*.blockers` 是发布就绪事实来源；`resume.next_actions` 按渠道给出后续动作，不再把三端压成一个线性 `drafted` 阶段。
 
 ## 可选平台能力
 
-润色、语气仿写、图片策划、图片生成、微信排版和小红书改写由 AI 完成。图片生成需要当前 Codex 环境具备图片生成能力。公众号和小红书没有内置稳定发布 API：辅助发布依赖当前环境的浏览器控制能力和用户已有登录态，默认只创建或保存平台草稿；页面结构变化时可能需要人工接管。缺少浏览器控制能力时，仍可完成语雀拉取、AI 文本加工、本地持久化与校验。
+润色、语气仿写、图片策划、图片生成、微信排版和小红书改写由 AI 完成。图片生成需要当前 Codex 环境具备图片生成能力。微信公众号可通过用户单独安装并配置的 `md2wechat` 写入草稿箱；小红书参考适配器只验证到预览填充，服务器草稿仍需在已登录页面确认。缺少适配器或浏览器控制能力时，仍可完成语雀拉取、AI 文本加工、本地持久化、质量报告与发布包交付。

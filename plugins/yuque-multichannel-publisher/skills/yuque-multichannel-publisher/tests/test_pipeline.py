@@ -298,6 +298,209 @@ class PipelineContractTest(unittest.TestCase):
                 self.assertTrue((root / "rednote" / "demo" / f"round{number}" / "post.md").is_file())
                 self.assertTrue((root / "rednote" / "demo" / f"round{number}" / "cards.json").is_file())
 
+    def test_delivery_state_is_independent_per_platform_and_round(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            project = Path(temp)
+            (project / ".codex").mkdir()
+            state = {"current_stage": "persisted", "deliveries": {}}
+            wechat = pipeline.record_delivery(
+                project,
+                state,
+                channel="wechat",
+                item="article",
+                status="draft_saved",
+                account="official-account",
+            )
+            rednote = pipeline.record_delivery(
+                project,
+                state,
+                channel="rednote",
+                item="round1",
+                status="filled_for_review",
+            )
+            saved = json.loads((project / ".codex" / "state.json").read_text(encoding="utf-8"))
+            self.assertEqual("draft_saved", wechat["status"])
+            self.assertEqual("filled_for_review", rednote["status"])
+            self.assertEqual("draft_saved", saved["deliveries"]["wechat"]["article"]["status"])
+            self.assertEqual("filled_for_review", saved["deliveries"]["rednote"]["round1"]["status"])
+            self.assertEqual("persisted", saved["current_stage"])
+
+    def test_adapter_errors_redact_secret_and_explain_ip_whitelist(self) -> None:
+        raw = (
+            'Get "https://api.weixin.qq.com/cgi-bin/token?appid=wx123&secret=top-secret": '
+            "errcode=40164, invalid ip 203.0.113.8, not in whitelist"
+        )
+        redacted = pipeline.redact_adapter_secrets(raw)
+        self.assertNotIn("top-secret", redacted)
+        nested = pipeline.redact_adapter_payload({"error": raw})
+        self.assertNotIn("top-secret", nested["error"])
+        message = pipeline.adapter_error_message({"message": raw})
+        self.assertIn("203.0.113.8", message)
+        self.assertIn("IP 白名单", message)
+
+    def test_wechat_probe_allows_existing_html_when_only_format_api_is_missing(self) -> None:
+        target = {"ready": True, "blockers": [], "warnings": []}
+        pipeline.apply_wechat_probe(
+            target,
+            {
+                "success": True,
+                "data": {"overall": "blocked", "readiness": {"format_api": False, "draft": True}},
+            },
+            0,
+        )
+        self.assertTrue(target["ready"])
+        self.assertTrue(target["draft_api_ready"])
+        self.assertFalse(target["format_api_ready"])
+        self.assertTrue(any("article.html" in warning for warning in target["warnings"]))
+
+    def test_wechat_send_draft_reuses_html_and_records_media_id(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            (root / ".git").mkdir()
+            project = root / "content-projects" / "demo"
+            (project / ".codex").mkdir(parents=True)
+            images = project / "images"
+            images.mkdir()
+            cover = images / "wechat-cover.png"
+            body_image = images / "section.png"
+            cover.write_bytes(b"cover")
+            body_image.write_bytes(b"body")
+            source_url = "https://cdn.example.com/section.png"
+            metadata = {
+                "project": "demo",
+                "title": "测试公众号草稿",
+                "description": "验证直接复用现成 HTML 保存公众号草稿。",
+                "channels": ["wechat"],
+                "wechat_cover_image": {"local": str(cover), "url": "https://cdn.example.com/cover.png"},
+                "section_images": {"1. 测试": {"local": str(body_image), "url": source_url}},
+            }
+            (project / "metadata.json").write_text(json.dumps(metadata), encoding="utf-8")
+            (project / ".codex" / "state.json").write_text(
+                json.dumps({"current_stage": "persisted", "deliveries": {}}), encoding="utf-8"
+            )
+            final = root / "wechat" / "demo"
+            final.mkdir(parents=True)
+            (final / "article.md").write_text("公众号正文。\n", encoding="utf-8")
+            (final / "article.html").write_text(
+                f'<section><img src="{source_url}"><p>公众号正文。</p></section>\n', encoding="utf-8"
+            )
+            adapter = root / "bin" / "md2wechat"
+            adapter.parent.mkdir()
+            adapter.write_text("adapter", encoding="utf-8")
+            config_dir = root / ".codex" / "yuque-multichannel-publisher"
+            config_dir.mkdir(parents=True)
+            (config_dir / "config.json").write_text(
+                json.dumps({"md2wechat_executable": str(adapter)}), encoding="utf-8"
+            )
+            captured_draft: dict = {}
+
+            def fake_adapter(command: list[str], *, cwd: Path, timeout: int = 180):
+                action = command[1]
+                if action == "doctor":
+                    return {"success": True, "data": {"readiness": {"draft": True, "format_api": False}}}
+                if action == "inspect":
+                    return {"success": True, "data": {"ready": True}}
+                if action == "upload_image":
+                    is_cover = command[2].endswith("wechat-cover.png")
+                    return {
+                        "success": True,
+                        "data": {
+                            "media_id": "cover-media" if is_cover else "body-media",
+                            "wechat_url": (
+                                "http://mmbiz.qpic.cn/cover.png" if is_cover else "http://mmbiz.qpic.cn/body.png"
+                            ),
+                        },
+                    }
+                if action == "create_draft":
+                    captured_draft.update(json.loads(Path(command[2]).read_text(encoding="utf-8")))
+                    return {"success": True, "data": {"media_id": "draft-media-id"}}
+                self.fail(f"unexpected adapter action: {action}")
+
+            with patch.dict(os.environ, {"YMP_WORKSPACE_ROOT": str(root)}), patch.object(
+                pipeline, "run_adapter_json", side_effect=fake_adapter
+            ):
+                pipeline.command_send_draft(
+                    SimpleNamespace(project="demo", channel="wechat", round=None, account=None, confirm=True)
+                )
+            article = captured_draft["articles"][0]
+            self.assertEqual("cover-media", article["thumb_media_id"])
+            self.assertIn("http://mmbiz.qpic.cn/body.png", article["content"])
+            self.assertNotIn(source_url, article["content"])
+            saved = json.loads((project / ".codex" / "state.json").read_text(encoding="utf-8"))
+            delivery = saved["deliveries"]["wechat"]["article"]
+            self.assertEqual("draft_saved", delivery["status"])
+            self.assertEqual("draft-media-id", delivery["identifier"])
+
+    def test_resume_actions_do_not_collapse_channel_delivery_state(self) -> None:
+        metadata = {"channels": ["blog", "wechat", "rednote"]}
+        state = {
+            "current_stage": "persisted",
+            "deliveries": {
+                "wechat": {"article": {"status": "draft_saved"}},
+                "rednote": {"round1": {"status": "filled_for_review"}},
+            },
+        }
+        actions = {item["target"]: item["action"] for item in pipeline.delivery_next_actions(metadata, state)}
+        self.assertEqual("review-repository-diff", actions["blog"])
+        self.assertEqual("review-platform-draft", actions["wechat"])
+        self.assertEqual("save-platform-draft-manually", actions["rednote"])
+
+    def test_rednote_parser_keeps_images_and_removes_title(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            post = Path(temp) / "post.md"
+            post.write_text(
+                "# 二十字以内标题\n\n正文。\n\n![卡片](https://example.com/card.png)\n\n#标签一 #标签二\n",
+                encoding="utf-8",
+            )
+            title, body, images = pipeline.markdown_title_and_body(post)
+            self.assertEqual("二十字以内标题", title)
+            self.assertNotIn("# 二十字以内标题", body)
+            self.assertEqual(["https://example.com/card.png"], images)
+
+    def test_rednote_adapter_is_preview_only(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            (root / ".git").mkdir()
+            project = root / "content-projects" / "demo"
+            (project / ".codex").mkdir(parents=True)
+            (project / "draft").mkdir()
+            (project / "metadata.json").write_text(
+                json.dumps({"project": "demo", "channels": ["rednote"]}), encoding="utf-8"
+            )
+            (project / ".codex" / "state.json").write_text(
+                json.dumps({"current_stage": "persisted", "deliveries": {}}), encoding="utf-8"
+            )
+            final_round = root / "rednote" / "demo" / "round1"
+            final_round.mkdir(parents=True)
+            (final_round / "post.md").write_text(
+                "# 标题\n\n正文。\n\n![图](https://example.com/1.png)\n", encoding="utf-8"
+            )
+            (final_round / "cards.json").write_text(json.dumps({"cards": []}), encoding="utf-8")
+            (final_round.parent / "series-plan.json").write_text(json.dumps({"rounds": []}), encoding="utf-8")
+            adapter = root / "xhs" / "scripts" / "publish_pipeline.py"
+            adapter.parent.mkdir(parents=True)
+            adapter.write_text("# adapter\n", encoding="utf-8")
+            config_dir = root / ".codex" / "yuque-multichannel-publisher"
+            config_dir.mkdir(parents=True)
+            (config_dir / "config.json").write_text(
+                json.dumps({"xiaohongshu_skills_dir": str(adapter.parents[1])}), encoding="utf-8"
+            )
+            captured: list[list[str]] = []
+
+            def fake_run(command: list[str], *, cwd: Path):
+                captured.append(command)
+                return SimpleNamespace(returncode=0)
+
+            with patch.dict(os.environ, {"YMP_WORKSPACE_ROOT": str(root)}), patch.object(
+                pipeline, "run_checked", side_effect=fake_run
+            ):
+                pipeline.command_send_draft(
+                    SimpleNamespace(project="demo", channel="rednote", round="round1", account=None, confirm=True)
+                )
+            self.assertEqual(1, len(captured))
+            self.assertIn("--preview", captured[0])
+            self.assertNotIn("--headless", captured[0])
+
 
 if __name__ == "__main__":
     unittest.main()

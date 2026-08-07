@@ -1,0 +1,44 @@
+{
+  "cards": [
+    {
+      "index": 1,
+      "role": "cover",
+      "headline": "一篇长文，三端发布",
+      "body": "写给用语雀写长文的创作者：一篇成稿，生成博客、公众号和小红书发布包。",
+      "visual_strategy": "img2img",
+      "material_ref": "content-projects/yuque-multichannel-publisher/images/cover.png"
+    },
+    {
+      "index": 2,
+      "role": "problem",
+      "headline": "为什么要做",
+      "body": "三个平台各要排版、配图、拆文和检查，我每篇大约要多花 2 小时。",
+      "visual_strategy": "img2img",
+      "material_ref": "content-projects/yuque-multichannel-publisher/images/originals/section-1.png"
+    },
+    {
+      "index": 3,
+      "role": "method",
+      "headline": "AI 与脚本分工",
+      "body": "AI 负责语气、内容、图片和渠道改写；脚本负责下载、上传、比例、目录与状态。",
+      "visual_strategy": "img2img",
+      "material_ref": "content-projects/yuque-multichannel-publisher/images/originals/section-2.png"
+    },
+    {
+      "index": 4,
+      "role": "boundary",
+      "headline": "长任务可以恢复",
+      "body": "每个项目记录原文、草稿、图片、哈希和检查点，中断后从有效阶段继续。",
+      "visual_strategy": "img2img",
+      "material_ref": "content-projects/yuque-multichannel-publisher/images/originals/section-2.png"
+    },
+    {
+      "index": 5,
+      "role": "result",
+      "headline": "质量留下证据",
+      "body": "语气指纹、图片 brief、正文相似度和拆轮理由都能在项目里检查。",
+      "visual_strategy": "img2img",
+      "material_ref": "content-projects/yuque-multichannel-publisher/images/originals/section-3.png"
+    }
+  ]
+}

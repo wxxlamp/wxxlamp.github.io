@@ -1,0 +1,25 @@
+{
+  "series_title": "听完 AI 夜校之后",
+  "round_count_reason": "这些都是作者上完第一节 AI 夜校后留下的同一组工程疑问，放在一篇里更接近真实的思考过程。",
+  "rounds": [
+    {
+      "round": "round1",
+      "angle": "记录第一节 AI 夜校后想到的几个 Agent 工程问题",
+      "subject": "Agent、Skill、Model 与程序的边界",
+      "target_reader": "正在使用或开发 Agent、也被各种新概念绕得有点晕的产品和技术同学",
+      "core_viewpoint": "生产系统通常要同时使用模型和确定性程序，Skill、Subagent 与评测也各有需要继续验证的地方。",
+      "context_brief": "作者在参加淘天技术 AI 夜校并进行 Agent 业务开发后，重新梳理了模型、Agent、Skill、程序和评测之间的关系。",
+      "reader_promise": "按作者真实的思考顺序记录当前判断，并保留还没有完全展开的问题。",
+      "hook": "最近参加了淘天技术 AI 夜校，我这段时间正好也在做 Agent 相关业务，第一场课听完以后记了几个问题。",
+      "image_plan": [
+        "封面：Agent 不是万能药",
+        "分工：模型与确定性程序要配合",
+        "层级：Model、Agent 与 Harness",
+        "选型：程序、Skill 还是 Subagent",
+        "场景：Agent 最适合的四类任务",
+        "开发：开始前先想清四件事",
+        "评测：Bad Case 的发现、定位与回归"
+      ]
+    }
+  ]
+}

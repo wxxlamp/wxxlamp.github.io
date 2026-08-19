@@ -1,0 +1,67 @@
+{
+  "cards": [
+    {
+      "index": 1,
+      "role": "cover",
+      "headline": "Agent不是万能药",
+      "body": "我这段时间正好在做 Agent 业务，第一节课听完以后记了几个还没想清楚的问题。",
+      "visual_strategy": "ai_generated",
+      "material_ref": "content-projects/ali-ai-night-school-agent-skill-model/images/rednote/round1/card-1.png",
+      "image_url": "https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/1618f01f_card-1.png"
+    },
+    {
+      "index": 2,
+      "role": "comparison",
+      "headline": "模型与程序要配合",
+      "body": "自然语言交给模型，算数、查库和固定流程继续用程序，实际开发基本都要配合。",
+      "visual_strategy": "ai_generated",
+      "material_ref": "content-projects/ali-ai-night-school-agent-skill-model/images/rednote/round1/card-2.png",
+      "image_url": "https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/9ae8e51a_card-2.png"
+    },
+    {
+      "index": 3,
+      "role": "architecture",
+      "headline": "Model·Agent·Harness",
+      "body": "Model 负责生成，Agent 组装上下文和工具，记忆、恢复、评测还要看 Harness。",
+      "visual_strategy": "ai_generated",
+      "material_ref": "content-projects/ali-ai-night-school-agent-skill-model/images/rednote/round1/card-3.png",
+      "image_url": "https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/a4071456_card-3.png"
+    },
+    {
+      "index": 4,
+      "role": "decision",
+      "headline": "程序、Skill还是Subagent",
+      "body": "我一般先看确定性，再看经验依赖和任务能否独立执行。这个划分目前还算顺手。",
+      "visual_strategy": "ai_generated",
+      "material_ref": "content-projects/ali-ai-night-school-agent-skill-model/images/rednote/round1/card-4.png",
+      "image_url": "https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/818807ff_card-4.png"
+    },
+    {
+      "index": 5,
+      "role": "scenarios",
+      "headline": "Agent最适合什么",
+      "body": "目前最直观的感受还是提效，开发、客服、QA 和学习都有可以尝试的地方。",
+      "visual_strategy": "ai_generated",
+      "material_ref": "content-projects/ali-ai-night-school-agent-skill-model/images/rednote/round1/card-5.png",
+      "image_url": "https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/e2f4e6ea_card-5.png"
+    },
+    {
+      "index": 6,
+      "role": "checklist",
+      "headline": "开发前先想四件事",
+      "body": "真正开始写以后，本地和云端、ReAct 和 Workflow、上下文管理都得逐个处理。",
+      "visual_strategy": "ai_generated",
+      "material_ref": "content-projects/ali-ai-night-school-agent-skill-model/images/rednote/round1/card-6.png",
+      "image_url": "https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/c800498c_card-6.png"
+    },
+    {
+      "index": 7,
+      "role": "evaluation",
+      "headline": "评测要形成闭环",
+      "body": "这部分我还没有完全展开，Bad Case 的发现、复现、定位和回归都需要继续补。",
+      "visual_strategy": "ai_generated",
+      "material_ref": "content-projects/ali-ai-night-school-agent-skill-model/images/rednote/round1/card-7-v2.png",
+      "image_url": "https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/9d4d215d_card-7-v2.png"
+    }
+  ]
+}

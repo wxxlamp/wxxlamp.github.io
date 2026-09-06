@@ -1,0 +1,280 @@
+<!DOCTYPE html><html lang="en"><head>
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>How Cross-Border E-Commerce Transactions Work | Sibo's Blog</title>
+<link rel="canonical" href="https://wxxlamp.cn/en/2026/01/04/cross-border-ecommerce-transaction-flow/">
+<meta name="description" content="An in-depth analysis of the full fulfillment flow on cross-border e-commerce platforms. It examines how information, funds, and logistics work together from buyer and seller per…">
+<meta name="author" content="Sibo Wang">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How Cross-Border E-Commerce Transactions Work | Sibo's Blog">
+<meta property="og:description" content="An in-depth analysis of the full fulfillment flow on cross-border e-commerce platforms. It examines how information, funds, and logistics work together from buyer and seller per…">
+<meta property="og:url" content="https://wxxlamp.cn/en/2026/01/04/cross-border-ecommerce-transaction-flow/">
+<meta property="og:site_name" content="Sibo's Blog">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/5606db74_ab1a042e.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How Cross-Border E-Commerce Transactions Work | Sibo's Blog">
+<meta name="twitter:description" content="An in-depth analysis of the full fulfillment flow on cross-border e-commerce platforms. It examines how information, funds, and logistics work together from buyer and seller per…">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/5606db74_ab1a042e.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://wxxlamp.cn/en/#website","name":"Sibo's Blog","url":"https://wxxlamp.cn/en/","inLanguage":"en"},{"@type":"BlogPosting","@id":"https://wxxlamp.cn/en/2026/01/04/cross-border-ecommerce-transaction-flow/#page","url":"https://wxxlamp.cn/en/2026/01/04/cross-border-ecommerce-transaction-flow/","name":"How Cross-Border E-Commerce Transactions Work | Sibo's Blog","description":"An in-depth analysis of the full fulfillment flow on cross-border e-commerce platforms. It examines how information, funds, and logistics work together from buyer and seller per…","inLanguage":"en","isPartOf":{"@id":"https://wxxlamp.cn/en/#website"},"headline":"How Cross-Border E-Commerce Transactions Work","author":{"@type":"Person","@id":"https://wxxlamp.cn/about/#person","name":"Sibo Wang","url":"https://wxxlamp.cn/en/about/"},"mainEntityOfPage":"https://wxxlamp.cn/en/2026/01/04/cross-border-ecommerce-transaction-flow/","image":["https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/5606db74_ab1a042e.png"],"datePublished":"2026-01-04T06:16:00.000Z","articleSection":["Business"]}]}</script>
+
+
+
+<link rel="alternate" href="/en/atom.xml" title="Atom" type="application/atom+xml">
+<link rel="alternate" href="/en/rss.xml" title="RSS 2.0" type="application/rss+xml">
+
+<link rel="alternate" hreflang="zh-CN" href="https://wxxlamp.cn/2026/01/04/cross-border-ecommerce-transaction-flow/">
+<link rel="alternate" hreflang="en" href="https://wxxlamp.cn/en/2026/01/04/cross-border-ecommerce-transaction-flow/">
+<link rel="alternate" hreflang="x-default" href="https://wxxlamp.cn/2026/01/04/cross-border-ecommerce-transaction-flow/">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2">
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2">
+<meta name="theme-color" content="#244f43">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2">
+
+
+
+<script defer="" src="/js/src/site.js?v=2"></script>
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  };
+</script>
+<script id="MathJax-script" async="" src="/lib/mathjax/tex-chtml.js"></script>
+
+
+
+
+  
+
+
+
+  <meta name="generator" content="Hexo 8.1.1"></head>
+
+  <body data-content-language="en" class="view-post">
+    <a class="skip-link" href="#content" data-zh="跳至正文" data-en="Skip to content">Skip to content</a>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+  <a href="/en/" class="site-brand" aria-label="Sibo's Blog · Home" data-zh-label="王星星的魔灯 · 首页" data-en-label="Sibo's Blog · Home">
+    <img class="brand-mark" src="/favicon.svg" width="36" height="36" alt="" aria-hidden="true">
+    <span class="brand-name" data-zh="王星星的魔灯" data-en="Sibo's Blog">Sibo's Blog</span>
+  </a>
+  <nav id="nav-top" aria-label="Main navigation" data-zh-label="主导航" data-en-label="Main navigation">
+    <ul class="nav-top-items">
+      <li><a href="/en/" data-nav="home" data-zh="文章" data-en="Writing">Writing</a></li>
+      <li><a href="/en/archives/" data-nav="archives" data-zh="归档" data-en="Archive">Archive</a></li>
+      <li><a href="/en/about/" data-nav="about" data-zh="关于" data-en="About">About</a></li>
+      <li><a href="/resume/" data-nav="resume" data-resume-link="" data-zh="简历" data-en="Résumé">Résumé</a></li>
+    </ul>
+  </nav>
+  <div class="language-switch" aria-label="Language">
+    <a href="/2026/01/04/cross-border-ecommerce-transaction-flow/" data-language="zh" lang="zh-CN" aria-label="阅读中文版">中</a>
+    <a href="/en/2026/01/04/cross-border-ecommerce-transaction-flow/" data-language="en" lang="en" aria-label="Read in English">EN</a>
+  </div>
+</div>
+
+      </header>
+      <main id="content" tabindex="-1">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <div class="post-meta"><time datetime="2026-01-04">2026.01.04</time><a href="/en/categories/%E4%B8%9A%E5%8A%A1%E5%AD%A6%E4%B9%A0/">Business</a></div>
+      <h1 class="post-title">How Cross-Border E-Commerce Transactions Work</h1>
+    </header>
+    
+      
+<nav class="post-language" aria-label="Article language">
+  <a href="/2026/01/04/cross-border-ecommerce-transaction-flow/" lang="zh-CN">中文原文 <svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17 17 7M7 7h10v10"></path></svg></a>
+</nav>
+
+
+      <div class="post-content" lang="en"><p>As someone who spends time surfing the Internet, I use online shopping platforms such as Taobao, JD, and Pinduoduo for everyday purchases.</p>
+<p>Since changing roles in August 2024, I have been responsible for online-shopping business similar to Taobao and JD, but with two differences. First, Taobao and JD are B2C shopping platforms for ordinary consumers, while the code I write serves B2B trade platforms. Second, Taobao and JD serve domestic merchants and consumers, whereas I work with overseas merchants and overseas consumers every day.</p>
+<p>Over the past year, the code I developed has covered merchant onboarding, transactions, orders, safeguards, payments, settlement, liquidity, accounting, gateways, and other domains. As my first article of 2026, this is a summary of roughly the past year of work. It also explains the complete cross-border transaction-fulfillment flow.</p>
+<h1 id="买卖家在电商平台要干啥"><a href="#买卖家在电商平台要干啥" class="headerlink" title="What buyers and sellers do on e-commerce platforms"></a>What buyers and sellers do on e-commerce platforms</h1><p>The essence of online transactions on e-commerce platforms is managing the flow of information, funds, and logistics: 1) transactions carry the information agreed by buyers and sellers; 2) funds legally and compliantly transfer buyers’ payment to sellers’ cards; and 3) logistics safely transports sellers’ goods to the locations buyers specify.</p>
+<p>Below is a brief summary from buyer-seller and platform perspectives.</p>
+<h2 id="买卖家视角——交易的生命周期"><a href="#买卖家视角——交易的生命周期" class="headerlink" title="Buyer and seller perspective — the transaction lifecycle"></a>Buyer and seller perspective — the transaction lifecycle</h2><p>The end-to-end view from buyers’ and sellers’ perspective is as follows:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/5606db74_ab1a042e.png"></p>
+<p>The preceding diagram shows a <strong>release of funds</strong> action after the buyer completes payment. Payment cannot go directly into the seller’s account because we cannot guarantee that the seller will fulfill normally afterward. If you have noticed, when you confirm receipt on Taobao, you are asked to enter your payment password (or complete Alipay facial verification). That is because for Taobao, your money is truly paid to the merchant only when you confirm receipt.</p>
+<p>From buyer and seller perspectives, the following are the main action points:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/59b28626_e8a5f5e5.png"></p>
+<h2 id="平台视角——平台在交易中的角色"><a href="#平台视角——平台在交易中的角色" class="headerlink" title="Platform perspective — the platform’s role in a transaction"></a>Platform perspective — the platform’s role in a transaction</h2><p>From the platform’s perspective, the key is to connect the flows in different business domains across transaction and fund stages. A simplified flowchart is as follows:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/3ebf4508_2a52ab59.png"></p>
+<h1 id="电商的参与主体和盈利模式"><a href="#电商的参与主体和盈利模式" class="headerlink" title="E-commerce participants and profit models"></a>E-commerce participants and profit models</h1><h2 id="参与主体——交易背后的很多双眼睛"><a href="#参与主体——交易背后的很多双眼睛" class="headerlink" title="Participants — many pairs of eyes behind a transaction"></a>Participants — many pairs of eyes behind a transaction</h2><p>For ordinary consumers, this is simply a transaction completed by buyer and seller on a platform. From the platform’s perspective, though, transaction participants include not only the platform and buyer and seller, but also various intermediary funding channels.</p>
+<p>Taking a basic cross-border online trading platform as an example: if the platform is not licensed to handle buyers’ funds, then in addition to buyers, sellers, and the platform, an extra funding center is needed. The arrangement is as follows:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/1afff81c_7693194e.png"></p>
+<p>Once a platform has the license to hold funds, it often has the acquiring institution settle funds to the platform to strengthen its control over funds; the platform then settles those funds to sellers worldwide through a payout institution.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/367b905e_407deea6.png"></p>
+<p>Every participant should be bound by an agreement with the others.</p>
+<p>Buyers need an agreement with the platform to purchase goods and pay for them; merchants need an agreement with the platform to trade goods and withdraw funds; Adyen, as the acquiring channel, also needs a corresponding acquiring agreement with the platform; Payout, as the payout channel, needs corresponding payment-service agreements with both the platform and merchants. If there is an FX institution (used to exchange foreign currencies into USD), that institution must also sign an agreement with the platform.</p>
+<h2 id="盈利模式——平台是如何赚钱的"><a href="#盈利模式——平台是如何赚钱的" class="headerlink" title="Profit models — how platforms make money"></a>Profit models — how platforms make money</h2><p>From a consumer perspective, online transactions can charge merchants a transaction service fee on every transaction. In cross-border scenarios, however, platforms have many ways to profit:</p>
+<ol>
+<li>Transaction dimension<ol>
+<li>Transaction service fee: roughly a 3% technical service fee is charged to merchants for each transaction. This revenue belongs entirely to the platform; accordingly, the platform must issue an invoice to the merchant.</li>
+</ol>
+</li>
+<li>Payment dimension<ol>
+<li>Payment processing fee: each payment charges the payer (buyer) a 3% fee (depending on the payment instrument). Unlike domestic payments, overseas payment instruments generally charge the payer a percentage on every payment (credit cards are basically 2%, for example). The platform shares revenue with the payment institution under a fixed rule.</li>
+</ol>
+</li>
+<li>Withdrawal dimension<ol>
+<li>Withdrawal fee: every time a merchant withdraws funds from its platform balance account to a bank card, it is charged a fee at a fixed rate or amount. The platform generally collects it on behalf of the provider, then shares it with the payout institution. This applies both domestically and internationally: merchants pay fees whenever they withdraw. For example, Alipay and WeChat both charge a 0.1% withdrawal fee.</li>
+</ol>
+</li>
+<li>Value-added services<ol>
+<li>Insurance premium: the platform can help merchants insure goods and share premiums with the insurance company.</li>
+<li>Loan interest: mature platforms partner with banks to offer loans to merchants, splitting loan interest with the channel.</li>
+<li>Collection service fee: by providing factoring institutions, platforms help merchants collect funds rapidly, sharing the service fee with the institution.</li>
+<li>Deposit: merchants often pay the platform a deposit when opening a store, used for deductions in subsequent after-sales disputes.</li>
+</ol>
+</li>
+<li>Merchant dimension<ol>
+<li>Merchants joining Alibaba International Station as members need to pay a membership fee.</li>
+<li>Merchants can purchase many kinds of services to increase the exposure of their stores and themselves, thereby improving conversion. This is the profit core of virtually every online platform, such as Taobao’s Alimama and Douyin’s Ocean Engine.</li>
+</ol>
+</li>
+<li>Logistics dimension<ol>
+<li>Merchants pay the platform a logistics fee when shipping; the fee is shared with logistics companies.</li>
+</ol>
+</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/88f308d8_55e4f92c.png"></p>
+<h1 id="跨境资金清结算"><a href="#跨境资金清结算" class="headerlink" title="Cross-border fund clearing and settlement"></a>Cross-border fund clearing and settlement</h1><p>Transactions represent information flow; another important part is fund flow. At the lowest level, fund flow is the movement of money among financial institutions, accompanied by debit-credit relationships among accounts. Fund transfers and accounting give rise upstream to business scenarios such as merchant onboarding, payment, settlement, withdrawal, transfers, and foreign exchange.</p>
+<h2 id="资金链路——你的钱是怎么到商家口袋的"><a href="#资金链路——你的钱是怎么到商家口袋的" class="headerlink" title="Fund flow — how your money reaches the merchant’s pocket"></a>Fund flow — how your money reaches the merchant’s pocket</h2><p>For a cross-border platform in its early construction phase, an acquiring platform can provide USD settlement capability to get the site running quickly, so there is no need to introduce an FX institution. Note that because this is a cross-border platform, under the current system of U.S.-dollar dominance, USD is the default preferred settlement currency.</p>
+<p>The fund flow is shown below:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/129fbdba_99a72499.png"></p>
+<p><strong>Phase one:</strong> After placing orders, buyers around the world enter the payment process. They pay the acquiring institution (for example, Adyen) through CREDIT CARD, GOOGLE PAY, APPLY PAY, PAYPAL, and other local payment methods. Adyen then performs internal currency conversion and settles the funds to the platform entity at T+1.</p>
+<ul>
+<li><input disabled="" type="checkbox"> <strong>Phase two:</strong> Through a T+1 transfer, the platform moves money settled to it by the acquiring institution into the account it opened with the payout institution, in fixed amounts according to merchants’ withdrawal amounts. Merchants can then withdraw money from their platform balance accounts directly into their own accounts. To ensure merchants can withdraw quickly, the project uses prefunding: before the project operates, funds are advanced to the payout institution through a treasury account.</li>
+</ul>
+<p>After the platform develops and matures, it will certainly add multiple acquiring institutions to introduce more payment instruments. When an acquirer does not support USD settlement, the platform needs an FX institution to convert other currencies to USD and settle them to the platform. The fund flow then becomes:</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/719664/1767518918849-342aa652-3e86-4fbb-ac9c-4fd212fede98.png"></p>
+<p>As the diagram shows, the platform must now recognize the user’s payment currency and complete its own rate lock and conversion from LCY to USD.</p>
+<h2 id="账务能力——平台是如何记钱的"><a href="#账务能力——平台是如何记钱的" class="headerlink" title="Accounting capabilities — how a platform records money"></a>Accounting capabilities — how a platform records money</h2><p>Since money must move and be transferred N times from buyers to merchants, how do we ensure that it is recorded correctly? This requires understanding a platform’s accounting capability, namely how it records money. The platform creates N virtual accounts internally to represent flows among different accounts. Internet companies generally use double-entry bookkeeping; interested readers can explore it further. Here are several classic account types:</p>
+<ol>
+<li><strong>Pending-association account</strong>: after a buyer pays, funds are recorded in the pending-association account.</li>
+<li><strong>Escrow account</strong>: after the system associates the funds with an order, the merchandise-payment portion moves from the pending-association account to the escrow account.</li>
+<li><strong>Revenue account</strong>: the system moves the platform’s receivable portion (transaction service fees, processing fees, and so on) to the revenue account.</li>
+<li><strong>Tax account</strong>: the system moves taxes withheld and remitted for merchants (such as EPR and GST) to the tax account and reports them to the corresponding authorities on schedule.</li>
+<li><strong>Merchant balance account</strong>: after a merchant fulfills, money moves from the escrow account to the merchant balance account.</li>
+<li><strong>Dedicated withdrawal account</strong>: after a merchant initiates a withdrawal, money in the balance account moves to the dedicated withdrawal account.</li>
+<li><strong>Refund transit account</strong>: after a buyer requests a refund, funds are gathered into the refund transit account through fund preparation and paid to the payment channel.</li>
+</ol>
+<p>Here is a classic flowchart (including forward and reverse flows) for a more detailed view:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/b01fb88d_b3430345.png"></p>
+</div>
+      <footer class="post-footer">
+        <div class="post-tags"><a href="/en/tags/%E8%B7%A8%E5%A2%83%E7%94%B5%E5%95%86/">Cross-border Commerce</a><a href="/en/tags/%E6%94%AF%E4%BB%98%E4%B8%8E%E7%BB%93%E7%AE%97/">Payments &amp; Settlement</a></div>
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/en/2026/01/10/llm-agent-tech-equality/">
+        <svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 5-7 7 7 7M5 12h14"></path></svg>
+        <span class="prev-text nav-default">How Large Models and Agents Are Democratizing Technology</span>
+        <span class="prev-text nav-mobile"><span data-zh="上一篇" data-en="Previous entry">Previous entry</span></span>
+      </a>
+    
+    
+      <a class="next" href="/en/2025/12/24/ai-ml-getting-started/">
+        <span class="next-text nav-default">Machine Learning for Backend Developers in the Age of Large Models</span>
+        <span class="prev-text nav-mobile"><span data-zh="下一篇" data-en="Next entry">Next entry</span></span>
+        <svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 5 7 7-7 7M5 12h14"></path></svg>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    
+
+<div class="github-comments">
+  <div class="comments-title">💬 Comments</div>
+  <p style="color: #666; font-size: 0.9em; margin-bottom: 1em;">
+    Comments require <a href="https://github.com/apps/giscus" target="_blank" rel="noopener">Giscus App</a> installed on your GitHub repository.
+  </p>
+  <script src="https://giscus.app/client.js" data-repo="wxxlamp/wxxlamp.github.io" data-repo-id="R_kgDOCiYteA" data-category="General" data-category-id="DIC_kwDOCiYteM4CelIo" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+  </script>
+</div>
+
+
+
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+    
+<aside class="toc-container" id="toc-container"><details open=""><summary data-zh="本篇目录" data-en="On this page">On this page</summary><ol class="toc-list" id="toc-list"></ol></details></aside>
+<div class="reading-progress" aria-hidden="true"></div>
+
+
+
+      </main>
+
+      <footer id="colophon"><div class="footer-inner"><span>© 2026 Sibo Wang <span class="footer-dot">·</span> <span data-zh="保持好奇，认真生活。" data-en="Stay curious. Live thoughtfully.">Stay curious. Live thoughtfully.</span></span><a href="/en/subscribe/"><svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 10a9 9 0 0 1 9 9M5 4a15 15 0 0 1 15 15"></path><circle cx="5" cy="19" r="1"></circle></svg> RSS</a></div>
+<div class="site-stats"><span data-zh="访问" data-en="Visits">Visits</span> <span id="busuanzi_value_site_pv">—</span> · <span data-zh="访客" data-en="Readers">Readers</span> <span id="busuanzi_value_site_uv">—</span> · Powered by <a target="_blank" href="https://hexo.io/" rel="noopener noopener">Hexo</a></div>
+<script async="" src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+      </footer>
+
+      <button class="back-to-top" id="back-to-top" aria-label="Back to top" data-zh-label="回到顶部" data-en-label="Back to top"><svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m5 12 7-7 7 7M12 5v14"></path></svg></button>
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2"></script>
+
+  
+
+</body></html>

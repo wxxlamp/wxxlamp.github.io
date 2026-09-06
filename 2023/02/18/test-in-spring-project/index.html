@@ -5,56 +5,48 @@
 <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width,initial-scale=1">
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-  <meta name="description" content="讲解Spring项目单元测试与集成测试实践，涵盖JUnit、Mockito、PowerMock框架使用，以及数据源、外部RPC接口Mock和测试容器配置策略。"/>
-
-
-
-
-  <meta name="keywords" content="SPRING," />
-
-
-
-
-
-  <link rel="alternate" href="/atom.xml" title="王星星的魔灯" type="application/atom+xml">
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
-
-
-
-<link rel="canonical" href="https://wxxlamp.cn/2023/02/18/test-in-spring-project/"/>
-
-
+<title>Spring 项目的单元测试与集成测试实践 | 王星星的魔灯</title>
+<link rel="canonical" href="https://wxxlamp.cn/2023/02/18/test-in-spring-project/">
 <meta name="description" content="讲解Spring项目单元测试与集成测试实践，涵盖JUnit、Mockito、PowerMock框架使用，以及数据源、外部RPC接口Mock和测试容器配置策略。">
+<meta name="author" content="王星星">
+<meta name="robots" content="index, follow, max-image-preview:large">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Test In Spring Project">
-<meta property="og:url" content="https://wxxlamp.cn/2023/02/18/test-in-spring-project/index.html">
-<meta property="og:site_name" content="王星星的魔灯">
+<meta property="og:title" content="Spring 项目的单元测试与集成测试实践 | 王星星的魔灯">
 <meta property="og:description" content="讲解Spring项目单元测试与集成测试实践，涵盖JUnit、Mockito、PowerMock框架使用，以及数据源、外部RPC接口Mock和测试容器配置策略。">
+<meta property="og:url" content="https://wxxlamp.cn/2023/02/18/test-in-spring-project/">
+<meta property="og:site_name" content="王星星的魔灯">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-02-18T11:36:00.000Z">
-<meta property="article:modified_time" content="2026-08-19T15:46:35.192Z">
-<meta property="article:author" content="Wxx">
-<meta property="article:tag" content="SPRING">
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="https://wxxlamp.cn/favicon.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Spring 项目的单元测试与集成测试实践 | 王星星的魔灯">
+<meta name="twitter:description" content="讲解Spring项目单元测试与集成测试实践，涵盖JUnit、Mockito、PowerMock框架使用，以及数据源、外部RPC接口Mock和测试容器配置策略。">
+<meta name="twitter:image" content="https://wxxlamp.cn/favicon.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://wxxlamp.cn/#website","name":"王星星的魔灯","url":"https://wxxlamp.cn/","inLanguage":"zh-CN"},{"@type":"BlogPosting","@id":"https://wxxlamp.cn/2023/02/18/test-in-spring-project/#page","url":"https://wxxlamp.cn/2023/02/18/test-in-spring-project/","name":"Spring 项目的单元测试与集成测试实践 | 王星星的魔灯","description":"讲解Spring项目单元测试与集成测试实践，涵盖JUnit、Mockito、PowerMock框架使用，以及数据源、外部RPC接口Mock和测试容器配置策略。","inLanguage":"zh-CN","isPartOf":{"@id":"https://wxxlamp.cn/#website"},"headline":"Spring 项目的单元测试与集成测试实践","author":{"@type":"Person","@id":"https://wxxlamp.cn/about/#person","name":"王星星","url":"https://wxxlamp.cn/about/"},"mainEntityOfPage":"https://wxxlamp.cn/2023/02/18/test-in-spring-project/","image":["https://wxxlamp.cn/favicon.png"],"datePublished":"2023-02-18T11:36:00.000Z","articleSection":["场景实践"]}]}</script>
 
 
-<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
 
-<link rel="preload" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/syst/dist/SmileySans-Oblique/result.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/syst/dist/SmileySans-Oblique/result.css"></noscript>
+<link rel="alternate" href="/atom.xml" title="Atom" type="application/atom+xml">
+<link rel="alternate" href="/rss.xml" title="RSS 2.0" type="application/rss+xml">
+
+<link rel="alternate" hreflang="zh-CN" href="https://wxxlamp.cn/2023/02/18/test-in-spring-project/">
+<link rel="alternate" hreflang="en" href="https://wxxlamp.cn/en/2023/02/18/test-in-spring-project/">
+<link rel="alternate" hreflang="x-default" href="https://wxxlamp.cn/2023/02/18/test-in-spring-project/">
 
 
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2" />
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2">
+<meta name="theme-color" content="#244f43">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2" />
+
+
+
+<script defer src="/js/src/site.js?v=2"></script>
 
 
 
@@ -68,6 +60,7 @@
 
 
 
+
 <script>
   window.MathJax = {
     tex: {
@@ -77,11 +70,12 @@
       processEnvironments: true
     },
     options: {
-      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
     }
   };
 </script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script id="MathJax-script" async src="/lib/mathjax/tex-chtml.js"></script>
+
 
 
 
@@ -89,83 +83,48 @@
 
 
 
-    <title> Test In Spring Project - 王星星的魔灯 </title>
   <meta name="generator" content="Hexo 8.1.1"></head>
 
-  <body>
+  <body data-content-language="zh-CN" class="view-post">
+    <a class="skip-link" href="#content" data-zh="跳至正文" data-en="Skip to content">跳至正文</a>
     <div id="page">
       <header id="masthead"><div class="site-header-inner">
-    <h1 class="site-title">
-        <a href="/." class="logo">王星星的魔灯</a>
-    </h1>
-
-    <nav id="nav-top">
-        
-            <ul id="menu-top" class="nav-top-items">
-                
-                    
-                    <li class="menu-item">
-                        <a href="/archives">
-                            
-                            
-                                Archives
-                            
-                        </a>
-                    </li>
-                    
-                
-                    
-                    <li class="menu-item">
-                        <a href="/about">
-                            
-                            
-                                About
-                            
-                        </a>
-                    </li>
-                    
-                
-                    
-                    <li class="menu-item menu-item-resume">
-                        <a href="/resume" class="resume-nav-label" onclick="event.preventDefault()">Resume</a>
-                        <ul class="resume-lang-dropdown">
-                            <li><a href="/resume">中文简历</a></li>
-                            <li><a href="/resume-en">English</a></li>
-                        </ul>
-                    </li>
-                    
-                
-                <li class="menu-item">
-                    <a href="/atom.xml">RSS</a>
-                </li>
-            </ul>
-        
+  <a href="/" class="site-brand" aria-label="王星星的魔灯 · 首页" data-zh-label="王星星的魔灯 · 首页" data-en-label="Sibo's Blog · Home">
+    <img class="brand-mark" src="/favicon.svg" width="36" height="36" alt="" aria-hidden="true">
+    <span class="brand-name" data-zh="王星星的魔灯" data-en="Sibo's Blog">王星星的魔灯</span>
+  </a>
+  <nav id="nav-top" aria-label="主导航" data-zh-label="主导航" data-en-label="Main navigation">
+    <ul class="nav-top-items">
+      <li><a href="/" data-nav="home" data-zh="文章" data-en="Writing">文章</a></li>
+      <li><a href="/archives/" data-nav="archives" data-zh="归档" data-en="Archive">归档</a></li>
+      <li><a href="/about/" data-nav="about" data-zh="关于" data-en="About">关于</a></li>
+      <li><a href="/resume/" data-nav="resume" data-resume-link data-zh="简历" data-en="Résumé">简历</a></li>
+    </ul>
   </nav>
+  <div class="language-switch" aria-label="Language">
+    <a href="/2023/02/18/test-in-spring-project/" data-language="zh" lang="zh-CN" aria-label="阅读中文版">中</a>
+    <a href="/en/2023/02/18/test-in-spring-project/" data-language="en" lang="en" aria-label="Read in English">EN</a>
+  </div>
 </div>
 
       </header>
-      <div id="content">
+      <main id="content" tabindex="-1">
         
     <div id="primary">
         
   <article class="post">
     <header class="post-header">
-      <h1 class="post-title">
-        
-          Test In Spring Project
-        
-      </h1>
-
-      <time class="post-time">
-          2月 18 2023
-      </time>
+      <div class="post-meta"><time datetime="2023-02-18">2023.02.18</time><a href="/categories/%E5%9C%BA%E6%99%AF%E5%AE%9E%E8%B7%B5/">场景实践</a></div>
+      <h1 class="post-title">Spring 项目的单元测试与集成测试实践</h1>
     </header>
-
-
-
     
-            <div class="post-content">
-            <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>系统的测试，从范围大致会分为单元测试，集成测试，回归测试等等。通常来说，真正由开发所负责的测试包含单元测试和集成测试。<br>由于大家在实际的开发过程中，对各种测试的范围理解都不一样，就本文来讲，一般说的单元测试指（按照类维度&#x2F;模块维度），集成测试是以接口维度对该接口下的整个业务逻辑进行的测试<br>所谓单元测试，就是对某个类业务逻辑的测试，在测试之前，需要将该类所依赖的下游和模块全部MOCK掉，并且根据测试场景生成不同的case，从而保证类的业务逻辑的正确性。<br>所谓的集成测试，是对业务流程的测试，它不是对一个模块或者一个类的测试，而是测试某个业务流程下，所有类和模块之间的正确性。</p>
+      
+<nav class="post-language" aria-label="Article language">
+  <a href="/en/2023/02/18/test-in-spring-project/" lang="en">Read in English <svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+</nav>
+
+
+      <div class="post-content" lang="zh-CN"><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>系统的测试，从范围大致会分为单元测试，集成测试，回归测试等等。通常来说，真正由开发所负责的测试包含单元测试和集成测试。<br>由于大家在实际的开发过程中，对各种测试的范围理解都不一样，就本文来讲，一般说的单元测试指（按照类维度&#x2F;模块维度），集成测试是以接口维度对该接口下的整个业务逻辑进行的测试<br>所谓单元测试，就是对某个类业务逻辑的测试，在测试之前，需要将该类所依赖的下游和模块全部MOCK掉，并且根据测试场景生成不同的case，从而保证类的业务逻辑的正确性。<br>所谓的集成测试，是对业务流程的测试，它不是对一个模块或者一个类的测试，而是测试某个业务流程下，所有类和模块之间的正确性。</p>
 <h3 id="单元VS集成"><a href="#单元VS集成" class="headerlink" title="单元VS集成"></a>单元VS集成</h3><p>单元测试的优点有很多，譬如编写起来非常快，我们只要对负责自己编写的代码进行测试即可，即使我们在不熟悉整个应用代码的情况下，也可以写出很健壮的测试代码。<br>但是如果要对整个业务逻辑负责，就不得不写集成测试，集成测试可以帮助我们更大胆的重构，同时，也可以方便新同学更快的了解业务代码，除此之外，因为集成测试是针对业务逻辑而非模块的，所以即使我们针对于某业务逻辑新增了一些类或者模块，我们甚至只依赖于老的集成测试的用例，就可以测试到增量的代码。<br>不过集成测试也有一个缺点，就是需要对应用以来的集成设施和外部以来进行mock，这在前期需要付出极大的精力去完成这件事情。不过一单集成测试覆盖到应用之后，就是一件功在当代，利在千秋的事情。</p>
 <h3 id="傻傻分不清的概念"><a href="#傻傻分不清的概念" class="headerlink" title="傻傻分不清的概念"></a>傻傻分不清的概念</h3><h4 id="Junit-Mockito-PowerMock"><a href="#Junit-Mockito-PowerMock" class="headerlink" title="Junit&amp;Mockito&amp;PowerMock"></a>Junit&amp;Mockito&amp;PowerMock</h4><p>直接引用chat-gpt的回复：</p>
 <blockquote>
@@ -226,35 +185,23 @@
 <p>不过要说的是，这里推荐将这些定制mock封装在一个类里，毕竟从设计模式上讲，组合大于继承。</p>
 <h3 id="基础设施Mock"><a href="#基础设施Mock" class="headerlink" title="基础设施Mock"></a>基础设施Mock</h3><p>除了外部服务之外，我们还需要对一些基础设施进行mock，譬如加解密，MQ，缓存，等等，总体上来说都是异曲同工的，所以这里就不赘述了。</p>
 <h3 id="Bean的排除和引入"><a href="#Bean的排除和引入" class="headerlink" title="Bean的排除和引入"></a>Bean的排除和引入</h3><p>上文我们引入了很多mock的Bean，容器很有可能会启动不起来，因为可能此时容器中既有真实的Bean，又有mock的Bean，这个时候，我们就需要将那些冲突的真实的Bean从测试容器中排除。<br>除此之外，有些Bean因为加载了非常恶心的东西（导致我们测试容器启动不起来），我们也需要排除。如下所示：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ComponentScan(basePackages = &#123;</span></span><br><span class="line"><span class="meta">    &quot;扫描我们希望引入的包和类&quot;</span></span><br><span class="line"><span class="meta">&#125;, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE,</span></span><br><span class="line"><span class="meta">        classes = &#123;要排除的包和类&#125;))</span></span><br><span class="line"><span class="meta">@Import(&#123;</span></span><br><span class="line"><span class="meta">        希望引入的bean</span></span><br><span class="line"><span class="meta">&#125;)</span></span><br><span class="line"><span class="meta">@TestConfiguration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ServiceMockConfig</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
-            </div>
-          
-
-    
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ComponentScan(basePackages = &#123;</span></span><br><span class="line"><span class="meta">    &quot;扫描我们希望引入的包和类&quot;</span></span><br><span class="line"><span class="meta">&#125;, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE,</span></span><br><span class="line"><span class="meta">        classes = &#123;要排除的包和类&#125;))</span></span><br><span class="line"><span class="meta">@Import(&#123;</span></span><br><span class="line"><span class="meta">        希望引入的bean</span></span><br><span class="line"><span class="meta">&#125;)</span></span><br><span class="line"><span class="meta">@TestConfiguration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ServiceMockConfig</span> &#123;&#125;</span><br></pre></td></tr></table></figure></div>
       <footer class="post-footer">
-		
-		<div class="post-tags">
-		  
-			<a href="/tags/SPRING/">SPRING</a>
-		  
-		</div>
-		
-
-        
+        <div class="post-tags"><a href="/tags/%E6%B5%8B%E8%AF%95%E4%B8%8E%E8%B4%A8%E9%87%8F/">测试与质量</a><a href="/tags/Spring-%E6%A1%86%E6%9E%B6/">Spring 框架</a></div>
         
   <nav class="post-nav">
     
       <a class="prev" href="/2023/03/13/view-of-shanghai/">
-        <i class="iconfont icon-left"></i>
-        <span class="prev-text nav-default">我对上海的印象</span>
-        <span class="prev-text nav-mobile">Prev</span>
+        <svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 5-7 7 7 7M5 12h14"/></svg>
+        <span class="prev-text nav-default">两次上海之行：城市印象与心境变化</span>
+        <span class="prev-text nav-mobile"><span data-zh="上一篇" data-en="Previous entry">上一篇</span></span>
       </a>
     
     
       <a class="next" href="/2023/02/07/zero-copy/">
-        <span class="next-text nav-default">零拷贝</span>
-        <span class="prev-text nav-mobile">Next</span>
-        <i class="iconfont icon-right"></i>
+        <span class="next-text nav-default">零拷贝 I/O：DMA、mmap 与 sendfile 的原理</span>
+        <span class="prev-text nav-mobile"><span data-zh="下一篇" data-en="Next entry">下一篇</span></span>
+        <svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 5 7 7-7 7M5 12h14"/></svg>
       </a>
     
   </nav>
@@ -298,103 +245,20 @@
 
     </div>
     
-
-<div class="toc-container" id="toc-container">
-  <div class="toc-title">Contents</div>
-  <ul class="toc-list" id="toc-list">
-    
-  </ul>
-</div>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  // Generate TOC from post content
-  const content = document.querySelector('.post-content');
-  const tocList = document.getElementById('toc-list');
-
-  if (!content || !tocList) return;
-
-  const headings = content.querySelectorAll('h1, h2, h3, h4');
-
-  if (headings.length < 2) {
-    document.getElementById('toc-container').style.display = 'none';
-    return;
-  }
-
-  headings.forEach(function(heading, index) {
-    // Add ID to heading if not exists
-    if (!heading.id) {
-      heading.id = 'heading-' + index;
-    }
-
-    const li = document.createElement('li');
-    li.className = 'toc-' + heading.tagName.toLowerCase();
-
-    const a = document.createElement('a');
-    a.href = '#' + heading.id;
-    a.textContent = heading.textContent;
-    a.onclick = function(e) {
-      e.preventDefault();
-      heading.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    };
-
-    li.appendChild(a);
-    tocList.appendChild(li);
-  });
-
-  // Active section highlighting
-  const tocItems = tocList.querySelectorAll('li');
-
-  function updateActiveToc() {
-    const scrollPos = window.scrollY + 100;
-
-    headings.forEach(function(heading, index) {
-      const top = heading.offsetTop;
-      const bottom = top + heading.offsetHeight;
-
-      if (scrollPos >= top && scrollPos < bottom) {
-        tocItems.forEach(function(item) {
-          item.classList.remove('active');
-        });
-        if (tocItems[index]) {
-          tocItems[index].classList.add('active');
-        }
-      }
-    });
-  }
-
-  window.addEventListener('scroll', updateActiveToc);
-  updateActiveToc();
-});
-</script>
+<aside class="toc-container" id="toc-container"><details open><summary data-zh="本篇目录" data-en="On this page">本篇目录</summary><ol class="toc-list" id="toc-list"></ol></details></aside>
+<div class="reading-progress" aria-hidden="true"></div>
 
 
 
-      </div>
+      </main>
 
-      <footer id="colophon"><span class="copyright-year">
-    
-        &copy;
-    
-        2014 -
-    
-    2026
-    <span class="footer-author">Wxx.</span>
-    <span class="power-by">
-        Powered by <a class="hexo-link" target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> and <a class="theme-link" target="_blank" rel="noopener" href="https://github.com/frostfan/hexo-theme-polarbear">Polar Bear</a>
-    </span>
-</span>
-<span class="site-stats" style="display: block; margin-top: 8px; font-size: 0.85rem; color: #666;">
-    Total Visits: <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> ·
-    Unique Visitors: <span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>
-</span>
-<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      <footer id="colophon"><div class="footer-inner"><span>© 2026 王星星 <span class="footer-dot">·</span> <span data-zh="保持好奇，认真生活。" data-en="Stay curious. Live thoughtfully.">保持好奇，认真生活。</span></span><a href="/subscribe/"><svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 10a9 9 0 0 1 9 9M5 4a15 15 0 0 1 15 15"/><circle cx="5" cy="19" r="1"/></svg> RSS</a></div>
+<div class="site-stats"><span data-zh="访问" data-en="Visits">访问</span> <span id="busuanzi_value_site_pv">—</span> · <span data-zh="访客" data-en="Readers">访客</span> <span id="busuanzi_value_site_uv">—</span> · Powered by <a target="_blank" href="https://hexo.io/" rel="noopener noopener">Hexo</a></div>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
       </footer>
 
-      <div class="back-to-top" id="back-to-top">
-        <i class="iconfont icon-up"></i>
-      </div>
+      <button class="back-to-top" id="back-to-top" aria-label="回到顶部" data-zh-label="回到顶部" data-en-label="Back to top"><svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m5 12 7-7 7 7M12 5v14"/></svg></button>
     </div>
     
 
@@ -410,8 +274,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   
 
-    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
-<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+    <script type="text/javascript" src="/js/src/theme.js?v=2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2"></script>
 
   </body>
 </html>

@@ -5,64 +5,48 @@
 <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width,initial-scale=1">
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-  <meta name="description" content="我把语雀长文的润色、配图、三端改写、质量检查和草稿投递收进一个 Codex Plugin，也记录平台自动化的真实边界。"/>
-
-
-
-
-  <meta name="keywords" content="Codex,Plugin,内容创作,自动化," />
-
-
-
-
-
-  <link rel="alternate" href="/atom.xml" title="王星星的魔灯" type="application/atom+xml">
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
-
-
-
-<link rel="canonical" href="https://wxxlamp.cn/2026/08/02/yuque-multichannel-publisher/"/>
-
-
+<title>基于 Codex 插件的语雀多平台内容发布实践 | 王星星的魔灯</title>
+<link rel="canonical" href="https://wxxlamp.cn/2026/08/02/yuque-multichannel-publisher/">
 <meta name="description" content="我把语雀长文的润色、配图、三端改写、质量检查和草稿投递收进一个 Codex Plugin，也记录平台自动化的真实边界。">
+<meta name="author" content="王星星">
+<meta name="robots" content="index, follow, max-image-preview:large">
 <meta property="og:type" content="article">
-<meta property="og:title" content="我把语雀长文到博客、公众号和小红书，做成了一个 Codex 插件">
-<meta property="og:url" content="https://wxxlamp.cn/2026/08/02/yuque-multichannel-publisher/index.html">
-<meta property="og:site_name" content="王星星的魔灯">
+<meta property="og:title" content="基于 Codex 插件的语雀多平台内容发布实践 | 王星星的魔灯">
 <meta property="og:description" content="我把语雀长文的润色、配图、三端改写、质量检查和草稿投递收进一个 Codex Plugin，也记录平台自动化的真实边界。">
+<meta property="og:url" content="https://wxxlamp.cn/2026/08/02/yuque-multichannel-publisher/">
+<meta property="og:site_name" content="王星星的魔灯">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/b2c5bb2c_cover.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/69c25415_section-1.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/f2fe3dfa_section-2.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/2000d4ab_section-3.png">
-<meta property="article:published_time" content="2026-08-02T09:28:50.000Z">
-<meta property="article:modified_time" content="2026-08-19T15:46:35.193Z">
-<meta property="article:author" content="Wxx">
-<meta property="article:tag" content="Codex">
-<meta property="article:tag" content="Plugin">
-<meta property="article:tag" content="内容创作">
-<meta property="article:tag" content="自动化">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="基于 Codex 插件的语雀多平台内容发布实践 | 王星星的魔灯">
+<meta name="twitter:description" content="我把语雀长文的润色、配图、三端改写、质量检查和草稿投递收进一个 Codex Plugin，也记录平台自动化的真实边界。">
 <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/b2c5bb2c_cover.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://wxxlamp.cn/#website","name":"王星星的魔灯","url":"https://wxxlamp.cn/","inLanguage":"zh-CN"},{"@type":"BlogPosting","@id":"https://wxxlamp.cn/2026/08/02/yuque-multichannel-publisher/#page","url":"https://wxxlamp.cn/2026/08/02/yuque-multichannel-publisher/","name":"基于 Codex 插件的语雀多平台内容发布实践 | 王星星的魔灯","description":"我把语雀长文的润色、配图、三端改写、质量检查和草稿投递收进一个 Codex Plugin，也记录平台自动化的真实边界。","inLanguage":"zh-CN","isPartOf":{"@id":"https://wxxlamp.cn/#website"},"headline":"基于 Codex 插件的语雀多平台内容发布实践","author":{"@type":"Person","@id":"https://wxxlamp.cn/about/#person","name":"王星星","url":"https://wxxlamp.cn/about/"},"mainEntityOfPage":"https://wxxlamp.cn/2026/08/02/yuque-multichannel-publisher/","image":["https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/b2c5bb2c_cover.png"],"datePublished":"2026-08-02T09:28:50.000Z","articleSection":["场景实践"]}]}</script>
 
 
-<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
 
-<link rel="preload" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/syst/dist/SmileySans-Oblique/result.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/syst/dist/SmileySans-Oblique/result.css"></noscript>
+<link rel="alternate" href="/atom.xml" title="Atom" type="application/atom+xml">
+<link rel="alternate" href="/rss.xml" title="RSS 2.0" type="application/rss+xml">
+
+<link rel="alternate" hreflang="zh-CN" href="https://wxxlamp.cn/2026/08/02/yuque-multichannel-publisher/">
+<link rel="alternate" hreflang="en" href="https://wxxlamp.cn/en/2026/08/02/yuque-multichannel-publisher/">
+<link rel="alternate" hreflang="x-default" href="https://wxxlamp.cn/2026/08/02/yuque-multichannel-publisher/">
 
 
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2" />
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2">
+<meta name="theme-color" content="#244f43">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2" />
+
+
+
+<script defer src="/js/src/site.js?v=2"></script>
 
 
 
@@ -76,6 +60,7 @@
 
 
 
+
 <script>
   window.MathJax = {
     tex: {
@@ -85,11 +70,12 @@
       processEnvironments: true
     },
     options: {
-      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
     }
   };
 </script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script id="MathJax-script" async src="/lib/mathjax/tex-chtml.js"></script>
+
 
 
 
@@ -97,83 +83,48 @@
 
 
 
-    <title> 我把语雀长文到博客、公众号和小红书，做成了一个 Codex 插件 - 王星星的魔灯 </title>
   <meta name="generator" content="Hexo 8.1.1"></head>
 
-  <body>
+  <body data-content-language="zh-CN" class="view-post">
+    <a class="skip-link" href="#content" data-zh="跳至正文" data-en="Skip to content">跳至正文</a>
     <div id="page">
       <header id="masthead"><div class="site-header-inner">
-    <h1 class="site-title">
-        <a href="/." class="logo">王星星的魔灯</a>
-    </h1>
-
-    <nav id="nav-top">
-        
-            <ul id="menu-top" class="nav-top-items">
-                
-                    
-                    <li class="menu-item">
-                        <a href="/archives">
-                            
-                            
-                                Archives
-                            
-                        </a>
-                    </li>
-                    
-                
-                    
-                    <li class="menu-item">
-                        <a href="/about">
-                            
-                            
-                                About
-                            
-                        </a>
-                    </li>
-                    
-                
-                    
-                    <li class="menu-item menu-item-resume">
-                        <a href="/resume" class="resume-nav-label" onclick="event.preventDefault()">Resume</a>
-                        <ul class="resume-lang-dropdown">
-                            <li><a href="/resume">中文简历</a></li>
-                            <li><a href="/resume-en">English</a></li>
-                        </ul>
-                    </li>
-                    
-                
-                <li class="menu-item">
-                    <a href="/atom.xml">RSS</a>
-                </li>
-            </ul>
-        
+  <a href="/" class="site-brand" aria-label="王星星的魔灯 · 首页" data-zh-label="王星星的魔灯 · 首页" data-en-label="Sibo's Blog · Home">
+    <img class="brand-mark" src="/favicon.svg" width="36" height="36" alt="" aria-hidden="true">
+    <span class="brand-name" data-zh="王星星的魔灯" data-en="Sibo's Blog">王星星的魔灯</span>
+  </a>
+  <nav id="nav-top" aria-label="主导航" data-zh-label="主导航" data-en-label="Main navigation">
+    <ul class="nav-top-items">
+      <li><a href="/" data-nav="home" data-zh="文章" data-en="Writing">文章</a></li>
+      <li><a href="/archives/" data-nav="archives" data-zh="归档" data-en="Archive">归档</a></li>
+      <li><a href="/about/" data-nav="about" data-zh="关于" data-en="About">关于</a></li>
+      <li><a href="/resume/" data-nav="resume" data-resume-link data-zh="简历" data-en="Résumé">简历</a></li>
+    </ul>
   </nav>
+  <div class="language-switch" aria-label="Language">
+    <a href="/2026/08/02/yuque-multichannel-publisher/" data-language="zh" lang="zh-CN" aria-label="阅读中文版">中</a>
+    <a href="/en/2026/08/02/yuque-multichannel-publisher/" data-language="en" lang="en" aria-label="Read in English">EN</a>
+  </div>
 </div>
 
       </header>
-      <div id="content">
+      <main id="content" tabindex="-1">
         
     <div id="primary">
         
   <article class="post">
     <header class="post-header">
-      <h1 class="post-title">
-        
-          我把语雀长文到博客、公众号和小红书，做成了一个 Codex 插件
-        
-      </h1>
-
-      <time class="post-time">
-          8月 02 2026
-      </time>
+      <div class="post-meta"><time datetime="2026-08-02">2026.08.02</time><a href="/categories/%E5%9C%BA%E6%99%AF%E5%AE%9E%E8%B7%B5/">场景实践</a></div>
+      <h1 class="post-title">基于 Codex 插件的语雀多平台内容发布实践</h1>
     </header>
-
-
-
     
-            <div class="post-content">
-            <p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/b2c5bb2c_cover.png" alt="一篇长文经过可恢复工作流生成三端发布包"></p>
+      
+<nav class="post-language" aria-label="Article language">
+  <a href="/en/2026/08/02/yuque-multichannel-publisher/" lang="en">Read in English <svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+</nav>
+
+
+      <div class="post-content" lang="zh-CN"><p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/b2c5bb2c_cover.png" alt="一篇长文经过可恢复工作流生成三端发布包"></p>
 <p>我一般先在语雀里把文章写完。</p>
 <p>文字落下最后一句后，事情却还没结束：博客、微信公众号和小红书各有一套内容形态，我还要重新排版、配图、拆文和检查，一轮下来大概要再花两个小时。</p>
 <p>最近我把这段流程做成了一个 <a target="_blank" rel="noopener" href="https://github.com/wxxlamp/ai-coding-config/tree/main/plugins/yuque-multichannel-publisher">Codex Plugin</a>。它会读取语雀原文，让 AI 完成润色、配图和平台改写，再由脚本负责上传、校验、落盘、断点恢复和发布前检查。这篇文章也正好是它的第一份完整测试。我想把制作过程记下来，也讲清楚哪些步骤真的能自动化，哪些仍然需要人在平台页面确认。</p>
@@ -245,41 +196,23 @@
 <p>它目前还有边界。公众号草稿箱可以通过外部适配器自动写入，但凭据、IP 白名单和账号权限仍要由用户配置；小红书自动化目前可靠做到的是编辑器填充，草稿是否真正保存必须看平台反馈。博客仓库也有自己的 Git 规则。真正发布前，仍然要确认账号、标题、时间和可见范围。</p>
 <p>插件源码和使用说明已经放在 <a target="_blank" rel="noopener" href="https://github.com/wxxlamp/ai-coding-config">wxxlamp&#x2F;ai-coding-config</a> 仓库，进入 <code>plugins/yuque-multichannel-publisher/</code> 目录即可查看完整 Plugin。</p>
 <p>对我来说，这个插件已经把最烦的搬运工作收进了一条可重复的流程。以后文章写完，我可以先把注意力留在内容上，等本地发布包检查通过，再决定什么时候打开各个平台。</p>
-
-            </div>
-          
-
-    
+</div>
       <footer class="post-footer">
-		
-		<div class="post-tags">
-		  
-			<a href="/tags/Codex/">Codex</a>
-		  
-			<a href="/tags/Plugin/">Plugin</a>
-		  
-			<a href="/tags/%E5%86%85%E5%AE%B9%E5%88%9B%E4%BD%9C/">内容创作</a>
-		  
-			<a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/">自动化</a>
-		  
-		</div>
-		
-
-        
+        <div class="post-tags"><a href="/tags/AI-%E7%BC%96%E7%A8%8B/">AI 编程</a><a href="/tags/%E5%8D%9A%E5%AE%A2%E4%B8%8E%E5%86%99%E4%BD%9C/">博客与写作</a><a href="/tags/%E7%A0%94%E5%8F%91%E6%95%88%E8%83%BD/">研发效能</a></div>
         
   <nav class="post-nav">
     
       <a class="prev" href="/2026/08/18/ali-ai-night-school-agent-skill-model/">
-        <i class="iconfont icon-left"></i>
-        <span class="prev-text nav-default">【我在阿里拧螺丝3】淘天技术AI夜校培训思考——Agent、SKILL与模型</span>
-        <span class="prev-text nav-mobile">Prev</span>
+        <svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 5-7 7 7 7M5 12h14"/></svg>
+        <span class="prev-text nav-default">Agent、Skill 与模型：AI 夜校学习与工程实践思考</span>
+        <span class="prev-text nav-mobile"><span data-zh="上一篇" data-en="Previous entry">上一篇</span></span>
       </a>
     
     
       <a class="next" href="/2026/07/19/agentscope-ai-operations-platform-v1/">
-        <span class="next-text nav-default">构建基于 AgentScope 的 AI 运营平台，开发者除了 Loop 还要考虑什么？</span>
-        <span class="prev-text nav-mobile">Next</span>
-        <i class="iconfont icon-right"></i>
+        <span class="next-text nav-default">基于 AgentScope 的 AI 运营平台设计与实践</span>
+        <span class="prev-text nav-mobile"><span data-zh="下一篇" data-en="Next entry">下一篇</span></span>
+        <svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 5 7 7-7 7M5 12h14"/></svg>
       </a>
     
   </nav>
@@ -323,103 +256,20 @@
 
     </div>
     
-
-<div class="toc-container" id="toc-container">
-  <div class="toc-title">Contents</div>
-  <ul class="toc-list" id="toc-list">
-    
-  </ul>
-</div>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  // Generate TOC from post content
-  const content = document.querySelector('.post-content');
-  const tocList = document.getElementById('toc-list');
-
-  if (!content || !tocList) return;
-
-  const headings = content.querySelectorAll('h1, h2, h3, h4');
-
-  if (headings.length < 2) {
-    document.getElementById('toc-container').style.display = 'none';
-    return;
-  }
-
-  headings.forEach(function(heading, index) {
-    // Add ID to heading if not exists
-    if (!heading.id) {
-      heading.id = 'heading-' + index;
-    }
-
-    const li = document.createElement('li');
-    li.className = 'toc-' + heading.tagName.toLowerCase();
-
-    const a = document.createElement('a');
-    a.href = '#' + heading.id;
-    a.textContent = heading.textContent;
-    a.onclick = function(e) {
-      e.preventDefault();
-      heading.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    };
-
-    li.appendChild(a);
-    tocList.appendChild(li);
-  });
-
-  // Active section highlighting
-  const tocItems = tocList.querySelectorAll('li');
-
-  function updateActiveToc() {
-    const scrollPos = window.scrollY + 100;
-
-    headings.forEach(function(heading, index) {
-      const top = heading.offsetTop;
-      const bottom = top + heading.offsetHeight;
-
-      if (scrollPos >= top && scrollPos < bottom) {
-        tocItems.forEach(function(item) {
-          item.classList.remove('active');
-        });
-        if (tocItems[index]) {
-          tocItems[index].classList.add('active');
-        }
-      }
-    });
-  }
-
-  window.addEventListener('scroll', updateActiveToc);
-  updateActiveToc();
-});
-</script>
+<aside class="toc-container" id="toc-container"><details open><summary data-zh="本篇目录" data-en="On this page">本篇目录</summary><ol class="toc-list" id="toc-list"></ol></details></aside>
+<div class="reading-progress" aria-hidden="true"></div>
 
 
 
-      </div>
+      </main>
 
-      <footer id="colophon"><span class="copyright-year">
-    
-        &copy;
-    
-        2014 -
-    
-    2026
-    <span class="footer-author">Wxx.</span>
-    <span class="power-by">
-        Powered by <a class="hexo-link" target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> and <a class="theme-link" target="_blank" rel="noopener" href="https://github.com/frostfan/hexo-theme-polarbear">Polar Bear</a>
-    </span>
-</span>
-<span class="site-stats" style="display: block; margin-top: 8px; font-size: 0.85rem; color: #666;">
-    Total Visits: <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> ·
-    Unique Visitors: <span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>
-</span>
-<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      <footer id="colophon"><div class="footer-inner"><span>© 2026 王星星 <span class="footer-dot">·</span> <span data-zh="保持好奇，认真生活。" data-en="Stay curious. Live thoughtfully.">保持好奇，认真生活。</span></span><a href="/subscribe/"><svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 10a9 9 0 0 1 9 9M5 4a15 15 0 0 1 15 15"/><circle cx="5" cy="19" r="1"/></svg> RSS</a></div>
+<div class="site-stats"><span data-zh="访问" data-en="Visits">访问</span> <span id="busuanzi_value_site_pv">—</span> · <span data-zh="访客" data-en="Readers">访客</span> <span id="busuanzi_value_site_uv">—</span> · Powered by <a target="_blank" href="https://hexo.io/" rel="noopener noopener">Hexo</a></div>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
       </footer>
 
-      <div class="back-to-top" id="back-to-top">
-        <i class="iconfont icon-up"></i>
-      </div>
+      <button class="back-to-top" id="back-to-top" aria-label="回到顶部" data-zh-label="回到顶部" data-en-label="Back to top"><svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m5 12 7-7 7 7M12 5v14"/></svg></button>
     </div>
     
 
@@ -435,8 +285,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   
 
-    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
-<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+    <script type="text/javascript" src="/js/src/theme.js?v=2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2"></script>
 
   </body>
 </html>

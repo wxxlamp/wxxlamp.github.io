@@ -5,63 +5,48 @@
 <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width,initial-scale=1">
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-  <meta name="description" content="通过两个大型商业项目的实践，分享使用Qoder完成1万行代码开发的经验与思考，探讨AI Coding的效能边界与程序员的能力演进方向。"/>
-
-
-
-
-  <meta name="keywords" content="人工智能," />
-
-
-
-
-
-  <link rel="alternate" href="/atom.xml" title="王星星的魔灯" type="application/atom+xml">
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
-
-
-
-<link rel="canonical" href="https://wxxlamp.cn/2026/06/07/qoder-vibe-coding-thoughts/"/>
-
-
+<title>Qoder AI 编程实践：万行代码开发的收益与边界 | 王星星的魔灯</title>
+<link rel="canonical" href="https://wxxlamp.cn/2026/06/07/qoder-vibe-coding-thoughts/">
 <meta name="description" content="通过两个大型商业项目的实践，分享使用Qoder完成1万行代码开发的经验与思考，探讨AI Coding的效能边界与程序员的能力演进方向。">
+<meta name="author" content="王星星">
+<meta name="robots" content="index, follow, max-image-preview:large">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[AI Coding]基于Qoder Vibe Coding 1万行代码的思考">
-<meta property="og:url" content="https://wxxlamp.cn/2026/06/07/qoder-vibe-coding-thoughts/index.html">
-<meta property="og:site_name" content="王星星的魔灯">
+<meta property="og:title" content="Qoder AI 编程实践：万行代码开发的收益与边界 | 王星星的魔灯">
 <meta property="og:description" content="通过两个大型商业项目的实践，分享使用Qoder完成1万行代码开发的经验与思考，探讨AI Coding的效能边界与程序员的能力演进方向。">
+<meta property="og:url" content="https://wxxlamp.cn/2026/06/07/qoder-vibe-coding-thoughts/">
+<meta property="og:site_name" content="王星星的魔灯">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/88836131_qoder-1.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/b74e18a5_qoder-2.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/675c3786_qoder-3.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/0d21480a_qoder-4.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/0cfc6174_qoder-5.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/a6f6e234_qoder-6.png">
-<meta property="article:published_time" content="2026-06-07T08:00:00.000Z">
-<meta property="article:modified_time" content="2026-08-19T15:46:35.191Z">
-<meta property="article:author" content="Wxx">
-<meta property="article:tag" content="人工智能">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Qoder AI 编程实践：万行代码开发的收益与边界 | 王星星的魔灯">
+<meta name="twitter:description" content="通过两个大型商业项目的实践，分享使用Qoder完成1万行代码开发的经验与思考，探讨AI Coding的效能边界与程序员的能力演进方向。">
 <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/88836131_qoder-1.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://wxxlamp.cn/#website","name":"王星星的魔灯","url":"https://wxxlamp.cn/","inLanguage":"zh-CN"},{"@type":"BlogPosting","@id":"https://wxxlamp.cn/2026/06/07/qoder-vibe-coding-thoughts/#page","url":"https://wxxlamp.cn/2026/06/07/qoder-vibe-coding-thoughts/","name":"Qoder AI 编程实践：万行代码开发的收益与边界 | 王星星的魔灯","description":"通过两个大型商业项目的实践，分享使用Qoder完成1万行代码开发的经验与思考，探讨AI Coding的效能边界与程序员的能力演进方向。","inLanguage":"zh-CN","isPartOf":{"@id":"https://wxxlamp.cn/#website"},"headline":"Qoder AI 编程实践：万行代码开发的收益与边界","author":{"@type":"Person","@id":"https://wxxlamp.cn/about/#person","name":"王星星","url":"https://wxxlamp.cn/about/"},"mainEntityOfPage":"https://wxxlamp.cn/2026/06/07/qoder-vibe-coding-thoughts/","image":["https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/88836131_qoder-1.png"],"datePublished":"2026-06-07T08:00:00.000Z","articleSection":["场景实践"]}]}</script>
 
 
-<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
 
-<link rel="preload" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/syst/dist/SmileySans-Oblique/result.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/syst/dist/SmileySans-Oblique/result.css"></noscript>
+<link rel="alternate" href="/atom.xml" title="Atom" type="application/atom+xml">
+<link rel="alternate" href="/rss.xml" title="RSS 2.0" type="application/rss+xml">
+
+<link rel="alternate" hreflang="zh-CN" href="https://wxxlamp.cn/2026/06/07/qoder-vibe-coding-thoughts/">
+<link rel="alternate" hreflang="en" href="https://wxxlamp.cn/en/2026/06/07/qoder-vibe-coding-thoughts/">
+<link rel="alternate" hreflang="x-default" href="https://wxxlamp.cn/2026/06/07/qoder-vibe-coding-thoughts/">
 
 
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2" />
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2">
+<meta name="theme-color" content="#244f43">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2" />
+
+
+
+<script defer src="/js/src/site.js?v=2"></script>
 
 
 
@@ -75,6 +60,7 @@
 
 
 
+
 <script>
   window.MathJax = {
     tex: {
@@ -84,11 +70,12 @@
       processEnvironments: true
     },
     options: {
-      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
     }
   };
 </script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script id="MathJax-script" async src="/lib/mathjax/tex-chtml.js"></script>
+
 
 
 
@@ -96,83 +83,48 @@
 
 
 
-    <title> [AI Coding]基于Qoder Vibe Coding 1万行代码的思考 - 王星星的魔灯 </title>
   <meta name="generator" content="Hexo 8.1.1"></head>
 
-  <body>
+  <body data-content-language="zh-CN" class="view-post">
+    <a class="skip-link" href="#content" data-zh="跳至正文" data-en="Skip to content">跳至正文</a>
     <div id="page">
       <header id="masthead"><div class="site-header-inner">
-    <h1 class="site-title">
-        <a href="/." class="logo">王星星的魔灯</a>
-    </h1>
-
-    <nav id="nav-top">
-        
-            <ul id="menu-top" class="nav-top-items">
-                
-                    
-                    <li class="menu-item">
-                        <a href="/archives">
-                            
-                            
-                                Archives
-                            
-                        </a>
-                    </li>
-                    
-                
-                    
-                    <li class="menu-item">
-                        <a href="/about">
-                            
-                            
-                                About
-                            
-                        </a>
-                    </li>
-                    
-                
-                    
-                    <li class="menu-item menu-item-resume">
-                        <a href="/resume" class="resume-nav-label" onclick="event.preventDefault()">Resume</a>
-                        <ul class="resume-lang-dropdown">
-                            <li><a href="/resume">中文简历</a></li>
-                            <li><a href="/resume-en">English</a></li>
-                        </ul>
-                    </li>
-                    
-                
-                <li class="menu-item">
-                    <a href="/atom.xml">RSS</a>
-                </li>
-            </ul>
-        
+  <a href="/" class="site-brand" aria-label="王星星的魔灯 · 首页" data-zh-label="王星星的魔灯 · 首页" data-en-label="Sibo's Blog · Home">
+    <img class="brand-mark" src="/favicon.svg" width="36" height="36" alt="" aria-hidden="true">
+    <span class="brand-name" data-zh="王星星的魔灯" data-en="Sibo's Blog">王星星的魔灯</span>
+  </a>
+  <nav id="nav-top" aria-label="主导航" data-zh-label="主导航" data-en-label="Main navigation">
+    <ul class="nav-top-items">
+      <li><a href="/" data-nav="home" data-zh="文章" data-en="Writing">文章</a></li>
+      <li><a href="/archives/" data-nav="archives" data-zh="归档" data-en="Archive">归档</a></li>
+      <li><a href="/about/" data-nav="about" data-zh="关于" data-en="About">关于</a></li>
+      <li><a href="/resume/" data-nav="resume" data-resume-link data-zh="简历" data-en="Résumé">简历</a></li>
+    </ul>
   </nav>
+  <div class="language-switch" aria-label="Language">
+    <a href="/2026/06/07/qoder-vibe-coding-thoughts/" data-language="zh" lang="zh-CN" aria-label="阅读中文版">中</a>
+    <a href="/en/2026/06/07/qoder-vibe-coding-thoughts/" data-language="en" lang="en" aria-label="Read in English">EN</a>
+  </div>
 </div>
 
       </header>
-      <div id="content">
+      <main id="content" tabindex="-1">
         
     <div id="primary">
         
   <article class="post">
     <header class="post-header">
-      <h1 class="post-title">
-        
-          [AI Coding]基于Qoder Vibe Coding 1万行代码的思考
-        
-      </h1>
-
-      <time class="post-time">
-          6月 07 2026
-      </time>
+      <div class="post-meta"><time datetime="2026-06-07">2026.06.07</time><a href="/categories/%E5%9C%BA%E6%99%AF%E5%AE%9E%E8%B7%B5/">场景实践</a></div>
+      <h1 class="post-title">Qoder AI 编程实践：万行代码开发的收益与边界</h1>
     </header>
-
-
-
     
-            <div class="post-content">
-            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>以前使用Claude Code作为代码开发工具，但前段时间因为各种原因用不了Opus系列模型了，加上公司推广，就用上了平替版的Qoder来开发代码。</p>
+      
+<nav class="post-language" aria-label="Article language">
+  <a href="/en/2026/06/07/qoder-vibe-coding-thoughts/" lang="en">Read in English <svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+</nav>
+
+
+      <div class="post-content" lang="zh-CN"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>以前使用Claude Code作为代码开发工具，但前段时间因为各种原因用不了Opus系列模型了，加上公司推广，就用上了平替版的Qoder来开发代码。</p>
 <p>4月期间开发了将近1万行有效业务代码，在开发阶段人工的干预率不超过10%，但联调和提测由于基建的原因，人工干预偏多。</p>
 <p>本文会通过两个重点项目的实践，来聊聊基于coding agent，我们的研发效能到底能提高多少，以及在全员AI coding的大背景下，思考我们究竟还有什么值得关心的事情。实践相关的内容比较长，赶时间的读者可以直接跳到感悟部分。</p>
 <p>笔者在此简单记录coding阶段的实践和思考，同时也相信，这些经验不止适用于Qoder，也希望沉淀出一些通用策略，以便在其他coding agent上复用。</p>
@@ -258,35 +210,23 @@
 <p>这样一来，仿佛程序员啥都能干了？AI的到来，看起来让我们对程序员的要求也降低了。其实笔者反而认为恰好相反。AI让程序员不再拘泥于需要死记硬背的八股文和语法，而是需要核心聚焦在那些能迁移的能力上。譬如：学习力、创新力、快速迁移的能力。程序员需要了解的东西也更多了，需要在核心领域上帮助AI做决策、做判断、做指导，而不能只是基本的实现——因为实现这件事，一定是AI做的。</p>
 <p>在不远的将来，程序员一定要像掌握计算机基础八股文一样，掌握各种Coding Agent的工具，把代码开发交给AI，然后往更上一层拓展自己的能力边界，深度介入业务的需求和产品能力，才是确定性最高的趋势。</p>
 <p>所以，如果你觉得目前的工作没有需要你结合专业知识进行判断的地方，一直都是埋头开发，那么，是时候抬起头，重新看看自己了。</p>
-
-            </div>
-          
-
-    
+</div>
       <footer class="post-footer">
-		
-		<div class="post-tags">
-		  
-			<a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a>
-		  
-		</div>
-		
-
-        
+        <div class="post-tags"><a href="/tags/AI-%E7%BC%96%E7%A8%8B/">AI 编程</a><a href="/tags/%E7%A0%94%E5%8F%91%E6%95%88%E8%83%BD/">研发效能</a></div>
         
   <nav class="post-nav">
     
       <a class="prev" href="/2026/06/12/best-arrangement/">
-        <i class="iconfont icon-left"></i>
-        <span class="prev-text nav-default">一年又一年|2026高考作文</span>
-        <span class="prev-text nav-mobile">Prev</span>
+        <svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 5-7 7 7 7M5 12h14"/></svg>
+        <span class="prev-text nav-default">一年又一年：2026 年高考作文随笔</span>
+        <span class="prev-text nav-mobile"><span data-zh="上一篇" data-en="Previous entry">上一篇</span></span>
       </a>
     
     
       <a class="next" href="/2026/04/13/claude-code-command-guide/">
-        <span class="next-text nav-default">Claude Code常用命令指北【官网版】</span>
-        <span class="prev-text nav-mobile">Next</span>
-        <i class="iconfont icon-right"></i>
+        <span class="next-text nav-default">Claude Code 使用指南：命令、Skill 与 Subagent</span>
+        <span class="prev-text nav-mobile"><span data-zh="下一篇" data-en="Next entry">下一篇</span></span>
+        <svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 5 7 7-7 7M5 12h14"/></svg>
       </a>
     
   </nav>
@@ -330,103 +270,20 @@
 
     </div>
     
-
-<div class="toc-container" id="toc-container">
-  <div class="toc-title">Contents</div>
-  <ul class="toc-list" id="toc-list">
-    
-  </ul>
-</div>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  // Generate TOC from post content
-  const content = document.querySelector('.post-content');
-  const tocList = document.getElementById('toc-list');
-
-  if (!content || !tocList) return;
-
-  const headings = content.querySelectorAll('h1, h2, h3, h4');
-
-  if (headings.length < 2) {
-    document.getElementById('toc-container').style.display = 'none';
-    return;
-  }
-
-  headings.forEach(function(heading, index) {
-    // Add ID to heading if not exists
-    if (!heading.id) {
-      heading.id = 'heading-' + index;
-    }
-
-    const li = document.createElement('li');
-    li.className = 'toc-' + heading.tagName.toLowerCase();
-
-    const a = document.createElement('a');
-    a.href = '#' + heading.id;
-    a.textContent = heading.textContent;
-    a.onclick = function(e) {
-      e.preventDefault();
-      heading.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    };
-
-    li.appendChild(a);
-    tocList.appendChild(li);
-  });
-
-  // Active section highlighting
-  const tocItems = tocList.querySelectorAll('li');
-
-  function updateActiveToc() {
-    const scrollPos = window.scrollY + 100;
-
-    headings.forEach(function(heading, index) {
-      const top = heading.offsetTop;
-      const bottom = top + heading.offsetHeight;
-
-      if (scrollPos >= top && scrollPos < bottom) {
-        tocItems.forEach(function(item) {
-          item.classList.remove('active');
-        });
-        if (tocItems[index]) {
-          tocItems[index].classList.add('active');
-        }
-      }
-    });
-  }
-
-  window.addEventListener('scroll', updateActiveToc);
-  updateActiveToc();
-});
-</script>
+<aside class="toc-container" id="toc-container"><details open><summary data-zh="本篇目录" data-en="On this page">本篇目录</summary><ol class="toc-list" id="toc-list"></ol></details></aside>
+<div class="reading-progress" aria-hidden="true"></div>
 
 
 
-      </div>
+      </main>
 
-      <footer id="colophon"><span class="copyright-year">
-    
-        &copy;
-    
-        2014 -
-    
-    2026
-    <span class="footer-author">Wxx.</span>
-    <span class="power-by">
-        Powered by <a class="hexo-link" target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> and <a class="theme-link" target="_blank" rel="noopener" href="https://github.com/frostfan/hexo-theme-polarbear">Polar Bear</a>
-    </span>
-</span>
-<span class="site-stats" style="display: block; margin-top: 8px; font-size: 0.85rem; color: #666;">
-    Total Visits: <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> ·
-    Unique Visitors: <span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>
-</span>
-<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      <footer id="colophon"><div class="footer-inner"><span>© 2026 王星星 <span class="footer-dot">·</span> <span data-zh="保持好奇，认真生活。" data-en="Stay curious. Live thoughtfully.">保持好奇，认真生活。</span></span><a href="/subscribe/"><svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 10a9 9 0 0 1 9 9M5 4a15 15 0 0 1 15 15"/><circle cx="5" cy="19" r="1"/></svg> RSS</a></div>
+<div class="site-stats"><span data-zh="访问" data-en="Visits">访问</span> <span id="busuanzi_value_site_pv">—</span> · <span data-zh="访客" data-en="Readers">访客</span> <span id="busuanzi_value_site_uv">—</span> · Powered by <a target="_blank" href="https://hexo.io/" rel="noopener noopener">Hexo</a></div>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
       </footer>
 
-      <div class="back-to-top" id="back-to-top">
-        <i class="iconfont icon-up"></i>
-      </div>
+      <button class="back-to-top" id="back-to-top" aria-label="回到顶部" data-zh-label="回到顶部" data-en-label="Back to top"><svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m5 12 7-7 7 7M12 5v14"/></svg></button>
     </div>
     
 
@@ -442,8 +299,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   
 
-    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
-<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+    <script type="text/javascript" src="/js/src/theme.js?v=2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2"></script>
 
   </body>
 </html>

@@ -5,65 +5,44 @@
 <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width,initial-scale=1">
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-  <meta name="description" content="剖析Netty框架核心优势：三层逻辑架构、Bootstrap脚手架、Handler责任链、TCP粘包拆包解决方案、ByteBuf动态扩缩容与序列化支持。"/>
-
-
-
-
-  <meta name="keywords" content="NETTY," />
-
-
-
-
-
-  <link rel="alternate" href="/atom.xml" title="王星星的魔灯" type="application/atom+xml">
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
-
-
-
-<link rel="canonical" href="https://wxxlamp.cn/2023/01/10/netty-useful-doc/"/>
-
-
+<title>Netty 核心机制：架构、缓冲区与协议处理 | 王星星的魔灯</title>
+<link rel="canonical" href="https://wxxlamp.cn/2023/01/10/netty-useful-doc/">
 <meta name="description" content="剖析Netty框架核心优势：三层逻辑架构、Bootstrap脚手架、Handler责任链、TCP粘包拆包解决方案、ByteBuf动态扩缩容与序列化支持。">
+<meta name="author" content="王星星">
+<meta name="robots" content="index, follow, max-image-preview:large">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Netty可用性剖析">
-<meta property="og:url" content="https://wxxlamp.cn/2023/01/10/netty-useful-doc/index.html">
-<meta property="og:site_name" content="王星星的魔灯">
+<meta property="og:title" content="Netty 核心机制：架构、缓冲区与协议处理 | 王星星的魔灯">
 <meta property="og:description" content="剖析Netty框架核心优势：三层逻辑架构、Bootstrap脚手架、Handler责任链、TCP粘包拆包解决方案、ByteBuf动态扩缩容与序列化支持。">
+<meta property="og:url" content="https://wxxlamp.cn/2023/01/10/netty-useful-doc/">
+<meta property="og:site_name" content="王星星的魔灯">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/1dc0a526_netty-useful-doc-1.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/c19b08d3_netty-useful-doc-2.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/da729e4d_netty-useful-doc-3.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/7bde4ed9_netty-useful-doc-4.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/342339d7_netty-useful-doc-5.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/5e63d65f_netty-useful-doc-6.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/712bcc14_netty-useful-doc-7.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/ade22650_netty-useful-doc-8.png">
-<meta property="article:published_time" content="2023-01-10T02:36:00.000Z">
-<meta property="article:modified_time" content="2026-08-19T15:46:35.190Z">
-<meta property="article:author" content="Wxx">
-<meta property="article:tag" content="NETTY">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Netty 核心机制：架构、缓冲区与协议处理 | 王星星的魔灯">
+<meta name="twitter:description" content="剖析Netty框架核心优势：三层逻辑架构、Bootstrap脚手架、Handler责任链、TCP粘包拆包解决方案、ByteBuf动态扩缩容与序列化支持。">
 <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/1dc0a526_netty-useful-doc-1.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://wxxlamp.cn/#website","name":"王星星的魔灯","url":"https://wxxlamp.cn/","inLanguage":"zh-CN"},{"@type":"BlogPosting","@id":"https://wxxlamp.cn/2023/01/10/netty-useful-doc/#page","url":"https://wxxlamp.cn/2023/01/10/netty-useful-doc/","name":"Netty 核心机制：架构、缓冲区与协议处理 | 王星星的魔灯","description":"剖析Netty框架核心优势：三层逻辑架构、Bootstrap脚手架、Handler责任链、TCP粘包拆包解决方案、ByteBuf动态扩缩容与序列化支持。","inLanguage":"zh-CN","isPartOf":{"@id":"https://wxxlamp.cn/#website"},"headline":"Netty 核心机制：架构、缓冲区与协议处理","author":{"@type":"Person","@id":"https://wxxlamp.cn/about/#person","name":"王星星","url":"https://wxxlamp.cn/about/"},"mainEntityOfPage":"https://wxxlamp.cn/2023/01/10/netty-useful-doc/","image":["https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/1dc0a526_netty-useful-doc-1.png"],"datePublished":"2023-01-10T02:36:00.000Z","articleSection":["面试经验"]}]}</script>
 
 
-<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
 
-<link rel="preload" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/syst/dist/SmileySans-Oblique/result.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/syst/dist/SmileySans-Oblique/result.css"></noscript>
+<link rel="alternate" href="/atom.xml" title="Atom" type="application/atom+xml">
+<link rel="alternate" href="/rss.xml" title="RSS 2.0" type="application/rss+xml">
 
 
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2" />
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2">
+<meta name="theme-color" content="#244f43">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2" />
+
+
+
+<script defer src="/js/src/site.js?v=2"></script>
 
 
 
@@ -77,6 +56,7 @@
 
 
 
+
 <script>
   window.MathJax = {
     tex: {
@@ -86,11 +66,12 @@
       processEnvironments: true
     },
     options: {
-      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
     }
   };
 </script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script id="MathJax-script" async src="/lib/mathjax/tex-chtml.js"></script>
+
 
 
 
@@ -98,83 +79,44 @@
 
 
 
-    <title> Netty可用性剖析 - 王星星的魔灯 </title>
   <meta name="generator" content="Hexo 8.1.1"></head>
 
-  <body>
+  <body data-content-language="zh-CN" class="view-post">
+    <a class="skip-link" href="#content" data-zh="跳至正文" data-en="Skip to content">跳至正文</a>
     <div id="page">
       <header id="masthead"><div class="site-header-inner">
-    <h1 class="site-title">
-        <a href="/." class="logo">王星星的魔灯</a>
-    </h1>
-
-    <nav id="nav-top">
-        
-            <ul id="menu-top" class="nav-top-items">
-                
-                    
-                    <li class="menu-item">
-                        <a href="/archives">
-                            
-                            
-                                Archives
-                            
-                        </a>
-                    </li>
-                    
-                
-                    
-                    <li class="menu-item">
-                        <a href="/about">
-                            
-                            
-                                About
-                            
-                        </a>
-                    </li>
-                    
-                
-                    
-                    <li class="menu-item menu-item-resume">
-                        <a href="/resume" class="resume-nav-label" onclick="event.preventDefault()">Resume</a>
-                        <ul class="resume-lang-dropdown">
-                            <li><a href="/resume">中文简历</a></li>
-                            <li><a href="/resume-en">English</a></li>
-                        </ul>
-                    </li>
-                    
-                
-                <li class="menu-item">
-                    <a href="/atom.xml">RSS</a>
-                </li>
-            </ul>
-        
+  <a href="/" class="site-brand" aria-label="王星星的魔灯 · 首页" data-zh-label="王星星的魔灯 · 首页" data-en-label="Sibo's Blog · Home">
+    <img class="brand-mark" src="/favicon.svg" width="36" height="36" alt="" aria-hidden="true">
+    <span class="brand-name" data-zh="王星星的魔灯" data-en="Sibo's Blog">王星星的魔灯</span>
+  </a>
+  <nav id="nav-top" aria-label="主导航" data-zh-label="主导航" data-en-label="Main navigation">
+    <ul class="nav-top-items">
+      <li><a href="/" data-nav="home" data-zh="文章" data-en="Writing">文章</a></li>
+      <li><a href="/archives/" data-nav="archives" data-zh="归档" data-en="Archive">归档</a></li>
+      <li><a href="/about/" data-nav="about" data-zh="关于" data-en="About">关于</a></li>
+      <li><a href="/resume/" data-nav="resume" data-resume-link data-zh="简历" data-en="Résumé">简历</a></li>
+    </ul>
   </nav>
+  <div class="language-switch" aria-label="Language">
+    <a href="/2023/01/10/netty-useful-doc/" data-language="zh" lang="zh-CN" aria-label="阅读中文版">中</a>
+    
+  </div>
 </div>
 
       </header>
-      <div id="content">
+      <main id="content" tabindex="-1">
         
     <div id="primary">
         
   <article class="post">
     <header class="post-header">
-      <h1 class="post-title">
-        
-          Netty可用性剖析
-        
-      </h1>
-
-      <time class="post-time">
-          1月 10 2023
-      </time>
+      <div class="post-meta"><time datetime="2023-01-10">2023.01.10</time><a href="/categories/%E9%9D%A2%E8%AF%95%E7%BB%8F%E9%AA%8C/">面试经验</a></div>
+      <h1 class="post-title">Netty 核心机制：架构、缓冲区与协议处理</h1>
     </header>
-
-
-
     
-            <div class="post-content">
-            <p>Netty使用起来非常简单，不用像写Java原生的NIO一样， 各种Select的监听和处理；同时，也无需处理Java NIO自身的各种BUG；以及网络编程中的各种坑，如TCP的沾包拆包问题等。<br>同时，各种网络协议也是网络编程的复杂之一，Netty也会帮助我们处理各种疑难问题。<br>下面我们来具体分析：</p>
+      
+
+      <div class="post-content" lang="zh-CN"><p>Netty使用起来非常简单，不用像写Java原生的NIO一样， 各种Select的监听和处理；同时，也无需处理Java NIO自身的各种BUG；以及网络编程中的各种坑，如TCP的沾包拆包问题等。<br>同时，各种网络协议也是网络编程的复杂之一，Netty也会帮助我们处理各种疑难问题。<br>下面我们来具体分析：</p>
 <h2 id="Netty的系统架构"><a href="#Netty的系统架构" class="headerlink" title="Netty的系统架构"></a>Netty的系统架构</h2><p>Netty从逻辑架构上可以分为三层，分别是通信层，职责链层和业务层。通信层负责通信处理；责任链层负责不同节点的编排，同时还会处理基础的逻辑，如编解码，POJO对象转换，心跳发送等等；而业务层就是单纯的负责上层业务的开发处理</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/1dc0a526_netty-useful-doc-1.png" alt="Netty架构图"></p>
 <p>其中，三层的主要分工如下：<br><strong>通信层</strong>：该层主要包含NioSocketChannel和NioServerSocketChannel用来和Socket的连接，通过Reactor模型来处理高并发请求。该层的主要职责是监听网络的读写和连接操作，负责将网络层的数据读取到内存缓冲区中，然后出发各种网络事件，例如连接，读&#x2F;写等事件，将这些事件触发到pipeline中，由pipeline来进行后续处理。<br><strong>职责链层</strong>：它负责事件在职责链中的有序传播，同时负责动态地编排职责链。通过不同的Handler来处理不同的基础情况，譬如，编解码处理器，POJO 对象转换器，粘包拆包处理器，心跳发送器，权限验证器等，这样上层业务则只需要关心处理业务逻辑即可，不需要感知底层的协议差异和线程模型差异，实现了架构层面的分层隔离。<br><strong>业务层</strong>：业务逻辑编排层通常有两类：一类是纯粹的业务逻辑编排，还有一类是其他的应用层协议插件，用于特定协议相关的会话和链路管理。</p>
@@ -238,35 +180,23 @@
 <li><a target="_blank" rel="noopener" href="https://netty.io/3.8/guide/#preface.2">Netty Doc</a></li>
 <li><a target="_blank" rel="noopener" href="https://stream.nosdn.127.net/kids/1625672349182/Netty%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97.pdf">Netty权威指南</a></li>
 </ol>
-
-            </div>
-          
-
-    
+</div>
       <footer class="post-footer">
-		
-		<div class="post-tags">
-		  
-			<a href="/tags/NETTY/">NETTY</a>
-		  
-		</div>
-		
-
-        
+        <div class="post-tags"><a href="/tags/Java/">Java</a><a href="/tags/%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1/">网络通信</a></div>
         
   <nav class="post-nav">
     
       <a class="prev" href="/2023/01/22/my-2022/">
-        <i class="iconfont icon-left"></i>
-        <span class="prev-text nav-default">我的2022</span>
-        <span class="prev-text nav-mobile">Prev</span>
+        <svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 5-7 7 7 7M5 12h14"/></svg>
+        <span class="prev-text nav-default">2022 年度回顾：业务负责人与成长焦虑</span>
+        <span class="prev-text nav-mobile"><span data-zh="上一篇" data-en="Previous entry">上一篇</span></span>
       </a>
     
     
       <a class="next" href="/2023/01/06/teacher_note_4_it/">
-        <span class="next-text nav-default">高中信息技术面试笔记</span>
-        <span class="prev-text nav-mobile">Next</span>
-        <i class="iconfont icon-right"></i>
+        <span class="next-text nav-default">高中信息技术教师面试：教案与试讲笔记</span>
+        <span class="prev-text nav-mobile"><span data-zh="下一篇" data-en="Next entry">下一篇</span></span>
+        <svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 5 7 7-7 7M5 12h14"/></svg>
       </a>
     
   </nav>
@@ -310,103 +240,20 @@
 
     </div>
     
-
-<div class="toc-container" id="toc-container">
-  <div class="toc-title">Contents</div>
-  <ul class="toc-list" id="toc-list">
-    
-  </ul>
-</div>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  // Generate TOC from post content
-  const content = document.querySelector('.post-content');
-  const tocList = document.getElementById('toc-list');
-
-  if (!content || !tocList) return;
-
-  const headings = content.querySelectorAll('h1, h2, h3, h4');
-
-  if (headings.length < 2) {
-    document.getElementById('toc-container').style.display = 'none';
-    return;
-  }
-
-  headings.forEach(function(heading, index) {
-    // Add ID to heading if not exists
-    if (!heading.id) {
-      heading.id = 'heading-' + index;
-    }
-
-    const li = document.createElement('li');
-    li.className = 'toc-' + heading.tagName.toLowerCase();
-
-    const a = document.createElement('a');
-    a.href = '#' + heading.id;
-    a.textContent = heading.textContent;
-    a.onclick = function(e) {
-      e.preventDefault();
-      heading.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    };
-
-    li.appendChild(a);
-    tocList.appendChild(li);
-  });
-
-  // Active section highlighting
-  const tocItems = tocList.querySelectorAll('li');
-
-  function updateActiveToc() {
-    const scrollPos = window.scrollY + 100;
-
-    headings.forEach(function(heading, index) {
-      const top = heading.offsetTop;
-      const bottom = top + heading.offsetHeight;
-
-      if (scrollPos >= top && scrollPos < bottom) {
-        tocItems.forEach(function(item) {
-          item.classList.remove('active');
-        });
-        if (tocItems[index]) {
-          tocItems[index].classList.add('active');
-        }
-      }
-    });
-  }
-
-  window.addEventListener('scroll', updateActiveToc);
-  updateActiveToc();
-});
-</script>
+<aside class="toc-container" id="toc-container"><details open><summary data-zh="本篇目录" data-en="On this page">本篇目录</summary><ol class="toc-list" id="toc-list"></ol></details></aside>
+<div class="reading-progress" aria-hidden="true"></div>
 
 
 
-      </div>
+      </main>
 
-      <footer id="colophon"><span class="copyright-year">
-    
-        &copy;
-    
-        2014 -
-    
-    2026
-    <span class="footer-author">Wxx.</span>
-    <span class="power-by">
-        Powered by <a class="hexo-link" target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> and <a class="theme-link" target="_blank" rel="noopener" href="https://github.com/frostfan/hexo-theme-polarbear">Polar Bear</a>
-    </span>
-</span>
-<span class="site-stats" style="display: block; margin-top: 8px; font-size: 0.85rem; color: #666;">
-    Total Visits: <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> ·
-    Unique Visitors: <span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>
-</span>
-<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      <footer id="colophon"><div class="footer-inner"><span>© 2026 王星星 <span class="footer-dot">·</span> <span data-zh="保持好奇，认真生活。" data-en="Stay curious. Live thoughtfully.">保持好奇，认真生活。</span></span><a href="/subscribe/"><svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 10a9 9 0 0 1 9 9M5 4a15 15 0 0 1 15 15"/><circle cx="5" cy="19" r="1"/></svg> RSS</a></div>
+<div class="site-stats"><span data-zh="访问" data-en="Visits">访问</span> <span id="busuanzi_value_site_pv">—</span> · <span data-zh="访客" data-en="Readers">访客</span> <span id="busuanzi_value_site_uv">—</span> · Powered by <a target="_blank" href="https://hexo.io/" rel="noopener noopener">Hexo</a></div>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
       </footer>
 
-      <div class="back-to-top" id="back-to-top">
-        <i class="iconfont icon-up"></i>
-      </div>
+      <button class="back-to-top" id="back-to-top" aria-label="回到顶部" data-zh-label="回到顶部" data-en-label="Back to top"><svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m5 12 7-7 7 7M12 5v14"/></svg></button>
     </div>
     
 
@@ -422,8 +269,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   
 
-    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
-<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+    <script type="text/javascript" src="/js/src/theme.js?v=2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2"></script>
 
   </body>
 </html>

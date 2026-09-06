@@ -5,67 +5,48 @@
 <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width,initial-scale=1">
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-  <meta name="description" content="深入解析Claude Code的核心概念与常用命令，涵盖Command、Skill、Rule、Subagent等关键功能的详细介绍与使用技巧，助您掌握现代化AI编程工作流。"/>
-
-
-
-
-  <meta name="keywords" content="大语言模型," />
-
-
-
-
-
-  <link rel="alternate" href="/atom.xml" title="王星星的魔灯" type="application/atom+xml">
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
-
-
-
-<link rel="canonical" href="https://wxxlamp.cn/2026/04/13/claude-code-command-guide/"/>
-
-
+<title>Claude Code 使用指南：命令、Skill 与 Subagent | 王星星的魔灯</title>
+<link rel="canonical" href="https://wxxlamp.cn/2026/04/13/claude-code-command-guide/">
 <meta name="description" content="深入解析Claude Code的核心概念与常用命令，涵盖Command、Skill、Rule、Subagent等关键功能的详细介绍与使用技巧，助您掌握现代化AI编程工作流。">
+<meta name="author" content="王星星">
+<meta name="robots" content="index, follow, max-image-preview:large">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Claude Code常用命令指北【官网版】">
-<meta property="og:url" content="https://wxxlamp.cn/2026/04/13/claude-code-command-guide/index.html">
-<meta property="og:site_name" content="王星星的魔灯">
+<meta property="og:title" content="Claude Code 使用指南：命令、Skill 与 Subagent | 王星星的魔灯">
 <meta property="og:description" content="深入解析Claude Code的核心概念与常用命令，涵盖Command、Skill、Rule、Subagent等关键功能的详细介绍与使用技巧，助您掌握现代化AI编程工作流。">
+<meta property="og:url" content="https://wxxlamp.cn/2026/04/13/claude-code-command-guide/">
+<meta property="og:site_name" content="王星星的魔灯">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/94ab8801_b76cb1b4.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/2b4cdca1_dcdc8b25.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/b62727ad_4db8f1a8.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/006b47f7_c3232358.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/c09f471b_3f295084.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/0700f2c0_ab484b5d.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/799f3c38_07e56628.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/d98bd464_7ce7a25c.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/93981e05_7290ccbd.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/5e29caec_bd6aeec9.png">
-<meta property="article:published_time" content="2026-04-13T14:00:00.000Z">
-<meta property="article:modified_time" content="2026-08-19T15:46:35.187Z">
-<meta property="article:author" content="Wxx">
-<meta property="article:tag" content="大语言模型">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Claude Code 使用指南：命令、Skill 与 Subagent | 王星星的魔灯">
+<meta name="twitter:description" content="深入解析Claude Code的核心概念与常用命令，涵盖Command、Skill、Rule、Subagent等关键功能的详细介绍与使用技巧，助您掌握现代化AI编程工作流。">
 <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/94ab8801_b76cb1b4.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://wxxlamp.cn/#website","name":"王星星的魔灯","url":"https://wxxlamp.cn/","inLanguage":"zh-CN"},{"@type":"BlogPosting","@id":"https://wxxlamp.cn/2026/04/13/claude-code-command-guide/#page","url":"https://wxxlamp.cn/2026/04/13/claude-code-command-guide/","name":"Claude Code 使用指南：命令、Skill 与 Subagent | 王星星的魔灯","description":"深入解析Claude Code的核心概念与常用命令，涵盖Command、Skill、Rule、Subagent等关键功能的详细介绍与使用技巧，助您掌握现代化AI编程工作流。","inLanguage":"zh-CN","isPartOf":{"@id":"https://wxxlamp.cn/#website"},"headline":"Claude Code 使用指南：命令、Skill 与 Subagent","author":{"@type":"Person","@id":"https://wxxlamp.cn/about/#person","name":"王星星","url":"https://wxxlamp.cn/about/"},"mainEntityOfPage":"https://wxxlamp.cn/2026/04/13/claude-code-command-guide/","image":["https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/94ab8801_b76cb1b4.png"],"datePublished":"2026-04-13T14:00:00.000Z","articleSection":["场景实践"]}]}</script>
 
 
-<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
 
-<link rel="preload" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/syst/dist/SmileySans-Oblique/result.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/syst/dist/SmileySans-Oblique/result.css"></noscript>
+<link rel="alternate" href="/atom.xml" title="Atom" type="application/atom+xml">
+<link rel="alternate" href="/rss.xml" title="RSS 2.0" type="application/rss+xml">
+
+<link rel="alternate" hreflang="zh-CN" href="https://wxxlamp.cn/2026/04/13/claude-code-command-guide/">
+<link rel="alternate" hreflang="en" href="https://wxxlamp.cn/en/2026/04/13/claude-code-command-guide/">
+<link rel="alternate" hreflang="x-default" href="https://wxxlamp.cn/2026/04/13/claude-code-command-guide/">
 
 
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2" />
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2">
+<meta name="theme-color" content="#244f43">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2" />
+
+
+
+<script defer src="/js/src/site.js?v=2"></script>
 
 
 
@@ -79,6 +60,7 @@
 
 
 
+
 <script>
   window.MathJax = {
     tex: {
@@ -88,11 +70,12 @@
       processEnvironments: true
     },
     options: {
-      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
     }
   };
 </script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script id="MathJax-script" async src="/lib/mathjax/tex-chtml.js"></script>
+
 
 
 
@@ -100,83 +83,48 @@
 
 
 
-    <title> Claude Code常用命令指北【官网版】 - 王星星的魔灯 </title>
   <meta name="generator" content="Hexo 8.1.1"></head>
 
-  <body>
+  <body data-content-language="zh-CN" class="view-post">
+    <a class="skip-link" href="#content" data-zh="跳至正文" data-en="Skip to content">跳至正文</a>
     <div id="page">
       <header id="masthead"><div class="site-header-inner">
-    <h1 class="site-title">
-        <a href="/." class="logo">王星星的魔灯</a>
-    </h1>
-
-    <nav id="nav-top">
-        
-            <ul id="menu-top" class="nav-top-items">
-                
-                    
-                    <li class="menu-item">
-                        <a href="/archives">
-                            
-                            
-                                Archives
-                            
-                        </a>
-                    </li>
-                    
-                
-                    
-                    <li class="menu-item">
-                        <a href="/about">
-                            
-                            
-                                About
-                            
-                        </a>
-                    </li>
-                    
-                
-                    
-                    <li class="menu-item menu-item-resume">
-                        <a href="/resume" class="resume-nav-label" onclick="event.preventDefault()">Resume</a>
-                        <ul class="resume-lang-dropdown">
-                            <li><a href="/resume">中文简历</a></li>
-                            <li><a href="/resume-en">English</a></li>
-                        </ul>
-                    </li>
-                    
-                
-                <li class="menu-item">
-                    <a href="/atom.xml">RSS</a>
-                </li>
-            </ul>
-        
+  <a href="/" class="site-brand" aria-label="王星星的魔灯 · 首页" data-zh-label="王星星的魔灯 · 首页" data-en-label="Sibo's Blog · Home">
+    <img class="brand-mark" src="/favicon.svg" width="36" height="36" alt="" aria-hidden="true">
+    <span class="brand-name" data-zh="王星星的魔灯" data-en="Sibo's Blog">王星星的魔灯</span>
+  </a>
+  <nav id="nav-top" aria-label="主导航" data-zh-label="主导航" data-en-label="Main navigation">
+    <ul class="nav-top-items">
+      <li><a href="/" data-nav="home" data-zh="文章" data-en="Writing">文章</a></li>
+      <li><a href="/archives/" data-nav="archives" data-zh="归档" data-en="Archive">归档</a></li>
+      <li><a href="/about/" data-nav="about" data-zh="关于" data-en="About">关于</a></li>
+      <li><a href="/resume/" data-nav="resume" data-resume-link data-zh="简历" data-en="Résumé">简历</a></li>
+    </ul>
   </nav>
+  <div class="language-switch" aria-label="Language">
+    <a href="/2026/04/13/claude-code-command-guide/" data-language="zh" lang="zh-CN" aria-label="阅读中文版">中</a>
+    <a href="/en/2026/04/13/claude-code-command-guide/" data-language="en" lang="en" aria-label="Read in English">EN</a>
+  </div>
 </div>
 
       </header>
-      <div id="content">
+      <main id="content" tabindex="-1">
         
     <div id="primary">
         
   <article class="post">
     <header class="post-header">
-      <h1 class="post-title">
-        
-          Claude Code常用命令指北【官网版】
-        
-      </h1>
-
-      <time class="post-time">
-          4月 13 2026
-      </time>
+      <div class="post-meta"><time datetime="2026-04-13">2026.04.13</time><a href="/categories/%E5%9C%BA%E6%99%AF%E5%AE%9E%E8%B7%B5/">场景实践</a></div>
+      <h1 class="post-title">Claude Code 使用指南：命令、Skill 与 Subagent</h1>
     </header>
-
-
-
     
-            <div class="post-content">
-            <p>Work agent在25年风头无两，其中以Claude Code最为显眼。Claude Code一直走在coding agent的最前列，提出了skills、subagent等多种已经成为事实标准的概念。</p>
+      
+<nav class="post-language" aria-label="Article language">
+  <a href="/en/2026/04/13/claude-code-command-guide/" lang="en">Read in English <svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+</nav>
+
+
+      <div class="post-content" lang="zh-CN"><p>Work agent在25年风头无两，其中以Claude Code最为显眼。Claude Code一直走在coding agent的最前列，提出了skills、subagent等多种已经成为事实标准的概念。</p>
 <p>随后一系列的Coding Agent，如Qoder、Gemini Cli、Qwen Cli、CodeX全部follow CC的主要设计，只要能针对一个agent的原理有所理解，对于其他agent也可以达到一通百通的程度了。</p>
 <p>同时，因为commands、skills、rules、subagent这些概念基本上在每个work agent都有存在，所以一旦这些资产沉淀下来，其他的agent也可以顺利复用。</p>
 <p>所以依据claude code 的官方文档，加上自己的理解，特意梳理了下相关的slash概念，帮助后续更好的vibe coding。</p>
@@ -188,7 +136,7 @@
 <p>相关内容参考：<a target="_blank" rel="noopener" href="https://code.claude.com/docs/zh-CN/skills">https://code.claude.com/docs/zh-CN/skills</a></p>
 </blockquote>
 <p>Skill可以理解是一个大号的command，把一些复杂或者标准工作沉淀成一套SOP。不过，skill与command最大的不同就是，skill不仅可以主动调用，也可以在vibe coding的时候，claude code可以根据上下文信息分析是否要自动调用skill。那么，如何编写一个skill呢？</p>
-<p>人工构建skill指令当然是好的，但是AI时代，我们也可以让CC帮我们完成skill的编写，这里可以使用CC官方的<a target="_blank" rel="noopener" href="https://code.claude.com/docs/en/skills">skill指南</a>和<a target="_blank" rel="noopener" href="https://github.com/anthropics/skills/blob/main/skills/skill-creator/SKILL.md">skill 指令</a>来帮我们创建skill。</p>
+<p>人工构建skill指令当然是好的，但是AI时代，我们也可以让CC帮我们完成skill的编写，这里可以使用CC官方的<a target="_blank" rel="noopener" href="https://code.claude.com/docs/zh-CN/skills">skill指南</a>和<a target="_blank" rel="noopener" href="https://github.com/anthropics/skills/blob/main/skills/skill-creator/SKILL.md">skill 指令</a>来帮我们创建skill。</p>
 <p>有了创建skill的skill之后，就可以通过对话的形式，让claude code帮我创建一些其他skill。举个例子，我希望创建一个获取yuque.com的文档，prompt如下：</p>
 <p><code>帮我创建一个skill，作用是获取yuque.com中的文档，具体是我给你一个yuque的文档链接（这个链接我可以在chrome中正常访问，因为我在chrome中有登录语雀账号，链接也是我自己的语雀文档链接），你帮我把语雀连接中的文档读出来，并下载到本地，以markdown格式保存</code></p>
 <p>可以发现，claude code可以自动发现我们刚才写的<code>skill-create</code>skill，如下：</p>
@@ -214,10 +162,10 @@
 <p>相关内容参考：<a target="_blank" rel="noopener" href="https://code.claude.com/docs/zh-CN/hooks-guide">https://code.claude.com/docs/zh-CN/hooks-guide</a></p>
 </blockquote>
 <p>Hook机制使得用户可以更加精准掌控claude code的行为，我们可以在会话前后、脚本执行前后执行各种命令。</p>
-<p>根据<a target="_blank" rel="noopener" href="https://code.claude.com/docs/en/hooks-guide">cc的官方文档</a>，可以返现常见的hook周期如下：</p>
+<p>根据<a target="_blank" rel="noopener" href="https://code.claude.com/docs/zh-CN/hooks-guide">cc的官方文档</a>，可以返现常见的hook周期如下：</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/0700f2c0_ab484b5d.png"></p>
 <p>比较经典的hook场景有上下文压缩，我们可以针对某个工程，在每次claude会话关闭的时候都让claude压缩一次上下文存储到本地，然后在下次claude启动的时候再自动读取。</p>
-<p>可以参考<a target="_blank" rel="noopener" href="https://code.claude.com/docs/en/hooks-guide#get-notified-when-claude-needs-input">claude code的官方例子</a>，在每次需要人工介入的时候，弹出一个提示，防止任务一直holding：<br><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/799f3c38_07e56628.png"></p>
+<p>可以参考<a target="_blank" rel="noopener" href="https://code.claude.com/docs/zh-CN/hooks-guide#%E5%9C%A8-claude-%E9%9C%80%E8%A6%81%E8%BE%93%E5%85%A5%E6%97%B6%E8%8E%B7%E5%BE%97%E9%80%9A%E7%9F%A5">claude code的官方例子</a>，在每次需要人工介入的时候，弹出一个提示，防止任务一直holding：<br><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/799f3c38_07e56628.png"></p>
 <h2 id="MCP"><a href="#MCP" class="headerlink" title="MCP"></a>MCP</h2><blockquote>
 <p>相关内容参考：<a target="_blank" rel="noopener" href="https://code.claude.com/docs/zh-CN/mcp">https://code.claude.com/docs/zh-CN/mcp</a></p>
 </blockquote>
@@ -264,7 +212,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">claude mcp add --transport http hubspot --scope user https://mcp.hubspot.com/anthropic</span><br></pre></td></tr></table></figure>
 
 <h2 id="Subagents"><a href="#Subagents" class="headerlink" title="Subagents"></a>Subagents</h2><blockquote>
-<p>相关内容参考：<a target="_blank" rel="noopener" href="https://code.claude.com/docs/zh-CN/sub-agents#other">https://code.claude.com/docs/zh-CN/sub-agents#other</a></p>
+<p>相关内容参考：<a target="_blank" rel="noopener" href="https://code.claude.com/docs/zh-CN/sub-agents">https://code.claude.com/docs/zh-CN/sub-agents</a></p>
 </blockquote>
 <p>不同的agent可以使用不同的skill和MCP、有不同的权限、模型和上下文。个人认为，subagent最重要的一点就是上下文的隔离，可以把不同任务用上下文隔离开。这样就会节省很多token，使得模型的回答更加精确。</p>
 <p>同时，subagent既然叫做agent，就说明他和主agent的能力几乎一样，subagent也有一块独立的memory空间供其维护长期的上下文，我们可以在创建subagent的时候，显示开启memory存储。</p>
@@ -280,35 +228,23 @@
 </blockquote>
 <p>Plugin顾名思义，就是插件。它是commands、skill、subagent等的集合。Plugin面向的是一件事务的解决方案。</p>
 <p>本篇文章暂不赘述，后续我将创建一个从 语雀网站拉取博客，到自动发布微信公众号、个人网站、小红书的plugin，到时候再演示plugin的打包能力。</p>
-
-            </div>
-          
-
-    
+</div>
       <footer class="post-footer">
-		
-		<div class="post-tags">
-		  
-			<a href="/tags/%E5%A4%A7%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B/">大语言模型</a>
-		  
-		</div>
-		
-
-        
+        <div class="post-tags"><a href="/tags/AI-%E7%BC%96%E7%A8%8B/">AI 编程</a><a href="/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a></div>
         
   <nav class="post-nav">
     
       <a class="prev" href="/2026/06/07/qoder-vibe-coding-thoughts/">
-        <i class="iconfont icon-left"></i>
-        <span class="prev-text nav-default">[AI Coding]基于Qoder Vibe Coding 1万行代码的思考</span>
-        <span class="prev-text nav-mobile">Prev</span>
+        <svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 5-7 7 7 7M5 12h14"/></svg>
+        <span class="prev-text nav-default">Qoder AI 编程实践：万行代码开发的收益与边界</span>
+        <span class="prev-text nav-mobile"><span data-zh="上一篇" data-en="Previous entry">上一篇</span></span>
       </a>
     
     
       <a class="next" href="/2026/04/05/my-2025/">
-        <span class="next-text nav-default">我的2025</span>
-        <span class="prev-text nav-mobile">Next</span>
-        <i class="iconfont icon-right"></i>
+        <span class="next-text nav-default">2025 年度回顾：硕士毕业、工作与技术学习</span>
+        <span class="prev-text nav-mobile"><span data-zh="下一篇" data-en="Next entry">下一篇</span></span>
+        <svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 5 7 7-7 7M5 12h14"/></svg>
       </a>
     
   </nav>
@@ -352,103 +288,20 @@
 
     </div>
     
-
-<div class="toc-container" id="toc-container">
-  <div class="toc-title">Contents</div>
-  <ul class="toc-list" id="toc-list">
-    
-  </ul>
-</div>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  // Generate TOC from post content
-  const content = document.querySelector('.post-content');
-  const tocList = document.getElementById('toc-list');
-
-  if (!content || !tocList) return;
-
-  const headings = content.querySelectorAll('h1, h2, h3, h4');
-
-  if (headings.length < 2) {
-    document.getElementById('toc-container').style.display = 'none';
-    return;
-  }
-
-  headings.forEach(function(heading, index) {
-    // Add ID to heading if not exists
-    if (!heading.id) {
-      heading.id = 'heading-' + index;
-    }
-
-    const li = document.createElement('li');
-    li.className = 'toc-' + heading.tagName.toLowerCase();
-
-    const a = document.createElement('a');
-    a.href = '#' + heading.id;
-    a.textContent = heading.textContent;
-    a.onclick = function(e) {
-      e.preventDefault();
-      heading.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    };
-
-    li.appendChild(a);
-    tocList.appendChild(li);
-  });
-
-  // Active section highlighting
-  const tocItems = tocList.querySelectorAll('li');
-
-  function updateActiveToc() {
-    const scrollPos = window.scrollY + 100;
-
-    headings.forEach(function(heading, index) {
-      const top = heading.offsetTop;
-      const bottom = top + heading.offsetHeight;
-
-      if (scrollPos >= top && scrollPos < bottom) {
-        tocItems.forEach(function(item) {
-          item.classList.remove('active');
-        });
-        if (tocItems[index]) {
-          tocItems[index].classList.add('active');
-        }
-      }
-    });
-  }
-
-  window.addEventListener('scroll', updateActiveToc);
-  updateActiveToc();
-});
-</script>
+<aside class="toc-container" id="toc-container"><details open><summary data-zh="本篇目录" data-en="On this page">本篇目录</summary><ol class="toc-list" id="toc-list"></ol></details></aside>
+<div class="reading-progress" aria-hidden="true"></div>
 
 
 
-      </div>
+      </main>
 
-      <footer id="colophon"><span class="copyright-year">
-    
-        &copy;
-    
-        2014 -
-    
-    2026
-    <span class="footer-author">Wxx.</span>
-    <span class="power-by">
-        Powered by <a class="hexo-link" target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> and <a class="theme-link" target="_blank" rel="noopener" href="https://github.com/frostfan/hexo-theme-polarbear">Polar Bear</a>
-    </span>
-</span>
-<span class="site-stats" style="display: block; margin-top: 8px; font-size: 0.85rem; color: #666;">
-    Total Visits: <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> ·
-    Unique Visitors: <span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>
-</span>
-<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      <footer id="colophon"><div class="footer-inner"><span>© 2026 王星星 <span class="footer-dot">·</span> <span data-zh="保持好奇，认真生活。" data-en="Stay curious. Live thoughtfully.">保持好奇，认真生活。</span></span><a href="/subscribe/"><svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 10a9 9 0 0 1 9 9M5 4a15 15 0 0 1 15 15"/><circle cx="5" cy="19" r="1"/></svg> RSS</a></div>
+<div class="site-stats"><span data-zh="访问" data-en="Visits">访问</span> <span id="busuanzi_value_site_pv">—</span> · <span data-zh="访客" data-en="Readers">访客</span> <span id="busuanzi_value_site_uv">—</span> · Powered by <a target="_blank" href="https://hexo.io/" rel="noopener noopener">Hexo</a></div>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
       </footer>
 
-      <div class="back-to-top" id="back-to-top">
-        <i class="iconfont icon-up"></i>
-      </div>
+      <button class="back-to-top" id="back-to-top" aria-label="回到顶部" data-zh-label="回到顶部" data-en-label="Back to top"><svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m5 12 7-7 7 7M12 5v14"/></svg></button>
     </div>
     
 
@@ -464,8 +317,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   
 
-    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
-<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+    <script type="text/javascript" src="/js/src/theme.js?v=2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2"></script>
 
   </body>
 </html>

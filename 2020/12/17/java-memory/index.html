@@ -5,61 +5,48 @@
 <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width,initial-scale=1">
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-  <meta name="description" content="系统梳理Java内存结构，对比C与Java内存处理差异，详解JDK8虚拟机栈、堆、方法区等区域的职责，演示类加载与内存分配过程，及继承、接口等场景的内存模型。"/>
-
-
-
-
-  <meta name="keywords" content="JVM,JAVA," />
-
-
-
-
-
-  <link rel="alternate" href="/atom.xml" title="王星星的魔灯" type="application/atom+xml">
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
-
-
-
-<link rel="canonical" href="https://wxxlamp.cn/2020/12/17/java-memory/"/>
-
-
+<title>Java 运行时内存：对象存储与类加载 | 王星星的魔灯</title>
+<link rel="canonical" href="https://wxxlamp.cn/2020/12/17/java-memory/">
 <meta name="description" content="系统梳理Java内存结构，对比C与Java内存处理差异，详解JDK8虚拟机栈、堆、方法区等区域的职责，演示类加载与内存分配过程，及继承、接口等场景的内存模型。">
+<meta name="author" content="王星星">
+<meta name="robots" content="index, follow, max-image-preview:large">
 <meta property="og:type" content="article">
-<meta property="og:title" content="类在内存中的存储方式">
-<meta property="og:url" content="https://wxxlamp.cn/2020/12/17/java-memory/index.html">
-<meta property="og:site_name" content="王星星的魔灯">
+<meta property="og:title" content="Java 运行时内存：对象存储与类加载 | 王星星的魔灯">
 <meta property="og:description" content="系统梳理Java内存结构，对比C与Java内存处理差异，详解JDK8虚拟机栈、堆、方法区等区域的职责，演示类加载与内存分配过程，及继承、接口等场景的内存模型。">
+<meta property="og:url" content="https://wxxlamp.cn/2020/12/17/java-memory/">
+<meta property="og:site_name" content="王星星的魔灯">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/520f416a_java-memory-1.png">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20190815120936937.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NvZGVyX3doYXQ=,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20190411183056417.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NvZGVyX3doYXQ=,size_16,color_FFFFFF,t_70">
-<meta property="article:published_time" content="2020-12-17T02:36:00.000Z">
-<meta property="article:modified_time" content="2026-08-19T15:46:35.188Z">
-<meta property="article:author" content="Wxx">
-<meta property="article:tag" content="JAVA">
-<meta property="article:tag" content="JVM">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Java 运行时内存：对象存储与类加载 | 王星星的魔灯">
+<meta name="twitter:description" content="系统梳理Java内存结构，对比C与Java内存处理差异，详解JDK8虚拟机栈、堆、方法区等区域的职责，演示类加载与内存分配过程，及继承、接口等场景的内存模型。">
 <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/520f416a_java-memory-1.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://wxxlamp.cn/#website","name":"王星星的魔灯","url":"https://wxxlamp.cn/","inLanguage":"zh-CN"},{"@type":"BlogPosting","@id":"https://wxxlamp.cn/2020/12/17/java-memory/#page","url":"https://wxxlamp.cn/2020/12/17/java-memory/","name":"Java 运行时内存：对象存储与类加载 | 王星星的魔灯","description":"系统梳理Java内存结构，对比C与Java内存处理差异，详解JDK8虚拟机栈、堆、方法区等区域的职责，演示类加载与内存分配过程，及继承、接口等场景的内存模型。","inLanguage":"zh-CN","isPartOf":{"@id":"https://wxxlamp.cn/#website"},"headline":"Java 运行时内存：对象存储与类加载","author":{"@type":"Person","@id":"https://wxxlamp.cn/about/#person","name":"王星星","url":"https://wxxlamp.cn/about/"},"mainEntityOfPage":"https://wxxlamp.cn/2020/12/17/java-memory/","image":["https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/520f416a_java-memory-1.png"],"datePublished":"2020-12-17T02:36:00.000Z","articleSection":["基础夯实"]}]}</script>
 
 
-<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
 
-<link rel="preload" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/syst/dist/SmileySans-Oblique/result.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/syst/dist/SmileySans-Oblique/result.css"></noscript>
+<link rel="alternate" href="/atom.xml" title="Atom" type="application/atom+xml">
+<link rel="alternate" href="/rss.xml" title="RSS 2.0" type="application/rss+xml">
+
+<link rel="alternate" hreflang="zh-CN" href="https://wxxlamp.cn/2020/12/17/java-memory/">
+<link rel="alternate" hreflang="en" href="https://wxxlamp.cn/en/2020/12/17/java-memory/">
+<link rel="alternate" hreflang="x-default" href="https://wxxlamp.cn/2020/12/17/java-memory/">
 
 
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2" />
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2">
+<meta name="theme-color" content="#244f43">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2" />
+
+
+
+<script defer src="/js/src/site.js?v=2"></script>
 
 
 
@@ -73,6 +60,7 @@
 
 
 
+
 <script>
   window.MathJax = {
     tex: {
@@ -82,11 +70,12 @@
       processEnvironments: true
     },
     options: {
-      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
     }
   };
 </script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script id="MathJax-script" async src="/lib/mathjax/tex-chtml.js"></script>
+
 
 
 
@@ -94,83 +83,48 @@
 
 
 
-    <title> 类在内存中的存储方式 - 王星星的魔灯 </title>
   <meta name="generator" content="Hexo 8.1.1"></head>
 
-  <body>
+  <body data-content-language="zh-CN" class="view-post">
+    <a class="skip-link" href="#content" data-zh="跳至正文" data-en="Skip to content">跳至正文</a>
     <div id="page">
       <header id="masthead"><div class="site-header-inner">
-    <h1 class="site-title">
-        <a href="/." class="logo">王星星的魔灯</a>
-    </h1>
-
-    <nav id="nav-top">
-        
-            <ul id="menu-top" class="nav-top-items">
-                
-                    
-                    <li class="menu-item">
-                        <a href="/archives">
-                            
-                            
-                                Archives
-                            
-                        </a>
-                    </li>
-                    
-                
-                    
-                    <li class="menu-item">
-                        <a href="/about">
-                            
-                            
-                                About
-                            
-                        </a>
-                    </li>
-                    
-                
-                    
-                    <li class="menu-item menu-item-resume">
-                        <a href="/resume" class="resume-nav-label" onclick="event.preventDefault()">Resume</a>
-                        <ul class="resume-lang-dropdown">
-                            <li><a href="/resume">中文简历</a></li>
-                            <li><a href="/resume-en">English</a></li>
-                        </ul>
-                    </li>
-                    
-                
-                <li class="menu-item">
-                    <a href="/atom.xml">RSS</a>
-                </li>
-            </ul>
-        
+  <a href="/" class="site-brand" aria-label="王星星的魔灯 · 首页" data-zh-label="王星星的魔灯 · 首页" data-en-label="Sibo's Blog · Home">
+    <img class="brand-mark" src="/favicon.svg" width="36" height="36" alt="" aria-hidden="true">
+    <span class="brand-name" data-zh="王星星的魔灯" data-en="Sibo's Blog">王星星的魔灯</span>
+  </a>
+  <nav id="nav-top" aria-label="主导航" data-zh-label="主导航" data-en-label="Main navigation">
+    <ul class="nav-top-items">
+      <li><a href="/" data-nav="home" data-zh="文章" data-en="Writing">文章</a></li>
+      <li><a href="/archives/" data-nav="archives" data-zh="归档" data-en="Archive">归档</a></li>
+      <li><a href="/about/" data-nav="about" data-zh="关于" data-en="About">关于</a></li>
+      <li><a href="/resume/" data-nav="resume" data-resume-link data-zh="简历" data-en="Résumé">简历</a></li>
+    </ul>
   </nav>
+  <div class="language-switch" aria-label="Language">
+    <a href="/2020/12/17/java-memory/" data-language="zh" lang="zh-CN" aria-label="阅读中文版">中</a>
+    <a href="/en/2020/12/17/java-memory/" data-language="en" lang="en" aria-label="Read in English">EN</a>
+  </div>
 </div>
 
       </header>
-      <div id="content">
+      <main id="content" tabindex="-1">
         
     <div id="primary">
         
   <article class="post">
     <header class="post-header">
-      <h1 class="post-title">
-        
-          类在内存中的存储方式
-        
-      </h1>
-
-      <time class="post-time">
-          12月 17 2020
-      </time>
+      <div class="post-meta"><time datetime="2020-12-17">2020.12.17</time><a href="/categories/%E5%9F%BA%E7%A1%80%E5%A4%AF%E5%AE%9E/">基础夯实</a></div>
+      <h1 class="post-title">Java 运行时内存：对象存储与类加载</h1>
     </header>
-
-
-
     
-            <div class="post-content">
-            <p>Java有许多特点，如线程并发，类加载，垃圾回收，语法糖，丰富的官方类库，易懂的面向对象设计，平台兼容等等。对于内存来说，从宏观上，主要分为静态和动态两部分，静态的是内存的空间结构，动态的是内存的分配和回收。本篇文章，就来总结一下Java中的内存结构。</p>
+      
+<nav class="post-language" aria-label="Article language">
+  <a href="/en/2020/12/17/java-memory/" lang="en">Read in English <svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+</nav>
+
+
+      <div class="post-content" lang="zh-CN"><p>Java有许多特点，如线程并发，类加载，垃圾回收，语法糖，丰富的官方类库，易懂的面向对象设计，平台兼容等等。对于内存来说，从宏观上，主要分为静态和动态两部分，静态的是内存的空间结构，动态的是内存的分配和回收。本篇文章，就来总结一下Java中的内存结构。</p>
 <h3 id="1-语言间的内存差异"><a href="#1-语言间的内存差异" class="headerlink" title="1. 语言间的内存差异"></a>1. 语言间的内存差异</h3><p>相对于C来说，在对内存的处理方式上，Java做了两点不同的决策。</p>
 <h4 id="1-2-内存的空间结构"><a href="#1-2-内存的空间结构" class="headerlink" title="1.2 内存的空间结构"></a>1.2 内存的空间结构</h4><p>对于C来说，程序员会以系统的视角去看内存——一块连续的字节数组。一个C程序最起码是一个进程，它会直接映射到操作系统对进程的空间分配中，如程序块和数据，用户栈，运行堆，共享库以及用户无法访问的内核虚拟内存。一个简单的<code>HelloWorld.c</code>程序，它的代码会存放到程序块区域，静态变量会存放到数据区，当调用函数时，会把函数地址和变量压入用户栈中，当使用malloc分配空间时，数据会存放在运行堆中。</p>
 <p>对于Java来说，VM会对内存再进行一次抽象和封装。它把内存分为线程独有的程序计数器、虚拟机栈、本地方法栈和线程共享的堆以及方法区(其实方法区也是堆)。当程序new一个对象后，对象的实例会被存放到堆中，对象的信息和方法以及静态变量会被存放到方法区中。</p>
@@ -193,7 +147,7 @@
 </ol>
 </li>
 </ul>
-<p>理论知识可以参考 <a target="_blank" rel="noopener" href="https://mritd.com/2006/01/02/java-memory-overview-of-vm-memory-auto-management-and-memory-regions/">Bleem1</a>、<a target="_blank" rel="noopener" href="https://mritd.com/2006/01/02/java-memory-method-area-and-runtime-constant-pool/">Bleem2</a>、<a href="">Bleem3</a></p>
+<p>理论知识可以参考 <a target="_blank" rel="noopener" href="https://mritd.com/2006/01/02/java-memory-overview-of-vm-memory-auto-management-and-memory-regions/">Bleem1</a>、<a target="_blank" rel="noopener" href="https://mritd.com/2006/01/02/java-memory-method-area-and-runtime-constant-pool/">Bleem2</a></p>
 <h4 id="2-2-程序演示"><a href="#2-2-程序演示" class="headerlink" title="2.2 程序演示"></a>2.2 程序演示</h4><p>对于一个类来说，它主要分为两部分，分别是属性和方法。这两部分和我们计算机基础中的数据结构和算法是一一对应的。对于C程序来说，数据结构存放在堆中，算法存放在代码块中。下面，我们通过一个程序来说明Java程序的这两部分分别存放在哪里？</p>
 <blockquote>
 <p>分配情况不考虑TLAB，JIT，逃逸分析等，同时也不考虑Eden和Survivor这些区域</p>
@@ -240,37 +194,23 @@
 <p>无论高级语言提供多么优美的数据模型，编译成机器代码之后，它只是简单地将内存理解为一个很大的，按照字节(8bits)寻址的数组。而机器访问内存，则都是通过地址来访问的</p>
 <p>32位机器和64位机器有什么不同呢？就是说的地址总线，32位机器表明程序的地址可以占用4个字节，能够访问的地址有4GB。而64位则表明程序的地址可以占8个字节，能够访问2^64byte</p>
 </blockquote>
-
-            </div>
-          
-
-    
+</div>
       <footer class="post-footer">
-		
-		<div class="post-tags">
-		  
-			<a href="/tags/JVM/">JVM</a>
-		  
-			<a href="/tags/JAVA/">JAVA</a>
-		  
-		</div>
-		
-
-        
+        <div class="post-tags"><a href="/tags/Java/">Java</a><a href="/tags/Java-%E8%99%9A%E6%8B%9F%E6%9C%BA/">Java 虚拟机</a></div>
         
   <nav class="post-nav">
     
       <a class="prev" href="/2020/12/21/individual-and-bussiness/">
-        <i class="iconfont icon-left"></i>
-        <span class="prev-text nav-default">论[工作拧螺丝]</span>
-        <span class="prev-text nav-mobile">Prev</span>
+        <svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 5-7 7 7 7M5 12h14"/></svg>
+        <span class="prev-text nav-default">从技术能力到业务价值：工程师成长的四个层次</span>
+        <span class="prev-text nav-mobile"><span data-zh="上一篇" data-en="Previous entry">上一篇</span></span>
       </a>
     
     
       <a class="next" href="/2020/12/16/hexo-guide/">
-        <span class="next-text nav-default">Hexo使用指南</span>
-        <span class="prev-text nav-mobile">Next</span>
-        <i class="iconfont icon-right"></i>
+        <span class="next-text nav-default">使用 Hexo 与 GitHub Pages 搭建博客</span>
+        <span class="prev-text nav-mobile"><span data-zh="下一篇" data-en="Next entry">下一篇</span></span>
+        <svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 5 7 7-7 7M5 12h14"/></svg>
       </a>
     
   </nav>
@@ -314,103 +254,20 @@
 
     </div>
     
-
-<div class="toc-container" id="toc-container">
-  <div class="toc-title">Contents</div>
-  <ul class="toc-list" id="toc-list">
-    
-  </ul>
-</div>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  // Generate TOC from post content
-  const content = document.querySelector('.post-content');
-  const tocList = document.getElementById('toc-list');
-
-  if (!content || !tocList) return;
-
-  const headings = content.querySelectorAll('h1, h2, h3, h4');
-
-  if (headings.length < 2) {
-    document.getElementById('toc-container').style.display = 'none';
-    return;
-  }
-
-  headings.forEach(function(heading, index) {
-    // Add ID to heading if not exists
-    if (!heading.id) {
-      heading.id = 'heading-' + index;
-    }
-
-    const li = document.createElement('li');
-    li.className = 'toc-' + heading.tagName.toLowerCase();
-
-    const a = document.createElement('a');
-    a.href = '#' + heading.id;
-    a.textContent = heading.textContent;
-    a.onclick = function(e) {
-      e.preventDefault();
-      heading.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    };
-
-    li.appendChild(a);
-    tocList.appendChild(li);
-  });
-
-  // Active section highlighting
-  const tocItems = tocList.querySelectorAll('li');
-
-  function updateActiveToc() {
-    const scrollPos = window.scrollY + 100;
-
-    headings.forEach(function(heading, index) {
-      const top = heading.offsetTop;
-      const bottom = top + heading.offsetHeight;
-
-      if (scrollPos >= top && scrollPos < bottom) {
-        tocItems.forEach(function(item) {
-          item.classList.remove('active');
-        });
-        if (tocItems[index]) {
-          tocItems[index].classList.add('active');
-        }
-      }
-    });
-  }
-
-  window.addEventListener('scroll', updateActiveToc);
-  updateActiveToc();
-});
-</script>
+<aside class="toc-container" id="toc-container"><details open><summary data-zh="本篇目录" data-en="On this page">本篇目录</summary><ol class="toc-list" id="toc-list"></ol></details></aside>
+<div class="reading-progress" aria-hidden="true"></div>
 
 
 
-      </div>
+      </main>
 
-      <footer id="colophon"><span class="copyright-year">
-    
-        &copy;
-    
-        2014 -
-    
-    2026
-    <span class="footer-author">Wxx.</span>
-    <span class="power-by">
-        Powered by <a class="hexo-link" target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> and <a class="theme-link" target="_blank" rel="noopener" href="https://github.com/frostfan/hexo-theme-polarbear">Polar Bear</a>
-    </span>
-</span>
-<span class="site-stats" style="display: block; margin-top: 8px; font-size: 0.85rem; color: #666;">
-    Total Visits: <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> ·
-    Unique Visitors: <span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>
-</span>
-<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      <footer id="colophon"><div class="footer-inner"><span>© 2026 王星星 <span class="footer-dot">·</span> <span data-zh="保持好奇，认真生活。" data-en="Stay curious. Live thoughtfully.">保持好奇，认真生活。</span></span><a href="/subscribe/"><svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 10a9 9 0 0 1 9 9M5 4a15 15 0 0 1 15 15"/><circle cx="5" cy="19" r="1"/></svg> RSS</a></div>
+<div class="site-stats"><span data-zh="访问" data-en="Visits">访问</span> <span id="busuanzi_value_site_pv">—</span> · <span data-zh="访客" data-en="Readers">访客</span> <span id="busuanzi_value_site_uv">—</span> · Powered by <a target="_blank" href="https://hexo.io/" rel="noopener noopener">Hexo</a></div>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
       </footer>
 
-      <div class="back-to-top" id="back-to-top">
-        <i class="iconfont icon-up"></i>
-      </div>
+      <button class="back-to-top" id="back-to-top" aria-label="回到顶部" data-zh-label="回到顶部" data-en-label="Back to top"><svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m5 12 7-7 7 7M12 5v14"/></svg></button>
     </div>
     
 
@@ -426,8 +283,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   
 
-    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
-<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+    <script type="text/javascript" src="/js/src/theme.js?v=2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2"></script>
 
   </body>
 </html>

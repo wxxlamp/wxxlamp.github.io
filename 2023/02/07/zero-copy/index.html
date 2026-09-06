@@ -5,63 +5,48 @@
 <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width,initial-scale=1">
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-  <meta name="description" content="系统讲解零拷贝技术原理与实现，从普通IO流程的4次拷贝开销出发，介绍DMA、mmap、sendfile及Direct I/O等方案的适用场景与局限性。"/>
-
-
-
-
-  <meta name="keywords" content="OS," />
-
-
-
-
-
-  <link rel="alternate" href="/atom.xml" title="王星星的魔灯" type="application/atom+xml">
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
-
-
-
-<link rel="canonical" href="https://wxxlamp.cn/2023/02/07/zero-copy/"/>
-
-
-<meta name="description" content="系统讲解零拷贝技术原理与实现，从普通IO流程的4次拷贝开销出发，介绍DMA、mmap、sendfile及Direct I&#x2F;O等方案的适用场景与局限性。">
+<title>零拷贝 I/O：DMA、mmap 与 sendfile 的原理 | 王星星的魔灯</title>
+<link rel="canonical" href="https://wxxlamp.cn/2023/02/07/zero-copy/">
+<meta name="description" content="系统讲解零拷贝技术原理与实现，从普通IO流程的4次拷贝开销出发，介绍DMA、mmap、sendfile及Direct I/O等方案的适用场景与局限性。">
+<meta name="author" content="王星星">
+<meta name="robots" content="index, follow, max-image-preview:large">
 <meta property="og:type" content="article">
-<meta property="og:title" content="零拷贝">
-<meta property="og:url" content="https://wxxlamp.cn/2023/02/07/zero-copy/index.html">
+<meta property="og:title" content="零拷贝 I/O：DMA、mmap 与 sendfile 的原理 | 王星星的魔灯">
+<meta property="og:description" content="系统讲解零拷贝技术原理与实现，从普通IO流程的4次拷贝开销出发，介绍DMA、mmap、sendfile及Direct I/O等方案的适用场景与局限性。">
+<meta property="og:url" content="https://wxxlamp.cn/2023/02/07/zero-copy/">
 <meta property="og:site_name" content="王星星的魔灯">
-<meta property="og:description" content="系统讲解零拷贝技术原理与实现，从普通IO流程的4次拷贝开销出发，介绍DMA、mmap、sendfile及Direct I&#x2F;O等方案的适用场景与局限性。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/62c75fdf_zero-copy-1.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/c1ddf61b_zero-copy-2.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/4e075fcb_zero-copy-3.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/df1e9b25_zero-copy-4.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/b057b8b7_zero-copy-5.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/ebcf03bd_zero-copy-6.png">
-<meta property="article:published_time" content="2023-02-07T02:36:00.000Z">
-<meta property="article:modified_time" content="2026-08-19T15:46:35.193Z">
-<meta property="article:author" content="Wxx">
-<meta property="article:tag" content="OS">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="零拷贝 I/O：DMA、mmap 与 sendfile 的原理 | 王星星的魔灯">
+<meta name="twitter:description" content="系统讲解零拷贝技术原理与实现，从普通IO流程的4次拷贝开销出发，介绍DMA、mmap、sendfile及Direct I/O等方案的适用场景与局限性。">
 <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/62c75fdf_zero-copy-1.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://wxxlamp.cn/#website","name":"王星星的魔灯","url":"https://wxxlamp.cn/","inLanguage":"zh-CN"},{"@type":"BlogPosting","@id":"https://wxxlamp.cn/2023/02/07/zero-copy/#page","url":"https://wxxlamp.cn/2023/02/07/zero-copy/","name":"零拷贝 I/O：DMA、mmap 与 sendfile 的原理 | 王星星的魔灯","description":"系统讲解零拷贝技术原理与实现，从普通IO流程的4次拷贝开销出发，介绍DMA、mmap、sendfile及Direct I/O等方案的适用场景与局限性。","inLanguage":"zh-CN","isPartOf":{"@id":"https://wxxlamp.cn/#website"},"headline":"零拷贝 I/O：DMA、mmap 与 sendfile 的原理","author":{"@type":"Person","@id":"https://wxxlamp.cn/about/#person","name":"王星星","url":"https://wxxlamp.cn/about/"},"mainEntityOfPage":"https://wxxlamp.cn/2023/02/07/zero-copy/","image":["https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/62c75fdf_zero-copy-1.png"],"datePublished":"2023-02-07T02:36:00.000Z","articleSection":["基础夯实"]}]}</script>
 
 
-<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
 
-<link rel="preload" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/syst/dist/SmileySans-Oblique/result.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/syst/dist/SmileySans-Oblique/result.css"></noscript>
+<link rel="alternate" href="/atom.xml" title="Atom" type="application/atom+xml">
+<link rel="alternate" href="/rss.xml" title="RSS 2.0" type="application/rss+xml">
+
+<link rel="alternate" hreflang="zh-CN" href="https://wxxlamp.cn/2023/02/07/zero-copy/">
+<link rel="alternate" hreflang="en" href="https://wxxlamp.cn/en/2023/02/07/zero-copy/">
+<link rel="alternate" hreflang="x-default" href="https://wxxlamp.cn/2023/02/07/zero-copy/">
 
 
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2" />
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2">
+<meta name="theme-color" content="#244f43">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2" />
+
+
+
+<script defer src="/js/src/site.js?v=2"></script>
 
 
 
@@ -75,6 +60,7 @@
 
 
 
+
 <script>
   window.MathJax = {
     tex: {
@@ -84,11 +70,12 @@
       processEnvironments: true
     },
     options: {
-      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
     }
   };
 </script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script id="MathJax-script" async src="/lib/mathjax/tex-chtml.js"></script>
+
 
 
 
@@ -96,83 +83,48 @@
 
 
 
-    <title> 零拷贝 - 王星星的魔灯 </title>
   <meta name="generator" content="Hexo 8.1.1"></head>
 
-  <body>
+  <body data-content-language="zh-CN" class="view-post">
+    <a class="skip-link" href="#content" data-zh="跳至正文" data-en="Skip to content">跳至正文</a>
     <div id="page">
       <header id="masthead"><div class="site-header-inner">
-    <h1 class="site-title">
-        <a href="/." class="logo">王星星的魔灯</a>
-    </h1>
-
-    <nav id="nav-top">
-        
-            <ul id="menu-top" class="nav-top-items">
-                
-                    
-                    <li class="menu-item">
-                        <a href="/archives">
-                            
-                            
-                                Archives
-                            
-                        </a>
-                    </li>
-                    
-                
-                    
-                    <li class="menu-item">
-                        <a href="/about">
-                            
-                            
-                                About
-                            
-                        </a>
-                    </li>
-                    
-                
-                    
-                    <li class="menu-item menu-item-resume">
-                        <a href="/resume" class="resume-nav-label" onclick="event.preventDefault()">Resume</a>
-                        <ul class="resume-lang-dropdown">
-                            <li><a href="/resume">中文简历</a></li>
-                            <li><a href="/resume-en">English</a></li>
-                        </ul>
-                    </li>
-                    
-                
-                <li class="menu-item">
-                    <a href="/atom.xml">RSS</a>
-                </li>
-            </ul>
-        
+  <a href="/" class="site-brand" aria-label="王星星的魔灯 · 首页" data-zh-label="王星星的魔灯 · 首页" data-en-label="Sibo's Blog · Home">
+    <img class="brand-mark" src="/favicon.svg" width="36" height="36" alt="" aria-hidden="true">
+    <span class="brand-name" data-zh="王星星的魔灯" data-en="Sibo's Blog">王星星的魔灯</span>
+  </a>
+  <nav id="nav-top" aria-label="主导航" data-zh-label="主导航" data-en-label="Main navigation">
+    <ul class="nav-top-items">
+      <li><a href="/" data-nav="home" data-zh="文章" data-en="Writing">文章</a></li>
+      <li><a href="/archives/" data-nav="archives" data-zh="归档" data-en="Archive">归档</a></li>
+      <li><a href="/about/" data-nav="about" data-zh="关于" data-en="About">关于</a></li>
+      <li><a href="/resume/" data-nav="resume" data-resume-link data-zh="简历" data-en="Résumé">简历</a></li>
+    </ul>
   </nav>
+  <div class="language-switch" aria-label="Language">
+    <a href="/2023/02/07/zero-copy/" data-language="zh" lang="zh-CN" aria-label="阅读中文版">中</a>
+    <a href="/en/2023/02/07/zero-copy/" data-language="en" lang="en" aria-label="Read in English">EN</a>
+  </div>
 </div>
 
       </header>
-      <div id="content">
+      <main id="content" tabindex="-1">
         
     <div id="primary">
         
   <article class="post">
     <header class="post-header">
-      <h1 class="post-title">
-        
-          零拷贝
-        
-      </h1>
-
-      <time class="post-time">
-          2月 07 2023
-      </time>
+      <div class="post-meta"><time datetime="2023-02-07">2023.02.07</time><a href="/categories/%E5%9F%BA%E7%A1%80%E5%A4%AF%E5%AE%9E/">基础夯实</a></div>
+      <h1 class="post-title">零拷贝 I/O：DMA、mmap 与 sendfile 的原理</h1>
     </header>
-
-
-
     
-            <div class="post-content">
-            <p>因为是做Web开发，网络IO总是避不开的一个话题，而零拷贝又是网络IO中重要的一环，之前老是看各种博客，今天就特意总结一下。</p>
+      
+<nav class="post-language" aria-label="Article language">
+  <a href="/en/2023/02/07/zero-copy/" lang="en">Read in English <svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+</nav>
+
+
+      <div class="post-content" lang="zh-CN"><p>因为是做Web开发，网络IO总是避不开的一个话题，而零拷贝又是网络IO中重要的一环，之前老是看各种博客，今天就特意总结一下。</p>
 <p>要想理解零拷贝，首先要了解操作系统的IO流程，因为有内核态和用户态的区别，为了保证安全性和缓存，普通的读写流程如下：<br>（对于Java程序，还会多了一个堆外内存和堆内存之间的copy）</p>
 <img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/62c75fdf_zero-copy-1.png" align="middle"/>
 整体的流程如下所示：
@@ -204,35 +156,23 @@ DMA的全称是Direct  Memory Access，顾名思义，DMA的作用就是直接�
 <h2 id="sendfile"><a href="#sendfile" class="headerlink" title="sendfile"></a>sendfile</h2><p>如果只是传输数据，并不对数据作任何处理，譬如将服务器存储的静态文件，如html，js发送到客户端用于浏览器渲染，在这种场景下，如果依然进行这么多数据拷贝和上下文切换，简直就是丧心病狂有木有！所以我们就可以通过sendfile的方式，只做文件传输，而不通过用户态进行干预：<br><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/b057b8b7_zero-copy-5.png" align="middle"/><br>此时我们发现，数据拷贝变成了3次，上下文切换减少到了2次。<br>虽然这个时候已经优化了不少，但是我们还有一个问题，为什么内核要拷贝两次（page cache -&gt; socket cache），能不能省略这个步骤？当然可以</p>
 <h3 id="sendfile-DMA-Scatter-Gather"><a href="#sendfile-DMA-Scatter-Gather" class="headerlink" title="sendfile + DMA Scatter&#x2F;Gather"></a>sendfile + DMA Scatter&#x2F;Gather</h3><p>DMA gather是LInux2.4新引入的功能，它可以读page cache中的数据描述信息（内存地址和偏移量）记录到socket cache中，由 DMA 根据这些将数据从读缓冲区拷贝到网卡，相比之前版本减少了一次CPU拷贝的过程，如下图所示：<br><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/ebcf03bd_zero-copy-6.png" align="middle"/></p>
 <h2 id="direct-I-O"><a href="#direct-I-O" class="headerlink" title="direct I&#x2F;O"></a>direct I&#x2F;O</h2><p>之前的mmap可以让用户态和内核态共用一个内存空间来减少拷贝，其实还有一个方式，就是硬件数据不经过内核态的空间，之间到用户态的内存中，这种方式就是Direct I&#x2F;O。换句话说，Direct I&#x2F;O不会经过内核态，而是用户态和设备的直接交互，用户态的写入就是直接写入到磁盘，不会再经过操作系统刷盘处理。<br>这样确实拷贝次数减少，读取速度会变快，但是因为操作系统不再负责缓存之类的管理，这就必须交由应用程序自己去做，譬如MySql就是自己通过Direct I&#x2F;O完成的，同时MySql也有一套自己的缓存系统<br>同时，虽然direct I&#x2F;O可以直接将文件写入磁盘中，但是文件相关的元信息还是要通过fsync缓存到内核空间中</p>
-
-            </div>
-          
-
-    
+</div>
       <footer class="post-footer">
-		
-		<div class="post-tags">
-		  
-			<a href="/tags/OS/">OS</a>
-		  
-		</div>
-		
-
-        
+        <div class="post-tags"><a href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">性能优化</a><a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/">计算机系统</a><a href="/tags/%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1/">网络通信</a></div>
         
   <nav class="post-nav">
     
       <a class="prev" href="/2023/02/18/test-in-spring-project/">
-        <i class="iconfont icon-left"></i>
-        <span class="prev-text nav-default">Test In Spring Project</span>
-        <span class="prev-text nav-mobile">Prev</span>
+        <svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 5-7 7 7 7M5 12h14"/></svg>
+        <span class="prev-text nav-default">Spring 项目的单元测试与集成测试实践</span>
+        <span class="prev-text nav-mobile"><span data-zh="上一篇" data-en="Previous entry">上一篇</span></span>
       </a>
     
     
       <a class="next" href="/2023/01/31/spring-festival-log-1/">
-        <span class="next-text nav-default">春节回家记</span>
-        <span class="prev-text nav-mobile">Next</span>
-        <i class="iconfont icon-right"></i>
+        <span class="next-text nav-default">2023 年春节返乡记：亲情、旧友与变化</span>
+        <span class="prev-text nav-mobile"><span data-zh="下一篇" data-en="Next entry">下一篇</span></span>
+        <svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 5 7 7-7 7M5 12h14"/></svg>
       </a>
     
   </nav>
@@ -276,103 +216,20 @@ DMA的全称是Direct  Memory Access，顾名思义，DMA的作用就是直接�
 
     </div>
     
-
-<div class="toc-container" id="toc-container">
-  <div class="toc-title">Contents</div>
-  <ul class="toc-list" id="toc-list">
-    
-  </ul>
-</div>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  // Generate TOC from post content
-  const content = document.querySelector('.post-content');
-  const tocList = document.getElementById('toc-list');
-
-  if (!content || !tocList) return;
-
-  const headings = content.querySelectorAll('h1, h2, h3, h4');
-
-  if (headings.length < 2) {
-    document.getElementById('toc-container').style.display = 'none';
-    return;
-  }
-
-  headings.forEach(function(heading, index) {
-    // Add ID to heading if not exists
-    if (!heading.id) {
-      heading.id = 'heading-' + index;
-    }
-
-    const li = document.createElement('li');
-    li.className = 'toc-' + heading.tagName.toLowerCase();
-
-    const a = document.createElement('a');
-    a.href = '#' + heading.id;
-    a.textContent = heading.textContent;
-    a.onclick = function(e) {
-      e.preventDefault();
-      heading.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    };
-
-    li.appendChild(a);
-    tocList.appendChild(li);
-  });
-
-  // Active section highlighting
-  const tocItems = tocList.querySelectorAll('li');
-
-  function updateActiveToc() {
-    const scrollPos = window.scrollY + 100;
-
-    headings.forEach(function(heading, index) {
-      const top = heading.offsetTop;
-      const bottom = top + heading.offsetHeight;
-
-      if (scrollPos >= top && scrollPos < bottom) {
-        tocItems.forEach(function(item) {
-          item.classList.remove('active');
-        });
-        if (tocItems[index]) {
-          tocItems[index].classList.add('active');
-        }
-      }
-    });
-  }
-
-  window.addEventListener('scroll', updateActiveToc);
-  updateActiveToc();
-});
-</script>
+<aside class="toc-container" id="toc-container"><details open><summary data-zh="本篇目录" data-en="On this page">本篇目录</summary><ol class="toc-list" id="toc-list"></ol></details></aside>
+<div class="reading-progress" aria-hidden="true"></div>
 
 
 
-      </div>
+      </main>
 
-      <footer id="colophon"><span class="copyright-year">
-    
-        &copy;
-    
-        2014 -
-    
-    2026
-    <span class="footer-author">Wxx.</span>
-    <span class="power-by">
-        Powered by <a class="hexo-link" target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> and <a class="theme-link" target="_blank" rel="noopener" href="https://github.com/frostfan/hexo-theme-polarbear">Polar Bear</a>
-    </span>
-</span>
-<span class="site-stats" style="display: block; margin-top: 8px; font-size: 0.85rem; color: #666;">
-    Total Visits: <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> ·
-    Unique Visitors: <span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>
-</span>
-<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      <footer id="colophon"><div class="footer-inner"><span>© 2026 王星星 <span class="footer-dot">·</span> <span data-zh="保持好奇，认真生活。" data-en="Stay curious. Live thoughtfully.">保持好奇，认真生活。</span></span><a href="/subscribe/"><svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 10a9 9 0 0 1 9 9M5 4a15 15 0 0 1 15 15"/><circle cx="5" cy="19" r="1"/></svg> RSS</a></div>
+<div class="site-stats"><span data-zh="访问" data-en="Visits">访问</span> <span id="busuanzi_value_site_pv">—</span> · <span data-zh="访客" data-en="Readers">访客</span> <span id="busuanzi_value_site_uv">—</span> · Powered by <a target="_blank" href="https://hexo.io/" rel="noopener noopener">Hexo</a></div>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
       </footer>
 
-      <div class="back-to-top" id="back-to-top">
-        <i class="iconfont icon-up"></i>
-      </div>
+      <button class="back-to-top" id="back-to-top" aria-label="回到顶部" data-zh-label="回到顶部" data-en-label="Back to top"><svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m5 12 7-7 7 7M12 5v14"/></svg></button>
     </div>
     
 
@@ -388,8 +245,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   
 
-    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
-<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+    <script type="text/javascript" src="/js/src/theme.js?v=2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2"></script>
 
   </body>
 </html>

@@ -5,74 +5,48 @@
 <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width,initial-scale=1">
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-  <meta name="description" content="系统科普区块链与比特币核心原理，从中心化与去中心化货币对比出发，讲解区块链链式结构、Hash指针、非对称加密、UTXO机制及PoW共识，梳理比特币交易全流程。"/>
-
-
-
-
-  <meta name="keywords" content="区块链," />
-
-
-
-
-
-  <link rel="alternate" href="/atom.xml" title="王星星的魔灯" type="application/atom+xml">
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
-
-
-
-<link rel="canonical" href="https://wxxlamp.cn/2025/09/07/what-is-bitcion-and-blockchain/"/>
-
-
+<title>比特币与区块链基础：密码学、共识与交易 | 王星星的魔灯</title>
+<link rel="canonical" href="https://wxxlamp.cn/2025/09/07/what-is-bitcion-and-blockchain/">
 <meta name="description" content="系统科普区块链与比特币核心原理，从中心化与去中心化货币对比出发，讲解区块链链式结构、Hash指针、非对称加密、UTXO机制及PoW共识，梳理比特币交易全流程。">
+<meta name="author" content="王星星">
+<meta name="robots" content="index, follow, max-image-preview:large">
 <meta property="og:type" content="article">
-<meta property="og:title" content="万字长文，从零科普比特币">
-<meta property="og:url" content="https://wxxlamp.cn/2025/09/07/what-is-bitcion-and-blockchain/index.html">
-<meta property="og:site_name" content="王星星的魔灯">
+<meta property="og:title" content="比特币与区块链基础：密码学、共识与交易 | 王星星的魔灯">
 <meta property="og:description" content="系统科普区块链与比特币核心原理，从中心化与去中心化货币对比出发，讲解区块链链式结构、Hash指针、非对称加密、UTXO机制及PoW共识，梳理比特币交易全流程。">
+<meta property="og:url" content="https://wxxlamp.cn/2025/09/07/what-is-bitcion-and-blockchain/">
+<meta property="og:site_name" content="王星星的魔灯">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/715e78c0_btc_img_01.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/ab2a1c74_btc_img_02.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/27e44fd0_btc_img_03.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/23123fe5_btc_img_04.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/c5e69815_btc_img_05.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/9beb844a_btc_img_06.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/f67db3e0_btc_img_07.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/5f5ac865_btc_img_08.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/424a115c_btc_img_09.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/8e367f8b_btc_img_10.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/23b7f548_btc_img_11.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/22a079e5_btc_img_12.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/fd9c71b0_btc_img_13.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/72ca1d6d_btc_img_14.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/d01e1eab_btc_img_15.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/853decfb_btc_img_16.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/9fd2ee78_btc_img_17.svg">
-<meta property="article:published_time" content="2025-09-07T02:36:00.000Z">
-<meta property="article:modified_time" content="2026-08-19T15:46:35.192Z">
-<meta property="article:author" content="Wxx">
-<meta property="article:tag" content="区块链">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="比特币与区块链基础：密码学、共识与交易 | 王星星的魔灯">
+<meta name="twitter:description" content="系统科普区块链与比特币核心原理，从中心化与去中心化货币对比出发，讲解区块链链式结构、Hash指针、非对称加密、UTXO机制及PoW共识，梳理比特币交易全流程。">
 <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/715e78c0_btc_img_01.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://wxxlamp.cn/#website","name":"王星星的魔灯","url":"https://wxxlamp.cn/","inLanguage":"zh-CN"},{"@type":"BlogPosting","@id":"https://wxxlamp.cn/2025/09/07/what-is-bitcion-and-blockchain/#page","url":"https://wxxlamp.cn/2025/09/07/what-is-bitcion-and-blockchain/","name":"比特币与区块链基础：密码学、共识与交易 | 王星星的魔灯","description":"系统科普区块链与比特币核心原理，从中心化与去中心化货币对比出发，讲解区块链链式结构、Hash指针、非对称加密、UTXO机制及PoW共识，梳理比特币交易全流程。","inLanguage":"zh-CN","isPartOf":{"@id":"https://wxxlamp.cn/#website"},"headline":"比特币与区块链基础：密码学、共识与交易","author":{"@type":"Person","@id":"https://wxxlamp.cn/about/#person","name":"王星星","url":"https://wxxlamp.cn/about/"},"mainEntityOfPage":"https://wxxlamp.cn/2025/09/07/what-is-bitcion-and-blockchain/","image":["https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/715e78c0_btc_img_01.png"],"datePublished":"2025-09-07T02:36:00.000Z","articleSection":["基础夯实"]}]}</script>
 
 
-<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
 
-<link rel="preload" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/syst/dist/SmileySans-Oblique/result.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/syst/dist/SmileySans-Oblique/result.css"></noscript>
+<link rel="alternate" href="/atom.xml" title="Atom" type="application/atom+xml">
+<link rel="alternate" href="/rss.xml" title="RSS 2.0" type="application/rss+xml">
+
+<link rel="alternate" hreflang="zh-CN" href="https://wxxlamp.cn/2025/09/07/what-is-bitcion-and-blockchain/">
+<link rel="alternate" hreflang="en" href="https://wxxlamp.cn/en/2025/09/07/what-is-bitcion-and-blockchain/">
+<link rel="alternate" hreflang="x-default" href="https://wxxlamp.cn/2025/09/07/what-is-bitcion-and-blockchain/">
 
 
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2" />
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2">
+<meta name="theme-color" content="#244f43">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2" />
+
+
+
+<script defer src="/js/src/site.js?v=2"></script>
 
 
 
@@ -86,6 +60,7 @@
 
 
 
+
 <script>
   window.MathJax = {
     tex: {
@@ -95,11 +70,12 @@
       processEnvironments: true
     },
     options: {
-      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
     }
   };
 </script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script id="MathJax-script" async src="/lib/mathjax/tex-chtml.js"></script>
+
 
 
 
@@ -107,83 +83,48 @@
 
 
 
-    <title> 万字长文，从零科普比特币 - 王星星的魔灯 </title>
   <meta name="generator" content="Hexo 8.1.1"></head>
 
-  <body>
+  <body data-content-language="zh-CN" class="view-post">
+    <a class="skip-link" href="#content" data-zh="跳至正文" data-en="Skip to content">跳至正文</a>
     <div id="page">
       <header id="masthead"><div class="site-header-inner">
-    <h1 class="site-title">
-        <a href="/." class="logo">王星星的魔灯</a>
-    </h1>
-
-    <nav id="nav-top">
-        
-            <ul id="menu-top" class="nav-top-items">
-                
-                    
-                    <li class="menu-item">
-                        <a href="/archives">
-                            
-                            
-                                Archives
-                            
-                        </a>
-                    </li>
-                    
-                
-                    
-                    <li class="menu-item">
-                        <a href="/about">
-                            
-                            
-                                About
-                            
-                        </a>
-                    </li>
-                    
-                
-                    
-                    <li class="menu-item menu-item-resume">
-                        <a href="/resume" class="resume-nav-label" onclick="event.preventDefault()">Resume</a>
-                        <ul class="resume-lang-dropdown">
-                            <li><a href="/resume">中文简历</a></li>
-                            <li><a href="/resume-en">English</a></li>
-                        </ul>
-                    </li>
-                    
-                
-                <li class="menu-item">
-                    <a href="/atom.xml">RSS</a>
-                </li>
-            </ul>
-        
+  <a href="/" class="site-brand" aria-label="王星星的魔灯 · 首页" data-zh-label="王星星的魔灯 · 首页" data-en-label="Sibo's Blog · Home">
+    <img class="brand-mark" src="/favicon.svg" width="36" height="36" alt="" aria-hidden="true">
+    <span class="brand-name" data-zh="王星星的魔灯" data-en="Sibo's Blog">王星星的魔灯</span>
+  </a>
+  <nav id="nav-top" aria-label="主导航" data-zh-label="主导航" data-en-label="Main navigation">
+    <ul class="nav-top-items">
+      <li><a href="/" data-nav="home" data-zh="文章" data-en="Writing">文章</a></li>
+      <li><a href="/archives/" data-nav="archives" data-zh="归档" data-en="Archive">归档</a></li>
+      <li><a href="/about/" data-nav="about" data-zh="关于" data-en="About">关于</a></li>
+      <li><a href="/resume/" data-nav="resume" data-resume-link data-zh="简历" data-en="Résumé">简历</a></li>
+    </ul>
   </nav>
+  <div class="language-switch" aria-label="Language">
+    <a href="/2025/09/07/what-is-bitcion-and-blockchain/" data-language="zh" lang="zh-CN" aria-label="阅读中文版">中</a>
+    <a href="/en/2025/09/07/what-is-bitcion-and-blockchain/" data-language="en" lang="en" aria-label="Read in English">EN</a>
+  </div>
 </div>
 
       </header>
-      <div id="content">
+      <main id="content" tabindex="-1">
         
     <div id="primary">
         
   <article class="post">
     <header class="post-header">
-      <h1 class="post-title">
-        
-          万字长文，从零科普比特币
-        
-      </h1>
-
-      <time class="post-time">
-          9月 07 2025
-      </time>
+      <div class="post-meta"><time datetime="2025-09-07">2025.09.07</time><a href="/categories/%E5%9F%BA%E7%A1%80%E5%A4%AF%E5%AE%9E/">基础夯实</a></div>
+      <h1 class="post-title">比特币与区块链基础：密码学、共识与交易</h1>
     </header>
-
-
-
     
-            <div class="post-content">
-            <p>本文面向技术和小白用户，从去中心化、区块链，再到比特币的原理，从科普和问题的视角，尽可能帮助大家弄懂去中心货币的本质和技术原理。</p>
+      
+<nav class="post-language" aria-label="Article language">
+  <a href="/en/2025/09/07/what-is-bitcion-and-blockchain/" lang="en">Read in English <svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+</nav>
+
+
+      <div class="post-content" lang="zh-CN"><p>本文面向技术和小白用户，从去中心化、区块链，再到比特币的原理，从科普和问题的视角，尽可能帮助大家弄懂去中心货币的本质和技术原理。</p>
 <h1 id="中心化和去中心化"><a href="#中心化和去中心化" class="headerlink" title="中心化和去中心化"></a>中心化和去中心化</h1><p>从概念上理解，所谓中心化和去中心化，代表着数据存储和逻辑执行的两种方式。中心化，即数据（如资产记录）在某一个地方或者机构存放，且逻辑执行（如交易）由某个单一的系统独立完成；而去中心化，也叫分布式（decentralization），即数据（如资产信息）在多个对等的节点存放，且执行逻辑（如交易）必须被所有的节点认可才算有效。</p>
 <h2 id="中心化货币的优劣"><a href="#中心化货币的优劣" class="headerlink" title="中心化货币的优劣"></a>中心化货币的优劣</h2><p>在区块链出现以前，几乎所有的系统都是中心化的（注意，虽然有分布式系统，但是这个分布式系统一般也是由单一的组织管控，无法随意扩展到任何一个组织或个人，所以诸如OceanBase这样的分布式数据库也是中心化的）。</p>
 <p>典型的中心化应用是中心化货币，它们基于国家信用，是由各国央行发行的衡量财富以及交易的凭证，具有无限法偿性。中心化货币具有两个优点：</p>
@@ -329,35 +270,23 @@
 <p>所以，<strong>比特币是一个靠社区所有节点决定的共识游戏，而不是由某一个中心机构决策的主权游戏</strong>。这或许就是去中心化魅力吧。</p>
 <h1 id="一笔比特币交易的产生过程"><a href="#一笔比特币交易的产生过程" class="headerlink" title="一笔比特币交易的产生过程"></a>一笔比特币交易的产生过程</h1><p>通过本文讲述的共识机制和比特币数据结构，我们来尝试复原一下，当“Alice给Bob转账10 BTC”时，比特币网络中的所有节点，是如何变化的：</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/9fd2ee78_btc_img_17.svg"></p>
-
-            </div>
-          
-
-    
+</div>
       <footer class="post-footer">
-		
-		<div class="post-tags">
-		  
-			<a href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/">区块链</a>
-		  
-		</div>
-		
-
-        
+        <div class="post-tags"><a href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/">区块链</a></div>
         
   <nav class="post-nav">
     
       <a class="prev" href="/2025/09/17/what-is-digtal-rmb/">
-        <i class="iconfont icon-left"></i>
-        <span class="prev-text nav-default">有了在线支付，为什么需要数字人民币</span>
-        <span class="prev-text nav-mobile">Prev</span>
+        <svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 5-7 7 7 7M5 12h14"/></svg>
+        <span class="prev-text nav-default">从在线支付理解数字人民币：清分、结算与资金流</span>
+        <span class="prev-text nav-mobile"><span data-zh="上一篇" data-en="Previous entry">上一篇</span></span>
       </a>
     
     
       <a class="next" href="/2025/08/15/how-to-use-mac/">
-        <span class="next-text nav-default">程序员如何配置MBP</span>
-        <span class="prev-text nav-mobile">Next</span>
-        <i class="iconfont icon-right"></i>
+        <span class="next-text nav-default">面向开发者的 macOS 环境配置指南</span>
+        <span class="prev-text nav-mobile"><span data-zh="下一篇" data-en="Next entry">下一篇</span></span>
+        <svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 5 7 7-7 7M5 12h14"/></svg>
       </a>
     
   </nav>
@@ -401,103 +330,20 @@
 
     </div>
     
-
-<div class="toc-container" id="toc-container">
-  <div class="toc-title">Contents</div>
-  <ul class="toc-list" id="toc-list">
-    
-  </ul>
-</div>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  // Generate TOC from post content
-  const content = document.querySelector('.post-content');
-  const tocList = document.getElementById('toc-list');
-
-  if (!content || !tocList) return;
-
-  const headings = content.querySelectorAll('h1, h2, h3, h4');
-
-  if (headings.length < 2) {
-    document.getElementById('toc-container').style.display = 'none';
-    return;
-  }
-
-  headings.forEach(function(heading, index) {
-    // Add ID to heading if not exists
-    if (!heading.id) {
-      heading.id = 'heading-' + index;
-    }
-
-    const li = document.createElement('li');
-    li.className = 'toc-' + heading.tagName.toLowerCase();
-
-    const a = document.createElement('a');
-    a.href = '#' + heading.id;
-    a.textContent = heading.textContent;
-    a.onclick = function(e) {
-      e.preventDefault();
-      heading.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    };
-
-    li.appendChild(a);
-    tocList.appendChild(li);
-  });
-
-  // Active section highlighting
-  const tocItems = tocList.querySelectorAll('li');
-
-  function updateActiveToc() {
-    const scrollPos = window.scrollY + 100;
-
-    headings.forEach(function(heading, index) {
-      const top = heading.offsetTop;
-      const bottom = top + heading.offsetHeight;
-
-      if (scrollPos >= top && scrollPos < bottom) {
-        tocItems.forEach(function(item) {
-          item.classList.remove('active');
-        });
-        if (tocItems[index]) {
-          tocItems[index].classList.add('active');
-        }
-      }
-    });
-  }
-
-  window.addEventListener('scroll', updateActiveToc);
-  updateActiveToc();
-});
-</script>
+<aside class="toc-container" id="toc-container"><details open><summary data-zh="本篇目录" data-en="On this page">本篇目录</summary><ol class="toc-list" id="toc-list"></ol></details></aside>
+<div class="reading-progress" aria-hidden="true"></div>
 
 
 
-      </div>
+      </main>
 
-      <footer id="colophon"><span class="copyright-year">
-    
-        &copy;
-    
-        2014 -
-    
-    2026
-    <span class="footer-author">Wxx.</span>
-    <span class="power-by">
-        Powered by <a class="hexo-link" target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> and <a class="theme-link" target="_blank" rel="noopener" href="https://github.com/frostfan/hexo-theme-polarbear">Polar Bear</a>
-    </span>
-</span>
-<span class="site-stats" style="display: block; margin-top: 8px; font-size: 0.85rem; color: #666;">
-    Total Visits: <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> ·
-    Unique Visitors: <span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>
-</span>
-<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      <footer id="colophon"><div class="footer-inner"><span>© 2026 王星星 <span class="footer-dot">·</span> <span data-zh="保持好奇，认真生活。" data-en="Stay curious. Live thoughtfully.">保持好奇，认真生活。</span></span><a href="/subscribe/"><svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 10a9 9 0 0 1 9 9M5 4a15 15 0 0 1 15 15"/><circle cx="5" cy="19" r="1"/></svg> RSS</a></div>
+<div class="site-stats"><span data-zh="访问" data-en="Visits">访问</span> <span id="busuanzi_value_site_pv">—</span> · <span data-zh="访客" data-en="Readers">访客</span> <span id="busuanzi_value_site_uv">—</span> · Powered by <a target="_blank" href="https://hexo.io/" rel="noopener noopener">Hexo</a></div>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
       </footer>
 
-      <div class="back-to-top" id="back-to-top">
-        <i class="iconfont icon-up"></i>
-      </div>
+      <button class="back-to-top" id="back-to-top" aria-label="回到顶部" data-zh-label="回到顶部" data-en-label="Back to top"><svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m5 12 7-7 7 7M12 5v14"/></svg></button>
     </div>
     
 
@@ -513,8 +359,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   
 
-    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
-<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+    <script type="text/javascript" src="/js/src/theme.js?v=2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2"></script>
 
   </body>
 </html>

@@ -1,0 +1,321 @@
+<!DOCTYPE html><html lang="en"><head>
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Building a Custom Parameter Parser for Spring MVC | Sibo's Blog</title>
+<link rel="canonical" href="https://wxxlamp.cn/en/2020/12/22/diy-param-parse-annotation/">
+<meta name="description" content="Solving the problem that @RequestBody cannot map multiple parameters in Spring MVC by implementing a custom HandlerMethodArgumentResolver and annotation to map JSON fields preci…">
+<meta name="author" content="Sibo Wang">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Building a Custom Parameter Parser for Spring MVC | Sibo's Blog">
+<meta property="og:description" content="Solving the problem that @RequestBody cannot map multiple parameters in Spring MVC by implementing a custom HandlerMethodArgumentResolver and annotation to map JSON fields preci…">
+<meta property="og:url" content="https://wxxlamp.cn/en/2020/12/22/diy-param-parse-annotation/">
+<meta property="og:site_name" content="Sibo's Blog">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://wxxlamp.cn/favicon.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Building a Custom Parameter Parser for Spring MVC | Sibo's Blog">
+<meta name="twitter:description" content="Solving the problem that @RequestBody cannot map multiple parameters in Spring MVC by implementing a custom HandlerMethodArgumentResolver and annotation to map JSON fields preci…">
+<meta name="twitter:image" content="https://wxxlamp.cn/favicon.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://wxxlamp.cn/en/#website","name":"Sibo's Blog","url":"https://wxxlamp.cn/en/","inLanguage":"en"},{"@type":"BlogPosting","@id":"https://wxxlamp.cn/en/2020/12/22/diy-param-parse-annotation/#page","url":"https://wxxlamp.cn/en/2020/12/22/diy-param-parse-annotation/","name":"Building a Custom Parameter Parser for Spring MVC | Sibo's Blog","description":"Solving the problem that @RequestBody cannot map multiple parameters in Spring MVC by implementing a custom HandlerMethodArgumentResolver and annotation to map JSON fields preci…","inLanguage":"en","isPartOf":{"@id":"https://wxxlamp.cn/en/#website"},"headline":"Building a Custom Parameter Parser for Spring MVC","author":{"@type":"Person","@id":"https://wxxlamp.cn/about/#person","name":"Sibo Wang","url":"https://wxxlamp.cn/en/about/"},"mainEntityOfPage":"https://wxxlamp.cn/en/2020/12/22/diy-param-parse-annotation/","image":["https://wxxlamp.cn/favicon.png"],"datePublished":"2020-12-22T10:26:00.000Z","articleSection":["Practice"]}]}</script>
+
+
+
+<link rel="alternate" href="/en/atom.xml" title="Atom" type="application/atom+xml">
+<link rel="alternate" href="/en/rss.xml" title="RSS 2.0" type="application/rss+xml">
+
+<link rel="alternate" hreflang="zh-CN" href="https://wxxlamp.cn/2020/12/22/diy-param-parse-annotation/">
+<link rel="alternate" hreflang="en" href="https://wxxlamp.cn/en/2020/12/22/diy-param-parse-annotation/">
+<link rel="alternate" hreflang="x-default" href="https://wxxlamp.cn/2020/12/22/diy-param-parse-annotation/">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2">
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2">
+<meta name="theme-color" content="#244f43">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2">
+
+
+
+<script defer="" src="/js/src/site.js?v=2"></script>
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  };
+</script>
+<script id="MathJax-script" async="" src="/lib/mathjax/tex-chtml.js"></script>
+
+
+
+
+  
+
+
+
+  <meta name="generator" content="Hexo 8.1.1"></head>
+
+  <body data-content-language="en" class="view-post">
+    <a class="skip-link" href="#content" data-zh="跳至正文" data-en="Skip to content">Skip to content</a>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+  <a href="/en/" class="site-brand" aria-label="Sibo's Blog · Home" data-zh-label="王星星的魔灯 · 首页" data-en-label="Sibo's Blog · Home">
+    <img class="brand-mark" src="/favicon.svg" width="36" height="36" alt="" aria-hidden="true">
+    <span class="brand-name" data-zh="王星星的魔灯" data-en="Sibo's Blog">Sibo's Blog</span>
+  </a>
+  <nav id="nav-top" aria-label="Main navigation" data-zh-label="主导航" data-en-label="Main navigation">
+    <ul class="nav-top-items">
+      <li><a href="/en/" data-nav="home" data-zh="文章" data-en="Writing">Writing</a></li>
+      <li><a href="/en/archives/" data-nav="archives" data-zh="归档" data-en="Archive">Archive</a></li>
+      <li><a href="/en/about/" data-nav="about" data-zh="关于" data-en="About">About</a></li>
+      <li><a href="/resume/" data-nav="resume" data-resume-link="" data-zh="简历" data-en="Résumé">Résumé</a></li>
+    </ul>
+  </nav>
+  <div class="language-switch" aria-label="Language">
+    <a href="/2020/12/22/diy-param-parse-annotation/" data-language="zh" lang="zh-CN" aria-label="阅读中文版">中</a>
+    <a href="/en/2020/12/22/diy-param-parse-annotation/" data-language="en" lang="en" aria-label="Read in English">EN</a>
+  </div>
+</div>
+
+      </header>
+      <main id="content" tabindex="-1">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <div class="post-meta"><time datetime="2020-12-22">2020.12.22</time><a href="/en/categories/%E5%9C%BA%E6%99%AF%E5%AE%9E%E8%B7%B5/">Practice</a></div>
+      <h1 class="post-title">Building a Custom Parameter Parser for Spring MVC</h1>
+    </header>
+    
+      
+<nav class="post-language" aria-label="Article language">
+  <a href="/2020/12/22/diy-param-parse-annotation/" lang="zh-CN">中文原文 <svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17 17 7M7 7h10v10"></path></svg></a>
+</nav>
+
+
+      <div class="post-content" lang="en"><p>During my internship, most of the company’s RESTful requests were GET and POST requests. For parameters carried in a URL, we use <code>@PathVariable</code> and <code>@RequestParam</code> to parse and map them. For a POST body, we use <code>@RequestBody</code> to map the body to parameters. Spring deserializes with Jackson by default, though we can change this with a converter.</p>
+<h3 id="1-从一个实验开始"><a href="#1-从一个实验开始" class="headerlink" title="1. Start with an experiment"></a>1. Start with an experiment</h3><p>For a POST request, the frontend often serializes parameters as JSON in the body. The backend then parses the JSON string with <code>@RequestBody</code> and maps it to method parameters. <code>@RequestBody</code> has a limitation, as we can see from this example:</p>
+<pre><code class="language-java">@PostMapping("/1")
+public String test(@RequestBody String a, @RequestBody String b) {
+    return a + b;
+}
+</code></pre>
+<p>In the HTTP request, set the method to POST and the body to:</p>
+<pre><code class="language-json">{
+    "a":"a",
+    "b":"b"
+}
+</code></pre>
+<p>We naturally expect the program to parse a as <code>a</code>, b as <code>b</code>, and return “ab”. After running it, however, the program returns “abab”. Debugging shows that <code>@RequestBody</code> parses a as “ab” and b as “ab” as well.</p>
+<p>The experiment reveals the problem: after parsing the body, <code>@RequestBody</code> can map the result to only one parameter. When there are two parameters, it reaches its limits.</p>
+<h3 id="2-解决方案"><a href="#2-解决方案" class="headerlink" title="2. Solution"></a>2. Solution</h3><p>To solve this problem, we must turn the parameters into one. There are two ways:</p>
+<ol>
+<li><p>Wrap both parameters in an entity class.</p>
+<pre><code class="language-java">@PostMapping("/1")
+public String test(@RequestBody Ab ab) {
+    return ab.getA() + ab.getB();
+}
+</code></pre>
+</li>
+<li><p>Wrap them in a Map and parse it.</p>
+<pre><code class="language-java">@PostMapping("/1")
+public String test(@RequestBody Map&lt;String, Object&gt; map) {
+    return map.get("a") + map.get("b");
+}
+</code></pre>
+</li>
+</ol>
+<p>Both approaches have problems. With the first, we must create a new Bean to aggregate the two parameters, increasing development cost. With the second, we must parse the Map, increasing the cost of understanding the code.</p>
+<p>Could we map the body to two or more parameters? That is the core of this article: DIY a parameter parser to replace <code>@RequestBody</code> and map the body to multiple parameters.</p>
+<h3 id="3-DIY参数解析器"><a href="#3-DIY参数解析器" class="headerlink" title="3. DIY the parameter parser"></a>3. DIY the parameter parser</h3><p>Looking at the parsing source code for <code>@RequestBody</code>, we can see that <code>RequestResponseBodyMethodProcessor</code> performs body parsing and mapping. Looking further up, it implements the <code>HandlerMethodArgumentResolver</code> interface, which Spring exposes to help users customize parameter parsing. So our first step is:</p>
+<pre><code class="language-java">// 接口的第一个方法，如果返回为true，则使用该解析器，第二个方法则是具体的解析流程
+@Component
+public class RequestBodyParamProcessor implements HandlerMethodArgumentResolver{
+
+    @Override
+    public boolean supportsParameter(MethodParameter parameter) {
+        return false;
+    }
+
+    @Override
+    public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
+        return null;
+    }
+}
+</code></pre>
+<p>Second, add this parser to the parsing chain:</p>
+<pre><code class="language-java">@Configuration
+public class Config implements WebMvcConfigurer {
+    @Autowired
+    private RequestBodyParamProcessor paramProcessor;
+
+    @Override
+    public void addArgumentResolvers(List&lt;HandlerMethodArgumentResolver&gt; resolvers) {
+        resolvers.add(this.paramProcessor);
+    }
+}
+</code></pre>
+<p>These two steps give us the basic framework.</p>
+<p>Third, define a custom annotation. If the user marks a method with it, the parameters should be parsed using our custom approach.</p>
+<pre><code class="language-java">@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface RequestBodyParam {
+}
+</code></pre>
+<p>Fourth, implement the parsing logic. By reading <code>RequestResponseBodyMethodProcessor</code>, I found that it parses the body through <code>AbstractMessageConverterMethodArgumentResolver#readWithMessageConverters</code>. We can therefore write the following:</p>
+<pre><code class="language-java">@Component
+public class RequestBodyParamProcessor
+        extends AbstractMessageConverterMethodArgumentResolver implements HandlerMethodArgumentResolver{
+
+    public RequestBodyParamProcessor(List&lt;HttpMessageConverter&lt;?&gt;&gt; converters) {
+        super(converters);
+    }
+
+    /**
+     * 如果有该注解，且方法为String类型则使用该Processor
+     * @param parameter 方法参数
+     * @return true/false
+     */
+    @Override
+    public boolean supportsParameter(MethodParameter parameter) {
+        return parameter.hasMethodAnnotation(RequestBodyParam.class) &amp;&amp;
+                parameter.getParameterType() == String.class;
+    }
+
+    @Override
+    public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
+        HttpServletRequest servletRequest = webRequest.getNativeRequest(HttpServletRequest.class);
+        assert servletRequest != null;
+        ServletServerHttpRequest inputMsg = new ServletServerHttpRequest(servletRequest);
+
+        Object body = readWithMessageConverters(inputMsg, parameter, Map.class);
+        ObjectMapper mapper = new ObjectMapper();
+        Map&lt;String, String&gt; kv = mapper.readValue((String) body, new TypeReference&lt;Map&lt;String,String&gt;&gt;() {});
+        return kv.get(parameter.getParameterName());
+    }
+}
+</code></pre>
+<p>At this point, our custom parameter parser is complete.</p>
+<p>Fifth, test it:</p>
+<pre><code class="language-java">@PostMapping("/1")
+@RequestBodyParam
+public String test(String a, String b) {
+    return a + b;
+}
+</code></pre>
+<p>Passing the same parameters as in the earlier experiment returns “ab”. Debugging shows a=“a” and b=“b”, as required.</p>
+<h3 id="4-后记"><a href="#4-后记" class="headerlink" title="4. Afterword"></a>4. Afterword</h3><p>While developing at my internship company, I found that, because of an earlier company convention, everyone used POST requests for everything: idempotent information retrieval, updates, and even deletion. This clearly did not follow the standard, but that is another story…. The result was that when the frontend needed to retrieve information, it often sent only a few parameters wrapped in JSON in the body. If I used <code>@RequestBody</code>, I could use only the two approaches above, which led me to DIY a parameter parser. That is where this article came from.</p>
+<p>Note, however, that this parser is still toy-level. It can parse only JSON strings whose body values are String, and it is still a long way from being truly practical…..</p>
+<p>2021.1.27 update:</p>
+<p>I later wrote an article on <a href="https://wxxlamp.cn/en/2021/01/27/annotation-requestbody/">@RequestBody parsing</a> that may help with understanding.</p>
+</div>
+      <footer class="post-footer">
+        <div class="post-tags"><a href="/en/tags/Java/">Java</a><a href="/en/tags/Spring-%E6%A1%86%E6%9E%B6/">Spring</a></div>
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/en/2021/01/10/a-little-red-flower-review/">
+        <svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 5-7 7 7 7M5 12h14"></path></svg>
+        <span class="prev-text nav-default">A Personal Review of A Little Red Flower</span>
+        <span class="prev-text nav-mobile"><span data-zh="上一篇" data-en="Previous entry">Previous entry</span></span>
+      </a>
+    
+    
+      <a class="next" href="/en/2020/12/21/individual-and-bussiness/">
+        <span class="next-text nav-default">From Interview Skills to Business Impact: A Framework for Engineering Growth</span>
+        <span class="prev-text nav-mobile"><span data-zh="下一篇" data-en="Next entry">Next entry</span></span>
+        <svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 5 7 7-7 7M5 12h14"></path></svg>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    
+
+<div class="github-comments">
+  <div class="comments-title">💬 Comments</div>
+  <p style="color: #666; font-size: 0.9em; margin-bottom: 1em;">
+    Comments require <a href="https://github.com/apps/giscus" target="_blank" rel="noopener">Giscus App</a> installed on your GitHub repository.
+  </p>
+  <script src="https://giscus.app/client.js" data-repo="wxxlamp/wxxlamp.github.io" data-repo-id="R_kgDOCiYteA" data-category="General" data-category-id="DIC_kwDOCiYteM4CelIo" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+  </script>
+</div>
+
+
+
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+    
+<aside class="toc-container" id="toc-container"><details open=""><summary data-zh="本篇目录" data-en="On this page">On this page</summary><ol class="toc-list" id="toc-list"></ol></details></aside>
+<div class="reading-progress" aria-hidden="true"></div>
+
+
+
+      </main>
+
+      <footer id="colophon"><div class="footer-inner"><span>© 2026 Sibo Wang <span class="footer-dot">·</span> <span data-zh="保持好奇，认真生活。" data-en="Stay curious. Live thoughtfully.">Stay curious. Live thoughtfully.</span></span><a href="/en/subscribe/"><svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 10a9 9 0 0 1 9 9M5 4a15 15 0 0 1 15 15"></path><circle cx="5" cy="19" r="1"></circle></svg> RSS</a></div>
+<div class="site-stats"><span data-zh="访问" data-en="Visits">Visits</span> <span id="busuanzi_value_site_pv">—</span> · <span data-zh="访客" data-en="Readers">Readers</span> <span id="busuanzi_value_site_uv">—</span> · Powered by <a target="_blank" href="https://hexo.io/" rel="noopener noopener">Hexo</a></div>
+<script async="" src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+      </footer>
+
+      <button class="back-to-top" id="back-to-top" aria-label="Back to top" data-zh-label="回到顶部" data-en-label="Back to top"><svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m5 12 7-7 7 7M12 5v14"></path></svg></button>
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2"></script>
+
+  
+
+</body></html>

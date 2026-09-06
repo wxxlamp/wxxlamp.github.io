@@ -1,11 +1,13 @@
 ---
-title: "当Map的值为NULL"
+title: HashMap 空值引发的线上问题与排查
 tags:
-   - JAVA
+  - Java
+  - 问题排查
 categories:
-   - 采坑记录
+  - 采坑记录
 date: 2022-07-31 10:36
-description: "记录HashMap允许value为null引发的线上Bug排查：containsKey判断后取值却为null，Fastjson默认不输出null值导致排查困难。揭示各Map实现差异并给出解决方案。"
+description: >-
+  记录HashMap允许value为null引发的线上Bug排查：containsKey判断后取值却为null，Fastjson默认不输出null值导致排查困难。揭示各Map实现差异并给出解决方案。
 ---
 
 最近在开发过程中遇到了一个非常令人费解的情况，排查了将近一早上还没找到头绪，还是在师兄的帮助下，才发现了问题。

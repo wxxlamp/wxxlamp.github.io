@@ -1,11 +1,15 @@
 ---
-title: "当调用多个IO操作时"
+title: Java 多 RPC 调用的并发编排与结果聚合
 tags:
-   - CONCURRENT
+  - Java
+  - 并发编程
+  - 性能优化
 categories:
-   - 场景实践
+  - 场景实践
 date: 2022-10-30 14:36
-description: "探讨微服务Facade层聚合多RPC调用时如何将串行改为并行。对比Callable+Future、CompletableFuture、Spring Event三种方案，分析最终一致性保障及线程池配置实践。"
+description: >-
+  探讨微服务Facade层聚合多RPC调用时如何将串行改为并行。对比Callable+Future、CompletableFuture、Spring
+  Event三种方案，分析最终一致性保障及线程池配置实践。
 ---
 
 ## 0. 前言

@@ -1,13 +1,12 @@
 ---
-title: "SpringMVC源码分析"
+title: Spring MVC 源码解析：请求处理与初始化流程
 tags:
-   - JAVA
-   - SPRING MVC
-   - SPRING
+  - Spring 框架
+  - Java
 categories:
-   - 源码剖析
+  - 源码剖析
 date: 2021-02-17 22:44
-description: "系统解析SpringMVC核心架构与工作原理，涵盖关键组件、执行流程、启动初始化流程及设计模式运用，附源码分析。"
+description: 系统解析SpringMVC核心架构与工作原理，涵盖关键组件、执行流程、启动初始化流程及设计模式运用，附源码分析。
 ---
 
 前几天看了分析了@RequestBody的原理，并且DIY了一个参数解析器，今天趁热打铁，分析下SpringMVC的原理，主要包括启动流程和执行流程以及其设计思路。

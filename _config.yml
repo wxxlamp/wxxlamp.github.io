@@ -30,6 +30,7 @@ category_dir: categories
 code_dir: downloads/code
 i18n_dir: :lang
 skip_render:
+  - 'design-history/**'
 
 # Writing
 new_post_name: :title.md # File name of new posts
@@ -99,6 +100,7 @@ pagination_dir: page
 include:
 exclude:
 ignore:
+  - "**/_posts/en/**"
 
 # Extensions
 ## Plugins: https://hexo.io/plugins/
@@ -108,16 +110,20 @@ theme: wxx-theme
 # RSS Feed
 feed:
   enable: true
-  type: atom
-  path: atom.xml
+  type:
+    - atom
+    - rss2
+  path:
+    - atom.xml
+    - rss.xml
   limit: 20
   hub:
-  content:
+  content: true
   content_limit: 140
   content_limit_delim: ' '
   order_by: -date
-  icon: icon.png
-  autodiscovery: true
+  icon: favicon.ico
+  autodiscovery: false # Theme emits language-specific discovery links
   template:
 
 # Deployment

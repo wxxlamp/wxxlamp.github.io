@@ -1,13 +1,13 @@
 ---
-title: "Tomcat中websocket的使用和原理"
+title: Tomcat WebSocket：使用方式与执行原理
 tags:
-   - TOMCAT
-   - WEBSOCKET
-   - JAVA
+  - 网络通信
+  - Java
+  - Spring 框架
 categories:
-   - 源码剖析
+  - 源码剖析
 date: 2020-09-21 10:36
-description: "剖析WebSocket在SpringBoot+Tomcat中的使用与原理，涵盖注解配置、前后端示例，以及启动流程和执行流程的源码分析。"
+description: 剖析WebSocket在SpringBoot+Tomcat中的使用与原理，涵盖注解配置、前后端示例，以及启动流程和执行流程的源码分析。
 ---
 
 

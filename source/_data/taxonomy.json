@@ -1,0 +1,228 @@
+{
+  "version": 1,
+  "categories": [
+    {
+      "zh": "面试经验",
+      "en": "Interviews",
+      "description": "求职面试、备考过程与招聘记录"
+    },
+    {
+      "zh": "生活感悟",
+      "en": "Life & Reflections",
+      "description": "个人经历、年度回顾、阅读与生活思考"
+    },
+    {
+      "zh": "架构思考",
+      "en": "Architecture",
+      "description": "系统结构、设计取舍与技术方法论"
+    },
+    {
+      "zh": "基础夯实",
+      "en": "Fundamentals",
+      "description": "计算机基础、语言原理、机器学习与区块链基础"
+    },
+    {
+      "zh": "源码剖析",
+      "en": "Source Code",
+      "description": "围绕框架内部实现与执行流程的分析"
+    },
+    {
+      "zh": "采坑记录",
+      "en": "Troubleshooting",
+      "description": "真实问题的定位、根因与修复"
+    },
+    {
+      "zh": "场景实践",
+      "en": "Practice",
+      "description": "具体工程场景的实现、验证与落地"
+    },
+    {
+      "zh": "业务学习",
+      "en": "Business",
+      "description": "业务流程、交易、支付与商业逻辑"
+    },
+    {
+      "zh": "和稀泥",
+      "en": "Miscellany",
+      "description": "尚不属于上述类别的个人学习笔记"
+    }
+  ],
+  "topics": [
+    {
+      "id": "java",
+      "zh": "Java",
+      "en": "Java"
+    },
+    {
+      "id": "jvm",
+      "zh": "Java 虚拟机",
+      "en": "JVM"
+    },
+    {
+      "id": "spring",
+      "zh": "Spring 框架",
+      "en": "Spring"
+    },
+    {
+      "id": "languages",
+      "zh": "编程语言",
+      "en": "Programming Languages"
+    },
+    {
+      "id": "databases",
+      "zh": "数据库",
+      "en": "Databases"
+    },
+    {
+      "id": "concurrency",
+      "zh": "并发编程",
+      "en": "Concurrency"
+    },
+    {
+      "id": "distributed",
+      "zh": "分布式系统",
+      "en": "Distributed Systems"
+    },
+    {
+      "id": "messaging",
+      "zh": "消息队列",
+      "en": "Messaging"
+    },
+    {
+      "id": "architecture",
+      "zh": "系统设计",
+      "en": "System Design"
+    },
+    {
+      "id": "performance",
+      "zh": "性能优化",
+      "en": "Performance"
+    },
+    {
+      "id": "quality",
+      "zh": "测试与质量",
+      "en": "Testing & Quality"
+    },
+    {
+      "id": "troubleshooting",
+      "zh": "问题排查",
+      "en": "Troubleshooting"
+    },
+    {
+      "id": "tools",
+      "zh": "开发工具",
+      "en": "Developer Tools"
+    },
+    {
+      "id": "systems",
+      "zh": "计算机系统",
+      "en": "Computer Systems"
+    },
+    {
+      "id": "networking",
+      "zh": "网络通信",
+      "en": "Networking"
+    },
+    {
+      "id": "security",
+      "zh": "网络安全",
+      "en": "Security"
+    },
+    {
+      "id": "algorithms",
+      "zh": "算法与数据结构",
+      "en": "Algorithms & Data Structures"
+    },
+    {
+      "id": "agents",
+      "zh": "智能体工程",
+      "en": "Agent Engineering"
+    },
+    {
+      "id": "llm",
+      "zh": "大模型应用",
+      "en": "LLM Applications"
+    },
+    {
+      "id": "ai-coding",
+      "zh": "AI 编程",
+      "en": "AI Coding"
+    },
+    {
+      "id": "ml",
+      "zh": "机器学习",
+      "en": "Machine Learning"
+    },
+    {
+      "id": "commerce",
+      "zh": "跨境电商",
+      "en": "Cross-border Commerce"
+    },
+    {
+      "id": "payments",
+      "zh": "支付与结算",
+      "en": "Payments & Settlement"
+    },
+    {
+      "id": "blockchain",
+      "zh": "区块链",
+      "en": "Blockchain"
+    },
+    {
+      "id": "leadership",
+      "zh": "技术管理",
+      "en": "Technical Leadership"
+    },
+    {
+      "id": "productivity",
+      "zh": "研发效能",
+      "en": "Engineering Productivity"
+    },
+    {
+      "id": "interviews",
+      "zh": "求职面试",
+      "en": "Job Interviews"
+    },
+    {
+      "id": "career",
+      "zh": "职业成长",
+      "en": "Career Development"
+    },
+    {
+      "id": "learning",
+      "zh": "学习方法",
+      "en": "Learning Methods"
+    },
+    {
+      "id": "annual",
+      "zh": "年度回顾",
+      "en": "Year in Review"
+    },
+    {
+      "id": "books",
+      "zh": "读书与观影",
+      "en": "Books & Films"
+    },
+    {
+      "id": "life",
+      "zh": "生活随笔",
+      "en": "Everyday Life"
+    },
+    {
+      "id": "education",
+      "zh": "教育与求学",
+      "en": "Education"
+    },
+    {
+      "id": "blog",
+      "zh": "博客与写作",
+      "en": "Blogging & Writing"
+    }
+  ],
+  "assignment": {
+    "categories": 1,
+    "topicsMin": 1,
+    "topicsMax": 3,
+    "rule": "分类表示文章体裁与目的，话题表示正文核心讨论对象。使用现有中文名称；品牌专名保留规范拼写。"
+  }
+}

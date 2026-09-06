@@ -1,11 +1,13 @@
 ---
-title: "Test In Spring Project"
+title: Spring 项目的单元测试与集成测试实践
 tags:
-   - SPRING
+  - Spring 框架
+  - 测试与质量
 categories:
-   - 场景实践
+  - 场景实践
 date: 2023-02-18 19:36
-description: "讲解Spring项目单元测试与集成测试实践，涵盖JUnit、Mockito、PowerMock框架使用，以及数据源、外部RPC接口Mock和测试容器配置策略。"
+description: >-
+  讲解Spring项目单元测试与集成测试实践，涵盖JUnit、Mockito、PowerMock框架使用，以及数据源、外部RPC接口Mock和测试容器配置策略。
 ---
 
 ## 概述

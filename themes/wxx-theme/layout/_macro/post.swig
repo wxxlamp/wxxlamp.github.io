@@ -1,44 +1,19 @@
 {% macro render(post) %}
   <article class="post">
     <header class="post-header">
-      <h1 class="post-title">
-        {% if is_home() %}
-          <a class="post-link" href="{{ url_for(post.path) }}">{{ post.title }}</a>
-        {% else %}
-          {{ post.title }}
-        {% endif %}
-      </h1>
-
-      <time class="post-time">
-          {{ full_date(post.date, 'MMM DD YYYY') }}
-      </time>
+      <div class="post-meta"><time datetime="{{ date(post.date, 'YYYY-MM-DD') }}">{{ date(post.date, 'YYYY.MM.DD') }}</time>{% for category in post.categories %}<a href="{{ url_for(category.path) }}">{{ taxonomy_label(category.name) }}</a>{% endfor %}</div>
+      {% if is_home() %}<h2 class="post-title" lang="{{ post.lang || 'zh-CN' }}"><a class="post-link" href="{{ url_for(post.path) }}">{{ post.title }}</a></h2>{% else %}<h1 class="post-title">{{ post.title }}</h1>{% endif %}
     </header>
-
-
-
     {% if is_home() %}
-        <div class="post-excerpt">
-            {% if post.description %}{{ post.description }}{% endif %}
-        </div>
-          {% else %}
-            <div class="post-content">
-            {{ post.content }}
-            </div>
-          {% endif %}
-
-    {% if not is_home() %}
+      <div class="post-excerpt" lang="{{ post.lang || 'zh-CN' }}">{% if post.description %}{{ post.description }}{% else %}{{ truncate(strip_html(post.excerpt || post.content), {length: 120}) }}{% endif %}</div>
+      <a class="read-entry" href="{{ url_for(post.path) }}" aria-label="{{ post.title }}"><span data-zh="阅读全文" data-en="Read entry">阅读全文</span> {{ site_icon('external') }}</a>
+    {% else %}
+      {% include '../_partial/translation.swig' %}
+      <div class="post-content" lang="{{ post.lang || 'zh-CN' }}">{{ post.content }}</div>
       <footer class="post-footer">
-		{% if post.tags and post.tags.length %}
-		<div class="post-tags">
-		  {% for tag in post.tags %}
-			<a href="{{ url_for(tag.path) }}">{{ tag.name }}</a>
-		  {% endfor %}
-		</div>
-		{% endif %}
-
-        {# Post Pagination #}
-        {% include "../_partial/pagination.swig" %}
-        {% include "../_partial/comments.swig" %}
+        {% if post.tags and post.tags.length %}<div class="post-tags">{% for tag in post.tags %}<a href="{{ url_for(tag.path) }}">{{ taxonomy_label(tag.name) }}</a>{% endfor %}</div>{% endif %}
+        {% include '../_partial/pagination.swig' %}
+        {% include '../_partial/comments.swig' %}
       </footer>
     {% endif %}
   </article>

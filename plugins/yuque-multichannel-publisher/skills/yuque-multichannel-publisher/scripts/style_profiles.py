@@ -13,7 +13,7 @@ import tempfile
 from pathlib import Path
 from typing import Any
 
-from workspace import find_workspace_root, posts_dir, state_dir
+from workspace import find_workspace_root, posts_dir, state_dir, load_config, configured_path
 
 REQUIRED_STRINGS = (
     "voice",
@@ -349,9 +349,92 @@ def command_validate(args: argparse.Namespace) -> None:
     print(f"OK: {len(index.get('profiles', {}))} style profile(s)")
 
 
+
+def author_corpus(repo: Path) -> list[dict[str, Any]]:
+    """Exclude pipeline-generated posts from automatic voice learning."""
+    config = load_config(repo)
+    excluded = set(config.get("voice_exclude_posts", []))
+    projects = configured_path(repo, config, "content_projects_dir")
+    for path in projects.glob("*/metadata.json"):
+        try:
+            metadata = json.loads(path.read_text())
+            slug = metadata.get("project")
+            if isinstance(slug, str) and slug:
+                excluded.add((posts_dir(repo)/f"{slug}.md").relative_to(repo).as_posix())
+        except (ValueError, OSError, AttributeError):
+            continue
+    return [item for item in category_corpus(repo, "default") if item["path"] not in excluded]
+
+
+def author_prepare(repo: Path) -> dict[str, Any]:
+    repo = repo.resolve()
+    corpus = author_corpus(repo)
+    profile = profile_dir(repo)/"author-voice.md"
+    index = load_json(profile_dir(repo)/"author-index.json", {})
+    fingerprint = corpus_fingerprint(corpus)
+    if not corpus:
+        return {"action":"blocked", "read_samples":[], "reason":"没有可用历史文章，声明冷启动"}
+    if profile.is_file() and index.get("corpus_fingerprint") == fingerprint and index.get("profile_sha256") == sha256_file(profile):
+        return {"action":"reuse", "profile_path":str(profile), "read_samples":[], "corpus_fingerprint":fingerprint}
+    changed = changed_paths(index.get("source_corpus", []), corpus) if index else []
+    candidates = [item for item in corpus if item["path"] in changed] if index else []
+    # Bounded sample: recent work from different categories, then older anchors.
+    categories = set()
+    for item in corpus:
+        key = tuple(item["categories"])
+        if key not in categories:
+            if item not in candidates:
+                candidates.append(item)
+            categories.add(key)
+    for item in reversed(corpus):
+        if item not in candidates:
+            candidates.append(item)
+    samples = [item["path"] for item in candidates[:6]]
+    return {"action":"refresh" if profile.exists() else "learn", "profile_path":str(profile),
+            "corpus_fingerprint":fingerprint, "read_samples":samples, "changed_paths":changed,
+            "reason":"仅阅读列出的代表作；变化过多时抽样刷新并在档案说明覆盖范围，不声称读过全部"}
+
+
+def command_author_prepare(args):
+    print(json.dumps(author_prepare(find_workspace_root()),ensure_ascii=False,indent=2))
+
+
+def command_author_save(args):
+    repo = find_workspace_root()
+    corpus = author_corpus(repo)
+    if not corpus:
+        raise SystemExit("没有可用历史文章，不能保存为已学习作者档案")
+    samples = resolve_samples(repo,"default",args.samples,corpus)
+    text = Path(args.input).read_text()
+    if not text.strip() or len(text.encode()) > MAX_PROFILE_BYTES:
+        raise SystemExit("作者档案必须非空且不超过 16 KB")
+    destination=profile_dir(repo)/"author-voice.md"
+    destination.parent.mkdir(parents=True,exist_ok=True)
+    fd, temporary = tempfile.mkstemp(dir=destination.parent)
+    try:
+        with os.fdopen(fd,"w") as handle:
+            handle.write(text)
+        os.replace(temporary,destination)
+    finally:
+        if os.path.exists(temporary):
+            os.unlink(temporary)
+    atomic_json(profile_dir(repo)/"author-index.json", {
+        "corpus_fingerprint":corpus_fingerprint(corpus), "profile_sha256":sha256_file(destination),
+        "updated_at":now_iso(), "sample_paths":samples,
+        "source_corpus":[{"path":item["path"],"sha256":item["sha256"]} for item in corpus]})
+    print(destination)
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="管理由 AI 编写的紧凑语气档案")
     subparsers = parser.add_subparsers(dest="command", required=True)
+
+    author = subparsers.add_parser("author-prepare", help="增量检查作者基线，排除流水线生成文章")
+    author.set_defaults(handler=command_author_prepare)
+    author_save = subparsers.add_parser("author-save", help="保存 AI 阅读历史文章后编写的作者基线")
+    author_save.add_argument("--input", required=True)
+    author_save.add_argument("--samples", nargs="+", required=True)
+    author_save.set_defaults(handler=command_author_save)
 
     prepare = subparsers.add_parser("prepare", help="判断复用、首次学习或增量刷新")
     prepare.add_argument("--category", required=True)

@@ -1,12 +1,13 @@
 ---
-title: "Spring高效开发"
+title: Spring 开发实践：Bean 生命周期、扩展接口与 AOP
 date: 2021-04-04 14:26
 tags:
-   - JAVA
-   - SPRING
+  - Spring 框架
+  - Java
+  - 研发效能
 categories:
-   - 场景实践
-description: "聚焦Spring IOC与AOP高效使用技巧，讲解Bean生命周期、扩展接口及优雅路由、策略模式等实战场景，附日志、异常、参数校验切面方案。"
+  - 场景实践
+description: 聚焦Spring IOC与AOP高效使用技巧，讲解Bean生命周期、扩展接口及优雅路由、策略模式等实战场景，附日志、异常、参数校验切面方案。
 ---
 
 不知道身为读者的你是否用过Java？也不知道使用Java的你是否使用过Spring？

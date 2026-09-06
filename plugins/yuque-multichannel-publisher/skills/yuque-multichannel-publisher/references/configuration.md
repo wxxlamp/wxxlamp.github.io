@@ -45,7 +45,8 @@ YMP_WORKSPACE_ROOT=/absolute/project/path
   "xiaohongshu_skills_dir": "",
   "rednote_account": "",
   "rednote_cdp_host": "",
-  "rednote_cdp_port": 9222
+  "rednote_cdp_port": 9222,
+  "rednote_allow_browser_launch": false
 }
 ```
 
@@ -58,8 +59,8 @@ YMP_WORKSPACE_ROOT=/absolute/project/path
 发布适配器是可选依赖，不随插件复制：
 
 - 微信公众号：安装 `md2wechat` 后，把 `md2wechat_executable` 指向可执行文件；多账号时只在 `wechat_account` 记录适配器账号别名。AppID、Secret 和 IP 白名单仍由 `md2wechat`/公众号后台管理，不写入本插件配置。插件默认复用现成 `article.html` 调用草稿 API，因此无需为了投递额外配置转换用的 `MD2WECHAT_API_KEY`。
-- 小红书：把 `xiaohongshu_skills_dir` 指向独立安装的 `XiaohongshuSkills` 根目录。`rednote_account` 仅保存其账号别名；Chrome Profile、Cookie 与登录二维码仍由该项目管理。
-- 远程 CDP 可填写 `rednote_cdp_host` 与 `rednote_cdp_port`。不配置时使用适配器默认的本地浏览器。
+- 小红书：优先使用 Codex 当前已打开、已登录的浏览器，不因配置了适配器而新开浏览器。只有当前浏览器无法控制且用户明确同意回退时，才把 `xiaohongshu_skills_dir` 指向独立安装的 `XiaohongshuSkills` 根目录。
+- CLI 回退固定传入 `--reuse-existing-tab`。远程 CDP 可填写 `rednote_cdp_host` 与 `rednote_cdp_port`；本地默认检查 `127.0.0.1:9222` 是否已有浏览器。`rednote_allow_browser_launch` 默认为 `false`，端口不可用时停止；只有用户明确允许新开 Chrome 才设为 `true`。
 
 先执行只读检查：
 
@@ -108,3 +109,6 @@ GitHub 图床还支持：
 - 语雀 `storage_state.json`
 
 接收者在自己的工作区执行 `setup`，首次使用相关分类时由 AI 建立自己的语气档案。
+
+
+`taxonomy_catalog` 默认 `source/_data/taxonomy.json`，与工作区相对，提供 canonical 中文分类/话题及英文显示名。未提供目录时从中文文章元数据读取已有名称；参见 [publishing-plan.md](publishing-plan.md)。

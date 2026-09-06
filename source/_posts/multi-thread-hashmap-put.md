@@ -1,11 +1,13 @@
 ---
-title: "HashMap的并发put问题"
+title: HashMap 并发 put 的数据覆盖问题
 tags:
-   - CONCURRENT
+  - Java
+  - 并发编程
 categories:
-   - 采坑记录
+  - 采坑记录
 date: 2022-12-10 14:36
-description: "揭示HashMap并发put的两类线程安全问题：扩容时数据覆盖及并发插入覆盖。通过复现实验分析问题原因，澄清JDK1.8已修复死循环问题，建议使用ConcurrentHashMap。"
+description: >-
+  揭示HashMap并发put的两类线程安全问题：扩容时数据覆盖及并发插入覆盖。通过复现实验分析问题原因，澄清JDK1.8已修复死循环问题，建议使用ConcurrentHashMap。
 ---
 
 ## 00. 问题背景

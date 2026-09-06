@@ -1,11 +1,12 @@
 ---
-title: "LeetCode初级算法-数组篇"
+title: LeetCode 数组题解：双指针、异或与基础算法
 tags:
-   - 算法
+  - 算法与数据结构
+  - Java
 categories:
-   - 基础夯实
+  - 基础夯实
 date: 2021-08-07 10:36
-description: "LeetCode初级算法数组篇题解，涵盖11道经典题目。讲解双指针法、异或特性、贪心策略等解题技巧，包括删除重复项、两数之和、有效数独等题目的Java实现。"
+description: LeetCode初级算法数组篇题解，涵盖11道经典题目。讲解双指针法、异或特性、贪心策略等解题技巧，包括删除重复项、两数之和、有效数独等题目的Java实现。
 ---
 
 [点击查看题目网址](https://leetcode-cn.com/explore/featured/card/top-interview-questions-easy/1/array/)

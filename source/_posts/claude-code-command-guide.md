@@ -1,11 +1,14 @@
 ---
-title: Claude Code常用命令指北【官网版】
+title: Claude Code 使用指南：命令、Skill 与 Subagent
 date: 2026-04-13 22:00
 tags:
-   - 大语言模型
+  - AI 编程
+  - 开发工具
 categories:
-   - 场景实践
-description: 深入解析Claude Code的核心概念与常用命令，涵盖Command、Skill、Rule、Subagent等关键功能的详细介绍与使用技巧，助您掌握现代化AI编程工作流。
+  - 场景实践
+description: >-
+  深入解析Claude
+  Code的核心概念与常用命令，涵盖Command、Skill、Rule、Subagent等关键功能的详细介绍与使用技巧，助您掌握现代化AI编程工作流。
 ---
 
 Work agent在25年风头无两，其中以Claude Code最为显眼。Claude Code一直走在coding agent的最前列，提出了skills、subagent等多种已经成为事实标准的概念。
@@ -32,7 +35,7 @@ command是最直接驱使agent的user prompt。通过直接在CLI或者GUI的输
 
 Skill可以理解是一个大号的command，把一些复杂或者标准工作沉淀成一套SOP。不过，skill与command最大的不同就是，skill不仅可以主动调用，也可以在vibe coding的时候，claude code可以根据上下文信息分析是否要自动调用skill。那么，如何编写一个skill呢？
 
-人工构建skill指令当然是好的，但是AI时代，我们也可以让CC帮我们完成skill的编写，这里可以使用CC官方的[skill指南](https://code.claude.com/docs/en/skills)和[skill 指令](https://github.com/anthropics/skills/blob/main/skills/skill-creator/SKILL.md)来帮我们创建skill。
+人工构建skill指令当然是好的，但是AI时代，我们也可以让CC帮我们完成skill的编写，这里可以使用CC官方的[skill指南](https://code.claude.com/docs/zh-CN/skills)和[skill 指令](https://github.com/anthropics/skills/blob/main/skills/skill-creator/SKILL.md)来帮我们创建skill。
 
 有了创建skill的skill之后，就可以通过对话的形式，让claude code帮我创建一些其他skill。举个例子，我希望创建一个获取yuque.com的文档，prompt如下：
 
@@ -95,13 +98,13 @@ paths:
 
 Hook机制使得用户可以更加精准掌控claude code的行为，我们可以在会话前后、脚本执行前后执行各种命令。
 
-根据[cc的官方文档](https://code.claude.com/docs/en/hooks-guide)，可以返现常见的hook周期如下：
+根据[cc的官方文档](https://code.claude.com/docs/zh-CN/hooks-guide)，可以返现常见的hook周期如下：
 
 ![](https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/0700f2c0_ab484b5d.png)
 
 比较经典的hook场景有上下文压缩，我们可以针对某个工程，在每次claude会话关闭的时候都让claude压缩一次上下文存储到本地，然后在下次claude启动的时候再自动读取。
 
-可以参考[claude code的官方例子](https://code.claude.com/docs/en/hooks-guide#get-notified-when-claude-needs-input)，在每次需要人工介入的时候，弹出一个提示，防止任务一直holding：  
+可以参考[claude code的官方例子](https://code.claude.com/docs/zh-CN/hooks-guide#在-claude-需要输入时获得通知)，在每次需要人工介入的时候，弹出一个提示，防止任务一直holding：
 ![](https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/799f3c38_07e56628.png)
 
 ## MCP
@@ -131,7 +134,7 @@ claude mcp add --transport http hubspot --scope user https://mcp.hubspot.com/ant
 ```
 
 ## Subagents
-> 相关内容参考：[https://code.claude.com/docs/zh-CN/sub-agents#other](https://code.claude.com/docs/zh-CN/sub-agents#other)
+> 相关内容参考：[https://code.claude.com/docs/zh-CN/sub-agents](https://code.claude.com/docs/zh-CN/sub-agents)
 >
 
 不同的agent可以使用不同的skill和MCP、有不同的权限、模型和上下文。个人认为，subagent最重要的一点就是上下文的隔离，可以把不同任务用上下文隔离开。这样就会节省很多token，使得模型的回答更加精确。

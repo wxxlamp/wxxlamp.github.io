@@ -1,9 +1,9 @@
 ---
-title: Wang Xingxing - Resume
+title: Sibo Wang - Resume
 layout: resume-en
 date: 2024-01-01
 password: dynamic
-name: Wang Xingxing
+name: Sibo Wang
 contact:
   phone: "+86 17179887126"
   email: "wxxlamp@foxmail.com"
@@ -27,6 +27,11 @@ projects:
   - name: Global Trade · Technical Lead of Merchant Settlement
     date: Aug 2024 – Present
     summary: "To mitigate potential risks in Chinese merchants' foreign trade operations and expand the platform's differentiated supply, Alibaba.com supports global merchants to onboard and fulfill transactions (Global Trade). Currently covering 15 country sites (Southeast Asia, North America, Europe, etc.), with over 5,000 onboarded merchants and cumulative withdrawal amount exceeding 10 million US dollars."
+    related_posts:
+      - title: Cross-border transactions and settlement
+        path: /en/2026/01/04/cross-border-ecommerce-transaction-flow/
+      - title: AI operations with AgentScope
+        path: /en/2026/07/19/agentscope-ai-operations-platform-v1/
     highlights:
       - "【LLM Application】Responsible for LLM application in Global Trade scenarios, building an LLM task platform from scratch, and driving the adoption of LLMs (based on RAG, MCP) for OCR in KYC processes and daily technical operations. Reduced merchant onboarding barriers and improved business operational efficiency;"
       - "【Full Lifecycle】Based on the existing infrastructure for Chinese merchants, independently delivered end-to-end development and tenant customization for overseas merchant onboarding, transactions, assurance, payment, settlement, and gateway. As the technical lead, responsible for the full-lifecycle launch of the Japan site project;"
@@ -36,6 +41,9 @@ projects:
   - name: Assurance Quota System Reconstruction · Technical Migration Lead
     date: Oct 2023 – Jul 2024
     summary: "Alibaba.com allocates advance payment quotas to onboarded merchants, enabling them to receive full payment upon delivery. The quota system (launched in 2016) had severely deteriorated, with data scattered across 3 data sources and 2 systems, suffering from poor scalability and critical data inconsistency. Responsible for leading the full split of 10-million-level data and reconstruction of the new system under strict constraints of 30+ TPS and zero financial errors."
+    related_posts:
+      - title: Concurrent RPC orchestration
+        path: /en/2022/10/30/multi-rpc-return/
     highlights:
       - "【Migration Strategy】Led the design of a seamless migration plan: \"full data replay, incremental Binlog synchronization, dual-write verification, gray-scale read traffic switch\". Utilized mechanisms such as step ID for new/old data isolation and asynchronous dual-write to ensure zero downtime and business transparency during migration;"
       - "【Migration Monitoring】Monitored the accuracy of dual-write traffic through real-time log monitoring and near-real-time data reconciliation, promptly identifying and fixing multiple dual-write issues including concurrency and time zone discrepancies;"
@@ -45,6 +53,11 @@ projects:
   - name: Trade Insurance Business · Technical PM & Core Developer
     date: Jul 2021 – Sep 2023
     summary: "To enhance transaction certainty and protect merchants' capital/goods safety on the International Station, third-party insurance institutions were integrated to cover chargebacks, returns, and final payments. Currently serving over 60,000 buyers/sellers, with daily policy volume exceeding 10,000 and QPS over 1,000. Responsible for project management and architecture design of the Trade Insurance Business."
+    related_posts:
+      - title: Configuration-driven operations platform
+        path: /en/2021/09/19/frontless-operate-platform/
+      - title: Unit and integration testing
+        path: /en/2023/02/18/test-in-spring-project/
     highlights:
       - "【Credit Platform】Built an insurance credit platform from scratch through the OA Trade Credit project; Introduced workflow engine for node orchestration and retry; Adopted SPI mechanism combined with strategy pattern for credit scalability of different insurance products; Drove credit process and status flow via domain events to ensure efficient business delivery; Ensured eventual consistency in microservices through local transaction tables and monitoring reconciliation;"
       - "【Multi-Region Deployment】To comply with cross-border data regulatory requirements, deployed the insurance domain to new data centers in China, US, and Singapore for overseas architecture; Implemented bidirectional data synchronization, avoided data overwriting via step mechanism, and ensured read-write consistency through buyer-based traffic routing;"

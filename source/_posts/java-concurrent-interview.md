@@ -1,12 +1,14 @@
 ---
-title: "Java并发常见面试题"
+title: Java 并发面试知识梳理：线程、锁与线程池
 tags:
-   - 并发编程
-   - JAVA
+  - Java
+  - 并发编程
+  - 求职面试
 categories:
-   - 面试经验
+  - 面试经验
 date: 2019-12-21 10:36
-description: "整理Java并发编程高频面试题，涵盖线程安全特性、JMM内存模型、线程池原理、synchronized与ReentrantLock、AQS框架、CAS原理及分布式锁实现等核心内容。"
+description: >-
+  整理Java并发编程高频面试题，涵盖线程安全特性、JMM内存模型、线程池原理、synchronized与ReentrantLock、AQS框架、CAS原理及分布式锁实现等核心内容。
 ---
 
 

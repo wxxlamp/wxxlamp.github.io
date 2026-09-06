@@ -1,12 +1,13 @@
 ---
-title: "类在内存中的存储方式"
+title: Java 运行时内存：对象存储与类加载
 tags:
-   - JAVA
-   - JVM
+  - Java
+  - Java 虚拟机
 categories:
-   - 基础夯实
+  - 基础夯实
 date: 2020-12-17 10:36
-description: "系统梳理Java内存结构，对比C与Java内存处理差异，详解JDK8虚拟机栈、堆、方法区等区域的职责，演示类加载与内存分配过程，及继承、接口等场景的内存模型。"
+description: >-
+  系统梳理Java内存结构，对比C与Java内存处理差异，详解JDK8虚拟机栈、堆、方法区等区域的职责，演示类加载与内存分配过程，及继承、接口等场景的内存模型。
 ---
 
 Java有许多特点，如线程并发，类加载，垃圾回收，语法糖，丰富的官方类库，易懂的面向对象设计，平台兼容等等。对于内存来说，从宏观上，主要分为静态和动态两部分，静态的是内存的空间结构，动态的是内存的分配和回收。本篇文章，就来总结一下Java中的内存结构。
@@ -46,7 +47,7 @@ Java的内存结构几乎是面试必问的一个问题，所以这里再拉出�
   2. 常量池，存放编译期生成的字面量（文本字符串、八种基本类型的值、被声明为final的常量）以及符号引用（类和方法的全限定名、字段的名称和描述符、方法的名称和描述符），大小在运行期前已知。以类为单位
   3. 方法字节码，存放的是各个方法的字节码（依赖操作数栈和局部变量表，由JVM解释执行）
 
-理论知识可以参考 [Bleem1](https://mritd.com/2006/01/02/java-memory-overview-of-vm-memory-auto-management-and-memory-regions/)、[Bleem2](https://mritd.com/2006/01/02/java-memory-method-area-and-runtime-constant-pool/)、[Bleem3]()
+理论知识可以参考 [Bleem1](https://mritd.com/2006/01/02/java-memory-overview-of-vm-memory-auto-management-and-memory-regions/)、[Bleem2](https://mritd.com/2006/01/02/java-memory-method-area-and-runtime-constant-pool/)
 
 #### 2.2 程序演示
 

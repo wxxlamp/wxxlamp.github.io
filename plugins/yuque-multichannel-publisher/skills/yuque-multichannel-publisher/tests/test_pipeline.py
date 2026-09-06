@@ -159,7 +159,7 @@ class PipelineContractTest(unittest.TestCase):
             metadata["ai_tone_review"] = {
                 "status": "passed",
                 "checks": sorted(pipeline.AI_TONE_CHECKS),
-                "corpus_fingerprint": pipeline.VOICE_REFERENCE_FINGERPRINT,
+                "corpus_fingerprint": "a" * 64,
                 "voice_reference": ".codex/yuque-multichannel-publisher/style-profiles/author-voice.md",
                 "notes": "AI 已结合语气档案复审。",
             }
@@ -483,7 +483,11 @@ class PipelineContractTest(unittest.TestCase):
             config_dir = root / ".codex" / "yuque-multichannel-publisher"
             config_dir.mkdir(parents=True)
             (config_dir / "config.json").write_text(
-                json.dumps({"xiaohongshu_skills_dir": str(adapter.parents[1])}), encoding="utf-8"
+                json.dumps({
+                    "xiaohongshu_skills_dir": str(adapter.parents[1]),
+                    "rednote_allow_browser_launch": True,
+                }),
+                encoding="utf-8",
             )
             captured: list[list[str]] = []
 
@@ -499,6 +503,7 @@ class PipelineContractTest(unittest.TestCase):
                 )
             self.assertEqual(1, len(captured))
             self.assertIn("--preview", captured[0])
+            self.assertIn("--reuse-existing-tab", captured[0])
             self.assertNotIn("--headless", captured[0])
 
 

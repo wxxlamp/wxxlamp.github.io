@@ -1,11 +1,13 @@
 ---
-title: "零拷贝"
+title: 零拷贝 I/O：DMA、mmap 与 sendfile 的原理
 tags:
-   - OS
+  - 计算机系统
+  - 网络通信
+  - 性能优化
 categories:
-   - 基础夯实
+  - 基础夯实
 date: 2023-02-07 10:36
-description: "系统讲解零拷贝技术原理与实现，从普通IO流程的4次拷贝开销出发，介绍DMA、mmap、sendfile及Direct I/O等方案的适用场景与局限性。"
+description: 系统讲解零拷贝技术原理与实现，从普通IO流程的4次拷贝开销出发，介绍DMA、mmap、sendfile及Direct I/O等方案的适用场景与局限性。
 ---
 
 因为是做Web开发，网络IO总是避不开的一个话题，而零拷贝又是网络IO中重要的一环，之前老是看各种博客，今天就特意总结一下。

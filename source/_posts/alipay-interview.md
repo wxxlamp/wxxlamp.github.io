@@ -1,12 +1,12 @@
 ---
-title: "蚂蚁实习面试"
+title: 蚂蚁金服实习面试复盘
 date: 2020-04-01 10:36
 tags:
-   - JAVA
-   - 校园招聘
+  - 求职面试
+  - Java
 categories:
-   - 面试经验
-description: "蚂蚁金服实习三轮面试复盘，涵盖JVM、MySQL、Redis、Java并发、Nginx负载均衡等技术点，记录面试问题与答题思路，最终放弃offer。"
+  - 面试经验
+description: 蚂蚁金服实习三轮面试复盘，涵盖JVM、MySQL、Redis、Java并发、Nginx负载均衡等技术点，记录面试问题与答题思路，最终放弃offer。
 ---
 
 其实复盘完了之后发现蚂蚁金服项目也没有问的太深入，为什么我感觉挺坑呢淦，仔细想了一想可能是关于操作方面问的比较多把~。

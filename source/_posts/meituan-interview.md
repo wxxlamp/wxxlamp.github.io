@@ -1,12 +1,13 @@
 ---
-title: "开水团面试"
+title: 美团基础架构部实习面试复盘
 tags:
-   - JAVA
-   - CAMPUS RECRUITMENT
+  - 求职面试
+  - Java
 categories:
-   - 面试经验
+  - 面试经验
 date: 2020-08-20 10:36
-description: "美团基础架构部实习秋招三轮面试复盘。涵盖HashMap原理、JVM内存、线程池、Redis、TCP状态机、数据库索引等技术点，以及算法题解答和HR面经验分享。"
+description: >-
+  美团基础架构部实习秋招三轮面试复盘。涵盖HashMap原理、JVM内存、线程池、Redis、TCP状态机、数据库索引等技术点，以及算法题解答和HR面经验分享。
 ---
 
 从公司实习结束后回来的下一周就开始面开水团，部门是基础架构部，进度算是我现在面试流程中最快的一个了。

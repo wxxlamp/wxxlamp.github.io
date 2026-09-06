@@ -1,0 +1,170 @@
+{
+  "version": 1,
+  "site_aliases": [
+    "www.wxxlamp.cn",
+    "wxxlamp.github.io",
+    "www.wxxlamp.github.io"
+  ],
+  "route_aliases": {
+    "/2025/08/15/Mac的目录结构/": "/2025/08/15/how-to-use-mac/"
+  },
+  "pairs": [
+    {
+      "zh": "https://code.claude.com/docs/zh-CN/skills",
+      "en": "https://code.claude.com/docs/en/skills",
+      "review": "Official localized documentation for the same Claude Code feature."
+    },
+    {
+      "zh": "https://code.claude.com/docs/zh-CN/memory",
+      "en": "https://code.claude.com/docs/en/memory",
+      "review": "Official localized documentation for the same Claude Code feature."
+    },
+    {
+      "zh": "https://code.claude.com/docs/zh-CN/hooks-guide",
+      "en": "https://code.claude.com/docs/en/hooks-guide",
+      "review": "Official localized documentation for the same Claude Code feature."
+    },
+    {
+      "zh": "https://code.claude.com/docs/zh-CN/mcp",
+      "en": "https://code.claude.com/docs/en/mcp",
+      "review": "Official localized documentation for the same Claude Code feature."
+    },
+    {
+      "zh": "https://code.claude.com/docs/zh-CN/sub-agents",
+      "en": "https://code.claude.com/docs/en/sub-agents",
+      "review": "Official localized documentation for the same Claude Code feature."
+    },
+    {
+      "zh": "https://code.claude.com/docs/zh-CN/plugins",
+      "en": "https://code.claude.com/docs/en/plugins",
+      "review": "Official localized documentation for the same Claude Code feature."
+    },
+    {
+      "zh": "https://code.claude.com/docs/zh-CN/memory#",
+      "en": "https://code.claude.com/docs/en/memory#",
+      "review": "Same memory documentation, empty fragment retained."
+    },
+    {
+      "zh": "https://code.claude.com/docs/zh-CN/hooks-guide#在-claude-需要输入时获得通知",
+      "en": "https://code.claude.com/docs/en/hooks-guide#get-notified-when-claude-needs-input",
+      "review": "Verified matching notification sections in the official hook guide."
+    },
+    {
+      "zh": "https://www.oklink.com/zh-hans/bitcoin",
+      "en": "https://www.oklink.com/bitcoin",
+      "review": "Same Bitcoin explorer in Chinese and English."
+    },
+    {
+      "zh": "https://www.oklink.com/zh-hans/bitcoin/block/914370",
+      "en": "https://www.oklink.com/bitcoin/block/914370",
+      "review": "Same Bitcoin block ID; only explorer locale differs."
+    },
+    {
+      "zh": "https://platform.claude.com/docs/zh-CN/build-with-claude/prompt-engineering/claude-prompting-best-practices",
+      "en": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices",
+      "review": "Verified Chinese and English official prompting best-practice pages."
+    }
+  ],
+  "original_sources": [
+    {
+      "url": "https://xueqiu.com/2684655177/154256082",
+      "language": "zh"
+    },
+    {
+      "url": "https://easyhexo.com/1-Hexo-install-and-config/1-3-config-hexo.html#%E9%85%8D%E7%BD%AE-hexo-2",
+      "language": "zh"
+    },
+    {
+      "url": "https://www.cnblogs.com/jianguo221/p/11487532.html",
+      "language": "zh"
+    },
+    {
+      "url": "https://www.jianshu.com/p/343934573342",
+      "language": "zh"
+    },
+    {
+      "url": "https://zhuanlan.zhihu.com/p/60578464",
+      "language": "zh"
+    },
+    {
+      "url": "https://blog.csdn.net/woshilijiuyi/article/details/85396492",
+      "language": "zh"
+    },
+    {
+      "url": "https://xiaolincoding.com/mysql/lock/how_to_lock.html#%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95%E7%AD%89%E5%80%BC%E6%9F%A5%E8%AF%A2",
+      "language": "zh"
+    },
+    {
+      "url": "https://blog.51cto.com/u_15905482/5919949",
+      "language": "zh"
+    },
+    {
+      "url": "https://www.51cto.com/article/744551.html",
+      "language": "zh"
+    },
+    {
+      "url": "https://movie.douban.com/subject/35096844/",
+      "language": "zh"
+    },
+    {
+      "url": "https://movie.douban.com/subject/26715636/",
+      "language": "zh"
+    },
+    {
+      "url": "https://www.cnblogs.com/zendwang/p/mockito-mock-spy-usage.html",
+      "language": "zh"
+    },
+    {
+      "url": "https://www.youtube.com/playlist?list=PLJV_el3uVTsMhtt7_Y6sgTHGHp1Vb2P2J",
+      "language": "zh"
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1TAtwzTE1S/?spm_id_from=333.337.search-card.all.click&vd_source=f22e07c1e9ae0985f92cf3a4f47ea7f8",
+      "language": "zh"
+    },
+    {
+      "url": "https://speech.ee.ntu.edu.tw/~hylee/ml/2021-spring.php",
+      "language": "zh"
+    },
+    {
+      "url": "https://speech.ee.ntu.edu.tw/~hylee/genai/2024-spring.php",
+      "language": "zh"
+    },
+    {
+      "url": "https://speech.ee.ntu.edu.tw/~hylee/ml/2025-spring.php",
+      "language": "zh"
+    },
+    {
+      "url": "https://www.yuque.com/wangxingxing-f4sey/iur8x3/mekvlarxoaw58uvb",
+      "language": "zh"
+    },
+    {
+      "url": "https://www.yuque.com/wangxingxing-f4sey/iur8x3/vhm08q3mw87ocv4p",
+      "language": "zh"
+    },
+    {
+      "url": "https://mritd.com/2006/01/02/java-memory-overview-of-vm-memory-auto-management-and-memory-regions/",
+      "language": "zh"
+    },
+    {
+      "url": "https://mritd.com/2006/01/02/java-memory-method-area-and-runtime-constant-pool/",
+      "language": "zh"
+    },
+    {
+      "url": "https://www.larscheng.com/hexo-principle/",
+      "language": "zh"
+    },
+    {
+      "url": "https://liuyib.github.io/2019/08/20/develop-hexo-theme-from-0-to-1/",
+      "language": "zh"
+    },
+    {
+      "url": "http://zjjzk.cn:8081/wjwpro/indexApartment.htm?tjrid=71d0",
+      "language": "zh"
+    },
+    {
+      "url": "http://www.hzswysyy.com/index/article/index/element/497",
+      "language": "zh"
+    }
+  ]
+}

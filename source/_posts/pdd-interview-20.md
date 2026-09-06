@@ -1,12 +1,12 @@
 ---
-title: "拼多多两轮游"
+title: 拼多多校招两轮技术面试复盘
 tags:
-   - JAVA
-   - CAMPUS RECRUITMENT
+  - 求职面试
+  - Java
 categories:
-   - 面试经验
+  - 面试经验
 date: 2020-12-29 21:36
-description: "记录拼多多拼越计划两轮面试经历，涵盖SQL优化、索引原理、RPC、TCP、Java IO模型、Redis等基础与进阶考点。"
+description: 记录拼多多拼越计划两轮面试经历，涵盖SQL优化、索引原理、RPC、TCP、Java IO模型、Redis等基础与进阶考点。
 ---
 
 很久就投递了拼多多的拼越计划，但是笔试挂，然后在提前批的时候笔试成功，大概在9月7号的时候开始的一面，12号的时候二面，然后等了将近一个半月，直接HR面试，然后就过了。。。感觉是白菜，果断拒绝。

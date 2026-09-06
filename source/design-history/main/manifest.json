@@ -1,0 +1,56 @@
+{
+  "ref": "origin/main",
+  "commit": "07cd3b79e5663181139be8b4efb5f5205d461cb5",
+  "date": "2026-08-19T15:46:51+00:00",
+  "pages": [
+    {
+      "title": "首页",
+      "file": "index.html",
+      "current": "/"
+    },
+    {
+      "title": "归档",
+      "file": "archives/index.html",
+      "current": "/archives/"
+    },
+    {
+      "title": "关于",
+      "file": "about/index.html",
+      "current": "/about/"
+    },
+    {
+      "title": "技术文章 · Java 内存",
+      "file": "2020/12/17/java-memory/index.html",
+      "current": "/2020/12/17/java-memory/"
+    },
+    {
+      "title": "生活文章 · 年度回顾",
+      "file": "2024/01/22/my-2023/index.html",
+      "current": "/2024/01/22/my-2023/"
+    },
+    {
+      "title": "中文简历",
+      "file": "resume/index.html",
+      "current": "/resume/"
+    },
+    {
+      "title": "英文简历",
+      "file": "resume-en/index.html",
+      "current": "/resume-en/"
+    }
+  ],
+  "assets": [
+    "atom.xml",
+    "css/style.css",
+    "favicon.ico",
+    "js/src/bootstrap.js",
+    "js/src/theme.js",
+    "lib/jquery/jquery-3.1.1.min.js"
+  ],
+  "missingAssets": [],
+  "notes": [
+    "External image/CDN URLs remain external.",
+    "Analytics and comment submission scripts removed.",
+    "Uncaptured internal navigation disabled."
+  ]
+}

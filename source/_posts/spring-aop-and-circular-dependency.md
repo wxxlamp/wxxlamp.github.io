@@ -1,13 +1,12 @@
 ---
-title: "BeanPostProcessor在循环依赖情况下导致的Spring初始化异常"
+title: Spring 循环依赖排查：BeanPostProcessor 与 AOP 代理
 date: 2021-07-31 18:36
 tags:
-   - JAVA
-   - SPRING
-   - AOP
+  - Spring 框架
+  - 问题排查
 categories:
-   - 采坑记录
-description: "分析BeanPostProcessor手动AOP代理导致循环依赖异常的根因，结合Spring三级缓存机制追踪源码，提供原生AOP和@Lazy解决方案。"
+  - 采坑记录
+description: 分析BeanPostProcessor手动AOP代理导致循环依赖异常的根因，结合Spring三级缓存机制追踪源码，提供原生AOP和@Lazy解决方案。
 ---
 
 *组里有一个二方库TEST，通过实现BeanPostProcessor来对bean进行拦截，同时，在拦截的过程中对bean进行手动的aop代理，但是在开发环境中，当被代理的bean被循环依赖时，会初始化异常，特此debug一下*

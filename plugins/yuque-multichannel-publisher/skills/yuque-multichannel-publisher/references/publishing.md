@@ -61,7 +61,9 @@ python3 <pipeline.py> send-draft \
 
 ## 小红书编辑器与草稿
 
-配置 `xiaohongshu_skills_dir` 后，逐轮安全填充：
+先复用当前已经打开、已经登录的小红书浏览器和现有标签页，通过 Codex 的浏览器控制能力逐轮安全填充。不要默认启动新的 Chrome，不要创建单独 Profile，也不要因为外部适配器已配置就跳过现有浏览器。
+
+只有当前浏览器无法控制、且用户明确同意使用 CLI 回退时，才在配置 `xiaohongshu_skills_dir` 后执行：
 
 ```bash
 python3 <pipeline.py> send-draft \
@@ -72,7 +74,7 @@ python3 <pipeline.py> send-draft \
   --confirm
 ```
 
-插件固定调用外部适配器的 `--preview` 模式，禁止自动追加 `--headless` 或点击发布。成功只表示编辑器已经填充，状态记录为 `filled_for_review`。随后需要：
+插件固定调用外部适配器的 `--preview --reuse-existing-tab` 模式，禁止自动追加 `--headless` 或点击发布。`rednote_allow_browser_launch` 默认是 `false`：本地 CDP 端口没有现成浏览器时直接停止，绝不静默新开 Chrome；只有用户明确允许后才能设为 `true`。成功只表示编辑器已经填充，状态记录为 `filled_for_review`。随后需要：
 
 1. 核对标题、正文、话题和全部本地上传图片；
 2. 确认当前账号与轮次；
@@ -90,7 +92,7 @@ python3 <pipeline.py> record-delivery \
   --note "平台已显示保存成功"
 ```
 
-没有 `XiaohongshuSkills` 时，使用当前可用的已登录浏览器控制能力完成同样的“填充—复核—保存”流程。平台改版、文件上传权限不足或选择器失效时暂停并让用户接管。
+无论是否安装 `XiaohongshuSkills`，只要当前已有可控的登录浏览器，就优先使用它完成“填充—复核—保存”流程。平台改版、文件上传权限不足或选择器失效时暂停并让用户接管。
 
 ## 最终发布
 

@@ -63,7 +63,7 @@ content-projects/<slug>/
 
 ## metadata.json
 
-初始化后补全：
+旧版 metadata 核心字段示例如下；v2 新增字段与统一编辑复审见文末，不必填写旧版 ai_tone_review：
 
 ```json
 {
@@ -79,7 +79,7 @@ content-projects/<slug>/
   "ai_tone_review": {
     "status": "passed",
     "voice_reference": ".codex/yuque-multichannel-publisher/style-profiles/author-voice.md",
-    "corpus_fingerprint": "a1098d0f36299efcd5f5101dc5e369b855e10c88f8726b170c5a9047526b756d",
+    "corpus_fingerprint": "0000000000000000000000000000000000000000000000000000000000000000",
     "checks": [
       "template_opening",
       "empty_abstractions",
@@ -146,7 +146,7 @@ content-projects/<slug>/
 - 仅在 `channels` 包含 `wechat` 时生成。目标：`wechat/<slug>/article.md` 与 `article.html`。
 - Markdown 不含 Hexo front matter。
 - Markdown 与博客正文基本一致，默认相似度不得低于 90%；只做段落级轻适配，不删减或重写主体内容。
-- HTML 由 AI 根据文章内容排版，使用行内样式，不加载脚本或外部 CSS；流水线只复制和校验，不得重新排版。
+- HTML 由 AI 设计，可使用内置 wechat_layout.py 渲染行内样式，使用行内样式，不加载脚本或外部 CSS；物化流水线只复制和校验，不得重新排版。
 - 发布时从 `wechat_cover_image` 读取独立的 2.35:1 微信封面，不把它当作正文第一张图。
 - 实际粘贴后仍需检查代码块、表格、图片宽度和公众号编辑器的二次清洗。
 
@@ -207,3 +207,16 @@ content-projects/<slug>/
 4. `.codex/state.json` 已记录产物路径与摘要。
 
 发布完成按平台分别记录；任一平台失败不影响其他平台和本地完成状态。
+
+## 编辑契约 v2
+
+新项目 metadata 包含 `editorial_contract_version: 2`、`section_image_policy: content-driven`；复审文件结构见 [editorial-review.md](editorial-review.md)。每次修改后更新受影响的真实复审，不只改文件指纹。
+
+`series-plan.json` 还需 `content_units: [{"id":"u1","source_excerpt":"成稿中的实际短片段"}]`；每个 round 添加 `unit_ids: ["u1"]`、`split_reason`、`standalone_test`、`overlap_review` 字符串。未分配材料需在 unit 添加 `excluded_reason`。不允许各轮复用完全相同材料；少量必要背景重叠由 AI 说明，不能靠改写标题伪装独立。
+
+`section_images` 只记录实际选用的生成章节图，增加 `placement_reason`；URL 应位于相应章节，不要求前 3 行。原始材料仍按原意保留。微信预览存在 `draft/preview/`，项目内保留证据，不当作发布正文。
+
+
+## 平台标题与可选英文版
+
+新项目还必须遵守 [publishing-plan.md](publishing-plan.md)。发布计划单独记录专业博客标题、吸引读者的社交标题、规范分类话题和 AI 英文取舍理由。英文正文与英文图片实际复审后才可分发；editorial-review 的 artifacts 同时绑定 publishing-plan.json 与可选 english.md，内容变化后重新复审。

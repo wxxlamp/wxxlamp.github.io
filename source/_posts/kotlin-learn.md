@@ -1,11 +1,14 @@
 ---
-title: "Kotlin学习笔记"
+title: 面向 Java 开发者的 Kotlin 入门笔记
 date: 2020-12-24 18:26
 tags:
-   - KOTLIN
+  - Java
+  - 编程语言
 categories:
-   - 基础夯实
-description: "Kotlin入门笔记，介绍其发展历史及与Java的对比。涵盖简洁性、空安全、互操作性三大特点，通过代码示例展示data class、lambda、扩展函数等语法糖，帮助Java开发者快速上手。"
+  - 基础夯实
+description: >-
+  Kotlin入门笔记，介绍其发展历史及与Java的对比。涵盖简洁性、空安全、互操作性三大特点，通过代码示例展示data
+  class、lambda、扩展函数等语法糖，帮助Java开发者快速上手。
 ---
 
 作为一门Jvm的衍生语言，Kotlin在安卓阵营大放异彩，Google官方在19年IO大会上宣布全局支持Kotlin，究竟是人性的扭曲还是道德的沦丧？昨天组内安卓大神分享了Kotlin，今天我又参考了Google官方的文档，特来整理一下。

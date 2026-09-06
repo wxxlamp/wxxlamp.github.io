@@ -1,12 +1,14 @@
 ---
-title: "RocketMQ多线程消费问题分析"
+title: RocketMQ 并发消费异常与集合线程安全
 tags:
-   - CONCURRENT
-   - MQ
+  - 消息队列
+  - 并发编程
+  - 问题排查
 categories:
-   - 采坑记录
+  - 采坑记录
 date: 2021-8-07 14:36
-description: "记录RocketMQ消费成功率骤降的线上事故排查。定位到ConcurrentModificationException，分析ArrayList的fail-fast机制及多线程下sort与forEach并发问题，总结线程安全实践原则。"
+description: >-
+  记录RocketMQ消费成功率骤降的线上事故排查。定位到ConcurrentModificationException，分析ArrayList的fail-fast机制及多线程下sort与forEach并发问题，总结线程安全实践原则。
 ---
 
 第一次项目发布到灰度的机器就出问题了，记录一下：

@@ -1,11 +1,12 @@
 ---
-title: "[AI Coding]基于Qoder Vibe Coding 1万行代码的思考"
+title: Qoder AI 编程实践：万行代码开发的收益与边界
 tags:
-  - 人工智能
+  - AI 编程
+  - 研发效能
 categories:
   - 场景实践
 date: 2026-06-07 16:00
-description: "通过两个大型商业项目的实践，分享使用Qoder完成1万行代码开发的经验与思考，探讨AI Coding的效能边界与程序员的能力演进方向。"
+description: 通过两个大型商业项目的实践，分享使用Qoder完成1万行代码开发的经验与思考，探讨AI Coding的效能边界与程序员的能力演进方向。
 ---
 
 # 前言

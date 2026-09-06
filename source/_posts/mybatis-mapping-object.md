@@ -1,12 +1,14 @@
 ---
-title: "MyBatis中实体类和关系的映射原理"
+title: MyBatis 结果映射原理：从 ResultSet 到 Java 对象
 tags:
-   - MYBATIS
-   - JAVA
+  - Java
+  - 数据库
 categories:
-   - 源码剖析
+  - 源码剖析
 date: 2021-03-29 21:36
-description: "深入剖析MyBatis将JDBC ResultSet自动映射为Java实体类的核心原理。介绍ResultSetHandler、TypeHandler、MetaObject等关键组件，梳理从获取ResultSet到生成实体的完整流程，总结框架设计思路。"
+description: >-
+  深入剖析MyBatis将JDBC
+  ResultSet自动映射为Java实体类的核心原理。介绍ResultSetHandler、TypeHandler、MetaObject等关键组件，梳理从获取ResultSet到生成实体的完整流程，总结框架设计思路。
 ---
 
 这个东西我好久就想写了，之前在阿里实习时，所有MySQL的数据都会以D1的频率备份到ODPS上，而我负责的项目需要查询ODPS里面的数据，但是ODPS的Java SDK版本类似于JDBC一样配置多且难用，所以我就诞生了写一个针对于ODPS的工具类以方便后来者操作ODPS，在写的过程中，我发现最难的就是映射那一块，所以拖了好久，今天终于拿出时间来分析下这一块的东西。

@@ -1,12 +1,13 @@
 ---
-title: "Java8的函数式编程"
+title: Java 8 函数式编程与 Lambda 实践
 tags:
-   - JAVA
-   - 函数式编程
+  - Java
 date: 2021-08-22 9:52
 categories:
-   - 基础夯实
-description: "介绍Java 8函数式编程与Lambda表达式，解析Function、Consumer、Supplier三大函数式接口，结合责任链、观察者、策略等设计模式演示Lambda简化代码的技巧。"
+  - 基础夯实
+description: >-
+  介绍Java
+  8函数式编程与Lambda表达式，解析Function、Consumer、Supplier三大函数式接口，结合责任链、观察者、策略等设计模式演示Lambda简化代码的技巧。
 ---
 
 Java8发布了一系列高效的操作方式，其中lambda就是一个很重要的特性。譬如我们可以利用lambda代替匿名内部类，可以更方便的创建线程，更方便的使用接口。同时Java8还结合lambda定义了一系列常用且高效的api，如forEach，Stream，Optional等等。

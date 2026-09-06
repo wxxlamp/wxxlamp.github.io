@@ -11,6 +11,8 @@ from typing import Any
 PLUGIN_STATE_NAME = "yuque-multichannel-publisher"
 DEFAULT_CONFIG: dict[str, Any] = {
     "posts_dir": "source/_posts",
+    "taxonomy_catalog": "source/_data/taxonomy.json",
+    "reference_catalog": "source/_data/references.json",
     "content_projects_dir": "content-projects",
     "wechat_dir": "wechat",
     "rednote_dir": "rednote",
@@ -27,6 +29,7 @@ DEFAULT_CONFIG: dict[str, Any] = {
     "rednote_account": "",
     "rednote_cdp_host": "",
     "rednote_cdp_port": 9222,
+    "rednote_allow_browser_launch": False,
     "github_path": "images",
     "github_branch": "main",
     "github_cdn": "jsdelivr",

@@ -1,12 +1,13 @@
 ---
-title: "@RequestBody的原理"
+title: Spring MVC 的 @RequestBody 参数解析原理
 tags:
-   - JAVA
-   - SPRING MVC
+  - Spring 框架
+  - Java
 categories:
-   - 源码剖析
+  - 源码剖析
 date: 2021-01-27 10:36
-description: "深入剖析SpringMVC中@RequestBody注解的底层原理，追踪执行链路、参数解析器注册流程，分析设计模式应用及缓存优化机制，附常见MVC参数注解对比。"
+description: >-
+  深入剖析SpringMVC中@RequestBody注解的底层原理，追踪执行链路、参数解析器注册流程，分析设计模式应用及缓存优化机制，附常见MVC参数注解对比。
 ---
 
 通过Http传递参数一般有两种方式，一种是通过url解析参数，一种是通过body来解决，那么我们本次说的RequestBody就是去解析请求体然后映射到我们的参数，那 么它该如何解析body呢？这就是本篇博客诞生的目的。

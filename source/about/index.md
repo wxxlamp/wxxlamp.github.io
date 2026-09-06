@@ -1,58 +1,18 @@
 ---
-title: 关于
+title: 王星星
 date: 2024-01-01
+layout: about
+description: 王星星，阿里巴巴工程师，香港科技大学计算机科学与技术全日制硕士、郑州大学软件工程本科。关注金融系统与 AI Agent。
 ---
 
-<center>
-<h2>王星星</h2>
-<p>高级开发工程师 @ 阿里巴巴 | 计算机科学研究生 @ 香港科技大学</p>
-</center>
+我是**王星星**，目前在[阿里巴巴](https://www.alibabagroup.com/zh-CN)从事金融系统与 AI Agent 的研发。我的工作涉及[国际化](/2026/01/04/cross-border-ecommerce-transaction-flow/)、[AI Agent](/2026/07/19/agentscope-ai-operations-platform-v1/)和[金融](/2025/09/17/what-is-digtal-rmb/)三个方向，未来希望进一步专注于 AI Agent 的工程化与业务应用。
 
----
+我于 2025 年获得[香港科技大学](https://hkust.edu.hk/zh-hans)计算机科学与技术硕士学位（全日制，2024—2025），此前于 2021 年毕业于[郑州大学](https://www.zzu.edu.cn/)软件工程专业（2017—2021）。
 
-## 👨‍💻 工作技能
+我于 2021 年 7 月加入阿里巴巴并工作至今，目前的工作重心是金融与 AI Agent。此前，我于 2020 年 9 月至 2021 年 3 月在[中原银行](https://www.zybank.com.cn/)实习，2020 年 5—8 月在阿里巴巴实习。
 
-**后端开发**
-- 熟悉 Java 生态（Spring、MyBatis），具备扎实的 JVM、并发编程、MySQL 优化基础
-- 理解 DDD 和 TDD 思想，熟练运用常用设计模式，熟悉微服务架构及组件
+工作之外，我喜欢跑步、阅读、电影和旅行，也通过这个博客记录技术实践与生活。
 
-**AI 与工程化**
-- 了解 LLM 和 Agent，具备基于 LlamaFactory 和 HuggingFace 的 SFT 与推理经验
-- 熟悉 AI Coding（Claude Code），能结合 MCP 实现自动化工作流
+欢迎通过[邮箱](mailto:wxxlamp@foxmail.com)、[GitHub](https://github.com/wxxlamp)或微信 **allinwxx** 联系我。也可以关注我的微信公众号 **「王星星的魔灯」**，以及[小红书](https://www.xiaohongshu.com/user/profile/63dbcba3000000002702896e)。
 
-**跨境业务**
-- 掌握跨境交易,资金结算,金融全链路，参与过多租户架构设计与多地部署方案
-- 具备中大型技术项目管理经验（100人日+），能辅导团队新人成长
-
----
-
-## 💼 工作兴趣
-
-- **全球化业务架构**：关注多租户、多币种、多语言的技术挑战与解决方案
-- **AI 工程化落地**：探索大模型在业务场景中的应用，如 RAG、MCP、自动化流程
-- **技术写作与分享**：热爱通过博客沉淀技术思考，记录成长轨迹
-
----
-
-## 🏃 个人兴趣
-
-- **跑步**：享受长跑带来的专注与释放，已完成多个半马
-- **阅读与观影**：偏爱文学、历史与科幻，也写影评书评
-- **旅行与探索**：足迹遍布郑州、上海、杭州、深圳、香港等城市，喜欢用脚步丈量世界
-- **早睡早起的梦想家**：梦想是有一天可以下班后还能锻炼身体
-
----
-
-## 📫 联系我
-
-- **微信**：allinwxx
-- **QQ 群**：346325140（欢迎加入讨论）
-- **公众号**：关注下方二维码，不定期分享技术面试心得与职场思考
-
-<center>
-<img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/95a8a213_weixinopen.png" alt="微信公众号" width="200">
-</center>
-
----
-
-> 本博客使用 [Hexo](https://hexo.io/) 搭建，主题基于 [PolarBear](https://github.com/frostfan/hexo-theme-polarbear) 定制。
+<figure class="about-social"><img class="about-qr" src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/95a8a213_weixinopen.png" alt="微信公众号：王星星的魔灯" width="900" height="500" loading="lazy" /><figcaption>扫码关注「王星星的魔灯」</figcaption></figure>

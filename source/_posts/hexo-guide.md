@@ -1,11 +1,12 @@
 ---
-title: "Hexo使用指南"
+title: 使用 Hexo 与 GitHub Pages 搭建博客
 date: 2020-12-16 19:53
 tags:
-   - 静态博客
+  - 博客与写作
+  - 开发工具
 categories:
-   - 采坑记录
-description: "Hexo博客从零搭建实战指南，涵盖环境准备、安装配置、GitHub Pages部署及主题更换，收录常见坑点及解决方案。"
+  - 采坑记录
+description: Hexo博客从零搭建实战指南，涵盖环境准备、安装配置、GitHub Pages部署及主题更换，收录常见坑点及解决方案。
 ---
 
 最近用了hexo搭建博客，踩了许多坑，所以想总结一篇文章。包括每一步的做法，以及可能踩的坑，以及应对的办法

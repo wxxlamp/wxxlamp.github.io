@@ -1,11 +1,12 @@
 ---
-title: "Netty可用性剖析"
+title: Netty 核心机制：架构、缓冲区与协议处理
 date: 2023-01-10 10:36
 tags:
-   - NETTY
+  - 网络通信
+  - Java
 categories:
-   - 面试经验
-description: "剖析Netty框架核心优势：三层逻辑架构、Bootstrap脚手架、Handler责任链、TCP粘包拆包解决方案、ByteBuf动态扩缩容与序列化支持。"
+  - 面试经验
+description: 剖析Netty框架核心优势：三层逻辑架构、Bootstrap脚手架、Handler责任链、TCP粘包拆包解决方案、ByteBuf动态扩缩容与序列化支持。
 ---
 
 Netty使用起来非常简单，不用像写Java原生的NIO一样， 各种Select的监听和处理；同时，也无需处理Java NIO自身的各种BUG；以及网络编程中的各种坑，如TCP的沾包拆包问题等。

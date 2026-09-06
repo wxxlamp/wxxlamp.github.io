@@ -13,7 +13,7 @@
 
 ## 去 AI 味复审
 
-`polish-expand` 完成内容补充后，由 AI 单独再读一遍全文。这一步不是脚本替换同义词，而是根据语气档案和具体上下文重新组织表达。
+两种 edit_mode 完成内容编辑后，由 AI 单独再读一遍全文。这一步不是脚本替换同义词，而是根据语气档案和具体上下文重新组织表达。
 
 - 开头直接进入作者的具体问题、观察或判断，删除“在当今时代”“随着技术不断发展”一类通用背景。
 - 删除不承载新信息的“值得注意的是”“综上所述”“由此可见”和逐节总结；转场应来自前后内容关系。
@@ -24,13 +24,13 @@
 - 同一结论只总结一次。结尾停在真正有价值的判断、限制或下一步，不写万能升华。
 - 技术文章优先保证准确和清晰；“去 AI 味”不能删掉必要前提、代码解释或失败场景。
 
-完成后在 `metadata.json.ai_tone_review` 记录作者基线指纹，以及这些检查：`template_opening`、`empty_abstractions`、`mechanical_transitions`、`negative_parallelism`、`rule_of_three`、`excessive_parallelism`、`repetitive_summaries`、`generic_conclusion`、`manufactured_punchline`、`inflated_claims`、`uniform_sentence_rhythm`、`vague_attribution`、`chatbot_artifacts`。脚本只检查记录并提示高风险表达，最终判断和改写仍由 AI 完成。
+v2 按 editorial-review.md 在逐平台复审中写具体观察；以下为语气遍的检查线索，不要求重复抄成一份布尔清单。旧项目的 `metadata.json.ai_tone_review` 兼容以下检查：`template_opening`、`empty_abstractions`、`mechanical_transitions`、`negative_parallelism`、`rule_of_three`、`excessive_parallelism`、`repetitive_summaries`、`generic_conclusion`、`manufactured_punchline`、`inflated_claims`、`uniform_sentence_rhythm`、`vague_attribution`、`chatbot_artifacts`。脚本只检查记录并提示高风险表达，最终判断和改写仍由 AI 完成。
 
 ## 从骨架扩写
 
 先读取 `metadata.json.edit_mode`：
 
-- `correction-only` 只修正错别字、语病、标点、术语大小写和确定性的格式错误；不新增段落、例子或判断。
+- `correction-only` 只修正错别字、语病、标点、术语大小写、确定性的格式错误和有依据的知识错误；不新增段落、例子或判断。
 - `polish-expand` 才允许按下列规则补充和润色。
 
 - 把用户已给出的主题、判断和经历视为事实边界。
@@ -42,7 +42,7 @@
 ## Markdown 结构
 
 - `draft/polished.md` 不包含 front matter，也不重复文档标题。
-- `#` 用作正文一级章节。每个一级章节下方 3 个非空行内放置章节图。
+- `#` 用作正文一级章节。章节图按实际解释需要放在相关段落附近；没有信息任务的短章节不凑图。
 - 封面图片放在正文开头、第一个一级标题之前。
 - 图片写成 `![准确的替代文本](https://...)`，替代文本描述信息而不是写“图片”。
 - 代码块必须注明语言；命令和路径使用反引号。
@@ -77,11 +77,13 @@
 ## 微信公众号轻适配
 
 - 以 `polished.md` 为唯一内容底稿，保留完整论点、事实、章节顺序、例子、代码、引用和正文图片。
-- 只允许拆分过长段落、修正少量不适合公众号的指代，并可在结尾增加一句自然的互动邀请。
+- 允许拆分过长段落、调整加粗与图片位置、修正少量不适合公众号的指代，并可在结尾增加一句自然的互动邀请。
 - 不另写摘要版，不删掉技术细节，不改标题立场，不新增原文没有的判断。
 - `wechat.html` 只改变视觉呈现；不能借排版之名再次改写文本。
 
 ## 小红书系列拆分
+
+具体材料映射与合并/拆分判断遵守 [rednote-planning.md](rednote-planning.md)。
 
 先提取文章对象、目标读者、核心判断、可执行信息和证据材料，再生成 `series-plan.json`。一个主题只能支撑一篇完整短文时就生成 1 轮；只有多个主题在缺少其他轮时仍有完整背景、独立收益和足够材料，才生成多轮。用 `round_count_reason` 记录判断，不得硬凑轮数，也不得机械按一级标题一一拆分。可从“为什么做 / 如何实现 / 踩坑与边界 / 实际使用”中选择原文真正支持的角度。
 
@@ -96,6 +98,8 @@
 7. 多轮时逐轮做“陌生读者测试”：只读当前 `post.md` 和卡片，仍能回答“讲的是什么、为什么重要、能怎么做”，才算独立成立。
 
 ## 事实与版权
+
+两种编辑模式、各平台正文和卡片遵守 [editorial-review.md](editorial-review.md)。历史文章不充当知识依据。事实疑点先核查权威来源，修正后再调整语气；时效事实记录核查日期与实际来源。
 
 - 不伪造引用、调研、用户反馈或跑分。
 - 生成视觉不得模仿在世艺术家的独特风格，不使用无授权商标和人物肖像。

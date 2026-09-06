@@ -10,6 +10,7 @@
 - `visual_type`：`real-material`、`process-diagram`、`architecture-diagram`、`comparison-chart`、`editorial-illustration` 或 `narrative-scene`。
 - `must_show`：画面里必须可见的 2–5 个对象、关系或步骤。
 - `avoid`：容易把语义带偏的元素。
+- `placement_reason`：放在相关段落之后或操作附近的理由；不默认每节都有图。
 - `prompt`：实际交给生图模型的完整提示词。
 - `review_status`：AI 看过成图并确认语义相符后才能写 `passed`。
 
@@ -49,3 +50,8 @@
 - `JuneYaooo/xhs-writer-skill`：先做卡片叙事、每卡一个信息点、优先真实材料（Apache-2.0）。
 - `dancolta/gen-images-skill`：从上下文提取图片槽位，先写 brief，再生成和复审。
 - `op7418/guizang-social-card-skill`：教程和工具内容优先编辑式信息图，并为标题保留安全区。这里只借鉴通用设计原则，不复制其受 AGPL-3.0 约束的实现或模板。
+
+
+## 平台标题与可选英文版
+
+新项目还必须遵守 [publishing-plan.md](publishing-plan.md)。发布计划单独记录专业博客标题、吸引读者的社交标题、规范分类话题和 AI 英文取舍理由。英文正文与英文图片实际复审后才可分发；editorial-review 的 artifacts 同时绑定 publishing-plan.json 与可选 english.md，内容变化后重新复审。

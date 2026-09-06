@@ -1,14 +1,13 @@
 ---
-title: "【我在阿里拧螺丝3】淘天技术AI夜校培训思考——Agent、SKILL与模型"
-date: 2026-08-18 23:29:47
+title: Agent、Skill 与模型：AI 夜校学习与工程实践思考
 tags:
-  - "大语言模型"
-  - "人工智能"
-  - "Agent"
-  - "系统设计"
+  - 智能体工程
+  - 大模型应用
+  - 系统设计
 categories:
-  - "架构思考"
-description: "结合淘天技术 AI 夜校与 Agent 开发实践，讨论模型、Agent、Skill 的边界，以及业务选型和评测方法。"
+  - 架构思考
+description: 结合淘天技术 AI 夜校与 Agent 开发实践，讨论模型、Agent、Skill 的边界，以及业务选型和评测方法。
+date: 2026-08-18 23:29:47
 ---
 ![夜间 AI 课堂后的工程思考](https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/60fce5c0_cover.png)
 

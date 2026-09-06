@@ -6,12 +6,16 @@
     "build": "hexo generate",
     "clean": "hexo clean",
     "deploy": "hexo deploy",
-    "server": "hexo server"
+    "server": "hexo server",
+    "test": "node --test tests/*.test.cjs",
+    "check:translations": "node tools/check-translations.cjs",
+    "check:seo": "node tools/check-seo.cjs"
   },
   "hexo": {
     "version": "8.1.1"
   },
   "dependencies": {
+    "cheerio": "1.0.0",
     "hexo": "^8.0.0",
     "hexo-generator-archive": "^2.0.0",
     "hexo-generator-category": "^2.0.0",
@@ -24,6 +28,7 @@
     "hexo-renderer-stylus": "^3.0.1",
     "hexo-renderer-swig": "^2.0.0",
     "hexo-server": "^3.0.0",
-    "hexo-theme-landscape": "^1.0.0"
+    "hexo-theme-landscape": "^1.0.0",
+    "mathjax": "3.2.2"
   }
 }

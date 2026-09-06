@@ -1,11 +1,15 @@
 ---
-title: "MetaQ消费堆积问题排查"
+title: MetaQ 消息堆积排查：ConsumerGroup 配置冲突
 tags:
-   - MQ
+  - 消息队列
+  - 问题排查
 categories:
-   - 采坑记录
+  - 采坑记录
 date: 2023-04-25 21:36
-description: "记录Spring Cloud Stream迁移至MetaQ原生配置引发的消费堆积问题排查。通过源码分析发现同一ConsumerGroup只能映射一个MQConsumerInner，最终通过拆分ConsumerGroup ID解决。"
+description: >-
+  记录Spring Cloud
+  Stream迁移至MetaQ原生配置引发的消费堆积问题排查。通过源码分析发现同一ConsumerGroup只能映射一个MQConsumerInner，最终通过拆分ConsumerGroup
+  ID解决。
 ---
 
 

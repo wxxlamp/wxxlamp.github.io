@@ -3,11 +3,11 @@
 
 {% block title %}
   {% if page.archive %}
-    {{ __('menu.archives') }} - {{ config.title }}
+    {% if content_language() === 'en' %}Archive{% else %}{{ __('menu.archives') }}{% endif %} - {{ site_title() }}
   {% elif page.tag %}
-    {{ page.tag }} - {{ config.title }}
+    {{ taxonomy_label(page.tag) }} - {{ site_title() }}
   {% elif page.category %}
-    {{ page.category }} - {{ config.title }}
+    {{ taxonomy_label(page.category) }} - {{ site_title() }}
   {% endif %}
 {% endblock %}
 

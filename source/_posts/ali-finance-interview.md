@@ -1,12 +1,12 @@
 ---
-title: "阿里企业金融实习面试"
+title: 阿里企业金融实习面试复盘
 date: 2020-04-03 10:36
 tags:
-   - JAVA
-   - 校园招聘
+  - 求职面试
+  - Java
 categories:
-   - 面试经验
-description: "阿里企业金融实习五轮面试复盘，涵盖Java并发、Spring原理、MySQL、Redis、MQ等技术点，及多线程编程题，分享面试经历与最终选择。"
+  - 面试经验
+description: 阿里企业金融实习五轮面试复盘，涵盖Java并发、Spring原理、MySQL、Redis、MQ等技术点，及多线程编程题，分享面试经历与最终选择。
 ---
 
 面试流程是p7 -> p8 -> p9 -> p9（交叉）-> HR

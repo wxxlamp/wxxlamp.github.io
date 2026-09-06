@@ -1,12 +1,14 @@
 ---
-title: "DIY一个参数解析器"
+title: Spring MVC 自定义参数解析器的实现
 date: 2020-12-22 18:26
 tags:
-   - JAVA
-   - SPRING MVC
+  - Spring 框架
+  - Java
 categories:
-   - 场景实践
-description: "解决Spring MVC中@RequestBody无法映射到多个参数的问题，通过自定义HandlerMethodArgumentResolver和注解，实现JSON字段到多参数的精准映射。"
+  - 场景实践
+description: >-
+  解决Spring
+  MVC中@RequestBody无法映射到多个参数的问题，通过自定义HandlerMethodArgumentResolver和注解，实现JSON字段到多参数的精准映射。
 ---
 
 在公司实习中，公司原有代码的RESTful请求中，GET和POST居多。我们知道，对于URL携带的参数来说，我们需要用`@PathVariable`，`@RequestParam`来进行解析和映射。对于POST的body来说，我们可以通过`@RequestBody`来把body映射到参数中，Spring默认的反序列化方式是通过Jackson，我们也可以通过converter来改变。
@@ -168,4 +170,4 @@ public String test(String a, String b) {
 
 2021.1.27更新：
 
-新写了一篇[@ResponseBody解析](https://wxxlamp.cn/2021/01/27/annotation-requestbody/)的文章，有助于理解
+新写了一篇[@RequestBody解析](https://wxxlamp.cn/2021/01/27/annotation-requestbody/)的文章，有助于理解

@@ -1,14 +1,13 @@
 ---
-title: "我把语雀长文到博客、公众号和小红书，做成了一个 Codex 插件"
-date: 2026-08-02 17:28:50
+title: 基于 Codex 插件的语雀多平台内容发布实践
 tags:
-  - "Codex"
-  - "Plugin"
-  - "内容创作"
-  - "自动化"
+  - AI 编程
+  - 研发效能
+  - 博客与写作
 categories:
-  - "场景实践"
-description: "我把语雀长文的润色、配图、三端改写、质量检查和草稿投递收进一个 Codex Plugin，也记录平台自动化的真实边界。"
+  - 场景实践
+description: 我把语雀长文的润色、配图、三端改写、质量检查和草稿投递收进一个 Codex Plugin，也记录平台自动化的真实边界。
+date: 2026-08-02 17:28:50
 ---
 ![一篇长文经过可恢复工作流生成三端发布包](https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/b2c5bb2c_cover.png)
 

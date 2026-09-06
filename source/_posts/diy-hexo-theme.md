@@ -1,11 +1,12 @@
 ---
-title: "HEXO主题修改指北"
+title: Hexo 主题开发：结构、渲染流程与功能定制
 date: 2021-03-22 19:38
 tags:
-   - 静态博客
+  - 博客与写作
+  - 开发工具
 categories:
-   - 采坑记录
-description: "介绍Hexo主题二次开发原理与实践，从Hexo工作流程出发，剖析主题构成要素，并说明如何添加分类、目录、统计等定制功能。"
+  - 采坑记录
+description: 介绍Hexo主题二次开发原理与实践，从Hexo工作流程出发，剖析主题构成要素，并说明如何添加分类、目录、统计等定制功能。
 ---
 
 为什么会写这篇文章呢？如你所见，我的博客使用hexo驱动，使用的主题是[Anatole-core](https://github.com/mrcore/hexo-theme-Anatole-Core)，它简洁美观，易于使用，感谢作者的开源，resp。

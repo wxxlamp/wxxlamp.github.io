@@ -1,13 +1,13 @@
 ---
-title: "构建基于 AgentScope 的 AI 运营平台，开发者除了 Loop 还要考虑什么？"
+title: 基于 AgentScope 的 AI 运营平台设计与实践
 date: 2026-07-19 23:58
 tags:
-  - 大语言模型
-  - 人工智能
+  - 智能体工程
+  - 大模型应用
   - 系统设计
 categories:
   - 架构思考
-description: "基于AgentScope总结AI运营平台的工程实践，覆盖提示词、状态机、主子Agent、工具治理、联调验证与体验优化。"
+description: 基于AgentScope总结AI运营平台的工程实践，覆盖提示词、状态机、主子Agent、工具治理、联调验证与体验优化。
 ---
 
 ![AI 运营平台](https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/52d30cd1_agentscope-ops-platform-cover.png)
@@ -75,7 +75,7 @@ Context-Reminder 中通常包含这些内容：
 
 延伸阅读：
 
-1. [Claude prompting best practices](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices)
+1. [Claude 提示词最佳实践](https://platform.claude.com/docs/zh-CN/build-with-claude/prompt-engineering/claude-prompting-best-practices)
 2. [prompt-eng-interactive-tutorial](https://github.com/anthropics/prompt-eng-interactive-tutorial)
 
 ### 上下文压缩

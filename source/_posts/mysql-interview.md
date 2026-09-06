@@ -1,12 +1,13 @@
 ---
-title: "MySQL常见面试题"
+title: MySQL 面试知识梳理：事务、索引与锁
 tags:
-   - MYSQL
-   - 数据库
+  - 数据库
+  - 求职面试
 categories:
-   - 面试经验
+  - 面试经验
 date: 2019-11-24 10:36
-description: "系统整理MySQL高频面试题，覆盖ACID事务、隔离级别、索引原理、存储引擎对比、锁机制与MVCC，以及SQL执行链路与日志区别等核心知识，适合Java后端面试备战。"
+description: >-
+  系统整理MySQL高频面试题，覆盖ACID事务、隔离级别、索引原理、存储引擎对比、锁机制与MVCC，以及SQL执行链路与日志区别等核心知识，适合Java后端面试备战。
 ---
 
 **时间过得好快呀**

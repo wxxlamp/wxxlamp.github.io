@@ -1,0 +1,40 @@
+{
+  "cards": [
+    {
+      "index": 1,
+      "role": "cover",
+      "headline": "美美地生成视频",
+      "body": "想让Astra做一个男孩从6到26岁的骑行视频。刚开始的关键帧，还真挺像那么回事。",
+      "visual_strategy": "real_material",
+      "material_ref": "images/originals/source-06.png",
+      "image_url": "https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@e553be4c58969c0b47a33016c3624ae0d967d210/images/1620119b_round2-01.png"
+    },
+    {
+      "index": 2,
+      "role": "evidence",
+      "headline": "然后开始反复试镜",
+      "body": "眼镜消失、脸型漂移、脚踏不稳。Astra会自己check，发现不符合要求，就继续重新生成。",
+      "visual_strategy": "real_material",
+      "material_ref": "images/yuque-cropped/source-07.png",
+      "image_url": "https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@e553be4c58969c0b47a33016c3624ae0d967d210/images/0e87ea3c_round2-02.png"
+    },
+    {
+      "index": 3,
+      "role": "experience",
+      "headline": "用了个邪修的方式",
+      "body": "让Astra操作浏览器，去Dreamina用Seedance生成。免费额度不够，就让它把当时能领的都领到。",
+      "visual_strategy": "real_material",
+      "material_ref": "images/originals/source-09.png",
+      "image_url": "https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@e553be4c58969c0b47a33016c3624ae0d967d210/images/c4ef3349_round2-03.png"
+    },
+    {
+      "index": 4,
+      "role": "ending",
+      "headline": "多么痛的领悟",
+      "body": "折腾了15个小时，确实有短片段，但视频还是没达到预期。几乎浪费了我Pro一周的额度。",
+      "visual_strategy": "real_material",
+      "material_ref": "images/originals/source-08.png",
+      "image_url": "https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@e553be4c58969c0b47a33016c3624ae0d967d210/images/7eae355b_round2-04.png"
+    }
+  ]
+}

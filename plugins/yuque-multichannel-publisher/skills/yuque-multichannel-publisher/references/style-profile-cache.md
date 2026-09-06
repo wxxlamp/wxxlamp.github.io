@@ -18,9 +18,11 @@ python3 plugins/yuque-multichannel-publisher/skills/yuque-multichannel-publisher
 - `reuse`：只读取 `profile_path`。禁止重新读取样本。
 - `learn`：首次建立档案。读取 `read_samples` 中的 3–8 篇文章。
 - `refresh`：先读取旧 `profile_path`，再读取 `read_samples` 中的变化文章和锚点文章；不要重读整个分类。
-- `blocked`：该分类没有样本。改用 `default` 档案；仍不存在时使用自然、克制的默认语气，并明确这是冷启动。
+- `blocked`：该分类没有样本。改用 `default` 档案；仍不存在时沿用当前原稿的实际语气，原稿也无足够表达材料时才使用朴素、直接的默认语气，并在内部复审记录档案不足。
 
 `default` 是跨分类兜底档案，只有在缺少精确分类档案时使用。不得用它覆盖已经存在的分类档案。
+
+缓存命中只省去历史样本读取，不省去当前 raw/source.md 与成稿的对照。所有档案都服从用户本次要求与本篇原稿已有的声音，不能把档案中的概括当作每段必须套用的写法。
 
 ## AI 生成档案
 

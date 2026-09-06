@@ -31,11 +31,17 @@ def resolve_theme(theme='auto', article_type='neutral'):
     return selected
 
 
-def render(markdown, theme='auto', link_mode='endnotes', article_type='neutral'):
+def render(markdown, theme='auto', link_mode='endnotes', article_type='neutral', image_frame='subtle', heading_style='plain', preserve_html=False):
     if link_mode not in ('endnotes', 'inline'):
         raise ValueError('未知链接呈现模式')
+    if image_frame not in ('subtle', 'shadow', 'none'):
+        raise ValueError('未知图片边框样式')
+    if heading_style not in ('plain', 'prominent'):
+        raise ValueError('未知章节标题样式')
     theme = resolve_theme(theme, article_type)
     accent = THEMES[theme]
+    image_border = '0' if image_frame == 'none' else '1px solid #e2e2e2'
+    image_shadow = 'box-shadow:0 2px 8px rgba(37,44,41,.08);' if image_frame == 'shadow' else ''
     styles = {
         'paragraph_open': 'margin:0 0 20px;line-height:1.85;text-align:left;',
         'blockquote_open': f'margin:24px 0;padding:12px 16px;border-left:3px solid {accent};background:#f6f6f6;color:#505050;',
@@ -48,13 +54,13 @@ def render(markdown, theme='auto', link_mode='endnotes', article_type='neutral')
         'th_open': 'padding:10px 8px;border:1px solid #e2e2e2;background:#f5f5f5;text-align:left;',
         'td_open': 'padding:10px 8px;border:1px solid #e2e2e2;text-align:left;overflow-wrap:anywhere;',
         'hr': 'border:0;border-top:1px solid #e3e3e3;margin:32px 0;',
-        'image': 'display:block;max-width:100%;height:auto;margin:24px auto;border-radius:4px;',
+        'image': f'display:block;box-sizing:border-box;max-width:100%;height:auto;margin:24px auto;border:{image_border};border-radius:4px;{image_shadow}',
         'code_inline': 'font-size:14px;font-family:Menlo,Consolas,monospace;background:#f4f4f4;padding:2px 4px;border-radius:3px;overflow-wrap:anywhere;',
     }
-    md = MarkdownIt('commonmark', {'html': False}).enable('table')
+    md = MarkdownIt('commonmark', {'html': preserve_html}).enable('table')
     # Raw HTML cannot be silently stripped/escaped in a publishing artifact.
     raw_tokens = MarkdownIt('commonmark', {'html':True}).parse(markdown)
-    if any(token.type in ('html_block', 'html_inline') or any(c.type == 'html_inline' for c in (token.children or [])) for token in raw_tokens):
+    if not preserve_html and any(token.type in ('html_block', 'html_inline') or any(c.type == 'html_inline' for c in (token.children or [])) for token in raw_tokens):
         raise ValueError('请先把原始 HTML 转成等义 Markdown，或由 AI 保真排版并验证')
     def decorate(tokens):
         for token in tokens:
@@ -64,8 +70,10 @@ def render(markdown, theme='auto', link_mode='endnotes', article_type='neutral')
                 level = int(token.tag[1])
                 size = {1:22, 2:19, 3:17}.get(level,16)
                 token.attrSet('style', f'font-size:{size}px;line-height:1.45;font-weight:600;color:#242424;margin:36px 0 16px;text-align:left;')
+                if level == 1 and heading_style == 'prominent':
+                    token.attrSet('style', f'font-size:24px;line-height:1.5;font-weight:700;color:#242424;margin:36px 0 20px;padding:10px 14px;border-left:4px solid {accent};background:#f7f5f3;text-align:left;')
             if token.children:
-                if any(c.type=='html_inline' for c in token.children):
+                if not preserve_html and any(c.type=='html_inline' for c in token.children):
                     raise ValueError('行内 HTML 请先转为等义 Markdown')
                 decorate(token.children)
     tokens = md.parse(markdown)
@@ -95,12 +103,15 @@ def main():
     parser.add_argument('--theme', choices=['auto', *THEMES], default='auto', help='显式主题优先；auto 按文章类型选色')
     parser.add_argument('--article-type', choices=list(ARTICLE_THEMES), default='neutral', help='AI 根据文章目的选择；未指定时采用中性灰')
     parser.add_argument('--link-mode', choices=['endnotes','inline'], default='endnotes')
+    parser.add_argument('--image-frame', choices=['subtle', 'shadow', 'none'], default='subtle', help='细框、轻阴影或无框')
+    parser.add_argument('--heading-style', choices=['plain', 'prominent'], default='plain')
+    parser.add_argument('--preserve-html', action='store_true', help='保留已审阅的行内样式 HTML（如时间线）；不做清洗，仍需保真验证及预览')
     args=parser.parse_args()
     source=Path(args.input).read_text()
     issues = link_label_issues(source)
     if issues:
         raise SystemExit('\n'.join(issues))
-    result=render(source,args.theme,args.link_mode,args.article_type)
+    result=render(source,args.theme,args.link_mode,args.article_type,args.image_frame,args.heading_style,args.preserve_html)
     from editorial_quality import validate_html_fidelity
     errors=validate_html_fidelity(source,result)
     if errors:

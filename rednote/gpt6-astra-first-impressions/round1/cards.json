@@ -1,0 +1,31 @@
+{
+  "cards": [
+    {
+      "index": 1,
+      "role": "cover",
+      "headline": "简直amazing",
+      "body": "作为一个审美一言难尽的程序员，让Astra帮我改了下博客。等了三十分钟，效果还真让我惊喜。",
+      "visual_strategy": "real_material",
+      "material_ref": "images/originals/source-04.png",
+      "image_url": "https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@e553be4c58969c0b47a33016c3624ae0d967d210/images/8206ee7d_round1-01.png"
+    },
+    {
+      "index": 2,
+      "role": "evidence",
+      "headline": "提示词就这么简单",
+      "body": "页面太丑了，手机和电脑不统一，双语支持也很差。我只能给它一个很模糊的提示。",
+      "visual_strategy": "real_material",
+      "material_ref": "images/yuque-cropped/source-01.png",
+      "image_url": "https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@e553be4c58969c0b47a33016c3624ae0d967d210/images/de9db432_round1-02.png"
+    },
+    {
+      "index": 3,
+      "role": "experience",
+      "headline": "三言两语就能get到",
+      "body": "随后又提了多语言、布局、文字、SEO的诉求。这种自我检查和交付的效果，比我用Sol的时候好很多。",
+      "visual_strategy": "real_material",
+      "material_ref": "images/originals/source-02.png",
+      "image_url": "https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@e553be4c58969c0b47a33016c3624ae0d967d210/images/da1d83a4_round1-04.png"
+    }
+  ]
+}

@@ -11,6 +11,7 @@ import os
 import sys
 from pathlib import Path
 from typing import Any
+from urllib.parse import quote
 
 import requests
 
@@ -80,28 +81,43 @@ def upload_github(path: Path, config: dict[str, Any], token: str) -> dict[str, A
     remote_dir = str(config.get("github_path") or "images").strip("/")
     cdn_mode = str(config.get("github_cdn") or "jsdelivr")
     content = path.read_bytes()
-    digest = hashlib.sha256(content).hexdigest()[:8]
-    remote_path = f"{remote_dir}/{digest}_{path.name}"
-    response = requests.put(
-        f"https://api.github.com/repos/{owner}/{repository}/contents/{remote_path}",
-        headers={
-            "Authorization": f"Bearer {token}",
-            "Accept": "application/vnd.github+json",
-        },
-        json={
+    digest = hashlib.sha256(content).hexdigest()
+    remote_path = f"{remote_dir}/{digest[:8]}_{path.name}".lstrip('/')
+    api = f"https://api.github.com/repos/{quote(owner, safe='')}/{quote(repository, safe='')}"
+    headers = {"Authorization": f"Bearer {token}", "Accept": "application/vnd.github+json"}
+    # Pin a snapshot before lookup, so a concurrent branch update cannot move the URL.
+    head = requests.get(f"{api}/commits/{quote(branch, safe='')}", headers=headers, timeout=30)
+    head.raise_for_status()
+    commit = head.json().get("sha")
+    if not isinstance(commit, str) or len(commit) != 40:
+        raise RuntimeError("GitHub 未返回有效的提交 SHA")
+    endpoint = f"{api}/contents/{quote(remote_path, safe='/')}"
+    existing = requests.get(endpoint, headers=headers, params={"ref": commit}, timeout=30)
+    reused = existing.status_code == 200
+    if reused:
+        blob_sha = hashlib.sha1(f"blob {len(content)}\0".encode() + content).hexdigest()
+        if existing.json().get("sha") != blob_sha:
+            raise RuntimeError("GitHub 图床同名文件内容不同，停止覆盖；请更换本地文件名")
+    else:
+        if existing.status_code != 404:
+            existing.raise_for_status()
+        response = requests.put(endpoint, headers=headers, json={
             "message": f"Upload {path.name}",
             "content": base64.b64encode(content).decode("ascii"),
             "branch": branch,
-        },
-        timeout=90,
-    )
-    response.raise_for_status()
-    payload = response.json()
+        }, timeout=90)
+        response.raise_for_status()
+        commit = response.json().get("commit", {}).get("sha")
+        if not isinstance(commit, str) or len(commit) != 40:
+            raise RuntimeError("GitHub 上传响应缺少提交 SHA；先核对远程文件，不直接重试")
     cdn_domain = "jsd.cdn.zzko.cn" if cdn_mode == "china" else "cdn.jsdelivr.net"
     return {
         "provider": "github",
-        "url": f"https://{cdn_domain}/gh/{owner}/{repository}@{branch}/{remote_path}",
-        "raw_url": payload.get("content", {}).get("download_url"),
+        "url": f"https://{cdn_domain}/gh/{owner}/{repository}@{commit}/{quote(remote_path, safe='/')}",
+        "raw_url": f"https://raw.githubusercontent.com/{owner}/{repository}/{commit}/{quote(remote_path, safe='/')}",
+        "commit": commit,
+        "sha256": digest,
+        "reused": reused,
     }
 
 

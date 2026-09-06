@@ -4,6 +4,8 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
+import html
 import json
 import re
 import sys
@@ -155,7 +157,7 @@ class YuqueFetcher:
 
 def image_urls(markdown: str) -> list[str]:
     urls = set(re.findall(r"!\[[^\]]*\]\((https?://[^)]+)\)", markdown))
-    urls.update(re.findall(r'<img[^>]*?src=["\']?(https?://[^\s"\'?>]+)', markdown))
+    urls.update(re.findall(r'<img[^>]*?src=["\']?(https?://[^\s"\'>]+)', markdown))
     return sorted(urls)
 
 
@@ -192,16 +194,36 @@ def migrate_images(
     session: YuqueSession,
     root: Path,
     provider: str | None,
+    image_manifest: Path | None = None,
 ) -> str:
     urls = image_urls(markdown)
     if not urls:
         return markdown
     failures: list[str] = []
+    display_files: dict[str, Path] = {}
+    if image_manifest:
+        manifest = json.loads(image_manifest.read_text(encoding="utf-8"))
+        # Resolve and validate the whole batch before the first public upload.
+        for item in manifest.get("images", []):
+            source = str(item.get("source_url") or "")
+            if source not in {html.unescape(url) for url in urls} or source in display_files:
+                raise ValueError("图片显示清单包含缺失或重复的源 URL")
+            local = Path(str(item.get("display") or ""))
+            if not local.is_absolute():
+                local = image_manifest.parent.parent / local
+            if not local.is_file() or item.get("review_status") != "passed" or not item.get("review_note"):
+                raise ValueError("图片显示版本必须存在，并已对照语雀可见裁剪完成复审")
+            if hashlib.sha256(local.read_bytes()).hexdigest() != item.get("display_sha256"):
+                raise ValueError("图片显示版本已变化，需重新核对裁剪与指纹")
+            display_files[source] = local
     with tempfile.TemporaryDirectory(prefix="yuque-images-") as temp:
         destination = Path(temp)
         for index, url in enumerate(urls, 1):
             try:
-                local = download_image(url, session.cookies(), destination)
+                decoded = html.unescape(url)
+                local = display_files.get(decoded)
+                if local is None:
+                    local = download_image(decoded, session.cookies(), destination)
                 uploaded = upload_file(local, provider=provider, root=root)
                 markdown = markdown.replace(url, uploaded["url"])
                 print(f"[{index}/{len(urls)}] {uploaded['url']}")
@@ -220,6 +242,7 @@ def main() -> None:
     parser.add_argument("--login", action="store_true")
     parser.add_argument("--no-images", action="store_true")
     parser.add_argument("--provider", choices=("imgur", "smms", "github", "chevereto"))
+    parser.add_argument("--image-manifest", type=Path, help="已核验的显示版本清单，裁剪图上传 display 而非原文件")
     args = parser.parse_args()
     root = find_workspace_root()
     session = YuqueSession(state_dir(root) / "browser-data" / "storage_state.json")
@@ -228,7 +251,7 @@ def main() -> None:
         session.ensure(args.login)
         title, markdown = YuqueFetcher(session).fetch(args.url)
         if not args.no_images:
-            markdown = migrate_images(markdown, session=session, root=root, provider=args.provider)
+            markdown = migrate_images(markdown, session=session, root=root, provider=args.provider, image_manifest=args.image_manifest)
         output = Path(args.output)
         if not output.is_absolute():
             output = root / output

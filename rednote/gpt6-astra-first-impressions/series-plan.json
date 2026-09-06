@@ -1,0 +1,90 @@
+{
+  "series_title": "Astra 一天使用体验",
+  "round_count_reason": "开发与浏览器协作、骑行视频制作各有独立的读者问题和实际截图。合成一篇会把视频的关键帧、运动失败与费用边界挤成一句提醒；按六个章节拆开又会让网站、讨论和验收缺少整体背景。因此选择两篇，初稿每篇四张卡片；发布时用户将第一篇改为三张。",
+  "content_units": [
+    {
+      "id": "development",
+      "source_excerpt": "在等了三十分钟后，Astra给了一个让我惊喜的效果。"
+    },
+    {
+      "id": "review",
+      "source_excerpt": "但是前提还是在于我能把验收规则定义的很清楚才可以"
+    },
+    {
+      "id": "browser",
+      "source_excerpt": "简直不要太方便。要是以前，我最少要操作2小时。"
+    },
+    {
+      "id": "video-goal",
+      "source_excerpt": "一个男孩从6到26岁，骑着自行车路过乡间、田野、小学、中学、大学、工作的各个场景"
+    },
+    {
+      "id": "video-failure",
+      "source_excerpt": "视频始终没有达到我的预期"
+    },
+    {
+      "id": "video-cost",
+      "source_excerpt": "花费了2亿 token和15个小时之后"
+    },
+    {
+      "id": "video-action",
+      "source_excerpt": "让Astra通过Computer Use操作浏览器，登录Dreamina"
+    },
+    {
+      "id": "personal-history",
+      "source_excerpt": "回想自己从2023年到现在使用AI工具的这四年",
+      "excluded_reason": "工具使用年表留在完整文章中。"
+    }
+  ],
+  "rounds": [
+    {
+      "round": "round1",
+      "angle": "程序员在真实开发任务里如何评估 Astra 的收益",
+      "subject": "Codex 中的 GPT-6 Astra",
+      "target_reader": "正在使用 AI 编程工具的程序员",
+      "core_viewpoint": "这次更明显的收益在网站审美、自我检查和跨页面操作，纯编码差距尚不明显。",
+      "context_brief": "周六把博客改版、开源问题讨论和内部代码审查交给 Astra，比较的是个人过去用 Sol 的印象。",
+      "reader_promise": "看看这一天改博客、讨论issue和做CR的实际感受。",
+      "hook": "作为一个审美一言难尽的程序员，让Astra改了下博客。",
+      "image_plan": [
+        "新版博客",
+        "作者裁剪的提示词",
+        "追加页脚需求"
+      ],
+      "unit_ids": [
+        "development",
+        "review",
+        "browser"
+      ],
+      "split_reason": "开发协作材料能组成完整体验，不需要依赖视频失败故事。",
+      "standalone_test": "仅看当前正文与三张卡，就能知道对象、试过的任务、体验改善以及验收和比较限制。",
+      "overlap_review": "只与另一篇共用 Astra 名称和单日体验背景，不复述骑行、模型尝试与长任务费用材料。"
+    },
+    {
+      "round": "round2",
+      "angle": "一次让Astra做骑行视频的经历",
+      "subject": "用 Codex Astra 编排骑行视频制作",
+      "target_reader": "希望让 AI Agent 代做视频的创作者",
+      "core_viewpoint": "原本以为可以美美地生成视频，折腾15小时仍不满意，多么痛的领悟。",
+      "context_brief": "希望做一个男孩从 6 岁骑到 26 岁的成长视频，尝试多个工具约 15 小时仍未达到预期。",
+      "reader_promise": "看看从关键帧到反复试镜，再到浏览器调用视频平台的过程。",
+      "hook": "想用一句话做骑行视频，结果折腾了约 15 小时。",
+      "image_plan": [
+        "关键帧",
+        "作者裁剪的试镜记录",
+        "Dreamina界面",
+        "当时的额度领取和生成记录"
+      ],
+      "unit_ids": [
+        "video-goal",
+        "video-failure",
+        "video-cost",
+        "video-action"
+      ],
+      "split_reason": "视频目标、尝试和失败能独立讲清，不需要前篇背景。",
+      "standalone_test": "单独阅读能知道想做什么视频、用了哪些方法和最后的感受；不添加原稿没有的下次计划。",
+      "overlap_review": "仅共享产品背景；不借网站改版成功给视频任务背书，不重复第一篇的审美和代码审查材料。"
+    }
+  ],
+  "closing_policy": "两篇自然结束，正文和卡片不追加疑问句。"
+}

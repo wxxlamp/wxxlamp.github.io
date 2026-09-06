@@ -3,6 +3,7 @@ import os
 import sys
 import tempfile
 import unittest
+from html.parser import HTMLParser
 from pathlib import Path
 from unittest.mock import patch
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts'))
@@ -14,6 +15,38 @@ import pipeline
 
 
 class EditorialTest(unittest.TestCase):
+    def test_image_frames_preserve_content_in_nested_and_reference_images(self):
+        class Images(HTMLParser):
+            def __init__(self):
+                super().__init__()
+                self.items = []
+            def handle_starttag(self, tag, attrs):
+                if tag == 'img':
+                    self.items.append(dict(attrs))
+
+        md = ('正文前。\n\n![白底截图](https://example.com/shot.png "原图")\n\n'
+              '> ![引用图][figure]\n\n'
+              '[![链接图](https://example.com/linked.png)](https://example.com/details)\n\n'
+              '[figure]: https://example.com/figure.png\n\n正文后。\n')
+        for frame in ('subtle', 'none'):
+            with self.subTest(frame=frame):
+                html = render(md, image_frame=frame)
+                self.assertEqual([], validate_html_fidelity(md, html))
+                images = Images()
+                images.feed(html)
+                self.assertEqual(3, len(images.items))
+                self.assertEqual('白底截图', images.items[0]['alt'])
+                self.assertEqual('原图', images.items[0]['title'])
+                for img in images.items:
+                    styles = dict(item.split(':', 1) for item in img['style'].split(';') if item)
+                    self.assertEqual('border-box', styles['box-sizing'])
+                    self.assertEqual('100%', styles['max-width'])
+                    self.assertEqual('auto', styles['height'])
+                    self.assertEqual('1px solid #e2e2e2' if frame == 'subtle' else '0', styles['border'])
+        self.assertEqual(render(md), render(md, image_frame='subtle'))
+        with self.assertRaises(ValueError):
+            render(md, image_frame='unknown')
+
     def test_renderer_preserves_symbols_code_links_images_table(self):
         md='# 1. 标题\n\n- **限制**：x != y，价格 9.9 元。\n- `a_b < 1`\n\n[文档](https://example.com/docs)\n\n![截图](https://example.com/img.png)\n\n> 只验证过此情况。\n\n```python\nif x != 2:\n    print("好")\n```\n\n|方案|限制|\n|---|---|\n|A|1 < 2|\n'
         for theme in ('ink','warm'):

@@ -57,6 +57,7 @@ button { color: inherit; }
 .post-meta { display: flex; flex-wrap: wrap; gap: 8px 16px; color: var(--muted); font-size: 12px; margin-bottom: 12px; font-variant-numeric: tabular-nums; }
 .post-meta a { color: var(--accent); }
 .post-title { font-size: clamp(26px, 3vw, 36px); font-weight: 650; line-height: 1.5; margin: 0; overflow-wrap: anywhere; }
+.view-post .post-title { text-align: center; }
 .home .post-title { font-size: clamp(19px, 1.8vw, 23px); line-height: 1.6; margin: 0; }
 .post-excerpt { font-size: 14px; color: var(--muted); line-height: 1.9; overflow-wrap: anywhere; }
 .read-entry { display: inline-flex; gap: 16px; align-items: center; font-size: 12px; color: var(--accent); margin-top: 15px; }
@@ -93,7 +94,7 @@ button { color: inherit; }
 .post-content .headerlink { text-decoration: none; }
 .post-content blockquote { background: var(--soft); padding: 18px 24px; border-left: 3px solid var(--accent); margin: 28px 0; color: #4e5b52; }
 .post-content blockquote p + p { margin-top: 1em; }
-.post-content img { display: block; height: auto; max-width: 100%; margin: 28px auto; border-radius: 4px; }
+.post-content img { display: block; height: auto; max-width: 100%; margin: 28px auto; border: 1px solid var(--line); border-radius: 4px; box-shadow: 0 2px 8px rgba(37, 44, 41, .08); }
 .post-content hr { border: 0; border-top: 1px solid var(--line); margin: 36px 0; }
 .post-content code, .post-content pre { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; font-size: .85em; }
 .post-content code { background: #edf0ea; border-radius: 3px; }
@@ -111,8 +112,9 @@ button { color: inherit; }
 .toc-list { padding: 0; margin: 0; list-style: none; }
 .toc-list li { margin: 8px 0; }
 .toc-list a { color: var(--muted); display: block; line-height: 1.6; }
-.toc-list .toc-h3 { padding-left: 12px; }
-.toc-list .toc-h4 { padding-left: 24px; }
+.toc-list .toc-h2 { padding-left: 12px; }
+.toc-list .toc-h3 { padding-left: 24px; }
+.toc-list .toc-h4 { padding-left: 36px; }
 .toc-list .active a { color: var(--accent); font-weight: 650; }
 .reading-progress { position: fixed; height: 2px; background: var(--accent); top: 0; left: 0; width: 0; z-index: 30; }
 .post-footer { border-top: 1px solid var(--line); }

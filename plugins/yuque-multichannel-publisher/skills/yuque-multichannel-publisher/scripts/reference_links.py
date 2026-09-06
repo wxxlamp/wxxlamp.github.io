@@ -84,6 +84,18 @@ def reference_context(repo, current_slug=None):
             if em and em.get('lang') == 'en' and em.get('translation_of') == post.stem:
                 variants['en'] = '/en'+route
         for value in variants.values(): routes[value] = variants
+    # Homepages and standalone pages are generated differently from dated posts.
+    # Use reviewed catalog entries, never infer /en/ from an arbitrary URL.
+    for pair in catalog.get('page_pairs', []):
+        if not isinstance(pair, dict) or not all(isinstance(pair.get(lang), str) and pair[lang].startswith('/') and not pair[lang].startswith('//') for lang in ('zh', 'en')):
+            raise ValueError('page_pairs 需提供已核验的站内 zh/en 绝对路径')
+        variants = {lang: normalized_path(pair[lang]) for lang in ('zh', 'en')}
+        if variants['zh'] == variants['en']:
+            raise ValueError('page_pairs 的中英文路径必须不同')
+        for value in variants.values():
+            if value in routes and routes[value] != variants:
+                raise ValueError('page_pairs 不得覆盖已有文章或页面路由：' + value)
+            routes[value] = variants
     for old, new in catalog.get('route_aliases', {}).items():
         if normalized_path(new) in routes: routes[normalized_path(old)] = routes[normalized_path(new)]
     result = {'site_url': origin, 'hosts': sorted(hosts), 'routes': routes, 'pairs': catalog.get('pairs', []), 'original_sources': catalog.get('original_sources', [])}

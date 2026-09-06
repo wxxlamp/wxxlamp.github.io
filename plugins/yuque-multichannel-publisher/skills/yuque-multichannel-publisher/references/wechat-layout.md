@@ -21,6 +21,8 @@
 
 不要把每段装进彩色卡片、不叠大边框或阴影，不用巨大编号占据首屏。正文保留内容本身的自然节奏，不强迫所有段落变成三行。
 
+正文图片默认加 `border:1px solid #e2e2e2;box-sizing:border-box;`，配合 `max-width:100%;height:auto;`、4px 小圆角和上下留白，让浅底截图与正文有清楚边界，不加粗框或重阴影。边框只写入 HTML 行内样式，不修改图片文件、URL、比例或内容；border-box 防止满宽图片加框后撑出手机屏幕。确需无框（如已有完整外框的设计图）时使用 `--image-frame none`，默认是 `subtle`；AI 手工排版也遵守同样原则。公众号后台封面独立上传，不加正文边框。
+
 图片位置根据阅读需要决定：流程图放在流程引入之后，截图紧靠相应操作或结果，比较图放在比较判断附近。短引言、结尾、参考资料通常无需生成装饰图。不必在每个一级标题后立即放图，也不为填空生成无信息图片。正文首图可在导入段之后、第一个主章节之前；微信公众号列表封面仍是独立字段。原图全部保留，若同一图重复引用需核对是否承担不同作用。
 
 代码采用可读等宽字体，保留缩进和字符；长行用视觉软换行或局部滚动，不能插入真实换行破坏复制。表格优先保留结构并控制列宽。过宽表格由 AI 在 Markdown 中改成同信息的分组条目，再同步生成 HTML，记录格式调整，不能截图后删掉唯一可复制数据。
@@ -36,7 +38,7 @@ python3 <skill>/scripts/wechat_preview.py --project-dir <project>
 
 渲染器只负责排版，不改句子。支持标题、列表、引用、链接、图片、表格、行内与块代码。原始 HTML 先保真转成 Markdown；复杂数学、嵌套组件等由 AI 单独排版、预览和复核。也可以直接由 AI 编写行内 HTML，最后走同样验证，不以脚本主题限制设计。
 
-预览器使用 Playwright Chromium（首次 `python3 -m playwright install chromium`），生成 375px、430px 截图与 `draft/preview/layout-evidence.json`。AI 必须打开实际截图检查：首屏是否进入主题、层级与留白是否清晰、图中文字是否可读、代码和表格是否越界、底部是否完整。`overflow` 或 `brokenImages` 非空时先修复。截图生成不会自动把复审记为 passed。
+预览器使用 Playwright Chromium（首次 `python3 -m playwright install chromium`），生成 375px、430px 截图与 `draft/preview/layout-evidence.json`。AI 必须打开实际截图检查：首屏是否进入主题、层级与留白是否清晰、图中文字是否可读、浅底图边界是否清楚、边框是否撑出屏幕或遮住图边文字、代码和表格是否越界、底部是否完整。`overflow` 或 `brokenImages` 非空时先修复。截图生成不会自动把复审记为 passed。
 
 把实际观察说明、截图与 HTML 指纹写进 `editorial-review.json.wechat_layout`，见 editorial-review.md。改动 HTML 后重新截图并复审。微信实际编辑器会再次清洗样式，操作其草稿时再检查粘贴结果；本地预览不冒称平台效果已验证。
 

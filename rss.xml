@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel>
-<title>王星星的魔灯</title><description>记录技术成长与生活感悟</description><link>https://wxxlamp.cn/</link><language>zh-CN</language><lastBuildDate>Sun, 06 Sep 2026 06:03:48 GMT</lastBuildDate>
+<title>王星星的魔灯</title><description>记录技术成长与生活感悟</description><link>https://wxxlamp.cn/</link><language>zh-CN</language><lastBuildDate>Sun, 06 Sep 2026 07:21:43 GMT</lastBuildDate>
 <atom:link href="https://wxxlamp.cn/rss.xml" rel="self" type="application/rss+xml"/>
 <item><title>Agent、Skill 与模型：AI 夜校学习与工程实践思考</title><link>https://wxxlamp.cn/2026/08/18/ali-ai-night-school-agent-skill-model/</link><guid isPermaLink="true">https://wxxlamp.cn/2026/08/18/ali-ai-night-school-agent-skill-model/</guid><pubDate>Tue, 18 Aug 2026 15:29:47 GMT</pubDate><description>结合淘天技术 AI 夜校与 Agent 开发实践，讨论模型、Agent、Skill 的边界，以及业务选型和评测方法。</description><content:encoded>&lt;p&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/60fce5c0_cover.png&quot; alt=&quot;夜间 AI 课堂后的工程思考&quot;&gt;&lt;/p&gt;
 &lt;h1 id=&quot;1-前言&quot;&gt;1. 前言&lt;/h1&gt;&lt;p&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/1bbb01e7_section-1-v2.png&quot; alt=&quot;从 AI 夜校到七个 Agent 工程问题&quot;&gt;&lt;/p&gt;

@@ -80,6 +80,22 @@
 
 
   
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MJEDN7D89G"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-MJEDN7D89G');
+</script>
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "ydyci83xyu");
+</script>
 
 
 
@@ -187,7 +203,7 @@
 <h3 id="Bean的排除和引入"><a href="#Bean的排除和引入" class="headerlink" title="Bean的排除和引入"></a>Bean的排除和引入</h3><p>上文我们引入了很多mock的Bean，容器很有可能会启动不起来，因为可能此时容器中既有真实的Bean，又有mock的Bean，这个时候，我们就需要将那些冲突的真实的Bean从测试容器中排除。<br>除此之外，有些Bean因为加载了非常恶心的东西（导致我们测试容器启动不起来），我们也需要排除。如下所示：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ComponentScan(basePackages = &#123;</span></span><br><span class="line"><span class="meta">    &quot;扫描我们希望引入的包和类&quot;</span></span><br><span class="line"><span class="meta">&#125;, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE,</span></span><br><span class="line"><span class="meta">        classes = &#123;要排除的包和类&#125;))</span></span><br><span class="line"><span class="meta">@Import(&#123;</span></span><br><span class="line"><span class="meta">        希望引入的bean</span></span><br><span class="line"><span class="meta">&#125;)</span></span><br><span class="line"><span class="meta">@TestConfiguration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ServiceMockConfig</span> &#123;&#125;</span><br></pre></td></tr></table></figure></div>
       <footer class="post-footer">
-        <div class="post-tags"><a href="/tags/%E6%B5%8B%E8%AF%95%E4%B8%8E%E8%B4%A8%E9%87%8F/">测试与质量</a><a href="/tags/Spring-%E6%A1%86%E6%9E%B6/">Spring 框架</a></div>
+        <div class="post-tags"><a href="/tags/Spring-%E6%A1%86%E6%9E%B6/">Spring 框架</a><a href="/tags/%E6%B5%8B%E8%AF%95%E4%B8%8E%E8%B4%A8%E9%87%8F/">测试与质量</a></div>
         
   <nav class="post-nav">
     

@@ -55,7 +55,9 @@ theme:
 # Baidu Analytics
 baidu_analytics:
 # Google Analytics
-google_analytics:
+google_analytics: G-MJEDN7D89G
+# Microsoft Clarity (public pages only)
+clarity_project_id: ydyci83xyu
 
 # Duoshuo
 duoshuo_shortname:

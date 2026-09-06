@@ -189,7 +189,7 @@
 <p>同理，<code>ScheduledThreadPoolExecutor</code>作为<code>ThreadPoolExecutor</code>的子类，基本上大差不差。与其最大的不同之处就在于队列：定时线程池自定义了<code>DelayedWorkQueue</code>队列，work线程从队列中获取任务时，队列会去判断时间，只有时间满足，才会将任务出列。同时在任务被执行完成后，定时线程池会将该任务重新入队，便于之后重新调用</p>
 </div>
       <footer class="post-footer">
-        <div class="post-tags"><a href="/tags/Java/">Java</a><a href="/tags/%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5/">问题排查</a><a href="/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/">并发编程</a></div>
+        <div class="post-tags"><a href="/tags/Java/">Java</a><a href="/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/">并发编程</a><a href="/tags/%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5/">问题排查</a></div>
         
   <nav class="post-nav">
     

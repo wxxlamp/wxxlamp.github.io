@@ -1,6 +1,6 @@
 {
   "name": "yuque-multichannel-publisher",
-  "version": "0.4.0+codex.20260905191729",
+  "version": "0.4.0+codex.20260906055327",
   "description": "\u81ea\u5305\u542b\u5730\u5c06\u8bed\u96c0\u6587\u6863\u52a0\u5de5\u4e3a\u53ef\u6062\u590d\u7684\u535a\u5ba2\u3001\u5fae\u4fe1\u516c\u4f17\u53f7\u548c\u5c0f\u7ea2\u4e66\u591a\u5e73\u53f0\u53d1\u5e03\u9879\u76ee\u3002",
   "author": {
     "name": "wxx"

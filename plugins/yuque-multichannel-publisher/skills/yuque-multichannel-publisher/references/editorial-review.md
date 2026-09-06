@@ -1,6 +1,6 @@
 # 编辑复审 v2：具体证据与当前文件绑定
 
-新建项目自动使用 `metadata.editorial_contract_version: 2` 与 `section_image_policy: content-driven`。旧项目恢复时保留已有文件，继续加工前设置这两项并补齐本复审；旧版状态兼容读取，校验会提示迁移，不把旧的 passed 自动继承成新标准。metadata 可以编辑，`.codex/state.json` 仍只由流水线管理。
+新建项目自动使用 `metadata.editorial_contract_version: 2` 与 `section_image_policy: content-driven`。旧项目恢复时保留已有文件，继续加工前设置这两项并补齐本复审；新旧项目均不再按章节要求图片；恢复旧项目时先审阅原图并按 visual-direction.md 补写简短的 draft/visual-plan.md。旧版状态兼容读取，校验会提示迁移，不把旧的 passed 自动继承成新标准。metadata 可以编辑，`.codex/state.json` 仍只由流水线管理。
 
 ## 审阅范围
 
@@ -16,7 +16,7 @@
 
 ## 记录结构
 
-在 `draft/editorial-review.json` 写入以下结构。所有指纹是相应文件当前字节的 SHA-256；`artifacts` 覆盖 raw/source.md、draft/polished.md、已选渠道的 Markdown/HTML、series-plan.json 及每轮 cards.json。只有 AI 完成实际审阅后填写 passed；脚本只核验记录完整、材料引用可定位和版本一致，不证明文字自然或事实真实。
+在 `draft/editorial-review.json` 写入以下结构。所有指纹是相应文件当前字节的 SHA-256；`artifacts` 覆盖启用历史检索时的 draft/related-posts.json、raw/source.md、draft/polished.md、已选渠道的 Markdown/HTML、series-plan.json 及每轮 cards.json。只有 AI 完成实际审阅后填写 passed；脚本只核验记录完整、材料引用可定位和版本一致，不证明文字自然或事实真实。
 
 ```json
 {
@@ -72,3 +72,5 @@
 ## 平台标题与可选英文版
 
 新项目还必须遵守 [publishing-plan.md](publishing-plan.md)。发布计划单独记录专业博客标题、吸引读者的社交标题、规范分类话题和 AI 英文取舍理由。英文正文与英文图片实际复审后才可分发；editorial-review 的 artifacts 同时绑定 publishing-plan.json 与可选 english.md，内容变化后重新复审。
+
+微信 format 复审需明确检查链接文字、普通外链编号与可复制地址、公众号文章锚文本及参考区密度。内容复审记录历史文章关联是否有助于当前论证，不能把站内推荐当作事实核查替代品。

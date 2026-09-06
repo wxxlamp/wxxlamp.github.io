@@ -93,7 +93,7 @@ codex plugin add yuque-multichannel-publisher@<marketplace-name>
 
 新项目按读者问题和原文材料规划小红书篇数，每篇有独立收益与素材映射。语气学习使用有指纹的作者基线，自动排除已知流水线成稿；博客、微信、小红书正文与卡片逐项检查语气、错字、格式和事实。复审与文件 SHA-256 绑定，内容改动后重新审阅。
 
-微信提供 `wechat_layout.py` 的 ink/warm 两种行内样式，以及 `wechat_preview.py` 的 375px/430px 预览。默认取消每个标题后强制配图。知识核查与审美判断仍由 AI 实际完成，脚本只检查结构、保真和复审是否过期，不把形式检查冒充内容质量保证。
+微信提供 `wechat_layout.py` 的文章类型配色：technical 蓝、essay 暖棕、lifestyle 灰绿、neutral 中性灰；默认 `--theme auto`，也可显式指定主题，保留旧 ink 参数。标题与加粗统一深色，链接与引用少量用色，并提供 `wechat_preview.py` 的 375px/430px 预览。默认取消每个标题后强制配图。知识核查与审美判断仍由 AI 实际完成，脚本只检查结构、保真和复审是否过期，不把形式检查冒充内容质量保证。
 
 升级后在使用的 Python 环境安装 Skill 的 requirements.txt。新建项目自动启用 v2；旧项目按 references/editorial-review.md 迁移，原有产物和投递记录保留。
 
@@ -106,3 +106,7 @@ codex plugin add yuque-multichannel-publisher@<marketplace-name>
 
 
 引用也按正文语言匹配：读取真实双语文章路由，检查旧地址、缺失译文与引用锚点，外部资料使用核验过的同源译文。不存在对应语言的原始来源需明确标注语言；不伪造 `/en/` 页面。引用复审纳入发布计划指纹，支持 Markdown、HTML 与裸链接，保持代码和图片不变。
+
+润色前支持检索相关历史博客，核对线上已发布内容后自然加上引用。微信默认采用清楚的链接名称、普通外链编号和文末可复制地址；公众号文章链接保留锚文本，长 URL 不再挤占正文。可使用 `related_posts.py` 检索候选，`wechat_layout.py --link-mode endnotes` 排版，随后预览并复核。
+
+正文配图先审阅已有图片，再按全文结构、理解难点与阅读节奏写 `draft/visual-plan.md`。允许零张新增图、同节多张图或一图解释多个小节；原图够用就复用。新旧项目均取消每章节图配额，图片使用独立槽位 ID，上传保留 brief 并重置成图复审状态。

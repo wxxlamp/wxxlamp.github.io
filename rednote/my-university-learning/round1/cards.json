@@ -1,0 +1,60 @@
+{
+  "cards": [
+    {
+      "index": 1,
+      "role": "cover",
+      "headline": "计算机专业学什么",
+      "body": "给准计算机相关专业大学生和编程小白的一张知识地图",
+      "visual_strategy": "大标题配校园技术路径插画，建立全景认知",
+      "material_ref": "images/cover.png"
+    },
+    {
+      "index": 2,
+      "role": "framework",
+      "headline": "专业能力五层",
+      "body": "硬件 → 操作系统 → 编程语言 → 程序 → 业务；真实需求也会反过来影响技术选择",
+      "visual_strategy": "五层结构图加双向反馈箭头",
+      "material_ref": "images/section-professional-ability-v2.png"
+    },
+    {
+      "index": 3,
+      "role": "deep-dive",
+      "headline": "操作系统学什么",
+      "body": "进程/线程/协程、内存、文件、IO、网络；核心是抽象资源并高效管理硬件",
+      "visual_strategy": "操作系统总览与六个模块概念标签组合",
+      "material_ref": "images/os-overview-v2.png"
+    },
+    {
+      "index": 4,
+      "role": "comparison",
+      "headline": "语言只是工具",
+      "body": "C、C++、Java、JavaScript、Python 场景不同；程序最终都要通过操作系统使用硬件",
+      "visual_strategy": "编程语言和程序分类两张正文信息图拼接",
+      "material_ref": "images/section-programming-languages-v2.png + images/section-programs-v2.png"
+    },
+    {
+      "index": 5,
+      "role": "value-loop",
+      "headline": "技术要连接业务",
+      "body": "理解用户、行业现场和真实约束，才能判断需求、设计架构、提升效率并创造价值",
+      "visual_strategy": "业务需求输入与技术反馈闭环图",
+      "material_ref": "images/section-business-v2.png"
+    },
+    {
+      "index": 6,
+      "role": "soft-skills",
+      "headline": "软能力决定上限",
+      "body": "沟通要对齐目标、进度和风险；学习要带着问题、总结抽象，再用 Demo 验证",
+      "visual_strategy": "沟通场景与学习循环图并列",
+      "material_ref": "images/section-communication-v2.png + images/section-learning-v2.png"
+    },
+    {
+      "index": 7,
+      "role": "action",
+      "headline": "新手怎么开始",
+      "body": "先画知识地图，再选一个问题往下钻；做出 Demo，尝试讲清楚，再回到地图补全",
+      "visual_strategy": "四步行动清单配持续探索插画",
+      "material_ref": "images/section-epilogue-v2.png"
+    }
+  ]
+}

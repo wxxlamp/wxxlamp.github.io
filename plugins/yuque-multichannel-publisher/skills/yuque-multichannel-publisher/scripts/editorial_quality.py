@@ -61,7 +61,11 @@ def html_content(html):
 
 def validate_html_fidelity(markdown, html):
     from markdown_it import MarkdownIt
-    source = html_content(MarkdownIt('commonmark', {'html': True}).enable('table').render(markdown))
+    from wechat_links import MARKER, project_links
+    source_html = MarkdownIt('commonmark', {'html': True}).enable('table').render(markdown)
+    if MARKER in html:
+        source_html = project_links(source_html)
+    source = html_content(source_html)
     target = html_content(html)
     errors = []
     compact = lambda parts: re.sub(r'\s+', '', ''.join(parts))
@@ -142,6 +146,10 @@ def required_artifacts(project, channels):
         paths += ['draft/rednote/series-plan.json']
         for p in sorted((project/'draft/rednote').glob('round*/post.md')):
             paths += [p.relative_to(project).as_posix(), (p.parent/'cards.json').relative_to(project).as_posix()]
+    if (project/'draft/visual-plan.md').is_file():
+        paths.append('draft/visual-plan.md')
+    if (project/'draft/related-posts.json').is_file():
+        paths.append('draft/related-posts.json')
     if (project/'draft/publishing-plan.json').is_file():
         paths.append('draft/publishing-plan.json')
         english = load_object(project/'draft/publishing-plan.json').get('english', {})
@@ -154,7 +162,9 @@ def validate_editorial(project, metadata, channels):
     report = load_object(project/'draft/editorial-review.json')
     if report.get('status') != 'passed':
         return ['缺少通过的 draft/editorial-review.json；需逐平台实际审阅后记录']
-    errors = []
+    from related_posts import validate_related
+    from workspace import find_workspace_root
+    errors = validate_related(project, find_workspace_root(project), metadata, channels)
     artifacts = report.get('artifacts', {})
     if not isinstance(artifacts, dict):
         artifacts = {}
@@ -205,6 +215,9 @@ def validate_editorial(project, metadata, channels):
         errors.append('缺少 fact_scope 核查范围和限制')
     if 'wechat' in channels:
         md, html = project/'draft/wechat.md', project/'draft/wechat.html'
+        if md.is_file() and metadata.get('wechat_links_contract_version') == 1:
+            from wechat_links import link_label_issues
+            errors.extend(link_label_issues(md.read_text()))
         if md.is_file() and html.is_file():
             errors.extend(validate_html_fidelity(md.read_text(), html.read_text()))
         layout = report.get('wechat_layout', {})

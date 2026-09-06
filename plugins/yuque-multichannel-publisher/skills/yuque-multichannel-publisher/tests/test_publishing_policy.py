@@ -37,6 +37,7 @@ class PublishingPolicyTest(unittest.TestCase):
         self.source = '![首图](https://example.com/zh.png)\n\n# 1. 内存分配\n\n解释分配方式和限制。\n\n[文档](https://example.com/docs)\n\n```java\nint x = 1;\n```\n'
         (self.project / 'draft/polished.md').write_text(self.source)
         (self.project / 'raw/source.md').write_text(self.source)
+        pipeline.atomic_json(self.project/'draft/related-posts.json', {'source_sha256':digest(self.project/'raw/source.md'),'queries':['Java 内存分配'],'selected':[],'review_note':'测试工作区没有已发表文章，不附加推荐'})
         self.plan = {'version': 1, 'references_sha256': reference_context(self.root)['sha256'], 'references_review': {'zh': '检查中文来源和可用语言', 'en': '检查英文来源及原始资料，测试无站内链接'}, 'source_sha256': digest(self.project / 'draft/polished.md'),
                      'titles': {'blog': {'text': 'Java 内存分配：机制与限制', 'reason': '明确技术对象与内容范围'}, 'wechat': {'text': 'Java 对象到底放在哪？从一次分配说起', 'reason': '用正文解释的问题吸引读者'}},
                      'taxonomy': {'catalog_sha256': catalog_context(self.root)['catalog_sha256'], 'categories': ['基础夯实'], 'topics': ['Java 虚拟机'], 'reason': '正文讨论 JVM 内存分配'},

@@ -290,6 +290,8 @@ def command_init(args: argparse.Namespace) -> None:
         "editorial_contract_version": 2,
         "publishing_contract_version": 1,
         "reference_contract_version": 1,
+        "related_posts_contract_version": 1,
+        "wechat_links_contract_version": 1,
         "section_image_policy": "content-driven",
         "created_at": created,
     }
@@ -530,7 +532,10 @@ def command_upload_image(args: argparse.Namespace) -> None:
         metadata["wechat_cover_image"] = record
     elif args.kind == "section":
         record["ratio"] = "16:9"
-        metadata.setdefault("section_images", {})[args.key] = record
+        # Stable slot IDs allow several images in one section. Keep the prewritten
+        # brief, but a new upload must not inherit approval of a previous image.
+        previous = metadata.setdefault("section_images", {}).get(args.key, {})
+        metadata["section_images"][args.key] = {**previous, **record, "review_status": "pending"}
     else:
         record["ratio"] = "3:4"
         metadata.setdefault("rednote_images", {}).setdefault(args.key, []).append(record)
@@ -573,7 +578,16 @@ def normalized_prose(text: str, *, html: bool = False) -> str:
 
 
 def content_similarity(left: str, right: str, *, right_is_html: bool = False) -> float:
-    normalized_left = normalized_prose(left)
+    if right_is_html:
+        from wechat_links import MARKER, project_links
+        if MARKER in right:
+            from markdown_it import MarkdownIt
+            left = project_links(MarkdownIt('commonmark', {'html': True}).enable('table').render(left))
+            normalized_left = normalized_prose(left, html=True)
+        else:
+            normalized_left = normalized_prose(left)
+    else:
+        normalized_left = normalized_prose(left)
     normalized_right = normalized_prose(right, html=right_is_html)
     if not normalized_left and not normalized_right:
         return 1.0
@@ -590,6 +604,56 @@ def rednote_round_number(path: Path) -> int | None:
 def ai_tone_risks(markdown: str) -> list[str]:
     prose = without_fences(strip_front_matter(markdown))
     return [label for label, pattern in AI_TONE_PATTERNS.items() if pattern.search(prose)]
+
+
+def validate_body_images(markdown: str, metadata: dict[str, Any]) -> list[str]:
+    """Validate selected generated images, never impose an image count per heading."""
+    from markdown_it import MarkdownIt
+    from editorial_quality import html_content
+    md = MarkdownIt('commonmark', {'html': True})
+    tokens = md.parse(markdown)
+    headings, images = [], []
+    for index, token in enumerate(tokens):
+        if token.type == 'heading_open':
+            title = ''.join(html_content(md.renderer.render([tokens[index + 1]], md.options, {})).text)
+            headings.append((title, int(token.tag[1]), token.map[0]))
+        if token.type in ('inline', 'html_block') and token.map:
+            parsed = html_content(md.renderer.render([token], md.options, {}))
+            images.extend((url, token.map[0]) for url in parsed.images)
+    records = metadata.get('section_images', {})
+    if not isinstance(records, dict):
+        return ['section_images 必须是以图片槽位 ID 为键的对象']
+    errors, seen_urls = [], set()
+    for slot, record in records.items():
+        if not isinstance(record, dict):
+            errors.append(f'正文配图“{slot}”记录必须是对象')
+            continue
+        # Old records keyed by heading remain readable; new IDs use section.
+        section = record.get('section', slot)
+        start, end = -1, len(markdown.splitlines())
+        if section:
+            matches = [(i, item) for i, item in enumerate(headings) if item[0] == section]
+            if len(matches) != 1:
+                errors.append(f'正文配图“{slot}”对应的标题不存在或不唯一：{section}')
+                continue
+            i, (_, level, start) = matches[0]
+            end = next((line for _, depth, line in headings[i + 1:] if depth <= level), end)
+        url = record.get('url')
+        if not isinstance(url, str) or not url.startswith('https://'):
+            errors.append(f'正文配图“{slot}”需要公开 HTTPS URL')
+        elif not any(src == url and start < line < end for src, line in images):
+            errors.append(f'正文配图“{slot}”必须出现在指定章节内（无章节时在正文内）')
+        elif url in seen_urls:
+            errors.append(f'正文配图“{slot}”重复登记同一 URL；跨节共用图只登记一次')
+        if isinstance(url, str):
+            seen_urls.add(url)
+        if record.get('ratio') != '16:9' or record.get('review_status') != 'passed':
+            errors.append(f'正文配图“{slot}”需要 16:9 比例和视觉复审')
+        if SECTION_IMAGE_FIELDS - set(record) or not isinstance(record.get('must_show'), list) or len(record.get('must_show', [])) < 2:
+            errors.append(f'正文配图“{slot}”缺少完整视觉 brief，must_show 至少需要两个具体元素或关系')
+        if (metadata.get('section_image_policy') == 'content-driven' or 'section' in record) and not str(record.get('placement_reason', '')).strip():
+            errors.append(f'正文配图“{slot}”缺少 placement_reason')
+    return errors
 
 
 def validate_draft(project: Path, metadata: dict[str, Any]) -> tuple[list[str], list[str]]:
@@ -637,54 +701,11 @@ def validate_draft(project: Path, metadata: dict[str, Any]) -> tuple[list[str], 
     if metadata.get("cover_image", {}).get("style") != expected_lead_style:
         errors.append(f"正文首图必须记录 style={expected_lead_style}，并由 AI review 实际画面")
     structural_prose = without_fences(polished)
-    headings = H1_RE.findall(structural_prose)
-    if not headings:
-        warnings.append("正文没有一级标题，无法验证章节配图")
-    lines = structural_prose.splitlines()
-    for index, line in enumerate(lines):
+    for line in structural_prose.splitlines():
         any_heading = re.match(r"^(#{1,6})\s+(.+?)\s*$", line)
         if any_heading and not heading_numbered(len(any_heading.group(1)), any_heading.group(2)):
             errors.append(f"标题“{any_heading.group(2)}”缺少 {len(any_heading.group(1))} 级数字序号")
-        match = re.match(r"^#\s+(.+?)\s*$", line)
-        if not match:
-            continue
-        if metadata.get("section_image_policy") == "content-driven":
-            section = match.group(1)
-            record = metadata.get("section_images", {}).get(section, {})
-            if not record:
-                continue  # Images explain content; short sections need no decorative filler.
-            end = next((i for i in range(index + 1, len(lines)) if re.match(r"^#\s+", lines[i])), len(lines))
-            body = "\n".join(lines[index + 1:end])
-            if record.get("url") not in [url for _, url in IMAGE_RE.findall(body)]:
-                errors.append(f"章节“{section}”的配图必须出现在所属章节内")
-            if record.get("ratio") != "16:9" or record.get("review_status") != "passed":
-                errors.append(f"章节“{section}”的配图需要 16:9 比例和视觉复审")
-            if SECTION_IMAGE_FIELDS - set(record) or not record.get("placement_reason") or not isinstance(record.get("must_show"), list) or len(record.get("must_show", [])) < 2:
-                errors.append(f"章节“{section}”缺少视觉 brief 或 placement_reason")
-            continue
-        following = [value.strip() for value in lines[index + 1 :] if value.strip()][:3]
-        following_images = [IMAGE_RE.fullmatch(value) for value in following]
-        following_images = [value for value in following_images if value]
-        if not following_images:
-            errors.append(f"一级标题“{match.group(1)}”后 3 个非空行内缺少 HTTPS 图片")
-        section_record = metadata.get("section_images", {}).get(match.group(1), {})
-        if section_record.get("ratio") != "16:9":
-            errors.append(f"metadata.json 缺少一级标题“{match.group(1)}”的 16:9 section_images 记录")
-        elif following_images and section_record.get("url") != following_images[0].group(2):
-            errors.append(f"一级标题“{match.group(1)}”的正文图片与 metadata.json URL 不一致")
-        missing_visual_fields = SECTION_IMAGE_FIELDS - set(section_record)
-        if missing_visual_fields:
-            errors.append(
-                f"一级标题“{match.group(1)}”的视觉 brief 缺少：{', '.join(sorted(missing_visual_fields))}"
-            )
-        elif section_record.get("review_status") != "passed":
-            errors.append(f"一级标题“{match.group(1)}”的章节图必须经过 AI 视觉复审")
-        if not isinstance(section_record.get("must_show"), list) or len(section_record.get("must_show", [])) < 2:
-            errors.append(f"一级标题“{match.group(1)}”的 must_show 至少需要两个具体元素或关系")
-    if metadata.get("section_image_policy") == "content-driven":
-        unknown_sections = set(metadata.get("section_images", {})) - set(headings)
-        if unknown_sections:
-            errors.append("章节图记录对应的标题不存在：" + ", ".join(sorted(unknown_sections)))
+    errors.extend(validate_body_images(polished, metadata))
     if "wechat" in channels:
         wechat_cover = metadata.get("wechat_cover_image", {})
         expected_wechat_ratio = str(metadata.get("wechat_cover_ratio") or "2.35:1")

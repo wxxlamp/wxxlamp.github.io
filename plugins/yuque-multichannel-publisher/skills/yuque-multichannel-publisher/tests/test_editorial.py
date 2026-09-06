@@ -111,6 +111,7 @@ class EditorialTest(unittest.TestCase):
             pipeline.command_init(SimpleNamespace(project='review-demo',yuque_url='https://www.yuque.com/a/b/c',title='排版测试',edit_mode='correction-only',channels=['blog']))
             project=pipeline.project_dir(root,'review-demo')
             metadata=pipeline.read_json(project/'metadata.json')
+            metadata.pop('related_posts_contract_version', None)
             metadata.pop('publishing_contract_version', None)  # Existing editorial-v2 projects stay compatible.
             metadata.update({'description':'用于验证经过审阅的内容能完整落盘。','cover_image':{'url':'https://example.com/cover.png','ratio':'21:9','style':'ghibli-inspired'}})
             source='![首图](https://example.com/cover.png)\n\n# 1. 记录\n\n这是作者已有的一段自述。\n'

@@ -46,6 +46,19 @@ def normalized_path(path):
     return path.removesuffix('index.html').rstrip('/') + '/'
 
 
+def post_route(post, meta, hexo):
+    """Shared Hexo route calculation; unsupported tokens require explicit resolution."""
+    date = str(meta.get('date', ''))[:10].split('-')
+    if len(date) != 3:
+        return None
+    permalink = str(meta.get('permalink') or hexo.get('permalink') or ':year/:month/:day/:title/')
+    for key, value in zip(('year','month','day','title'), [*date, str(meta.get('slug') or post.stem)]):
+        permalink = permalink.replace(':'+key, value)
+    if ':' in permalink:
+        return None
+    return normalized_path('/'+permalink.lstrip('/'))
+
+
 def reference_context(repo, current_slug=None):
     config = load_config(repo)
     file = configured_path(repo, config, 'reference_catalog')
@@ -61,13 +74,8 @@ def reference_context(repo, current_slug=None):
         match = re.match(r'^---\s*\n(.*?)\n---', post.read_text(), re.S)
         meta = yaml.safe_load(match[1]) if match else {}
         if not meta or not meta.get('date'): continue
-        date = str(meta['date'])[:10].split('-')
-        if len(date) != 3: continue
-        permalink = str(meta.get('permalink') or (hexo or {}).get('permalink') or ':year/:month/:day/:title/')
-        for key, value in zip(('year','month','day','title'), [*date, str(meta.get('slug') or post.stem)]):
-            permalink = permalink.replace(':'+key, value)
-        if ':' in permalink: continue  # Unsupported layouts are reviewed explicitly, never guessed.
-        route = normalized_path('/'+permalink.lstrip('/'))
+        route = post_route(post, meta, hexo or {})
+        if not route: continue
         variants = {'zh': route}
         english = post.parent/'en'/post.name
         if english.is_file():

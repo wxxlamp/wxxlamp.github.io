@@ -94,6 +94,8 @@ python3 <pipeline.py> fetch --project <english-slug>
 
 ### 3. 学习语气并润色
 
+开始润色前先读 [related-posts.md](references/related-posts.md)，从原稿提取具体概念，执行 `scripts/related_posts.py --query <关键词...> --exclude <slug>` 检索历史博客。AI 阅读有限候选、实际核验已发布页面并决定是否值得关联；将选择和取舍写入 `draft/related-posts.json`。合适的历史链接自然插入首次相关段落或文末延伸阅读，微信保留；无合适文章就不凑链接。此内容检索独立于语气缓存，不因缓存命中而跳过。
+
 先执行 `python3 <skill>/scripts/style_profiles.py author-prepare`，按输出的 reuse/learn/refresh 读取基线或有限代表作。该命令排除本流水线生成的文章，避免把 AI 成稿反复学成作者声音；可用工作区 `voice_exclude_posts` 补充排除。按 [voice-profile.md](references/voice-profile.md) 学习类别、人称、情绪与表达节奏，通过 `author-save --input <profile.md> --samples <文章路径...>` 保存基线。个人语气只留在工作区，不进入插件包。
 
 需要更细的分类差异时，再检查分类语气缓存：
@@ -122,11 +124,11 @@ python3 plugins/yuque-multichannel-publisher/skills/yuque-multichannel-publisher
 
 ### 4. 生成、上传并插入配图
 
-先按 [visual-direction.md](references/visual-direction.md) 为每个图片槽位写 brief，再使用可用的图片生成工具。生成后 AI 必须实际查看图片并记录 review；图片文件存在或比例正确，不代表语义合格。
+先读 [visual-direction.md](references/visual-direction.md)，查看现有图片，结合全文结构、信息难点与手机阅读节奏写 `draft/visual-plan.md`，决定保留、复用及需要补充的图片。正文新增图允许为零，不按章节数或字数设配额；只有选中的新增槽位才写 brief 并使用图片生成工具。生成后 AI 必须实际查看图片并记录 review；图片文件存在或比例正确，不代表语义合格。
 
 - 正文首图：默认比例为 21:9，可配置为 23:9；视觉上优先采用吉卜力感的温暖手绘动画氛围，但不得复刻具体角色、场景或受保护元素。
 - 微信公众号封面：与正文首图分开生成和记录，比例严格为 2.35:1；延续合适的画面风格，在安全留白区加入 8–14 字短标题，并逐字复核。
-- 章节配图按信息需要选择，生成图比例 16:9，优先放在相关解释或操作附近，并记录 `placement_reason`。短引言、总结和参考资料无需凑图；不强制紧随标题。图片必须表现 brief 的 `section_claim` 与 `must_show`。原图保留，图片计划在生成前确定。
+- 正文配图先判断已有图片是否准确、清晰并足以辅助理解；已有合适图片就复用，不因本节有标题再生成一张。同一节可零张或多张，一张图也可解释多个相关小节；每张新增图须有不同的信息任务，使用独立槽位 ID，记录 `section`、`placement_reason` 与 brief。生成正文图采用 16:9，现有原图保留自身比例。放在读者需要它的段落附近，避免标题后连续堆图或打断论证。
 - 小红书：每轮 3–9 张 3:4 卡片，常见为 5–7 张；先规划卡片叙事，封面标题控制在 12 个汉字以内。
 - 所有图片保持专业完成度和信息准确性，但不要求共享同一色板或材质；优先让风格服务于内容。
 
@@ -136,19 +138,19 @@ python3 plugins/yuque-multichannel-publisher/skills/yuque-multichannel-publisher
 python3 <pipeline.py> upload-image \
   --project <english-slug> \
   --kind <cover|wechat-cover|section|rednote> \
-  --key "<标题或round1>" \
+  --key "<正文图唯一槽位ID或round1>" \
   --file <local-image> \
   --provider <imgur|smms|github|chevereto>
 ```
 
-`cover` 是正文首图，`wechat-cover` 是微信公众号后台封面字段。脚本会校验实际比例、调用插件内部图片上传模块、解析远程 URL 并写入 `metadata.json`。把正文图片的远程 URL 插入博客与微信 Markdown，小红书按每轮材料计划选图；微信封面不插入正文，由发布阶段单独填写。成功后记录 `illustrated` 检查点。
+`cover` 是正文首图，`wechat-cover` 是微信公众号后台封面字段。脚本会校验实际比例、调用插件内部图片上传模块、解析远程 URL 并写入 `metadata.json`。正文图先在 `section_images[槽位ID]` 填 brief 与 `section`，再使用相同 `--key` 上传；同节多图使用不同 ID。上传保留 brief，但把该图复审重置为 pending，查看当前成图后才标 passed。把正文图片的远程 URL 插入博客与微信 Markdown，小红书按每轮材料计划选图；微信封面不插入正文，由发布阶段单独填写。成功后记录 `illustrated` 检查点。
 
 需要英文版时，对全部正文图片执行 [英文图片规则](references/publishing-plan.md#英文图片)，包括后续新增的配图。上传英文图使用 `--language en`，不得覆盖中文图记录。
 
 ### 5. 改写三端内容
 
 - 博客：保留完整论证、代码、引用与目录结构，正文源为 `draft/polished.md`。采用发布计划中的专业标题与规范分类话题；需要英文时完整翻译为 `draft/english.md`，逐节核对内容和英文图片。
-- 微信：先读 [wechat-layout.md](references/wechat-layout.md)，AI 同时写入 `draft/wechat.md` 和已经排好版的 `draft/wechat.html`。`wechat.md` 以博客正文为唯一内容底稿，默认保留全部观点、事实、章节、代码和图片，允许拆短段落、调整强调和图片位置、极少量平台称呼或自然互动；不得摘要化、重组论证或另写一篇。流水线默认要求其与博客正文相似度至少 90%。`wechat.html` 只做行内样式排版，可用 `scripts/wechat_layout.py` 实现可复用主题；可见文本、数字、代码、图片和链接必须与 `wechat.md` 一致。用 `scripts/wechat_preview.py` 生成 375px、430px 预览，实际查看并修正后记录视觉复审。
+- 微信：先读 [wechat-layout.md](references/wechat-layout.md)，AI 同时写入 `draft/wechat.md` 和已经排好版的 `draft/wechat.html`。`wechat.md` 以博客正文为唯一内容底稿，默认保留全部观点、事实、章节、代码和图片，允许拆短段落、调整强调和图片位置、极少量平台称呼或自然互动；不得摘要化、重组论证或另写一篇。流水线默认要求其与博客正文相似度至少 90%。`wechat.html` 只做行内样式排版，可用 `scripts/wechat_layout.py` 实现可复用主题，先按全文目的选择 `--article-type technical|essay|lifestyle|neutral`，自动配色，用户显式主题优先；标题与加粗保持深色，颜色主要用于链接与引用，在视觉复审说明中记录选择理由；正文、数字、代码和图片必须与 `wechat.md` 一致；普通外链默认呈现为名称加编号，文末列出可复制地址，公众号文章链接保留锚文本。仅允许这一确定性的链接呈现差异，地址与标签逐项核对，裸 URL 和“点击这里”等文字先改成明确名称。用 `scripts/wechat_preview.py` 生成 375px、430px 预览，实际查看并修正后记录视觉复审。
 - 小红书：先读 [rednote-planning.md](references/rednote-planning.md)，比较合并与拆分的读者收益。以 `content_units` 映射每篇的原文材料，补齐 `unit_ids`、`split_reason`、`standalone_test`、`overlap_review`，不硬凑或压缩篇数。先提取原文的对象、目标读者、核心判断、可执行信息和真实材料，再判断能支撑几篇无需前文也能读懂的笔记。同一产品介绍所需的动机、做法和结果通常应留在一篇，不能按长文章章节拆轮；只有主题、读者收益和证据材料都能独立成立时才增加轮次。每轮先写 `series-plan.json` 中的完整上下文，再写 `cards.json` 规划 3–9 张卡片，最后生成独立可读的 `post.md`。开头 120 个可见字符内重新点明对象、目标读者与核心观点，禁止“上一轮、下一轮、上文、前文、见前”等依赖。图片优先使用真实截图和材料，单卡只推进一个信息点。
 
 完成已选渠道草稿后，AI 按 [editorial-review.md](references/editorial-review.md) 逐篇审阅正文和卡片，将具体结论、事实核查依据、作者档案与成品 SHA-256 写入 `draft/editorial-review.json`。校验会拒绝漏审和修改后未复审的文件。AI 必须检查：事实边界、错别字、标题编号、图片语义、三端差异、发布字段和是否残留明显 AI 腔，再记录 `reviewed` 检查点。没有 `reviewed` 检查点时，`materialize` 默认拒绝分发。
@@ -193,7 +195,7 @@ python3 <pipeline.py> inspect --project <english-slug>
 - 博客语气与对应分类的历史文章一致，但不刻意复制句子。
 - 两种模式、每个所选平台及每轮卡片均完成具体编辑复审和知识核查；没有模板化开场、机械总结、空泛排比和连续同节奏段落，也没有为了“像人”而编造经历。
 - 语气缓存命中时不重读样本；缓存失效时只做增量刷新。
-- 微信排版已实际查看两种手机宽度预览，复审与当前文件绑定；HTML 不依赖外部 CSS；图片均使用可公开访问的 HTTPS URL。
+- 历史文章检索已记录真实取舍，选中链接同时进入博客与微信；微信排版已实际查看两种手机宽度预览和链接密集段，复审与当前文件绑定；HTML 不依赖外部 CSS；图片均使用可公开访问的 HTTPS URL。
 - 小红书轮数由 AI 根据独立主题数决定，实际 roundN 必须与系列计划一致；每轮开头重建上下文，包含 3–9 张卡片、明确钩子、互动问题和 5–8 个标签，不使用跨轮指代。
 - `validate` 无错误后才进入平台草稿；平台草稿完成不等于已发布。
 - `inspect.targets.*.blockers` 是发布就绪事实来源；`resume.next_actions` 按渠道给出后续动作，不再把三端压成一个线性 `drafted` 阶段。

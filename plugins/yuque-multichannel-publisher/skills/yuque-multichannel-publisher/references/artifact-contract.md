@@ -115,7 +115,9 @@ content-projects/<slug>/
     "review_status": "passed"
   },
   "section_images": {
-    "一级标题": {
+    "flow-overview": {
+      "section": "1. 处理流程",
+      "placement_reason": "放在整体流程说明之后，帮助读者串联后续步骤",
       "url": "https://...",
       "local": "...",
       "ratio": "16:9",
@@ -214,9 +216,13 @@ content-projects/<slug>/
 
 `series-plan.json` 还需 `content_units: [{"id":"u1","source_excerpt":"成稿中的实际短片段"}]`；每个 round 添加 `unit_ids: ["u1"]`、`split_reason`、`standalone_test`、`overlap_review` 字符串。未分配材料需在 unit 添加 `excluded_reason`。不允许各轮复用完全相同材料；少量必要背景重叠由 AI 说明，不能靠改写标题伪装独立。
 
-`section_images` 只记录实际选用的生成章节图，增加 `placement_reason`；URL 应位于相应章节，不要求前 3 行。原始材料仍按原意保留。微信预览存在 `draft/preview/`，项目内保留证据，不当作发布正文。
+`draft/visual-plan.md` 记录现有图片审阅、复用/新增/无需图的取舍，以及位置与阅读节奏，正文新增图可为零。`section_images` 只记录实际选用的生成正文图，以独立槽位 ID 为键，包含 `section` 与 `placement_reason`；同节可多张，跨节共用图只登记一次，`section` 写实际插入处。支持各级标题，无标题文章显式填写 `section: ""`。旧标题键仍兼容，但所有项目均取消章节数量和标题后 3 行的图片配额；校验只检查实际登记的图。原图不必转成生成图记录，也不要求 16:9，仍按原意保留。微信预览存在 `draft/preview/`，项目内保留证据，不当作发布正文。
 
 
 ## 平台标题与可选英文版
 
 新项目还必须遵守 [publishing-plan.md](publishing-plan.md)。发布计划单独记录专业博客标题、吸引读者的社交标题、规范分类话题和 AI 英文取舍理由。英文正文与英文图片实际复审后才可分发；editorial-review 的 artifacts 同时绑定 publishing-plan.json 与可选 english.md，内容变化后重新复审。
+
+## 历史文章与微信链接
+
+新项目增加 `related_posts_contract_version: 1`，在 `draft/related-posts.json` 记录实际检索和选取结果，结构见 related-posts.md。微信 HTML 默认把普通外链变为名称、编号和文末完整地址；源 Markdown 保留原链接。确定性呈现经过保真校验，不能因此新增或删减正文。

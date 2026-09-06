@@ -1,7 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel>
-<title>Sibo&apos;s Blog</title><description>Engineering, reading, and life.</description><link>https://wxxlamp.cn/en/</link><language>en</language><lastBuildDate>Sun, 06 Sep 2026 07:21:43 GMT</lastBuildDate>
+<title>Sibo&apos;s Blog</title><description>Engineering, reading, and life.</description><link>https://wxxlamp.cn/en/</link><language>en</language><lastBuildDate>Sun, 06 Sep 2026 17:38:40 GMT</lastBuildDate>
 <atom:link href="https://wxxlamp.cn/en/rss.xml" rel="self" type="application/rss+xml"/>
+<item><title>My First Day with GPT-6 Astra</title><link>https://wxxlamp.cn/en/2026/09/06/gpt6-astra-first-impressions/</link><guid isPermaLink="true">https://wxxlamp.cn/en/2026/09/06/gpt6-astra-first-impressions/</guid><pubDate>Sun, 06 Sep 2026 15:49:03 GMT</pubDate><description>A day using Astra to redesign my blog, discuss code, review changes, and spend fifteen hours trying to make a cycling video.</description><content:encoded>&lt;p&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@e553be4c58969c0b47a33016c3624ae0d967d210/images/f2ca3c53_cover.png&quot; alt=&quot;An engineer checking a website and cycling storyboards by the window&quot;&gt;&lt;/p&gt;
+&lt;p&gt;After GPT-6 Astra launched, the PR was everywhere. I happened to be using Codex for development, so I wanted to see whether it was really as good as people said.&lt;/p&gt;
+&lt;p&gt;I spent all of Saturday giving Astra different tasks. My verdict up front: simply amazing. It felt great to use. Here is how that day went, from Computer Use and video storyboarding to code review, website development and UI design.&lt;/p&gt;
+&lt;h1 id=&quot;1-网站设计与制作&quot;&gt;1. Website design and development&lt;/h1&gt;&lt;p&gt;The first task I gave Astra was to improve my own blog, &lt;a href=&quot;https://wxxlamp.cn/en/&quot;&gt;SiBo’s Blog&lt;/a&gt; (&lt;a href=&quot;https://wxxlamp.cn/&quot;&gt;Chinese homepage&lt;/a&gt;). This was my prompt:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@39bcfed5bc8e47a03c472a624482ddccd8fa5001/images/3bdd7134_en-source-01.png&quot; alt=&quot;My request to improve the website&apos;s layout and bilingual support&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;English rendering of the &lt;a href=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@e553be4c58969c0b47a33016c3624ae0d967d210/images/31975fbe_source-01.png&quot;&gt;original Chinese screenshot&lt;/a&gt;, with the original crop preserved.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;As a programmer whose sense of design is, well, hard to describe, I could only give it a vague request to make the site look better. Nothing particularly complicated. Thirty minutes later, Astra came back with a result that surprised me. It designed, built and checked the site itself, then handed it over after the checks passed. That self-checking worked much better than what I had seen with Sol and other models.&lt;/p&gt;
+&lt;p&gt;I then asked for a few more changes to language support, layout, wording and SEO. A few words were enough for Astra to get what I meant and deliver the change. When I was using Claude Code six months earlier, this had felt almost impossible.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@39bcfed5bc8e47a03c472a624482ddccd8fa5001/images/d2d73aac_en-source-02.png&quot; alt=&quot;Astra fixing the footer width&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;English rendering of the &lt;a href=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@e553be4c58969c0b47a33016c3624ae0d967d210/images/4152cda8_source-02.png&quot;&gt;original Chinese screenshot&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Here is the result. You can also visit the &lt;a href=&quot;https://wxxlamp.cn/design-history/&quot;&gt;old and new blog comparison&lt;/a&gt; to see the difference. The new version was built with Astra; the old one was built with Claude Code six months earlier. The comparison preserves the original Chinese pages.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@39bcfed5bc8e47a03c472a624482ddccd8fa5001/images/ec090af0_en-source-03.png&quot; alt=&quot;The previous blog design&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;English rendering of the &lt;a href=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@e553be4c58969c0b47a33016c3624ae0d967d210/images/0385b2c0_source-03.png&quot;&gt;original old-site screenshot&lt;/a&gt;; the layout is preserved.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@39bcfed5bc8e47a03c472a624482ddccd8fa5001/images/3c74a781_en-source-04.png&quot; alt=&quot;The redesigned blog&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;English rendering of the &lt;a href=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@e553be4c58969c0b47a33016c3624ae0d967d210/images/9815efa2_source-04.png&quot;&gt;original new-site screenshot&lt;/a&gt;; the layout is preserved.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;One other thing: Astra’s taste and ability to understand what I want feel like a huge step up from Sol. It also helped me prepare the content and layout of the WeChat article accompanying this post, including generating the images.&lt;/p&gt;
+&lt;h1 id=&quot;2-问题讨论与开发&quot;&gt;2. Discussing problems and writing code&lt;/h1&gt;&lt;p&gt;Our team’s AI work has recently been built on AgentScope, so I wanted to see whether there was an issue in the community I could fix. I found &lt;a href=&quot;https://github.com/agentscope-ai/agentscope/issues/2373&quot;&gt;issue #2373&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I was pretty lost when I first read it, of course. I asked Astra to quickly walk me through the project’s basic model, data flow and so on.&lt;/p&gt;
+&lt;p&gt;When we were discussing the problem and possible solutions, before getting into implementation, one word described Astra’s responses: fast. Whatever I asked, it could generally give me the right conclusion within two minutes.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@39bcfed5bc8e47a03c472a624482ddccd8fa5001/images/ea7f3861_en-source-05.png&quot; alt=&quot;Discussing the Discord Client architecture in AgentScope&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;English rendering of the &lt;a href=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@e553be4c58969c0b47a33016c3624ae0d967d210/images/26c1217d_source-05.png&quot;&gt;original Chinese conversation&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;During that discussion, Astra and I even found another problem, &lt;a href=&quot;https://github.com/agentscope-ai/agentscope/issues/2522&quot;&gt;issue #2522&lt;/a&gt;. It quickly set things up and reproduced that one too. It saved me a lot of time.&lt;/p&gt;
+&lt;p&gt;For this kind of work, though, Astra only felt a little better than Sol. I have not yet seen a leap in coding that went far beyond my expectations.&lt;/p&gt;
+&lt;h1 id=&quot;3-代码CR与修复&quot;&gt;3. Code review and fixes&lt;/h1&gt;&lt;p&gt;I also had a code review at work that I had not looked at yet. With Sol, the changes it made during a review often failed to meet my expectations. Time to see how Astra would do.&lt;/p&gt;
+&lt;p&gt;This involved internal company code, so I cannot show the actual review or fixes. Here is what stood out to me:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;It understood my requirements more precisely. At the start of the review, I gave it a few points to focus on. Astra understood almost all of them and also spotted other compatibility problems in the code.&lt;/li&gt;
+&lt;li&gt;I have not seen a difference from Sol in coding ability so far. In complicated business scenarios, context engineering may matter more. A stronger model does not necessarily produce a huge improvement.&lt;/li&gt;
+&lt;li&gt;Automated acceptance checks were a little better. I used a simple prompt asking Astra to call the APIs and check the database after finishing the code, and it followed those instructions fairly well. But I still had to define the acceptance criteria clearly.&lt;/li&gt;
+&lt;li&gt;The Q&amp;amp;A was faster. As for usage, Astra felt a little more expensive than Sol. In the &lt;a href=&quot;https://developers.openai.com/api/docs/pricing&quot;&gt;official API price table&lt;/a&gt; on September 6, 2026, Astra’s Standard short-context input and output prices were both 2.5 times Sol’s. That does not translate directly into Pro usage limits, though.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id=&quot;4-视频脚本与分镜&quot;&gt;4. Video scripts and storyboards&lt;/h1&gt;&lt;p&gt;If Astra is this good at planning and checking its own work, could I get it to make a video from a single request?&lt;/p&gt;
+&lt;p&gt;I sent it a prompt asking for a video of a boy riding a bicycle from age 6 to 26, passing through the countryside, fields, primary school, secondary school, university and workplaces. I told Astra which schools and workplaces I had attended, hoping it could find pictures of them to use as backgrounds.&lt;/p&gt;
+&lt;p&gt;Off it went.&lt;/p&gt;
+&lt;p&gt;First, Astra found real photographs of the different locations and generated keyframes:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@39bcfed5bc8e47a03c472a624482ddccd8fa5001/images/0408ad72_en-source-06.png&quot; alt=&quot;Hand-drawn cycling keyframes for different stages of life&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;English rendering of the &lt;a href=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@e553be4c58969c0b47a33016c3624ae0d967d210/images/b87756de_source-06.png&quot;&gt;original Chinese screenshot&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Then it used Blender with the keyframes to make test clips. At this point, Astra would check whether each video met the requirements and generate it again if it did not.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@39bcfed5bc8e47a03c472a624482ddccd8fa5001/images/141c2dbf_en-source-07.png&quot; alt=&quot;A local cycling test and its remaining problems&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;English rendering of the &lt;a href=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@e553be4c58969c0b47a33016c3624ae0d967d210/images/2ad3d934_source-07.png&quot;&gt;original Chinese screenshot&lt;/a&gt;, with the original crop preserved.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;I thought I could just sit back and get a nice video. But after 200 million tokens and fifteen hours, I had plenty of keyframes and short clips, and the video still did not meet my expectations. What Astra did better here was &lt;strong&gt;planning, organizing and checking&lt;/strong&gt;. It could design storyboards and keyframes and inspect videos. Asking it to make the video directly was not a good idea. I practically burned through a week’s Pro allowance. What a painful lesson. If you insist on making Astra produce a video, it will hunt down small video-generation models online, combine them with Blender and force out something that looks like it came from the 1980s.&lt;/p&gt;
+&lt;p&gt;Here are the approaches Astra tried:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Stage&lt;/th&gt;
+&lt;th&gt;Actual method&lt;/th&gt;
+&lt;th&gt;What it achieved&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;&lt;tr&gt;
+&lt;td&gt;Initial 15-second version&lt;/td&gt;
+&lt;td&gt;AI images + JavaScript/Canvas animation&lt;/td&gt;
+&lt;td&gt;A finished video, but the rider-to-bike proportions and leg movements looked unnatural&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Second version&lt;/td&gt;
+&lt;td&gt;Python controlling Blender&lt;/td&gt;
+&lt;td&gt;Built a 3D scene and movement, with some check renders; the complete film was not finished&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Third version&lt;/td&gt;
+&lt;td&gt;Downloaded LTX-2.3 and ran it on my Mac&lt;/td&gt;
+&lt;td&gt;Generated several short clips with actual motion&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;74-second storyboard version&lt;/td&gt;
+&lt;td&gt;FFmpeg editing&lt;/td&gt;
+&lt;td&gt;Mostly camera moves over still images, plus two model-generated clips of morning reading and office work&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
+&lt;p&gt;So I tried a slightly unorthodox approach: have Astra use Computer Use to open the browser, sign in to Dreamina and make videos with the account’s free credits. I even asked it to collect every free credit it could find:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@39bcfed5bc8e47a03c472a624482ddccd8fa5001/images/7664f477_en-source-08.png&quot; alt=&quot;Astra collecting and using Dreamina&apos;s available free credits&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;English rendering of the &lt;a href=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@e553be4c58969c0b47a33016c3624ae0d967d210/images/1d5ee885_source-08.png&quot;&gt;original Chinese activity log&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Still, whether it was the prompt or the limits of Astra’s capabilities, Seedance’s free allowance was not enough. After spending a lot more Codex tokens, I was still unhappy with the video.&lt;/p&gt;
+&lt;h1 id=&quot;5-Computer-Use&quot;&gt;5. Computer Use&lt;/h1&gt;&lt;p&gt;Most of the tasks above involved Computer Use in one way or another. I have to say, it works really well. It is also one of Astra’s main features.&lt;/p&gt;
+&lt;p&gt;After the blog redesign, I wanted to improve its SEO and use Google Analytics to understand the traffic, but I had no idea how to configure everything. I gave Astra one instruction. It opened Google Search Console, Google Analytics and my DNS provider’s website, then configured the necessary keys and code. Ridiculously convenient. Doing it myself before would have taken me at least two hours.&lt;/p&gt;
+&lt;p&gt;While reproducing the AgentScope issue, Astra used Discord in the browser to get the bot credentials. It also signed in to GitHub to create, comment on and claim issues. During code verification, it sent and received messages through Discord in the browser. It could reliably recognize what was happening on the page. Compared with my experience using Playwright a few months earlier, it felt like a different level altogether.&lt;/p&gt;
+&lt;p&gt;I am also having Astra split this article into posts for RedNote. You can find my RedNote account through &lt;a href=&quot;https://wxxlamp.cn/en/&quot;&gt;my blog&lt;/a&gt;. The plan is to let Astra use Computer Use to open the browser, enter the creator center and fill in the posts. With Sol, there were usually little problems along the way. Astra now feels both fast and accurate.&lt;/p&gt;
+&lt;p&gt;For the video work, I also had Astra go straight into the browser after generating the storyboards and operate Seedance there:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@39bcfed5bc8e47a03c472a624482ddccd8fa5001/images/01fe398d_en-source-09.png&quot; alt=&quot;Using Seedance through the Dreamina browser interface&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;English rendering of the &lt;a href=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@e553be4c58969c0b47a33016c3624ae0d967d210/images/78e022ba_source-09.png&quot;&gt;original Chinese interface screenshot&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
+&lt;h1 id=&quot;6-用后感&quot;&gt;6. After a day with Astra&lt;/h1&gt;&lt;p&gt;After using Astra, my reaction was: damn, this is good. &lt;strong&gt;It is not that its coding ability has suddenly improved enormously; it feels closer to real-world work and reaches into tasks beyond coding.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@39bcfed5bc8e47a03c472a624482ddccd8fa5001/images/7d1ce74a_en-astra-sol-observations.png&quot; alt=&quot;Astra versus Sol: impressions from five kinds of task&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Whether it was understanding what I meant, visual taste, computer operation, token use, self-checking or speed, it felt more than one step ahead of Sol. Of course, Astra alone does not deserve all the credit for these new capabilities. I might take a closer look later at how much Codex’s memory contributes.&lt;/p&gt;
+&lt;p&gt;Without really noticing it, I have been using AI tools for several years. Looking back at these four years, from 2023 to now:&lt;/p&gt;
+&lt;section class=&quot;ai-years&quot; style=&quot;margin:28px 0;padding:24px 20px 4px;background:#faf5f1;border:1px solid #eadfd7;border-radius:8px;&quot;&gt;
+&lt;p style=&quot;margin:0 0 20px;padding:0 0 0 18px;border-left:3px solid #b58b72;line-height:1.9;&quot;&gt;&lt;strong style=&quot;display:block;font-size:22px;color:#7a4730;margin:0 0 5px;&quot;&gt;2023&lt;/strong&gt;I used GPT-3.5 to score the IELTS essays I wrote, saving myself some money.&lt;/p&gt;
+&lt;p style=&quot;margin:0 0 20px;padding:0 0 0 18px;border-left:3px solid #b58b72;line-height:1.9;&quot;&gt;&lt;strong style=&quot;display:block;font-size:22px;color:#7a4730;margin:0 0 5px;&quot;&gt;2024&lt;/strong&gt;I used DeepSeek to translate papers and help me read papers and understand code.&lt;/p&gt;
+&lt;p style=&quot;margin:0 0 20px;padding:0 0 0 18px;border-left:3px solid #b58b72;line-height:1.9;&quot;&gt;&lt;strong style=&quot;display:block;font-size:22px;color:#7a4730;margin:0 0 5px;&quot;&gt;2025&lt;/strong&gt;I used Qoder, Cursor and Claude Code for basic development—about &lt;strong&gt;20%&lt;/strong&gt; of my code—and Gemini to help revise students&apos; assignments.&lt;/p&gt;
+&lt;p style=&quot;margin:0 0 20px;padding:0 0 0 18px;border-left:3px solid #b58b72;line-height:1.9;&quot;&gt;&lt;strong style=&quot;display:block;font-size:22px;color:#7a4730;margin:0 0 5px;&quot;&gt;2026&lt;/strong&gt;Codex now delivers roughly &lt;strong&gt;95%&lt;/strong&gt; of my code development, and I hand over all kinds of complicated computer operations to it as well.&lt;/p&gt;
+&lt;/section&gt;
+
+&lt;p&gt;Large language models are often compared to a game of predicting the next word. But as capabilities such as tool use improve, AI has moved from answering questions toward connecting with the online world and carrying out the operations available there.&lt;/p&gt;
+&lt;p&gt;When I first started using AI tools, I would optimize prompts and manage the context to get better results. With Astra, I have found that I can simply give it a task and it will work through it itself. AI is moving far faster than I expected.&lt;/p&gt;
+&lt;p&gt;What will this look like in the future? AI may replace a lot of basic work. It may replace me too. But before that happens, I still want to see more of the world.&lt;/p&gt;
+</content:encoded></item>
 <item><title>Agents, Skills, and Models: Reflections from Alibaba AI Night School</title><link>https://wxxlamp.cn/en/2026/08/18/ali-ai-night-school-agent-skill-model/</link><guid isPermaLink="true">https://wxxlamp.cn/en/2026/08/18/ali-ai-night-school-agent-skill-model/</guid><pubDate>Tue, 18 Aug 2026 15:29:47 GMT</pubDate><description>Drawing on Taotian Technology AI Night School and Agent-development practice, this article discusses the boundaries among models, Agents, and Skills, along with business choices and evaluation methods.</description><content:encoded>&lt;p&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/60fce5c0_cover.png&quot; alt=&quot;Engineering thoughts after an evening AI class&quot;&gt;&lt;/p&gt;
 &lt;h1 id=&quot;1-前言&quot;&gt;1. Preface&lt;/h1&gt;&lt;p&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/1bbb01e7_section-1-v2.png&quot; alt=&quot;From AI Night School to seven Agent engineering questions&quot;&gt;&lt;/p&gt;
 &lt;p&gt;I recently attended AI Night School training organized by Taotian’s business technology organization. As I have been working on Agent-related development lately, I enrolled in the two-month course. Last Thursday’s first overview session was excellent, and I want to combine my recent experience building Agent applications with some thoughts on Agents, Skills, and models.&lt;/p&gt;
@@ -2594,94 +2691,5 @@ select * from article where id = 3 for update ;
 &lt;p&gt;&lt;strong&gt;Do moderate aerobic exercise.&lt;/strong&gt; Scientists say at least three 30-minute aerobic sessions per week can increase sperm count, although the improvement is temporary and returns to its original state within a month after stopping. Excessively intense exercise can also damage sperm quality. Source: Reproduction.&lt;br&gt;&lt;strong&gt;Sleep seven to eight hours every night.&lt;/strong&gt; Compared with eight hours, men sleeping under six or over nine hours have a 42% lower chance of conception in any given month. Source: Boston University School of Public Health.&lt;br&gt;&lt;strong&gt;Eat healthily.&lt;/strong&gt; Eat foods rich in vitamins D and C, zinc, selenium, and folate, such as nuts, tomatoes, oranges, eggs, fish, poultry, milk, leafy vegetables, beans, blueberries, pomegranates, and dark chocolate.&lt;br&gt;&lt;strong&gt;Drink fewer soft and energy drinks.&lt;/strong&gt; Men who drink at least one soft drink daily are 33% less likely to successfully conceive with their partners. Source: Epidemiology.&lt;br&gt;&lt;strong&gt;Do not keep your phone in your trouser pocket.&lt;/strong&gt; Compared with a control group, men who often do so had 8% lower sperm survival and progressive motility. Source: Environment International.&lt;br&gt;&lt;strong&gt;Wear boxer briefs.&lt;/strong&gt; Harvard research found that men who regularly wear boxer briefs have higher sperm concentration and total sperm counts than men who do not. Avoiding overly tight trousers follows the same principle.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;Finally, according to the study &lt;a href=&quot;https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9385505/&quot;&gt;Effects of Seasonal Factors on Semen Quality among Sperm Donors in Beijing&lt;/a&gt;, spring is the best season for sperm donation.&lt;/p&gt;
-</content:encoded></item>
-<item><title>Troubleshooting a MetaQ Consumer Backlog</title><link>https://wxxlamp.cn/en/2023/04/25/metaq-consumer-heap-up/</link><guid isPermaLink="true">https://wxxlamp.cn/en/2023/04/25/metaq-consumer-heap-up/</guid><pubDate>Tue, 25 Apr 2023 13:36:00 GMT</pubDate><description>A consumer-backlog investigation triggered by migrating from Spring Cloud Stream to native MetaQ configuration. Source analysis shows that one ConsumerGroup can map to only one MQConsumerInner; using separate ConsumerGroup IDs resolves it.</description><content:encoded>&lt;blockquote&gt;
-&lt;p&gt;Note: MetaQ is an internal Alibaba product whose open-source version is called RocketMQ.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&quot;问题现象&quot;&gt;Symptoms&lt;/h2&gt;&lt;p&gt;For special reasons, one application in the business I owned needed its messaging configuration changed from Spring Cloud Stream to native MetaQ. The configurations before and after the change were:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-properties&quot;&gt;spring.cloud.stream.bindings.consumerA.group=CID_CONSUMER_A
-spring.cloud.stream.bindings.consumerA.contentType=text/plain
-spring.cloud.stream.bindings.consumerA.destination=CONSUMER_A_TOPIC
-spring.cloud.stream.metaq.bindings.consumerA.consumer.tags=CONSUMER_A_TOPIC_TAG
-
-spring.cloud.stream.bindings.consumerB.group=CID_CONSUMER_A
-spring.cloud.stream.bindings.consumerB.contentType=text/plain
-spring.cloud.stream.bindings.consumerB.destination=CONSUMER_B_TOPIC
-spring.cloud.stream.metaq.bindings.consumerB.consumer.tags=CONSUMER_B_TOPIC_TAG
-
-spring.cloud.stream.bindings.consumerC.group=CID_CONSUMER_A
-spring.cloud.stream.bindings.consumerC.contentType=text/plain
-spring.cloud.stream.bindings.consumerC.destination=CONSUMER_C_TOPIC
-spring.cloud.stream.metaq.bindings.consumerC.consumer.tags=CONSUMER_C_TOPIC_TAG
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class=&quot;language-properties&quot;&gt;spring.metaq.consumers[0].consumer-group=CID_CONSUMER_A
-spring.metaq.consumers[0].topic=CONSUMER_A_TOPIC
-spring.metaq.consumers[0].sub-expression=CONSUMER_A_TOPIC_TAG
-spring.metaq.consumers[0].message-listener-ref=consumerAListener
-
-spring.cloud.stream.bindings.consumerB.group=CID_CONSUMER_A
-spring.cloud.stream.bindings.consumerB.contentType=text/plain
-spring.cloud.stream.bindings.consumerB.destination=CONSUMER_B_TOPIC
-spring.cloud.stream.metaq.bindings.consumerB.consumer.tags=CONSUMER_B_TOPIC_TAG
-
-spring.cloud.stream.bindings.consumerC.group=CID_CONSUMER_A
-spring.cloud.stream.bindings.consumerC.contentType=text/plain
-spring.cloud.stream.bindings.consumerC.destination=CONSUMER_C_TOPIC
-spring.cloud.stream.metaq.bindings.consumerC.consumer.tags=CONSUMER_C_TOPIC_TAG
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;When half the machines had been deployed and we began observing the canary rollout, messages started accumulating:&lt;/p&gt;
-&lt;img src=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/a563e111_metaq-consumer-heap-up-1.png&quot; align=&quot;middle&quot;&gt;
-
-&lt;h2 id=&quot;问题原因&quot;&gt;Cause&lt;/h2&gt;&lt;h3 id=&quot;消息订阅关系不一致&quot;&gt;Inconsistent Message Subscriptions&lt;/h3&gt;&lt;p&gt;Based on past experience, I suspected that machines in the consumer group had inconsistent subscription relationships. Some subscribed to A and others to B, so MetaQ could not determine whether to consume the messages and left them accumulating on the broker. The MetaQ console confirmed that inconsistent subscriptions had caused the backlog.&lt;/p&gt;
-&lt;img src=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/19657061_metaq-consumer-heap-up-2.png&quot; align=&quot;middle&quot;&gt;
-
-&lt;p&gt;The subscription on the deployed machine was:&lt;/p&gt;
-&lt;img src=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/e1890480_metaq-consumer-heap-up-3.png&quot; align=&quot;middle&quot;&gt;
-
-&lt;p&gt;The undeployed machine had the following subscriptions, clearly more than the deployed machine:&lt;/p&gt;
-&lt;img src=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/50585be8_metaq-consumer-heap-up-4.png&quot; align=&quot;middle&quot;&gt;
-
-&lt;h3 id=&quot;Spring-Cloud-Stream-和-MetaQ-Native&quot;&gt;Spring Cloud Stream and Native MetaQ&lt;/h3&gt;&lt;p&gt;This raised another question: why did the subscriptions for the same &lt;code&gt;ConsumerId&lt;/code&gt; change after replacing Spring Cloud Stream with native MetaQ?&lt;/p&gt;
-&lt;p&gt;More simply, when MetaQ and Spring Cloud Stream used the same &lt;code&gt;ConsumerId&lt;/code&gt;, why did MetaQ’s subscriptions overwrite Spring Cloud Stream’s subscriptions?&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Note: one &lt;code&gt;consumerId&lt;/code&gt; can subscribe to multiple topics.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;The only way to answer this was to inspect the startup source code of Spring Cloud Stream and MetaQ.&lt;/p&gt;
-&lt;h4 id=&quot;MetaQ&quot;&gt;MetaQ&lt;/h4&gt;&lt;p&gt;The MetaQ client’s class diagram is shown below:&lt;/p&gt;
-&lt;img src=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/ead0ccb5_metaq-consumer-heap-up-5.png&quot; align=&quot;middle&quot;&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;MQConsumerInner&lt;/code&gt; records how the current &lt;code&gt;consumerGroup&lt;/code&gt; interacts with the server and maps topics to tags. Its default implementation is &lt;code&gt;DefaultMQPushConsumerImpl&lt;/code&gt;, with a one-to-one relationship to &lt;code&gt;consumerGroup&lt;/code&gt;.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;MQClientInstance&lt;/code&gt; centrally manages reusable objects such as network connections. A map maintains the relationship between &lt;code&gt;ConsumerGroupId&lt;/code&gt; and &lt;code&gt;MQConsumerInner&lt;/code&gt;. Put simply, one &lt;code&gt;ConsumerGroup&lt;/code&gt; can correspond to only one &lt;code&gt;MQConsumerInner&lt;/code&gt;, as shown below:&lt;/li&gt;
-&lt;/ul&gt;
-&lt;img src=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/bb273e43_metaq-consumer-heap-up-6.png&quot; align=&quot;middle&quot;&gt;
-
-&lt;h4 id=&quot;Spring-Cloud-Stream&quot;&gt;Spring Cloud Stream&lt;/h4&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/3c942beb_metaq-consumer-heap-up-7.png&quot; align=&quot;middle&quot;&gt;
-
-&lt;p&gt;Spring Cloud Stream is a glue layer between Spring and middleware. When it starts, it also registers a &lt;code&gt;ConsumerGroup&lt;/code&gt;, as shown below:&lt;/p&gt;
-&lt;img src=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/c4d6e249_metaq-consumer-heap-up-8.png&quot; align=&quot;middle&quot;&gt;
-
-&lt;h3 id=&quot;问题根因&quot;&gt;Root Cause&lt;/h3&gt;&lt;p&gt;At this point, the cause is clear. During startup, Spring Cloud Stream creates its own &lt;code&gt;MetaPushConsumer&lt;/code&gt;, which is effectively a new &lt;code&gt;MQConsumerInner&lt;/code&gt;. One &lt;code&gt;ConsumerGroup&lt;/code&gt; therefore has two &lt;code&gt;MQConsumerInner&lt;/code&gt; instances, violating MetaQ’s required one-to-one mapping. By default, MetaQ replaces the old mapping with the new one. The native MetaQ consumer consequently replaces Spring Cloud Stream’s consumer.&lt;/p&gt;
-&lt;p&gt;That is why, for &lt;code&gt;ConsumerA&lt;/code&gt; on deployed machines, only the native MetaQ subscription remained.&lt;/p&gt;
-&lt;h2 id=&quot;解决思路&quot;&gt;Solution&lt;/h2&gt;&lt;p&gt;Change the consumer ID:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-properties&quot;&gt;spring.metaq.consumers[0].consumer-group=CID_CONSUMER_A
-spring.metaq.consumers[0].topic=CONSUMER_A_TOPIC
-spring.metaq.consumers[0].sub-expression=CONSUMER_A_TOPIC_TAG
-spring.metaq.consumers[0].message-listener-ref=consumerAListener
-
-spring.cloud.stream.bindings.consumerB.group=CID_CONSUMER_B
-spring.cloud.stream.bindings.consumerB.contentType=text/plain
-spring.cloud.stream.bindings.consumerB.destination=CONSUMER_B_TOPIC
-spring.cloud.stream.metaq.bindings.consumerB.consumer.tags=CONSUMER_B_TOPIC_TAG
-
-spring.cloud.stream.bindings.consumerC.group=CID_CONSUMER_B
-spring.cloud.stream.bindings.consumerC.contentType=text/plain
-spring.cloud.stream.bindings.consumerC.destination=CONSUMER_C_TOPIC
-spring.cloud.stream.metaq.bindings.consumerC.consumer.tags=CONSUMER_C_TOPIC_TAG
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&quot;思考和总结&quot;&gt;Reflections and Summary&lt;/h2&gt;&lt;ol&gt;
-&lt;li&gt;The cause was not complicated, but many people might stop at the first layer—an inconsistent subscription relationship caused the backlog. We still need the curiosity to investigate more deeply.&lt;/li&gt;
-&lt;li&gt;Avoid maintaining two sets of configuration in production wherever possible, because doing so adds cognitive overhead.&lt;/li&gt;
-&lt;/ol&gt;
 </content:encoded></item>
 </channel></rss>

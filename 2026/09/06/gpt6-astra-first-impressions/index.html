@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GPT6 Astra使用初体验 | 王星星的魔灯</title>
+<link rel="canonical" href="https://wxxlamp.cn/2026/09/06/gpt6-astra-first-impressions/">
+<meta name="description" content="花周六一天用Astra改博客、讨论问题、做代码CR，也折腾了15小时视频，聊聊让我惊喜和踩坑的地方。">
+<meta name="author" content="王星星">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GPT6 Astra使用初体验 | 王星星的魔灯">
+<meta property="og:description" content="花周六一天用Astra改博客、讨论问题、做代码CR，也折腾了15小时视频，聊聊让我惊喜和踩坑的地方。">
+<meta property="og:url" content="https://wxxlamp.cn/2026/09/06/gpt6-astra-first-impressions/">
+<meta property="og:site_name" content="王星星的魔灯">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@e553be4c58969c0b47a33016c3624ae0d967d210/images/f2ca3c53_cover.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="GPT6 Astra使用初体验 | 王星星的魔灯">
+<meta name="twitter:description" content="花周六一天用Astra改博客、讨论问题、做代码CR，也折腾了15小时视频，聊聊让我惊喜和踩坑的地方。">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@e553be4c58969c0b47a33016c3624ae0d967d210/images/f2ca3c53_cover.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://wxxlamp.cn/#website","name":"王星星的魔灯","url":"https://wxxlamp.cn/","inLanguage":"zh-CN"},{"@type":"BlogPosting","@id":"https://wxxlamp.cn/2026/09/06/gpt6-astra-first-impressions/#page","url":"https://wxxlamp.cn/2026/09/06/gpt6-astra-first-impressions/","name":"GPT6 Astra使用初体验 | 王星星的魔灯","description":"花周六一天用Astra改博客、讨论问题、做代码CR，也折腾了15小时视频，聊聊让我惊喜和踩坑的地方。","inLanguage":"zh-CN","isPartOf":{"@id":"https://wxxlamp.cn/#website"},"headline":"GPT6 Astra使用初体验","author":{"@type":"Person","@id":"https://wxxlamp.cn/about/#person","name":"王星星","url":"https://wxxlamp.cn/about/"},"mainEntityOfPage":"https://wxxlamp.cn/2026/09/06/gpt6-astra-first-impressions/","image":["https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@e553be4c58969c0b47a33016c3624ae0d967d210/images/f2ca3c53_cover.png"],"datePublished":"2026-09-06T15:49:03.000Z","articleSection":["场景实践"]}]}</script>
+
+
+
+<link rel="alternate" href="/atom.xml" title="Atom" type="application/atom+xml">
+<link rel="alternate" href="/rss.xml" title="RSS 2.0" type="application/rss+xml">
+
+<link rel="alternate" hreflang="zh-CN" href="https://wxxlamp.cn/2026/09/06/gpt6-astra-first-impressions/">
+<link rel="alternate" hreflang="en" href="https://wxxlamp.cn/en/2026/09/06/gpt6-astra-first-impressions/">
+<link rel="alternate" hreflang="x-default" href="https://wxxlamp.cn/2026/09/06/gpt6-astra-first-impressions/">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2" />
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2">
+<meta name="theme-color" content="#244f43">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2" />
+
+
+
+<script defer src="/js/src/site.js?v=2"></script>
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  };
+</script>
+<script id="MathJax-script" async src="/lib/mathjax/tex-chtml.js"></script>
+
+
+
+
+  
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MJEDN7D89G"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-MJEDN7D89G');
+</script>
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "ydyci83xyu");
+</script>
+
+
+
+  <meta name="generator" content="Hexo 8.1.1"></head>
+
+  <body data-content-language="zh-CN" class="view-post">
+    <a class="skip-link" href="#content" data-zh="跳至正文" data-en="Skip to content">跳至正文</a>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+  <a href="/" class="site-brand" aria-label="王星星的魔灯 · 首页" data-zh-label="王星星的魔灯 · 首页" data-en-label="Sibo's Blog · Home">
+    <img class="brand-mark" src="/favicon.svg" width="36" height="36" alt="" aria-hidden="true">
+    <span class="brand-name" data-zh="王星星的魔灯" data-en="Sibo's Blog">王星星的魔灯</span>
+  </a>
+  <nav id="nav-top" aria-label="主导航" data-zh-label="主导航" data-en-label="Main navigation">
+    <ul class="nav-top-items">
+      <li><a href="/" data-nav="home" data-zh="文章" data-en="Writing">文章</a></li>
+      <li><a href="/archives/" data-nav="archives" data-zh="归档" data-en="Archive">归档</a></li>
+      <li><a href="/about/" data-nav="about" data-zh="关于" data-en="About">关于</a></li>
+      <li><a href="/resume/" data-nav="resume" data-resume-link data-zh="简历" data-en="Résumé">简历</a></li>
+    </ul>
+  </nav>
+  <div class="language-switch" aria-label="Language">
+    <a href="/2026/09/06/gpt6-astra-first-impressions/" data-language="zh" lang="zh-CN" aria-label="阅读中文版">中</a>
+    <a href="/en/2026/09/06/gpt6-astra-first-impressions/" data-language="en" lang="en" aria-label="Read in English">EN</a>
+  </div>
+</div>
+
+      </header>
+      <main id="content" tabindex="-1">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <div class="post-meta"><time datetime="2026-09-06">2026.09.06</time><a href="/categories/%E5%9C%BA%E6%99%AF%E5%AE%9E%E8%B7%B5/">场景实践</a></div>
+      <h1 class="post-title">GPT6 Astra使用初体验</h1>
+    </header>
+    
+      
+<nav class="post-language" aria-label="Article language">
+  <a href="/en/2026/09/06/gpt6-astra-first-impressions/" lang="en">Read in English <svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+</nav>
+
+
+      <div class="post-content" lang="zh-CN"><p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@e553be4c58969c0b47a33016c3624ae0d967d210/images/f2ca3c53_cover.png" alt="周末工程师在窗边检查网页和骑行分镜"></p>
+<p>GPT6 Astra发布后，PR满天飞，恰好笔者最近在用Codex做代码开发，来看看是不是真的如传言般厉害。</p>
+<p>所以我花了周六一整天来让Astra帮我完成各种任务，直接说结论：“简直amazing”。Astra给我的感觉真的很棒，接下来我就从 Computer Use、视频脚本策划、代码CR、网站制作与UI设计，简单聊下最近一天的使用感受。</p>
+<h1 id="1-网站设计与制作"><a href="#1-网站设计与制作" class="headerlink" title="1. 网站设计与制作"></a>1. 网站设计与制作</h1><p>笔者布置给 Astra第一个任务是帮我优化我自己的博客网站：<a href="https://wxxlamp.cn/">王星星的魔灯</a>，提示词如下：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@e553be4c58969c0b47a33016c3624ae0d967d210/images/31975fbe_source-01.png" alt="image.png"></p>
+<p>作为一个审美一言难尽的程序员，我只能给他一个很模糊的提示，让Astra帮我优化网站，这个是一个非常基础的诉求。在等了三十分钟后，Astra给了一个让我惊喜的效果。Astra会自己设计、开发，然后检查，最后通过之后再交付，这种自我检查的效果比我用Sol等模型要好很多。</p>
+<p>随后，我又提交了一些其他多语言、布局、文字、SEO等简单的诉求。只需要三言两语，Astra就能迅速get到我的意思，并且完成交付。这在半年前我用Claude Code的时候，是几乎不可能实现的。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@e553be4c58969c0b47a33016c3624ae0d967d210/images/4152cda8_source-02.png" alt="image.png"></p>
+<p>最后展示一下效果，大家可以通过该链接：<a href="https://wxxlamp.cn/design-history/">博客新旧版对比</a> 看一下原版博客界面和新版博客界面的区别（新版是基于Astra开发、原版是半年前基于Claude Code开发）：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@e553be4c58969c0b47a33016c3624ae0d967d210/images/0385b2c0_source-03.png" alt="image.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@e553be4c58969c0b47a33016c3624ae0d967d210/images/9815efa2_source-04.png" alt="image.png"></p>
+<p>同时，另外一点要提到的是，Astra的审美和理解能力相对于Sol来说，真的是跃升了一大截，包括我本次发布的微信公众号的内容和排版、图片生成，也是Astra自动帮我完成的。</p>
+<h1 id="2-问题讨论与开发"><a href="#2-问题讨论与开发" class="headerlink" title="2. 问题讨论与开发"></a>2. 问题讨论与开发</h1><p>同时，因为最近团队的AI业务是基于AgentScope开发的，所以就想看看社区有没有什么issue是自己可以fix的。然后就找到了这个<a target="_blank" rel="noopener" href="https://github.com/agentscope-ai/agentscope/issues/2373">issue#2373</a>。</p>
+<p>刚开始看这个issue的时候，肯定是懵逼的，所以我就让Astra快速的帮我理清当前项目的基本模型、数据流等等。</p>
+<p>在讨论问题和方案的时候，因为不涉及到代码的开发，Astra给我的反馈就是一个字：“快”。不管我问什么问题，基本两分钟以内就可以给出对应的正确结论：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@e553be4c58969c0b47a33016c3624ae0d967d210/images/26c1217d_source-05.png" alt="image.png"></p>
+<p>甚至在讨论的过程中，我还和Astra发现了另一个 <a target="_blank" rel="noopener" href="https://github.com/agentscope-ai/agentscope/issues/2522">issue#2522</a>，同时Astra还迅速的帮我自动配置，自动复现。真的是大大地节约了我的时间。</p>
+<p>不过这里Astra和Sol比较，目前只是觉得Astra体感上优秀一点，并没有在coding上有太超出预期的感觉。</p>
+<h1 id="3-代码CR与修复"><a href="#3-代码CR与修复" class="headerlink" title="3. 代码CR与修复"></a>3. 代码CR与修复</h1><p>正好公司最近还有一个cr还没有看，之前用Sol的时候，审查cr改的代码，老是不太符合我的预期，看看Astra怎么样。</p>
+<p>由于是公司内部代码，具体的CR内容和修复过程不便展示出来。重点讲下使用Astra的感受：</p>
+<ol>
+<li>诉求理解得更精准。在刚开始cr的时候，我提了一些cr的要点和诉求，Astra基本都能理解到，同时还能找出代码的其他兼容性问题；</li>
+<li>Coding能力目前没有看出来和Sol的区别。只能说明，在复杂的业务场景中，上下文工程可能更加重要，模型能力的提升，并不能带来非常大的收益。</li>
+<li>自动化验收的能力会稍强一点。我用简单的提示词提示Astra在开发完代码自动调用接口、通过数据库验收，基本能比较好地遵循我的指令。但是前提还是在于我能把验收规则定义的很清楚才可以；</li>
+<li>QA环节，速度会比较快。额度消耗上，感觉Astra还是比Sol贵一点。按2026年9月6日的<a target="_blank" rel="noopener" href="https://developers.openai.com/api/docs/pricing">官方API价格表</a>，Standard短上下文的输入、输出单价，Astra都是Sol的2.5倍，不过这个不能直接换算成Pro的额度消耗。</li>
+</ol>
+<h1 id="4-视频脚本与分镜"><a href="#4-视频脚本与分镜" class="headerlink" title="4. 视频脚本与分镜"></a>4. 视频脚本与分镜</h1><p>既然 Astra的自我规划、自我监督能力这么强，我能否用一句话，让Astra帮我生成视频呢？</p>
+<p>所以我就给Astra发了一段prompt，希望它能帮我生成一个男孩从6到26岁，骑着自行车路过乡间、田野、小学、中学、大学、工作的各个场景。我把我的小学、中学、大学、工作地点告诉了Astra，希望它能自己搜到对应的图片作为背景。</p>
+<p>接下来，任务开始：</p>
+<p>首先，Astra搜索了不同场景的真实照片，然后生成了不同的关键帧：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@e553be4c58969c0b47a33016c3624ae0d967d210/images/b87756de_source-06.png" alt="image.png"></p>
+<p>然后，Astra使用Blender结合关键帧生成试镜视频。这个时候，Astra会check对应的视频是否符合要求，如果不符合要求，Astra会重新生成。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@e553be4c58969c0b47a33016c3624ae0d967d210/images/2ad3d934_source-07.png" alt="image.png"></p>
+<p>本以为这样就可以美美地生成视频了，但是花费了2亿 token和15个小时之后，发现生成了不少关键帧和短片段，但视频始终没有达到我的预期。这次用下来，Astra更擅长的还是 <strong>规划、组织和检查</strong>，它可以设计分镜、关键帧、检查视频，但是直接让他生成视频，并不是一个好主意（几乎浪费了我Pro一周的额度，多么痛的领悟）。如果强行让Astra生成视频，只会逼得Astra去网上找可以生成视频的小模型，结合Blender，硬生成一些80年代风格的视频。</p>
+<p>以下是Astra生成视频的方式</p>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>实际方法</th>
+<th>做到了什么</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>最初的 15 秒版本</td>
+<td>AI 图片＋JavaScript&#x2F;Canvas 动画</td>
+<td>完成视频，但人车比例和腿脚不自然</td>
+</tr>
+<tr>
+<td>第二版</td>
+<td>Python 操作 Blender</td>
+<td>建立三维场景和动作，完成部分检查渲染；完整影片未完成</td>
+</tr>
+<tr>
+<td>第三版</td>
+<td>下载 LTX-2.3 模型，在我的 Mac 上运行</td>
+<td>生成了若干真实运动的短片段</td>
+</tr>
+<tr>
+<td>74 秒分镜版</td>
+<td>FFmpeg 剪辑</td>
+<td>主要是图片运镜，加入晨读、办公两个模型生成片段</td>
+</tr>
+</tbody></table>
+<p>所以我就使用了一个邪修的方式，让Astra通过Computer Use操作浏览器，登录Dreamina，利用账号的免费额度帮我生成。甚至我还让Astra自己帮我去薅羊毛，把能领的额度都领到：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@e553be4c58969c0b47a33016c3624ae0d967d210/images/1d5ee885_source-08.png" alt="image.png"></p>
+<p>但是，可能是prompt的原因，或者是Astra模型能力不支持，Seedance的免费额度不够用，在浪费了大量codex token之后，最后生成的视频不太满意。</p>
+<h1 id="5-Computer-Use"><a href="#5-Computer-Use" class="headerlink" title="5. Computer Use"></a>5. Computer Use</h1><p>其实上面提到的功能，基本都用到了Computer Use。不得不说，非常好用。这也是Astra主打的一个核心功能。</p>
+<p>在开发完个人博客网站后，我希望能提高SEO、以及google分析整体的流量情况，但是我又不知道怎么配置，就给Astra发了一个指令，然后Astra就自动打开了 Google Search Console、Google Analytics，dns服务商网站，来帮我自动配置对应的key、代码，简直不要太方便。要是以前，我最少要操作2小时。</p>
+<p>在复现AgentScope Issue的时候，Astra帮我操作了浏览器上的Discord获取bot的密钥、帮我登录GitHub进行issue创建、评论、认领等操作。在代码验证阶段，Astra还操控了浏览器的Discord发送和接收消息。并且它能稳定的识别到浏览器中发生的事情。这和前几个月我用Playwright操控浏览器，有质的差距。</p>
+<p>包括本篇文章也会同步让Astra拆分发送到小红书上（小红书地址可以通过我的<a href="https://wxxlamp.cn/">博客</a>获取），打算让Astra自己通过Computer Use功能打开浏览器、进入创作者中心，再把拆分的内容编辑进去。之前在用Sol的时候，这一步老是或多或少有点小问题，现在Astra给我的感觉真的是又快又准。</p>
+<p>同时，在剪辑视频的时候，我也是让Astra生成完分镜之后，直接进入浏览器操作Seedance生成的：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@e553be4c58969c0b47a33016c3624ae0d967d210/images/78e022ba_source-09.png" alt="image.png"></p>
+<h1 id="6-用后感"><a href="#6-用后感" class="headerlink" title="6. 用后感"></a>6. 用后感</h1><p>用完Astra之后，给我的感觉真的是牛皮。<strong>它不是说coding能力有了巨大的提升，而是更加接近真实场景，触及到了coding外的其他业务。</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@e553be4c58969c0b47a33016c3624ae0d967d210/images/b0857508_astra-sol-observations.png" alt="Astra与Sol：这一天的五类任务体验"></p>
+<p>不管是语义理解、审美、电脑操控、token消耗、自我验证、实现速度上，都比Sol进步了不止一个台阶。当然，这些新的能力，不只是Astra的功劳。至于Codex的记忆机制起了多少作用，后续有机会再分析下。</p>
+<p>不知不觉，已经用AI工具好几年了。回想自己从2023年到现在使用AI工具的这四年：</p>
+<section class="ai-years" style="margin:28px 0;padding:24px 20px 4px;background:#faf5f1;border:1px solid #eadfd7;border-radius:8px;">
+<p style="margin:0 0 20px;padding:0 0 0 18px;border-left:3px solid #b58b72;line-height:1.9;"><strong style="display:block;font-size:22px;color:#7a4730;margin:0 0 5px;">23年</strong>使用GPT 3.5 给我自己写的雅思作文打分，以此来省钱；</p>
+<p style="margin:0 0 20px;padding:0 0 0 18px;border-left:3px solid #b58b72;line-height:1.9;"><strong style="display:block;font-size:22px;color:#7a4730;margin:0 0 5px;">24年</strong>使用DeepSeek完成论文的翻译，并且辅助我阅读论文、理解代码；</p>
+<p style="margin:0 0 20px;padding:0 0 0 18px;border-left:3px solid #b58b72;line-height:1.9;"><strong style="display:block;font-size:22px;color:#7a4730;margin:0 0 5px;">25年</strong>基于Qoder、Cursor、Claude Code完成基本代码的开发（<strong>20%</strong>代码量）、使用Gemini完成学生作业的修改；</p>
+<p style="margin:0 0 20px;padding:0 0 0 18px;border-left:3px solid #b58b72;line-height:1.9;"><strong style="display:block;font-size:22px;color:#7a4730;margin:0 0 5px;">26年</strong>使用Codex基本交付了我<strong>95%</strong>的代码开发量，同时，有关电脑的各种复杂操作都会交给Codex来完成。</p>
+</section>
+
+<p>可以发现，大模型虽然常被比作成语接龙，但是随着tool use等能力提升，AI已经可以从最开始的问答，慢慢地连接网络世界，完成各种可达性的操作。</p>
+<p>最开始使用AI工具的时候，我会优化prompt、控制上下文，以此来让AI实现更好的效果。随着Astra的发布，我发现只需要提供任务，AI会自己完成。不得不说，AI的发展之迅速，远超我的预期。</p>
+<p>未来会发展成什么样？很多基础性的工作可能都会被AI替代、可能我也会被替代，但是在替代之前，还是要多看看这个世界呀。</p>
+</div>
+      <footer class="post-footer">
+        <div class="post-tags"><a href="/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BA%94%E7%94%A8/">大模型应用</a><a href="/tags/AI-%E7%BC%96%E7%A8%8B/">AI 编程</a><a href="/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a></div>
+        
+  <nav class="post-nav">
+    
+    
+      <a class="next" href="/2026/08/18/ali-ai-night-school-agent-skill-model/">
+        <span class="next-text nav-default">Agent、Skill 与模型：AI 夜校学习与工程实践思考</span>
+        <span class="prev-text nav-mobile"><span data-zh="下一篇" data-en="Next entry">下一篇</span></span>
+        <svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 5 7 7-7 7M5 12h14"/></svg>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    
+
+<div class="github-comments">
+  <div class="comments-title">💬 Comments</div>
+  <p style="color: #666; font-size: 0.9em; margin-bottom: 1em;">
+    Comments require <a href="https://github.com/apps/giscus" target="_blank" rel="noopener">Giscus App</a> installed on your GitHub repository.
+  </p>
+  <script src="https://giscus.app/client.js"
+    data-repo="wxxlamp/wxxlamp.github.io"
+    data-repo-id="R_kgDOCiYteA"
+    data-category="General"
+    data-category-id="DIC_kwDOCiYteM4CelIo"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="light"
+    data-lang="en"
+    crossorigin="anonymous"
+    async>
+  </script>
+</div>
+
+
+
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+    
+<aside class="toc-container" id="toc-container"><details open><summary data-zh="本篇目录" data-en="On this page">本篇目录</summary><ol class="toc-list" id="toc-list"></ol></details></aside>
+<div class="reading-progress" aria-hidden="true"></div>
+
+
+
+      </main>
+
+      <footer id="colophon"><div class="footer-inner"><span>© 2026 王星星 <span class="footer-dot">·</span> <span data-zh="保持好奇，认真生活。" data-en="Stay curious. Live thoughtfully.">保持好奇，认真生活。</span></span><a href="/subscribe/"><svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 10a9 9 0 0 1 9 9M5 4a15 15 0 0 1 15 15"/><circle cx="5" cy="19" r="1"/></svg> RSS</a></div>
+<div class="site-stats"><span data-zh="访问" data-en="Visits">访问</span> <span id="busuanzi_value_site_pv">—</span> · <span data-zh="访客" data-en="Readers">访客</span> <span id="busuanzi_value_site_uv">—</span> · Powered by <a target="_blank" href="https://hexo.io/" rel="noopener noopener">Hexo</a></div>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+      </footer>
+
+      <button class="back-to-top" id="back-to-top" aria-label="回到顶部" data-zh-label="回到顶部" data-en-label="Back to top"><svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m5 12 7-7 7 7M12 5v14"/></svg></button>
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2"></script>
+
+  </body>
+</html>

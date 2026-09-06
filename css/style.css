@@ -1484,6 +1484,10 @@ button {
   overflow-wrap: anywhere;
 }
 
+.view-post .post-title {
+  text-align: center;
+}
+
 .home .post-title {
   font-size: clamp(19px, 1.8vw, 23px);
   line-height: 1.6;
@@ -1705,7 +1709,9 @@ button {
   height: auto;
   max-width: 100%;
   margin: 28px auto;
+  border: 1px solid var(--line);
   border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(37, 44, 41, 0.08);
 }
 
 .post-content hr {
@@ -1808,12 +1814,16 @@ button {
   line-height: 1.6;
 }
 
-.toc-list .toc-h3 {
+.toc-list .toc-h2 {
   padding-left: 12px;
 }
 
-.toc-list .toc-h4 {
+.toc-list .toc-h3 {
   padding-left: 24px;
+}
+
+.toc-list .toc-h4 {
+  padding-left: 36px;
 }
 
 .toc-list .active a {

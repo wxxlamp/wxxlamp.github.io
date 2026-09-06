@@ -2,8 +2,96 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN">
 <title>王星星的魔灯</title><subtitle>记录技术成长与生活感悟</subtitle><id>https://wxxlamp.cn/</id>
 <link href="https://wxxlamp.cn/" rel="alternate"/><link href="https://wxxlamp.cn/atom.xml" rel="self" type="application/atom+xml"/>
-<icon>https://wxxlamp.cn/favicon.ico</icon><updated>2026-09-06T07:21:43.832Z</updated><author><name>Wxx</name></author>
-<entry><title>Agent、Skill 与模型：AI 夜校学习与工程实践思考</title><id>https://wxxlamp.cn/2026/08/18/ali-ai-night-school-agent-skill-model/</id><link href="https://wxxlamp.cn/2026/08/18/ali-ai-night-school-agent-skill-model/"/><published>2026-08-18T15:29:47.000Z</published><updated>2026-09-06T07:21:43.821Z</updated><summary type="text">结合淘天技术 AI 夜校与 Agent 开发实践，讨论模型、Agent、Skill 的边界，以及业务选型和评测方法。</summary><content type="html" xml:base="https://wxxlamp.cn/2026/08/18/ali-ai-night-school-agent-skill-model/">&lt;p&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/60fce5c0_cover.png&quot; alt=&quot;夜间 AI 课堂后的工程思考&quot;&gt;&lt;/p&gt;
+<icon>https://wxxlamp.cn/favicon.ico</icon><updated>2026-09-06T17:38:40.692Z</updated><author><name>Wxx</name></author>
+<entry><title>GPT6 Astra使用初体验</title><id>https://wxxlamp.cn/2026/09/06/gpt6-astra-first-impressions/</id><link href="https://wxxlamp.cn/2026/09/06/gpt6-astra-first-impressions/"/><published>2026-09-06T15:49:03.000Z</published><updated>2026-09-06T17:38:40.686Z</updated><summary type="text">花周六一天用Astra改博客、讨论问题、做代码CR，也折腾了15小时视频，聊聊让我惊喜和踩坑的地方。</summary><content type="html" xml:base="https://wxxlamp.cn/2026/09/06/gpt6-astra-first-impressions/">&lt;p&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@e553be4c58969c0b47a33016c3624ae0d967d210/images/f2ca3c53_cover.png&quot; alt=&quot;周末工程师在窗边检查网页和骑行分镜&quot;&gt;&lt;/p&gt;
+&lt;p&gt;GPT6 Astra发布后，PR满天飞，恰好笔者最近在用Codex做代码开发，来看看是不是真的如传言般厉害。&lt;/p&gt;
+&lt;p&gt;所以我花了周六一整天来让Astra帮我完成各种任务，直接说结论：“简直amazing”。Astra给我的感觉真的很棒，接下来我就从 Computer Use、视频脚本策划、代码CR、网站制作与UI设计，简单聊下最近一天的使用感受。&lt;/p&gt;
+&lt;h1 id=&quot;1-网站设计与制作&quot;&gt;1. 网站设计与制作&lt;/h1&gt;&lt;p&gt;笔者布置给 Astra第一个任务是帮我优化我自己的博客网站：&lt;a href=&quot;https://wxxlamp.cn/&quot;&gt;王星星的魔灯&lt;/a&gt;，提示词如下：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@e553be4c58969c0b47a33016c3624ae0d967d210/images/31975fbe_source-01.png&quot; alt=&quot;image.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;作为一个审美一言难尽的程序员，我只能给他一个很模糊的提示，让Astra帮我优化网站，这个是一个非常基础的诉求。在等了三十分钟后，Astra给了一个让我惊喜的效果。Astra会自己设计、开发，然后检查，最后通过之后再交付，这种自我检查的效果比我用Sol等模型要好很多。&lt;/p&gt;
+&lt;p&gt;随后，我又提交了一些其他多语言、布局、文字、SEO等简单的诉求。只需要三言两语，Astra就能迅速get到我的意思，并且完成交付。这在半年前我用Claude Code的时候，是几乎不可能实现的。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@e553be4c58969c0b47a33016c3624ae0d967d210/images/4152cda8_source-02.png&quot; alt=&quot;image.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;最后展示一下效果，大家可以通过该链接：&lt;a href=&quot;https://wxxlamp.cn/design-history/&quot;&gt;博客新旧版对比&lt;/a&gt; 看一下原版博客界面和新版博客界面的区别（新版是基于Astra开发、原版是半年前基于Claude Code开发）：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@e553be4c58969c0b47a33016c3624ae0d967d210/images/0385b2c0_source-03.png&quot; alt=&quot;image.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@e553be4c58969c0b47a33016c3624ae0d967d210/images/9815efa2_source-04.png&quot; alt=&quot;image.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;同时，另外一点要提到的是，Astra的审美和理解能力相对于Sol来说，真的是跃升了一大截，包括我本次发布的微信公众号的内容和排版、图片生成，也是Astra自动帮我完成的。&lt;/p&gt;
+&lt;h1 id=&quot;2-问题讨论与开发&quot;&gt;2. 问题讨论与开发&lt;/h1&gt;&lt;p&gt;同时，因为最近团队的AI业务是基于AgentScope开发的，所以就想看看社区有没有什么issue是自己可以fix的。然后就找到了这个&lt;a href=&quot;https://github.com/agentscope-ai/agentscope/issues/2373&quot;&gt;issue#2373&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;刚开始看这个issue的时候，肯定是懵逼的，所以我就让Astra快速的帮我理清当前项目的基本模型、数据流等等。&lt;/p&gt;
+&lt;p&gt;在讨论问题和方案的时候，因为不涉及到代码的开发，Astra给我的反馈就是一个字：“快”。不管我问什么问题，基本两分钟以内就可以给出对应的正确结论：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@e553be4c58969c0b47a33016c3624ae0d967d210/images/26c1217d_source-05.png&quot; alt=&quot;image.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;甚至在讨论的过程中，我还和Astra发现了另一个 &lt;a href=&quot;https://github.com/agentscope-ai/agentscope/issues/2522&quot;&gt;issue#2522&lt;/a&gt;，同时Astra还迅速的帮我自动配置，自动复现。真的是大大地节约了我的时间。&lt;/p&gt;
+&lt;p&gt;不过这里Astra和Sol比较，目前只是觉得Astra体感上优秀一点，并没有在coding上有太超出预期的感觉。&lt;/p&gt;
+&lt;h1 id=&quot;3-代码CR与修复&quot;&gt;3. 代码CR与修复&lt;/h1&gt;&lt;p&gt;正好公司最近还有一个cr还没有看，之前用Sol的时候，审查cr改的代码，老是不太符合我的预期，看看Astra怎么样。&lt;/p&gt;
+&lt;p&gt;由于是公司内部代码，具体的CR内容和修复过程不便展示出来。重点讲下使用Astra的感受：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;诉求理解得更精准。在刚开始cr的时候，我提了一些cr的要点和诉求，Astra基本都能理解到，同时还能找出代码的其他兼容性问题；&lt;/li&gt;
+&lt;li&gt;Coding能力目前没有看出来和Sol的区别。只能说明，在复杂的业务场景中，上下文工程可能更加重要，模型能力的提升，并不能带来非常大的收益。&lt;/li&gt;
+&lt;li&gt;自动化验收的能力会稍强一点。我用简单的提示词提示Astra在开发完代码自动调用接口、通过数据库验收，基本能比较好地遵循我的指令。但是前提还是在于我能把验收规则定义的很清楚才可以；&lt;/li&gt;
+&lt;li&gt;QA环节，速度会比较快。额度消耗上，感觉Astra还是比Sol贵一点。按2026年9月6日的&lt;a href=&quot;https://developers.openai.com/api/docs/pricing&quot;&gt;官方API价格表&lt;/a&gt;，Standard短上下文的输入、输出单价，Astra都是Sol的2.5倍，不过这个不能直接换算成Pro的额度消耗。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id=&quot;4-视频脚本与分镜&quot;&gt;4. 视频脚本与分镜&lt;/h1&gt;&lt;p&gt;既然 Astra的自我规划、自我监督能力这么强，我能否用一句话，让Astra帮我生成视频呢？&lt;/p&gt;
+&lt;p&gt;所以我就给Astra发了一段prompt，希望它能帮我生成一个男孩从6到26岁，骑着自行车路过乡间、田野、小学、中学、大学、工作的各个场景。我把我的小学、中学、大学、工作地点告诉了Astra，希望它能自己搜到对应的图片作为背景。&lt;/p&gt;
+&lt;p&gt;接下来，任务开始：&lt;/p&gt;
+&lt;p&gt;首先，Astra搜索了不同场景的真实照片，然后生成了不同的关键帧：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@e553be4c58969c0b47a33016c3624ae0d967d210/images/b87756de_source-06.png&quot; alt=&quot;image.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;然后，Astra使用Blender结合关键帧生成试镜视频。这个时候，Astra会check对应的视频是否符合要求，如果不符合要求，Astra会重新生成。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@e553be4c58969c0b47a33016c3624ae0d967d210/images/2ad3d934_source-07.png&quot; alt=&quot;image.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;本以为这样就可以美美地生成视频了，但是花费了2亿 token和15个小时之后，发现生成了不少关键帧和短片段，但视频始终没有达到我的预期。这次用下来，Astra更擅长的还是 &lt;strong&gt;规划、组织和检查&lt;/strong&gt;，它可以设计分镜、关键帧、检查视频，但是直接让他生成视频，并不是一个好主意（几乎浪费了我Pro一周的额度，多么痛的领悟）。如果强行让Astra生成视频，只会逼得Astra去网上找可以生成视频的小模型，结合Blender，硬生成一些80年代风格的视频。&lt;/p&gt;
+&lt;p&gt;以下是Astra生成视频的方式&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;阶段&lt;/th&gt;
+&lt;th&gt;实际方法&lt;/th&gt;
+&lt;th&gt;做到了什么&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;&lt;tr&gt;
+&lt;td&gt;最初的 15 秒版本&lt;/td&gt;
+&lt;td&gt;AI 图片＋JavaScript/Canvas 动画&lt;/td&gt;
+&lt;td&gt;完成视频，但人车比例和腿脚不自然&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;第二版&lt;/td&gt;
+&lt;td&gt;Python 操作 Blender&lt;/td&gt;
+&lt;td&gt;建立三维场景和动作，完成部分检查渲染；完整影片未完成&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;第三版&lt;/td&gt;
+&lt;td&gt;下载 LTX-2.3 模型，在我的 Mac 上运行&lt;/td&gt;
+&lt;td&gt;生成了若干真实运动的短片段&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;74 秒分镜版&lt;/td&gt;
+&lt;td&gt;FFmpeg 剪辑&lt;/td&gt;
+&lt;td&gt;主要是图片运镜，加入晨读、办公两个模型生成片段&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
+&lt;p&gt;所以我就使用了一个邪修的方式，让Astra通过Computer Use操作浏览器，登录Dreamina，利用账号的免费额度帮我生成。甚至我还让Astra自己帮我去薅羊毛，把能领的额度都领到：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@e553be4c58969c0b47a33016c3624ae0d967d210/images/1d5ee885_source-08.png&quot; alt=&quot;image.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;但是，可能是prompt的原因，或者是Astra模型能力不支持，Seedance的免费额度不够用，在浪费了大量codex token之后，最后生成的视频不太满意。&lt;/p&gt;
+&lt;h1 id=&quot;5-Computer-Use&quot;&gt;5. Computer Use&lt;/h1&gt;&lt;p&gt;其实上面提到的功能，基本都用到了Computer Use。不得不说，非常好用。这也是Astra主打的一个核心功能。&lt;/p&gt;
+&lt;p&gt;在开发完个人博客网站后，我希望能提高SEO、以及google分析整体的流量情况，但是我又不知道怎么配置，就给Astra发了一个指令，然后Astra就自动打开了 Google Search Console、Google Analytics，dns服务商网站，来帮我自动配置对应的key、代码，简直不要太方便。要是以前，我最少要操作2小时。&lt;/p&gt;
+&lt;p&gt;在复现AgentScope Issue的时候，Astra帮我操作了浏览器上的Discord获取bot的密钥、帮我登录GitHub进行issue创建、评论、认领等操作。在代码验证阶段，Astra还操控了浏览器的Discord发送和接收消息。并且它能稳定的识别到浏览器中发生的事情。这和前几个月我用Playwright操控浏览器，有质的差距。&lt;/p&gt;
+&lt;p&gt;包括本篇文章也会同步让Astra拆分发送到小红书上（小红书地址可以通过我的&lt;a href=&quot;https://wxxlamp.cn/&quot;&gt;博客&lt;/a&gt;获取），打算让Astra自己通过Computer Use功能打开浏览器、进入创作者中心，再把拆分的内容编辑进去。之前在用Sol的时候，这一步老是或多或少有点小问题，现在Astra给我的感觉真的是又快又准。&lt;/p&gt;
+&lt;p&gt;同时，在剪辑视频的时候，我也是让Astra生成完分镜之后，直接进入浏览器操作Seedance生成的：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@e553be4c58969c0b47a33016c3624ae0d967d210/images/78e022ba_source-09.png&quot; alt=&quot;image.png&quot;&gt;&lt;/p&gt;
+&lt;h1 id=&quot;6-用后感&quot;&gt;6. 用后感&lt;/h1&gt;&lt;p&gt;用完Astra之后，给我的感觉真的是牛皮。&lt;strong&gt;它不是说coding能力有了巨大的提升，而是更加接近真实场景，触及到了coding外的其他业务。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@e553be4c58969c0b47a33016c3624ae0d967d210/images/b0857508_astra-sol-observations.png&quot; alt=&quot;Astra与Sol：这一天的五类任务体验&quot;&gt;&lt;/p&gt;
+&lt;p&gt;不管是语义理解、审美、电脑操控、token消耗、自我验证、实现速度上，都比Sol进步了不止一个台阶。当然，这些新的能力，不只是Astra的功劳。至于Codex的记忆机制起了多少作用，后续有机会再分析下。&lt;/p&gt;
+&lt;p&gt;不知不觉，已经用AI工具好几年了。回想自己从2023年到现在使用AI工具的这四年：&lt;/p&gt;
+&lt;section class=&quot;ai-years&quot; style=&quot;margin:28px 0;padding:24px 20px 4px;background:#faf5f1;border:1px solid #eadfd7;border-radius:8px;&quot;&gt;
+&lt;p style=&quot;margin:0 0 20px;padding:0 0 0 18px;border-left:3px solid #b58b72;line-height:1.9;&quot;&gt;&lt;strong style=&quot;display:block;font-size:22px;color:#7a4730;margin:0 0 5px;&quot;&gt;23年&lt;/strong&gt;使用GPT 3.5 给我自己写的雅思作文打分，以此来省钱；&lt;/p&gt;
+&lt;p style=&quot;margin:0 0 20px;padding:0 0 0 18px;border-left:3px solid #b58b72;line-height:1.9;&quot;&gt;&lt;strong style=&quot;display:block;font-size:22px;color:#7a4730;margin:0 0 5px;&quot;&gt;24年&lt;/strong&gt;使用DeepSeek完成论文的翻译，并且辅助我阅读论文、理解代码；&lt;/p&gt;
+&lt;p style=&quot;margin:0 0 20px;padding:0 0 0 18px;border-left:3px solid #b58b72;line-height:1.9;&quot;&gt;&lt;strong style=&quot;display:block;font-size:22px;color:#7a4730;margin:0 0 5px;&quot;&gt;25年&lt;/strong&gt;基于Qoder、Cursor、Claude Code完成基本代码的开发（&lt;strong&gt;20%&lt;/strong&gt;代码量）、使用Gemini完成学生作业的修改；&lt;/p&gt;
+&lt;p style=&quot;margin:0 0 20px;padding:0 0 0 18px;border-left:3px solid #b58b72;line-height:1.9;&quot;&gt;&lt;strong style=&quot;display:block;font-size:22px;color:#7a4730;margin:0 0 5px;&quot;&gt;26年&lt;/strong&gt;使用Codex基本交付了我&lt;strong&gt;95%&lt;/strong&gt;的代码开发量，同时，有关电脑的各种复杂操作都会交给Codex来完成。&lt;/p&gt;
+&lt;/section&gt;
+
+&lt;p&gt;可以发现，大模型虽然常被比作成语接龙，但是随着tool use等能力提升，AI已经可以从最开始的问答，慢慢地连接网络世界，完成各种可达性的操作。&lt;/p&gt;
+&lt;p&gt;最开始使用AI工具的时候，我会优化prompt、控制上下文，以此来让AI实现更好的效果。随着Astra的发布，我发现只需要提供任务，AI会自己完成。不得不说，AI的发展之迅速，远超我的预期。&lt;/p&gt;
+&lt;p&gt;未来会发展成什么样？很多基础性的工作可能都会被AI替代、可能我也会被替代，但是在替代之前，还是要多看看这个世界呀。&lt;/p&gt;
+</content></entry>
+<entry><title>Agent、Skill 与模型：AI 夜校学习与工程实践思考</title><id>https://wxxlamp.cn/2026/08/18/ali-ai-night-school-agent-skill-model/</id><link href="https://wxxlamp.cn/2026/08/18/ali-ai-night-school-agent-skill-model/"/><published>2026-08-18T15:29:47.000Z</published><updated>2026-09-06T17:38:40.681Z</updated><summary type="text">结合淘天技术 AI 夜校与 Agent 开发实践，讨论模型、Agent、Skill 的边界，以及业务选型和评测方法。</summary><content type="html" xml:base="https://wxxlamp.cn/2026/08/18/ali-ai-night-school-agent-skill-model/">&lt;p&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/60fce5c0_cover.png&quot; alt=&quot;夜间 AI 课堂后的工程思考&quot;&gt;&lt;/p&gt;
 &lt;h1 id=&quot;1-前言&quot;&gt;1. 前言&lt;/h1&gt;&lt;p&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/1bbb01e7_section-1-v2.png&quot; alt=&quot;从 AI 夜校到七个 Agent 工程问题&quot;&gt;&lt;/p&gt;
 &lt;p&gt;最近参加了淘天业务技术组织的 AI 夜校培训。因为我这段时间正好在做 Agent 开发相关的业务，所以报名参加了为期两个月的课程。上周四的第一场 Overview 讲得很好，我也想结合最近做 Agent 应用的经历，聊聊自己对 Agent、Skill 和模型的一些思考。&lt;/p&gt;
 &lt;p&gt;本文已经做过脱密处理，不涉及商业机密，个人思考的成分很高。部分章节默认读者了解 LLM 和 Agent 的基础概念，没有相关经验的话，读起来可能会稍微费劲一些。&lt;/p&gt;
@@ -66,7 +154,7 @@
 &lt;p&gt;第四，沉淀历史评测结果，让每一次改动都能回溯，并和之前的版本关联。否则 Prompt 或 Skill 调整后，很容易只修好眼前的 Case，却把旧问题重新带回来。&lt;/p&gt;
 &lt;p&gt;这部分我目前更多是在总结问题和方向，具体的评测实现还没有在本文里展开。等后续实践更完整，再单独写一篇。&lt;/p&gt;
 </content></entry>
-<entry><title>基于 Codex 插件的语雀多平台内容发布实践</title><id>https://wxxlamp.cn/2026/08/02/yuque-multichannel-publisher/</id><link href="https://wxxlamp.cn/2026/08/02/yuque-multichannel-publisher/"/><published>2026-08-02T09:28:50.000Z</published><updated>2026-09-06T07:21:43.832Z</updated><summary type="text">我把语雀长文的润色、配图、三端改写、质量检查和草稿投递收进一个 Codex Plugin，也记录平台自动化的真实边界。</summary><content type="html" xml:base="https://wxxlamp.cn/2026/08/02/yuque-multichannel-publisher/">&lt;p&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/b2c5bb2c_cover.png&quot; alt=&quot;一篇长文经过可恢复工作流生成三端发布包&quot;&gt;&lt;/p&gt;
+<entry><title>基于 Codex 插件的语雀多平台内容发布实践</title><id>https://wxxlamp.cn/2026/08/02/yuque-multichannel-publisher/</id><link href="https://wxxlamp.cn/2026/08/02/yuque-multichannel-publisher/"/><published>2026-08-02T09:28:50.000Z</published><updated>2026-09-06T17:38:40.692Z</updated><summary type="text">我把语雀长文的润色、配图、三端改写、质量检查和草稿投递收进一个 Codex Plugin，也记录平台自动化的真实边界。</summary><content type="html" xml:base="https://wxxlamp.cn/2026/08/02/yuque-multichannel-publisher/">&lt;p&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/b2c5bb2c_cover.png&quot; alt=&quot;一篇长文经过可恢复工作流生成三端发布包&quot;&gt;&lt;/p&gt;
 &lt;p&gt;我一般先在语雀里把文章写完。&lt;/p&gt;
 &lt;p&gt;文字落下最后一句后，事情却还没结束：博客、微信公众号和小红书各有一套内容形态，我还要重新排版、配图、拆文和检查，一轮下来大概要再花两个小时。&lt;/p&gt;
 &lt;p&gt;最近我把这段流程做成了一个 &lt;a href=&quot;https://github.com/wxxlamp/ai-coding-config/tree/main/plugins/yuque-multichannel-publisher&quot;&gt;Codex Plugin&lt;/a&gt;。它会读取语雀原文，让 AI 完成润色、配图和平台改写，再由脚本负责上传、校验、落盘、断点恢复和发布前检查。这篇文章也正好是它的第一份完整测试。我想把制作过程记下来，也讲清楚哪些步骤真的能自动化，哪些仍然需要人在平台页面确认。&lt;/p&gt;
@@ -139,7 +227,7 @@
 &lt;p&gt;插件源码和使用说明已经放在 &lt;a href=&quot;https://github.com/wxxlamp/ai-coding-config&quot;&gt;wxxlamp/ai-coding-config&lt;/a&gt; 仓库，进入 &lt;code&gt;plugins/yuque-multichannel-publisher/&lt;/code&gt; 目录即可查看完整 Plugin。&lt;/p&gt;
 &lt;p&gt;对我来说，这个插件已经把最烦的搬运工作收进了一条可重复的流程。以后文章写完，我可以先把注意力留在内容上，等本地发布包检查通过，再决定什么时候打开各个平台。&lt;/p&gt;
 </content></entry>
-<entry><title>基于 AgentScope 的 AI 运营平台设计与实践</title><id>https://wxxlamp.cn/2026/07/19/agentscope-ai-operations-platform-v1/</id><link href="https://wxxlamp.cn/2026/07/19/agentscope-ai-operations-platform-v1/"/><published>2026-07-19T15:58:00.000Z</published><updated>2026-09-06T07:21:43.821Z</updated><summary type="text">基于AgentScope总结AI运营平台的工程实践，覆盖提示词、状态机、主子Agent、工具治理、联调验证与体验优化。</summary><content type="html" xml:base="https://wxxlamp.cn/2026/07/19/agentscope-ai-operations-platform-v1/">&lt;p&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/52d30cd1_agentscope-ops-platform-cover.png&quot; alt=&quot;AI 运营平台&quot;&gt;&lt;/p&gt;
+<entry><title>基于 AgentScope 的 AI 运营平台设计与实践</title><id>https://wxxlamp.cn/2026/07/19/agentscope-ai-operations-platform-v1/</id><link href="https://wxxlamp.cn/2026/07/19/agentscope-ai-operations-platform-v1/"/><published>2026-07-19T15:58:00.000Z</published><updated>2026-09-06T17:38:40.681Z</updated><summary type="text">基于AgentScope总结AI运营平台的工程实践，覆盖提示词、状态机、主子Agent、工具治理、联调验证与体验优化。</summary><content type="html" xml:base="https://wxxlamp.cn/2026/07/19/agentscope-ai-operations-platform-v1/">&lt;p&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/52d30cd1_agentscope-ops-platform-cover.png&quot; alt=&quot;AI 运营平台&quot;&gt;&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;很多人上手 Agent 开发，第一反应是把 Agent loop 跑起来——模型调工具、拿结果、再进入下一轮。但真正把一个面向运营的 AI 平台做到可用，你会发现 Loop 只是起点。这篇文章基于 AgentScope，聊聊我们在构建 AI 运营平台的过程中，除了 Loop 之外还踩过、想过的那些事：提示词与技能怎么分工、长流程怎么引导、多下游接口怎么保证参数正确。（文中隐去了内部平台地址、系统名称与具体业务数据，只保留可复用的工程实践。）&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -256,7 +344,7 @@
 &lt;li&gt;并发调用不同 agent，提高系统的响应速度。&lt;/li&gt;
 &lt;/ol&gt;
 </content></entry>
-<entry><title>系统架构设计师考试复盘：备考方法与资料</title><id>https://wxxlamp.cn/2026/07/12/soft-exam-system-architect-experience/</id><link href="https://wxxlamp.cn/2026/07/12/soft-exam-system-architect-experience/"/><published>2026-07-12T15:33:00.000Z</published><updated>2026-09-06T07:21:43.830Z</updated><summary type="text">记录三次软考高级系统架构师考试的心态变化与备考经验，梳理科目重点、刷题节奏、论文选题及实用资料。</summary><content type="html" xml:base="https://wxxlamp.cn/2026/07/12/soft-exam-system-architect-experience/">&lt;h1 id=&quot;1-前言&quot;&gt;1. 前言&lt;/h1&gt;&lt;p&gt;24年的时候，因为公司“1+6+N”不当人的政策，让我因为一个月的误差，没有申请上杭州E类人才，错失了最后一波人才房上车的机会。&lt;/p&gt;
+<entry><title>系统架构设计师考试复盘：备考方法与资料</title><id>https://wxxlamp.cn/2026/07/12/soft-exam-system-architect-experience/</id><link href="https://wxxlamp.cn/2026/07/12/soft-exam-system-architect-experience/"/><published>2026-07-12T15:33:00.000Z</published><updated>2026-09-06T17:38:40.690Z</updated><summary type="text">记录三次软考高级系统架构师考试的心态变化与备考经验，梳理科目重点、刷题节奏、论文选题及实用资料。</summary><content type="html" xml:base="https://wxxlamp.cn/2026/07/12/soft-exam-system-architect-experience/">&lt;h1 id=&quot;1-前言&quot;&gt;1. 前言&lt;/h1&gt;&lt;p&gt;24年的时候，因为公司“1+6+N”不当人的政策，让我因为一个月的误差，没有申请上杭州E类人才，错失了最后一波人才房上车的机会。&lt;/p&gt;
 &lt;p&gt;后来打听到，软考高级+软著也可以申请杭州E类人才，所以就于24年上半年开始了漫漫的软考之旅。本来以为靠着河南人的刷题天赋，软考就是手到擒来，但是竟然还是陆陆续续考了三次才通过，所以特地分享下自己参加软考以来的心态波动和刷题技巧，希望对大家有所帮助。&lt;/p&gt;
 &lt;h1 id=&quot;2-时间线&quot;&gt;2. 时间线&lt;/h1&gt;&lt;p&gt;笔者一共考了三次软考，分别是24年上半年、25年下半年和26年上半年。&lt;/p&gt;
 &lt;p&gt;第一次是因为案例没有合格、第二次是论文没有合格，所幸最后一次全部通过：&lt;/p&gt;
@@ -297,7 +385,7 @@
 &lt;li&gt;语雀笔记（记录了三年来的备考时间安排、论文模板）：&lt;a href=&quot;https://www.yuque.com/wangxingxing-f4sey/vgwfvg#&quot;&gt;https://www.yuque.com/wangxingxing-f4sey/vgwfvg?#&lt;/a&gt; 《软考系统架构师》&lt;/li&gt;
 &lt;/ol&gt;
 </content></entry>
-<entry><title>一年又一年：2026 年高考作文随笔</title><id>https://wxxlamp.cn/2026/06/12/best-arrangement/</id><link href="https://wxxlamp.cn/2026/06/12/best-arrangement/"/><published>2026-06-12T16:00:00.000Z</published><updated>2026-09-06T07:21:43.821Z</updated><summary type="text">2026全国一卷高考作文</summary><content type="html" xml:base="https://wxxlamp.cn/2026/06/12/best-arrangement/">&lt;p&gt;2017 年 6 月的那天下午，我趴在课桌上，想睡却睡不着，只能睁着眼，看着窗边斜射的几缕阳光，透过玻璃打落在桌上和沙沙作响的纸笔上——内心有点激动，因为再过 20 分钟，我的高中生涯就彻底结束了。&lt;/p&gt;
+<entry><title>一年又一年：2026 年高考作文随笔</title><id>https://wxxlamp.cn/2026/06/12/best-arrangement/</id><link href="https://wxxlamp.cn/2026/06/12/best-arrangement/"/><published>2026-06-12T16:00:00.000Z</published><updated>2026-09-06T17:38:40.681Z</updated><summary type="text">2026全国一卷高考作文</summary><content type="html" xml:base="https://wxxlamp.cn/2026/06/12/best-arrangement/">&lt;p&gt;2017 年 6 月的那天下午，我趴在课桌上，想睡却睡不着，只能睁着眼，看着窗边斜射的几缕阳光，透过玻璃打落在桌上和沙沙作响的纸笔上——内心有点激动，因为再过 20 分钟，我的高中生涯就彻底结束了。&lt;/p&gt;
 &lt;p&gt;英语考试结束后，我和七位室友一起去了学校附近的一个网吧，第一次开了一个包夜。我本想发泄出高中三年所有的压抑和苦闷，但是考完试的我，仿佛一个泄了气的皮球，再也拿不出备考时的精力和劲头，草草玩到了凌晨一点，就顶不住困意，在椅子上慢慢睡去。&lt;/p&gt;
 &lt;p&gt;那时候，我觉得我的人生刚刚开始，应该，再也不会这么累了。&lt;/p&gt;
 &lt;hr&gt;
@@ -324,7 +412,7 @@
 &lt;hr&gt;
 &lt;p&gt;其实人生是在不断变化的，环境也是不断变化的，当然人也是不断变化的。在时代的洪流中，面对这些变化，我别无选择，只能顺应这些变化，成为一个新的自己。一切，都是最好的安排。&lt;/p&gt;
 </content></entry>
-<entry><title>Qoder AI 编程实践：万行代码开发的收益与边界</title><id>https://wxxlamp.cn/2026/06/07/qoder-vibe-coding-thoughts/</id><link href="https://wxxlamp.cn/2026/06/07/qoder-vibe-coding-thoughts/"/><published>2026-06-07T08:00:00.000Z</published><updated>2026-09-06T07:21:43.830Z</updated><summary type="text">通过两个大型商业项目的实践，分享使用Qoder完成1万行代码开发的经验与思考，探讨AI Coding的效能边界与程序员的能力演进方向。</summary><content type="html" xml:base="https://wxxlamp.cn/2026/06/07/qoder-vibe-coding-thoughts/">&lt;h1 id=&quot;前言&quot;&gt;前言&lt;/h1&gt;&lt;p&gt;以前使用Claude Code作为代码开发工具，但前段时间因为各种原因用不了Opus系列模型了，加上公司推广，就用上了平替版的Qoder来开发代码。&lt;/p&gt;
+<entry><title>Qoder AI 编程实践：万行代码开发的收益与边界</title><id>https://wxxlamp.cn/2026/06/07/qoder-vibe-coding-thoughts/</id><link href="https://wxxlamp.cn/2026/06/07/qoder-vibe-coding-thoughts/"/><published>2026-06-07T08:00:00.000Z</published><updated>2026-09-06T17:38:40.690Z</updated><summary type="text">通过两个大型商业项目的实践，分享使用Qoder完成1万行代码开发的经验与思考，探讨AI Coding的效能边界与程序员的能力演进方向。</summary><content type="html" xml:base="https://wxxlamp.cn/2026/06/07/qoder-vibe-coding-thoughts/">&lt;h1 id=&quot;前言&quot;&gt;前言&lt;/h1&gt;&lt;p&gt;以前使用Claude Code作为代码开发工具，但前段时间因为各种原因用不了Opus系列模型了，加上公司推广，就用上了平替版的Qoder来开发代码。&lt;/p&gt;
 &lt;p&gt;4月期间开发了将近1万行有效业务代码，在开发阶段人工的干预率不超过10%，但联调和提测由于基建的原因，人工干预偏多。&lt;/p&gt;
 &lt;p&gt;本文会通过两个重点项目的实践，来聊聊基于coding agent，我们的研发效能到底能提高多少，以及在全员AI coding的大背景下，思考我们究竟还有什么值得关心的事情。实践相关的内容比较长，赶时间的读者可以直接跳到感悟部分。&lt;/p&gt;
 &lt;p&gt;笔者在此简单记录coding阶段的实践和思考，同时也相信，这些经验不止适用于Qoder，也希望沉淀出一些通用策略，以便在其他coding agent上复用。&lt;/p&gt;
@@ -411,7 +499,7 @@
 &lt;p&gt;在不远的将来，程序员一定要像掌握计算机基础八股文一样，掌握各种Coding Agent的工具，把代码开发交给AI，然后往更上一层拓展自己的能力边界，深度介入业务的需求和产品能力，才是确定性最高的趋势。&lt;/p&gt;
 &lt;p&gt;所以，如果你觉得目前的工作没有需要你结合专业知识进行判断的地方，一直都是埋头开发，那么，是时候抬起头，重新看看自己了。&lt;/p&gt;
 </content></entry>
-<entry><title>Claude Code 使用指南：命令、Skill 与 Subagent</title><id>https://wxxlamp.cn/2026/04/13/claude-code-command-guide/</id><link href="https://wxxlamp.cn/2026/04/13/claude-code-command-guide/"/><published>2026-04-13T14:00:00.000Z</published><updated>2026-09-06T07:21:43.821Z</updated><summary type="text">深入解析Claude Code的核心概念与常用命令，涵盖Command、Skill、Rule、Subagent等关键功能的详细介绍与使用技巧，助您掌握现代化AI编程工作流。</summary><content type="html" xml:base="https://wxxlamp.cn/2026/04/13/claude-code-command-guide/">&lt;p&gt;Work agent在25年风头无两，其中以Claude Code最为显眼。Claude Code一直走在coding agent的最前列，提出了skills、subagent等多种已经成为事实标准的概念。&lt;/p&gt;
+<entry><title>Claude Code 使用指南：命令、Skill 与 Subagent</title><id>https://wxxlamp.cn/2026/04/13/claude-code-command-guide/</id><link href="https://wxxlamp.cn/2026/04/13/claude-code-command-guide/"/><published>2026-04-13T14:00:00.000Z</published><updated>2026-09-06T17:38:40.681Z</updated><summary type="text">深入解析Claude Code的核心概念与常用命令，涵盖Command、Skill、Rule、Subagent等关键功能的详细介绍与使用技巧，助您掌握现代化AI编程工作流。</summary><content type="html" xml:base="https://wxxlamp.cn/2026/04/13/claude-code-command-guide/">&lt;p&gt;Work agent在25年风头无两，其中以Claude Code最为显眼。Claude Code一直走在coding agent的最前列，提出了skills、subagent等多种已经成为事实标准的概念。&lt;/p&gt;
 &lt;p&gt;随后一系列的Coding Agent，如Qoder、Gemini Cli、Qwen Cli、CodeX全部follow CC的主要设计，只要能针对一个agent的原理有所理解，对于其他agent也可以达到一通百通的程度了。&lt;/p&gt;
 &lt;p&gt;同时，因为commands、skills、rules、subagent这些概念基本上在每个work agent都有存在，所以一旦这些资产沉淀下来，其他的agent也可以顺利复用。&lt;/p&gt;
 &lt;p&gt;所以依据claude code 的官方文档，加上自己的理解，特意梳理了下相关的slash概念，帮助后续更好的vibe coding。&lt;/p&gt;
@@ -516,7 +604,7 @@
 &lt;p&gt;Plugin顾名思义，就是插件。它是commands、skill、subagent等的集合。Plugin面向的是一件事务的解决方案。&lt;/p&gt;
 &lt;p&gt;本篇文章暂不赘述，后续我将创建一个从 语雀网站拉取博客，到自动发布微信公众号、个人网站、小红书的plugin，到时候再演示plugin的打包能力。&lt;/p&gt;
 </content></entry>
-<entry><title>2025 年度回顾：硕士毕业、工作与技术学习</title><id>https://wxxlamp.cn/2026/04/05/my-2025/</id><link href="https://wxxlamp.cn/2026/04/05/my-2025/"/><published>2026-04-05T09:13:00.000Z</published><updated>2026-09-06T07:21:43.829Z</updated><summary type="text">深入回顾2025年的个人成长轨迹，涵盖港硕毕业、工作发展、技术学习等方面，并对目标达成情况进行全面复盘，总结经验教训与未来规划。</summary><content type="html" xml:base="https://wxxlamp.cn/2026/04/05/my-2025/">&lt;p&gt;今年的农历春节过得比较晚，间接导致了2025年review姗姗来迟。&lt;/p&gt;
+<entry><title>2025 年度回顾：硕士毕业、工作与技术学习</title><id>https://wxxlamp.cn/2026/04/05/my-2025/</id><link href="https://wxxlamp.cn/2026/04/05/my-2025/"/><published>2026-04-05T09:13:00.000Z</published><updated>2026-09-06T17:38:40.689Z</updated><summary type="text">深入回顾2025年的个人成长轨迹，涵盖港硕毕业、工作发展、技术学习等方面，并对目标达成情况进行全面复盘，总结经验教训与未来规划。</summary><content type="html" xml:base="https://wxxlamp.cn/2026/04/05/my-2025/">&lt;p&gt;今年的农历春节过得比较晚，间接导致了2025年review姗姗来迟。&lt;/p&gt;
 &lt;p&gt;此时坐在工位上，怀着很多种莫名的情绪，焦虑、懊悔、迷茫，结合着去年一整年的日记，努力的回想着去年的回忆，发现了太多决策失误的地方。&lt;/p&gt;
 &lt;p&gt;2025年整体复盘，感觉略微有点不及预期：&lt;/p&gt;
 &lt;ol&gt;
@@ -567,7 +655,7 @@
 &lt;li&gt;专一上，超过20个工作日，手机使用时长不超过2小时。&lt;/li&gt;
 &lt;/ol&gt;
 </content></entry>
-<entry><title>大模型与 Agent 如何降低技术使用门槛</title><id>https://wxxlamp.cn/2026/01/10/llm-agent-tech-equality/</id><link href="https://wxxlamp.cn/2026/01/10/llm-agent-tech-equality/"/><published>2026-01-10T07:42:00.000Z</published><updated>2026-09-06T07:21:43.828Z</updated><summary type="text">通过一次Git分支污染事件，探讨大模型和Agent如何实现技术平权，让非专业开发者也能高效解决复杂技术问题。</summary><content type="html" xml:base="https://wxxlamp.cn/2026/01/10/llm-agent-tech-equality/">&lt;p&gt;我对git确实不算了解。&lt;/p&gt;
+<entry><title>大模型与 Agent 如何降低技术使用门槛</title><id>https://wxxlamp.cn/2026/01/10/llm-agent-tech-equality/</id><link href="https://wxxlamp.cn/2026/01/10/llm-agent-tech-equality/"/><published>2026-01-10T07:42:00.000Z</published><updated>2026-09-06T17:38:40.688Z</updated><summary type="text">通过一次Git分支污染事件，探讨大模型和Agent如何实现技术平权，让非专业开发者也能高效解决复杂技术问题。</summary><content type="html" xml:base="https://wxxlamp.cn/2026/01/10/llm-agent-tech-equality/">&lt;p&gt;我对git确实不算了解。&lt;/p&gt;
 &lt;p&gt;之前校招面试的时候虽然把面试官哄成胎盘，&lt;code&gt;merge&lt;/code&gt;、&lt;code&gt;revert&lt;/code&gt;指令在电话中信手拈来。但是不得不说，其实没怎么用过。&lt;/p&gt;
 &lt;p&gt;工作四年多，只会&lt;code&gt;pull&lt;/code&gt;、&lt;code&gt;add&lt;/code&gt;、&lt;code&gt;commit&lt;/code&gt;、&lt;code&gt;checkout&lt;/code&gt;、&lt;code&gt;push&lt;/code&gt;五剑客，复杂的git指令和协作流程日常也没怎么用到，所以工作之后也就没有动力仔细了解过其他复杂的git指令。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/d951595f_f58e3da3.png&quot;&gt;&lt;/p&gt;
@@ -654,7 +742,7 @@
 &lt;p&gt;注：本文图片采用Gemini Nano Banana Pro生成&lt;/p&gt;
 &lt;/blockquote&gt;
 </content></entry>
-<entry><title>跨境电商交易全流程：信息流、资金流与履约</title><id>https://wxxlamp.cn/2026/01/04/cross-border-ecommerce-transaction-flow/</id><link href="https://wxxlamp.cn/2026/01/04/cross-border-ecommerce-transaction-flow/"/><published>2026-01-04T06:16:00.000Z</published><updated>2026-09-06T07:21:43.821Z</updated><summary type="text">深入解析跨境电商平台交易履约全流程，从买卖家视角剖析信息流、资金流与物流的协同机制，揭秘平台盈利模式与资金结算体系。</summary><content type="html" xml:base="https://wxxlamp.cn/2026/01/04/cross-border-ecommerce-transaction-flow/">&lt;p&gt;作为在线冲浪选手，日常买买买都需要用到某宝、某东和某多多等在线购物平台。&lt;/p&gt;
+<entry><title>跨境电商交易全流程：信息流、资金流与履约</title><id>https://wxxlamp.cn/2026/01/04/cross-border-ecommerce-transaction-flow/</id><link href="https://wxxlamp.cn/2026/01/04/cross-border-ecommerce-transaction-flow/"/><published>2026-01-04T06:16:00.000Z</published><updated>2026-09-06T17:38:40.681Z</updated><summary type="text">深入解析跨境电商平台交易履约全流程，从买卖家视角剖析信息流、资金流与物流的协同机制，揭秘平台盈利模式与资金结算体系。</summary><content type="html" xml:base="https://wxxlamp.cn/2026/01/04/cross-border-ecommerce-transaction-flow/">&lt;p&gt;作为在线冲浪选手，日常买买买都需要用到某宝、某东和某多多等在线购物平台。&lt;/p&gt;
 &lt;p&gt;从24年8月转岗后，笔者便一直负责类似于某宝某东的在线购物类业务，不过有两个不同点。第一个不同点是某宝某东是面向普通消费者的2C购物平台，而笔者写的代码则是作用于2B贸易类的购物平台。第二个不同点是某宝某东面向的是国内的商家和消费者，而笔者日常面对的则是国外的商家和国外的消费者。&lt;/p&gt;
 &lt;p&gt;在过去一年里，笔者开发的代码包含了商户的入驻、交易、订单、保障、支付、结算、流动性、账务、网关等各个领域。作为2026年第一篇文章，便是对笔者过去一年左右的工作进行一次总结。同时也主要科普下跨境的交易履约全流程。&lt;/p&gt;
 &lt;h1 id=&quot;买卖家在电商平台要干啥&quot;&gt;买卖家在电商平台要干啥&lt;/h1&gt;&lt;p&gt;电商平台平台的在线交易的本质其实就是负责信息流、资金流和物流的流转——1）交易承载买卖家约定的信息流 2）资金负责将买家的货款合法合规的调拨到商家的卡上 3）物流负责将商家的货物安全的运送到买家指定的地点。&lt;/p&gt;
@@ -729,7 +817,7 @@
 &lt;p&gt;这里捞了一个经典的流程图（包含正逆向的），可以详细了解下：&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/b01fb88d_b3430345.png&quot;&gt;&lt;/p&gt;
 </content></entry>
-<entry><title>面向后端开发者的机器学习入门：神经网络与模型训练</title><id>https://wxxlamp.cn/2025/12/24/ai-ml-getting-started/</id><link href="https://wxxlamp.cn/2025/12/24/ai-ml-getting-started/"/><published>2025-12-24T13:50:00.000Z</published><updated>2026-09-06T07:21:43.821Z</updated><summary type="text">从后端开发视角入门机器学习，厘清AI、ML、DL、LLM的关系，详解神经网络、CNN、RNN原理及Embedding、前反向传播等核心概念，附Python代码示例。</summary><content type="html" xml:base="https://wxxlamp.cn/2025/12/24/ai-ml-getting-started/">&lt;p&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/0faf3c20_img1.png&quot;&gt;&lt;/p&gt;
+<entry><title>面向后端开发者的机器学习入门：神经网络与模型训练</title><id>https://wxxlamp.cn/2025/12/24/ai-ml-getting-started/</id><link href="https://wxxlamp.cn/2025/12/24/ai-ml-getting-started/"/><published>2025-12-24T13:50:00.000Z</published><updated>2026-09-06T17:38:40.681Z</updated><summary type="text">从后端开发视角入门机器学习，厘清AI、ML、DL、LLM的关系，详解神经网络、CNN、RNN原理及Embedding、前反向传播等核心概念，附Python代码示例。</summary><content type="html" xml:base="https://wxxlamp.cn/2025/12/24/ai-ml-getting-started/">&lt;p&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/0faf3c20_img1.png&quot;&gt;&lt;/p&gt;
 &lt;h1 id=&quot;前言&quot;&gt;前言&lt;/h1&gt;&lt;p&gt;从2017年Transformer架构横空出世，再到2022年GPT的出现，人们愈发发现大模型的重要性，每一年仿佛都是LLM元年。在逐步步入AI时代的过程中，我感觉到十分的焦虑，担心被大模型替代，也感觉到兴奋，希望能通过LM做更多的事情。&lt;/p&gt;
 &lt;p&gt;但是我能够通过LLM做什么呢？我又需要了解什么呢？&lt;/p&gt;
 &lt;p&gt;在大模型时代以前，后端程序员一般需要掌握开发语言（Java、Go、Js等）、Mysql、Redis的架构知识就可以上手开发软件了。但是在AI时代，或者说是大模型时代，显然只掌握一般的开发语言已经不够看了。&lt;/p&gt;
@@ -937,7 +1025,7 @@ w_{4,0} &amp;amp; w_{4,1} &amp;amp; w_{4,2}
 &lt;li&gt;datawhale：&lt;a href=&quot;https://github.com/datawhalechina&quot;&gt;https://github.com/datawhalechina&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 </content></entry>
-<entry><title>在香港科技大学求学：工作后的教育选择与体验</title><id>https://wxxlamp.cn/2025/10/07/why-graduated-to-hkust/</id><link href="https://wxxlamp.cn/2025/10/07/why-graduated-to-hkust/"/><published>2025-10-07T02:36:00.000Z</published><updated>2026-09-06T07:21:43.832Z</updated><summary type="text">以工作后赴港就读港科大一周年为契机，对比香港与内地在制度、金融、社会福利差异，聚焦两地高校教育体系异同，呈现香港留学真实体验。</summary><content type="html" xml:base="https://wxxlamp.cn/2025/10/07/why-graduated-to-hkust/">&lt;h1 id=&quot;前言&quot;&gt;前言&lt;/h1&gt;&lt;p&gt;时间飞逝，从2024年9月去香港读master到现在，已经整整一年了。虽然这一年在香港呆的时间也不算久（满打满算可能就大几十天吧），但是香港独特的城市特色已经深深的震撼到我。&lt;/p&gt;
+<entry><title>在香港科技大学求学：工作后的教育选择与体验</title><id>https://wxxlamp.cn/2025/10/07/why-graduated-to-hkust/</id><link href="https://wxxlamp.cn/2025/10/07/why-graduated-to-hkust/"/><published>2025-10-07T02:36:00.000Z</published><updated>2026-09-06T17:38:40.692Z</updated><summary type="text">以工作后赴港就读港科大一周年为契机，对比香港与内地在制度、金融、社会福利差异，聚焦两地高校教育体系异同，呈现香港留学真实体验。</summary><content type="html" xml:base="https://wxxlamp.cn/2025/10/07/why-graduated-to-hkust/">&lt;h1 id=&quot;前言&quot;&gt;前言&lt;/h1&gt;&lt;p&gt;时间飞逝，从2024年9月去香港读master到现在，已经整整一年了。虽然这一年在香港呆的时间也不算久（满打满算可能就大几十天吧），但是香港独特的城市特色已经深深的震撼到我。&lt;/p&gt;
 &lt;p&gt;我是一个典型的小镇做题家，初高中的学习就没有离开过县城。印象中第一次去省会还是高考结束后参加某985大学的高校专项考试，而第一次出省更是在大学以后，18岁大一那年暑假和同学一起去的上海。至于出国（境），说来惭愧，更是从工作到读Master之前从来没有过。&lt;/p&gt;
 &lt;p&gt;所以我想借着学习一周年这个机会，从一个工作后再留学的打工人角度，谈谈我留学一年的经历。本文是系列文章第一篇，主要介绍香港、尤其是香港教育与内地的差异。也欢迎对香港留学感兴趣的朋友私我了解详情。&lt;/p&gt;
 &lt;h1 id=&quot;香港与内地的差异在哪里？&quot;&gt;香港与内地的差异在哪里？&lt;/h1&gt;&lt;p&gt;本段不会聚焦于简单的生活差异（如语言、交通等），核心会从香港定位和一国两制的背景出发，聊聊香港与大陆的不同。&lt;/p&gt;
@@ -968,7 +1056,7 @@ w_{4,0} &amp;amp; w_{4,1} &amp;amp; w_{4,2}
 &lt;p&gt;另外可能是因为我在港科的原因，学校的创业氛围特别浓厚，很多学生的标签竟然是“连续创业者”，小小年纪竟然多次创业甚至还拿过天使轮，实在是令我十分震惊。在学校的时候也了解了香港的一些博士情况，大家基本都是全奖读博的，每月资助金额大概20,000 HKD，感觉也是博士期间一笔不菲的收入了。&lt;/p&gt;
 &lt;p&gt;很多人比较感兴趣MSc的就业和博士升学情况，考虑到本篇内容较多，就放到下篇详谈。&lt;/p&gt;
 </content></entry>
-<entry><title>从在线支付理解数字人民币：清分、结算与资金流</title><id>https://wxxlamp.cn/2025/09/17/what-is-digtal-rmb/</id><link href="https://wxxlamp.cn/2025/09/17/what-is-digtal-rmb/"/><published>2025-09-17T02:36:00.000Z</published><updated>2026-09-06T07:21:43.832Z</updated><summary type="text">从传统在线支付的信息流与资金流分离说起，厘清交易、清分、结算、交割概念，阐述数字人民币基于央行区块链实现资金流同步的底层逻辑及应用场景。</summary><content type="html" xml:base="https://wxxlamp.cn/2025/09/17/what-is-digtal-rmb/">&lt;h1 id=&quot;前言&quot;&gt;前言&lt;/h1&gt;&lt;p&gt;近在开发跨境支付和资金相关的需求，发现跨境资金流动的成本真的很高，而且时效性也非常低。但是国内消费时候却完全感受不到这种弊端，所以就想花时间研究下国内的在线支付网络，以及顺道看看数字人民币和稳定币。&lt;/p&gt;
+<entry><title>从在线支付理解数字人民币：清分、结算与资金流</title><id>https://wxxlamp.cn/2025/09/17/what-is-digtal-rmb/</id><link href="https://wxxlamp.cn/2025/09/17/what-is-digtal-rmb/"/><published>2025-09-17T02:36:00.000Z</published><updated>2026-09-06T17:38:40.691Z</updated><summary type="text">从传统在线支付的信息流与资金流分离说起，厘清交易、清分、结算、交割概念，阐述数字人民币基于央行区块链实现资金流同步的底层逻辑及应用场景。</summary><content type="html" xml:base="https://wxxlamp.cn/2025/09/17/what-is-digtal-rmb/">&lt;h1 id=&quot;前言&quot;&gt;前言&lt;/h1&gt;&lt;p&gt;近在开发跨境支付和资金相关的需求，发现跨境资金流动的成本真的很高，而且时效性也非常低。但是国内消费时候却完全感受不到这种弊端，所以就想花时间研究下国内的在线支付网络，以及顺道看看数字人民币和稳定币。&lt;/p&gt;
 &lt;p&gt;相信部分读者的银行账户都有数字人民币，但是大部分人在使用的时候常常会有一个疑问——用数字人民币支付的体验和支付宝几乎一样，我们已经有类似于支付宝这么方便的在线支付方式了，为什么国家还要推广数字人民币呢？&lt;/p&gt;
 &lt;p&gt;有人猜测数字人民币是国家是画蛇添足，仅仅是为了创建就业岗位；也有人猜测国家想从支付宝微信等电子支付手中夺回电子支付的控制权；甚至还有人觉得数字人民币只是为了利用区块链这个噱头，在资本市场分一杯羹。&lt;/p&gt;
 &lt;p&gt;事实上，数字人民币的战略价值远超一般人的想象。数字人民币从创建开始，就是数字化的，这和有互连网加持下的传统纸质人民币大不一样。&lt;/p&gt;
@@ -1101,7 +1189,7 @@ w_{4,0} &amp;amp; w_{4,1} &amp;amp; w_{4,2}
 &lt;/ul&gt;
 &lt;p&gt;所以，一句话来讲，稳定币是机会，但是在大洋彼岸。在大陆，不妨多看看数字人民币。&lt;/p&gt;
 </content></entry>
-<entry><title>比特币与区块链基础：密码学、共识与交易</title><id>https://wxxlamp.cn/2025/09/07/what-is-bitcion-and-blockchain/</id><link href="https://wxxlamp.cn/2025/09/07/what-is-bitcion-and-blockchain/"/><published>2025-09-07T02:36:00.000Z</published><updated>2026-09-06T07:21:43.831Z</updated><summary type="text">系统科普区块链与比特币核心原理，从中心化与去中心化货币对比出发，讲解区块链链式结构、Hash指针、非对称加密、UTXO机制及PoW共识，梳理比特币交易全流程。</summary><content type="html" xml:base="https://wxxlamp.cn/2025/09/07/what-is-bitcion-and-blockchain/">&lt;p&gt;本文面向技术和小白用户，从去中心化、区块链，再到比特币的原理，从科普和问题的视角，尽可能帮助大家弄懂去中心货币的本质和技术原理。&lt;/p&gt;
+<entry><title>比特币与区块链基础：密码学、共识与交易</title><id>https://wxxlamp.cn/2025/09/07/what-is-bitcion-and-blockchain/</id><link href="https://wxxlamp.cn/2025/09/07/what-is-bitcion-and-blockchain/"/><published>2025-09-07T02:36:00.000Z</published><updated>2026-09-06T17:38:40.691Z</updated><summary type="text">系统科普区块链与比特币核心原理，从中心化与去中心化货币对比出发，讲解区块链链式结构、Hash指针、非对称加密、UTXO机制及PoW共识，梳理比特币交易全流程。</summary><content type="html" xml:base="https://wxxlamp.cn/2025/09/07/what-is-bitcion-and-blockchain/">&lt;p&gt;本文面向技术和小白用户，从去中心化、区块链，再到比特币的原理，从科普和问题的视角，尽可能帮助大家弄懂去中心货币的本质和技术原理。&lt;/p&gt;
 &lt;h1 id=&quot;中心化和去中心化&quot;&gt;中心化和去中心化&lt;/h1&gt;&lt;p&gt;从概念上理解，所谓中心化和去中心化，代表着数据存储和逻辑执行的两种方式。中心化，即数据（如资产记录）在某一个地方或者机构存放，且逻辑执行（如交易）由某个单一的系统独立完成；而去中心化，也叫分布式（decentralization），即数据（如资产信息）在多个对等的节点存放，且执行逻辑（如交易）必须被所有的节点认可才算有效。&lt;/p&gt;
 &lt;h2 id=&quot;中心化货币的优劣&quot;&gt;中心化货币的优劣&lt;/h2&gt;&lt;p&gt;在区块链出现以前，几乎所有的系统都是中心化的（注意，虽然有分布式系统，但是这个分布式系统一般也是由单一的组织管控，无法随意扩展到任何一个组织或个人，所以诸如OceanBase这样的分布式数据库也是中心化的）。&lt;/p&gt;
 &lt;p&gt;典型的中心化应用是中心化货币，它们基于国家信用，是由各国央行发行的衡量财富以及交易的凭证，具有无限法偿性。中心化货币具有两个优点：&lt;/p&gt;
@@ -1248,7 +1336,7 @@ w_{4,0} &amp;amp; w_{4,1} &amp;amp; w_{4,2}
 &lt;h1 id=&quot;一笔比特币交易的产生过程&quot;&gt;一笔比特币交易的产生过程&lt;/h1&gt;&lt;p&gt;通过本文讲述的共识机制和比特币数据结构，我们来尝试复原一下，当“Alice给Bob转账10 BTC”时，比特币网络中的所有节点，是如何变化的：&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/9fd2ee78_btc_img_17.svg&quot;&gt;&lt;/p&gt;
 </content></entry>
-<entry><title>面向开发者的 macOS 环境配置指南</title><id>https://wxxlamp.cn/2025/08/15/how-to-use-mac/</id><link href="https://wxxlamp.cn/2025/08/15/how-to-use-mac/"/><published>2025-08-15T04:05:00.000Z</published><updated>2026-09-06T07:21:43.827Z</updated><summary type="text">详细介绍MacOS系统目录结构及作为开发工具的最佳实践，涵盖常用命令、环境配置和系统管理技巧，帮助开发者更好地使用Mac进行开发工作。</summary><content type="html" xml:base="https://wxxlamp.cn/2025/08/15/how-to-use-mac/">&lt;p&gt;一转眼在公司四周年了，公司给我换了一个mbp14作为新的主子。&lt;/p&gt;
+<entry><title>面向开发者的 macOS 环境配置指南</title><id>https://wxxlamp.cn/2025/08/15/how-to-use-mac/</id><link href="https://wxxlamp.cn/2025/08/15/how-to-use-mac/"/><published>2025-08-15T04:05:00.000Z</published><updated>2026-09-06T17:38:40.686Z</updated><summary type="text">详细介绍MacOS系统目录结构及作为开发工具的最佳实践，涵盖常用命令、环境配置和系统管理技巧，帮助开发者更好地使用Mac进行开发工作。</summary><content type="html" xml:base="https://wxxlamp.cn/2025/08/15/how-to-use-mac/">&lt;p&gt;一转眼在公司四周年了，公司给我换了一个mbp14作为新的主子。&lt;/p&gt;
 &lt;p&gt;因为四年前刚接触Mac，所以不管安装什么都是下一步，导致有时候会发生莫名其妙的环境问题，什么mvn命令找不到，python版本不一致等等。正好趁着mbp13正式退役，抽时间了解下MAC系统。&lt;/p&gt;
 &lt;p&gt;同时，自己也不清楚安装的各种数据究竟存储在哪里。所以，借用这个机会，系统性的整理和学习下MacOS的基本概念和操作。&lt;/p&gt;
 &lt;p&gt;使用姿势可以直接看第二部分&lt;/p&gt;
@@ -1768,7 +1856,7 @@ w_{4,0} &amp;amp; w_{4,1} &amp;amp; w_{4,2}
 
 
 </content></entry>
-<entry><title>Maven 编译编码异常排查：Malformed Unicode Escape</title><id>https://wxxlamp.cn/2025/06/18/maven-malformed-exception-solution/</id><link href="https://wxxlamp.cn/2025/06/18/maven-malformed-exception-solution/"/><published>2025-06-18T10:30:00.000Z</published><updated>2026-09-06T07:21:43.828Z</updated><summary type="text">本文详细记录了一次Maven编译时遇到Malformed \uxxxx异常的排查过程，通过分析堆栈、调试源码，最终定位到是本地Maven仓库中resolver-status.properties文件的编码问题，并提供了有效的解决方案。</summary><content type="html" xml:base="https://wxxlamp.cn/2025/06/18/maven-malformed-exception-solution/">&lt;h1 id=&quot;问题现象&quot;&gt;问题现象&lt;/h1&gt;&lt;p&gt;笔者在一次需求迭代的时候，从仓库拉下来了一个分支，然后肌肉记忆般的使用mvn reimport重新sync其他的依赖。本来以为这个已经点了几千次的操作会像往常一样顺利加载依赖，然后进入我最开心的写代码环节。结果却出现了下面的异常：&lt;/p&gt;
+<entry><title>Maven 编译编码异常排查：Malformed Unicode Escape</title><id>https://wxxlamp.cn/2025/06/18/maven-malformed-exception-solution/</id><link href="https://wxxlamp.cn/2025/06/18/maven-malformed-exception-solution/"/><published>2025-06-18T10:30:00.000Z</published><updated>2026-09-06T17:38:40.688Z</updated><summary type="text">本文详细记录了一次Maven编译时遇到Malformed \uxxxx异常的排查过程，通过分析堆栈、调试源码，最终定位到是本地Maven仓库中resolver-status.properties文件的编码问题，并提供了有效的解决方案。</summary><content type="html" xml:base="https://wxxlamp.cn/2025/06/18/maven-malformed-exception-solution/">&lt;h1 id=&quot;问题现象&quot;&gt;问题现象&lt;/h1&gt;&lt;p&gt;笔者在一次需求迭代的时候，从仓库拉下来了一个分支，然后肌肉记忆般的使用mvn reimport重新sync其他的依赖。本来以为这个已经点了几千次的操作会像往常一样顺利加载依赖，然后进入我最开心的写代码环节。结果却出现了下面的异常：&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/70c01355_c527162f.png&quot;&gt;&lt;/p&gt;
 &lt;p&gt;看到这个异常一脸懵逼，难道是新拉下来的分支pom文件的编码有问题？&lt;/p&gt;
 &lt;p&gt;伴随着这个怀疑，开始了问题排查之旅。&lt;/p&gt;
@@ -1808,7 +1896,7 @@ w_{4,0} &amp;amp; w_{4,1} &amp;amp; w_{4,2}
 &lt;/ol&gt;
 &lt;h1 id=&quot;参考&quot;&gt;参考&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://stackoverflow.com/questions/17043037/ant-malformed-uxxxx-encoding-in-propertyfile-task&quot;&gt;https://stackoverflow.com/questions/17043037/ant-malformed-uxxxx-encoding-in-propertyfile-task&lt;/a&gt;&lt;/p&gt;
 </content></entry>
-<entry><title>2024 年度回顾：晋升、半马与港深求学</title><id>https://wxxlamp.cn/2025/03/07/my-2024/</id><link href="https://wxxlamp.cn/2025/03/07/my-2024/"/><published>2025-03-07T12:19:00.000Z</published><updated>2026-09-06T07:21:43.829Z</updated><summary type="text">2024年终总结：成功晋升、首次半马跑出1小时46分PB。收到港科大录取后选择转岗深圳，开启港深双城通勤生活。学期末三门课全拿A，积累大量金融与跨境支付知识，在全新环境中摸索方向。</summary><content type="html" xml:base="https://wxxlamp.cn/2025/03/07/my-2024/">&lt;p&gt;说来惭愧，年度总结一年写的比一年晚。虽然时间就像是海绵里的水，只要肯挤总会有的，但是deadline才是第一生产力。今年的年度总结，竟然到25年3月底才开始动笔。&lt;/p&gt;
+<entry><title>2024 年度回顾：晋升、半马与港深求学</title><id>https://wxxlamp.cn/2025/03/07/my-2024/</id><link href="https://wxxlamp.cn/2025/03/07/my-2024/"/><published>2025-03-07T12:19:00.000Z</published><updated>2026-09-06T17:38:40.688Z</updated><summary type="text">2024年终总结：成功晋升、首次半马跑出1小时46分PB。收到港科大录取后选择转岗深圳，开启港深双城通勤生活。学期末三门课全拿A，积累大量金融与跨境支付知识，在全新环境中摸索方向。</summary><content type="html" xml:base="https://wxxlamp.cn/2025/03/07/my-2024/">&lt;p&gt;说来惭愧，年度总结一年写的比一年晚。虽然时间就像是海绵里的水，只要肯挤总会有的，但是deadline才是第一生产力。今年的年度总结，竟然到25年3月底才开始动笔。&lt;/p&gt;
 &lt;p&gt;悟以往之不谏，知来者之可追。希望2025年的年终总结不会像24年一样拖到很晚。&lt;/p&gt;
 &lt;p&gt;2024年整体来说是新鲜、充实和迷茫，接触了新的环境，工作模式、学习方式都与之前发生了改变。申请到了科大的MSc，转岗到了深圳，开始了一段港深通勤的生活。脱离了在杭州时候稳定的人际关系和工作环境，适应期难免有点波折，但是心中又夹杂着跃跃欲试的冲动。&lt;/p&gt;
 &lt;h3 id=&quot;2024年目标达成情况&quot;&gt;2024年目标达成情况&lt;/h3&gt;&lt;p&gt;以前年年都是里程碑，今年换一种总结方式，分为两部分，一部分是回顾自己2024年目标的达成情况，另一部分是列举下自己的实际做了什么事情。&lt;/p&gt;
@@ -1854,7 +1942,7 @@ w_{4,0} &amp;amp; w_{4,1} &amp;amp; w_{4,2}
 &lt;li&gt;运动上，本年度跑步700KM&lt;/li&gt;
 &lt;/ol&gt;
 </content></entry>
-<entry><title>在阿里工作三年：业务、项目管理与个人成长</title><id>https://wxxlamp.cn/2025/02/16/ali-3-years-thought/</id><link href="https://wxxlamp.cn/2025/02/16/ali-3-years-thought/"/><published>2025-02-16T12:19:00.000Z</published><updated>2026-09-06T07:21:43.821Z</updated><summary type="text">阿里工作三年后的非技术向复盘，围绕业务与技术平衡、项目管理、职场心态、拥抱变化等维度，分享从校招新人成长的真实感悟，适合入职大厂同学参考。</summary><content type="html" xml:base="https://wxxlamp.cn/2025/02/16/ali-3-years-thought/">&lt;p&gt;二零二一年的七月九号，我以校招生的身份入职了阿里，开启了一段十分有意思、有意义的阿里旅程。&lt;/p&gt;
+<entry><title>在阿里工作三年：业务、项目管理与个人成长</title><id>https://wxxlamp.cn/2025/02/16/ali-3-years-thought/</id><link href="https://wxxlamp.cn/2025/02/16/ali-3-years-thought/"/><published>2025-02-16T12:19:00.000Z</published><updated>2026-09-06T17:38:40.681Z</updated><summary type="text">阿里工作三年后的非技术向复盘，围绕业务与技术平衡、项目管理、职场心态、拥抱变化等维度，分享从校招新人成长的真实感悟，适合入职大厂同学参考。</summary><content type="html" xml:base="https://wxxlamp.cn/2025/02/16/ali-3-years-thought/">&lt;p&gt;二零二一年的七月九号，我以校招生的身份入职了阿里，开启了一段十分有意思、有意义的阿里旅程。&lt;/p&gt;
 &lt;p&gt;这三年，我从企业金融技术部，到ICBU技术部，中间还借调到1688技术部一段时间。整个滨江园区的业务，除了已经仙去的零售通，我好像都经历了一遍。&lt;/p&gt;
 &lt;p&gt;三年里，先后经历了5任老板，换过N个小组。经历过很多好的坏的、各种郁闷坑爹事情。但是幸好周围的各位大佬对我不厌其烦帮助、孜孜不倦地教诲，让我感受到了阿里人温暖，在这里收获了友情，成长和感动。&lt;/p&gt;
 &lt;p&gt;在阿里有句俗语，三年成人，在这个时间点，我小小地做个总结，欢迎拍砖～&lt;/p&gt;
@@ -1943,7 +2031,7 @@ w_{4,0} &amp;amp; w_{4,1} &amp;amp; w_{4,2}
 &lt;h2 id=&quot;新的开始&quot;&gt;新的开始&lt;/h2&gt;&lt;p&gt;本来想在三周年之际发表这篇文章，没想到中间经历了一系列的事情，这一耽搁就是半年。不过虽然拖拉了这么久，但是好在发布出来了:)&lt;/p&gt;
 &lt;p&gt;正好要于2月17号参加公司的三年醇活动。悟以往之不谏，知来者之可追。以此，来祭奠我的阿里三周年，迎接在阿里的新挑战^_^&lt;/p&gt;
 </content></entry>
-<entry><title>分布式锁的实现与并发测试</title><id>https://wxxlamp.cn/2024/06/15/distributed-lock-implementation/</id><link href="https://wxxlamp.cn/2024/06/15/distributed-lock-implementation/"/><published>2024-06-15T10:39:00.000Z</published><updated>2026-09-06T07:21:43.822Z</updated><summary type="text">本文详细介绍分布式锁的实现要点，涵盖可重试、可续期、加锁释放锁一致性等关键设计，包含完整的加锁业务逻辑和Redis连接异常处理策略，并提供Java实现代码示例。</summary><content type="html" xml:base="https://wxxlamp.cn/2024/06/15/distributed-lock-implementation/">&lt;h1 id=&quot;制作锁&quot;&gt;制作锁&lt;/h1&gt;&lt;p&gt;编写分布式锁的注意点&lt;/p&gt;
+<entry><title>分布式锁的实现与并发测试</title><id>https://wxxlamp.cn/2024/06/15/distributed-lock-implementation/</id><link href="https://wxxlamp.cn/2024/06/15/distributed-lock-implementation/"/><published>2024-06-15T10:39:00.000Z</published><updated>2026-09-06T17:38:40.681Z</updated><summary type="text">本文详细介绍分布式锁的实现要点，涵盖可重试、可续期、加锁释放锁一致性等关键设计，包含完整的加锁业务逻辑和Redis连接异常处理策略，并提供Java实现代码示例。</summary><content type="html" xml:base="https://wxxlamp.cn/2024/06/15/distributed-lock-implementation/">&lt;h1 id=&quot;制作锁&quot;&gt;制作锁&lt;/h1&gt;&lt;p&gt;编写分布式锁的注意点&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;注意锁的可重试、可续期、以及加锁和释放锁的一致&lt;/li&gt;
 &lt;li&gt;如果连接不上redis如何处理？如果线程抢占锁失败如何处理？&lt;/li&gt;
@@ -1986,44 +2074,5 @@ w_{4,0} &amp;amp; w_{4,1} &amp;amp; w_{4,2}
 
 &lt;p&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/6cc2037a_ee446bac.png&quot;&gt;&lt;/p&gt;
 &lt;p&gt;完美&lt;/p&gt;
-</content></entry>
-<entry><title>2023 年度回顾：职业选择与自我审视</title><id>https://wxxlamp.cn/2024/01/22/my-2023/</id><link href="https://wxxlamp.cn/2024/01/22/my-2023/"/><published>2024-01-22T12:19:00.000Z</published><updated>2026-09-06T07:21:43.829Z</updated><summary type="text">2023年终总结：未能晋升后豁然开朗，备战跳槽收获字节与拼多多offer却选择留下。与Hollis合作的Java八股上线，三战雅思考过6.5分。下半年投身新方向，完成了从内卷到审视自我需要什么的转变。</summary><content type="html" xml:base="https://wxxlamp.cn/2024/01/22/my-2023/">&lt;p&gt;此刻坐在返乡的火车上，看着窗外鹅毛铺成的雪地，在欣赏着无垠而又空旷的雪白的同事，我也又陷入了回忆。&lt;/p&gt;
-&lt;p&gt;会想起去年，如果让我用一个字来描述我的2023，就是累，用两个字描述就是充实。除此之外，如果再想几个关键词的话，就是平和、有意思、突破自我、但也不够坚持。虽然过的也跌宕起伏，不过总的来说，一年有一年的成长，一年有一年的惊喜。&lt;/p&gt;
-&lt;h3 id=&quot;2023打脸报告&quot;&gt;2023打脸报告&lt;/h3&gt;&lt;p&gt;2023年，对我来说更是里程碑式的一年（连续三年都是里程碑了，明年争取换个词）。按照惯例，先看下2023年的flag的完成度怎么样：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;一个好身体：累计跑步1800KM，做俯卧撑和仰卧起坐 =============&amp;gt; 100%，跑步达到2000KM，俯卧撑基本每天都做，仰卧起坐没做，但是经常做引体向上，总体来说完成任务。&lt;/li&gt;
-&lt;li&gt;Java八股面世，为有需要的人提供帮助 =============&amp;gt; 70%，八股面试，帮助了很多人。不过后期因为自己面试和学习英语，便退出了八股的编辑。&lt;/li&gt;
-&lt;li&gt;继续尝试自媒体，B站抖音发布6个视频，以及文章类平台输出 =============&amp;gt; 10%，只发了2个视频，自媒体进度几乎为0。这玩意没有坚持的决心是做不下来的。&lt;/li&gt;
-&lt;li&gt;做点有意思的事情，鬼畜&amp;amp;采访 =============&amp;gt; 0%，下半年有时间的时候完全忘了这个flag…..&lt;/li&gt;
-&lt;li&gt;去年在计划中有一个缩写是zx，说了今年要公布，zx其实就是涨薪哈哈 =============&amp;gt; 100%，因为去年绩效还不错，所以顺利涨薪。&lt;/li&gt;
-&lt;li&gt;提升专业能力，博客12篇&amp;amp;看4本书 =============&amp;gt; 50%，博客倒是有12篇，但是技术相关的只有80%。至于看书，今年看了置身事内还有余华的兄弟，而且因为太悲哀了，所以还没有看完。印象中上次看应该是22年，看了刘震云的一地鸡毛和一句顶一万句。多说一句，刘震云虽然写小说比较吊，但是之前他在脱口秀大会做嘉宾的表现，我不是很喜欢。&lt;/li&gt;
-&lt;li&gt;学习英语，争取通过一些考试 =============&amp;gt; 100%，因为工作中对英语的需要，再加上大学没过英语六级的遗憾，所以特意花了三个月的时间考了雅思，最终考了6.5的成绩，虽然不高，但是对于高考没考过听力、口语的我来说，已经知足了。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h3 id=&quot;2023复盘总结&quot;&gt;2023复盘总结&lt;/h3&gt;&lt;p&gt;站在新的一年来回顾去年，感觉快，但是也感觉充实。虽然充实，但是说实话，前半年的事情，有一点点遗忘了。容我想想。&lt;/p&gt;
-&lt;p&gt;不同于2024年2月10日的春节，2023年1月22日的春节是21世纪第二早的春节。在一月份年前就是作为金融域的大促PM负责网站三月大促的项目管理和技术开发工作。过年在家里也没有闲着，每天都是早早起床，忙家里生意，拜年。以及年后在工作第一天也就是大年初七我带着爸去市医院治疗他的呼噜，动了手术。也正是那几天，才让我知道了在小城市，没有关系寸步难行的真正含义，也正是那几天，让我明白，像我这样的小镇做题家，只靠努力三年的在别人眼里还不错的大学，如何能在小城市这些其他奋斗几代人的关系网中生存呢？所以，今后的日子，我只能背井离乡，远离我的故土。不是不想回，只是回不去啊。&lt;/p&gt;
-&lt;p&gt;年后回公司就是二月了，二月和三月因为财年底，所以二月不仅在做三月大促最后的冲刺，也在加班搞述职review。因为互联网大环境不好，公司还在降本增效，虽然我早已预料到今年我不能晋升，但是在得知晋升名额没有我的时候，还是有点小伤心的。轮项目管理能力，我刚毕业就作为技术PM负责金融侧200人日左右的项目，这其中的辛苦只有自己知道；轮业务能力，在去年业务架构和骨干开发纷纷跑路的情况下，是我独自扛起了业务需求，并且带新同学慢慢了解和完成项目；轮技术能力，我开发了不需要写一行前端代码的、基于Java注解的配置化页面的 运营平台，且从0-1对某核心系统进行迁移、领域重构和UT建设。我自问我已经符合晋升的标准，但是我也知道，从公司的角度出发，晋升并不是对能力的肯定，而是和薪酬一样，是一种管理方式。对于公司来讲，我用最小的成本，招到最合适的人即可，如果我断定我不给你晋升，你也不会跑路，那我为什么要给你晋升呢？而且小P晋升一般都是排队，我前面还有一个排队三年的兄弟，我又是中途转BU的，所以从老板视角来看，不晋升我倒也正常。所以对于我来讲，看这件事情，我也就平常心对之了。不过老板却是对我还可以，除了没晋升，绩效倒是不错。&lt;/p&gt;
-&lt;p&gt;财年结束，按照公司一贯的尿性，又要开始换团队了，而我，又是那个被拆分的幸运儿，被换到了一个新老板下面。我之前带的小师妹则是跟着原来的老板去了其他团队。久经变化的我对这些拆分已经无感，毕竟在上层看来，无论是员工汰换，还是组织变化，都是为了人力资源更好的利用和配置，在他们眼里，我们哪里能算上“人”呢？不过新老板也不错，他还是阿里Java开发规范的作者之一，不得不说，这一年跟他学到了不少优秀的编码技巧。&lt;/p&gt;
-&lt;p&gt;因为没有晋升名额，我突然一下子变得释然了。我的思想和目标发生了转变，不再像前两年一样，为了虚无的晋升疯狂卷，我真正开始审视自己需要什么，以及离开公司，我究竟是什么？所以从4月开始，我便开始准备面试和跳槽。除此之外，3月和四月我还在和Hollis一起完善Java八股，应该是4月底，Java八股成功上线，距今累计帮助近万名程序员。虽然Java八股我也获得了部分物质上的收益，但是对于我来讲，他更是一种成就感，因为这是我从刚进公司就想搞的事情，终于在Hollis的帮助下做成了。&lt;/p&gt;
-&lt;p&gt;五月就是准备面试以及参加各种面试，基本六月的时候就开始收割offer，最后比较满意的是拿到了字节的支付和拼多多营销团队的offer，但是因为感觉太累以及一些其他目前不太方便透露的因素，我最终还是选择留在了原来的公司。但是留下来，是经过我深思熟虑的，而我留下来后，也不会再为了晋升这些虚无的名额疯狂内卷，而是为了一些自己真正想做的事情。&lt;/p&gt;
-&lt;p&gt;确定还留在原来公司后，七月份便开始思考自己离开公司后如何证明自己的价值，因为比较忙，为此我还退出了Java八股项目的编辑工作，这意味着从感情上，我要和我之前的知识库进行切割，从物质上，我也无法再靠它盈利。但是权衡利弊后，我还是选择了投身进入新的事情当中，因为我知道，做了才不后悔。同时，在工作中，七月份，我也离开了原来的工作岗位，从新负责一块新的领域，这对我来说，是机会，也是挑战。七月份还有一个标志性事件，就是入职公司两周年，想不到，一转眼这么快了。&lt;/p&gt;
-&lt;p&gt;因为工作和自己大学六级没过的遗憾，所以八月份便开始准备雅思考试，用百次斩陆陆续续背了背单词。到了九月份，感觉只背单词确实不行，所以就逼着自己花了2K报了名，果然有了deadline之后，学习计划，学习效率徒增。国庆也没有出去玩，在公司会议室每天阅读、听力、作文连续搞了8天。因为河南考试高考不考口语和听力，所以我第一次口语和听力考的很差，口语只有5。有点不甘心，报了12月初的第二次考试，结果不知道是天意弄人还是咋地，第二次的口语题和第一次一样，但是我大意了以为不会再考就没有准备，而且考试成绩和第一次竟然一模一样。我觉得我要突破一下，我对自己说，如果我能在工作的情况下，以河南考生的身份把雅思考过6.5的话，我将来不管做什么事情都有底气。反而我知道，如果我考不过的话，那将是对我自信的巨大打击，所以我又报考了12月末的第三次，这次皇天不负有心人，终于考过到了6.5，虽然听力依然拉胯，但是阅读竟然有8分，可能这就是刷题党吧（PS前两次的阅读是7.5）。虽然刚开始并没有想一定要把雅思考过，但是报考后劲就上来了，它不仅是一个考试，考验的是我工作两年后的专注度，执行力，也算是对我离开学校两年后学习能力的一种检测吧。总体来说，结果还是令我满意的，也能继续让我普信下去。&lt;/p&gt;
-&lt;h3 id=&quot;2024FLAG&quot;&gt;2024FLAG&lt;/h3&gt;&lt;p&gt;假如说2023刚开年的时候我隐约找到了一些方向，但是在按照既定的规划向前出发的时候，我又有些许的迷茫。在2024年，又是我一个重新寻找方向一年。但是也不必悲伤，因为人生本来就是兜兜转转，来来回回。24年的计划，我会分为健康、学习、副业三块：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;健康方面，每年都是重复的，一个是运动，一个是作息，去年作息不是很好，希望今年能纠正一下：&lt;ol&gt;
-&lt;li&gt;稳定的作息：8点半起床，晚上12点睡觉。工作日无特殊情况至少1个半小时在学习和写作上，周末无特殊情况至少6个小时在学习和写作上；&lt;/li&gt;
-&lt;li&gt;继续运动：每周6次引体+卷腹，每次2-3组，年底最少4块腹肌。全年跑步路程800KM&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/li&gt;
-&lt;li&gt;学习方面，去年下半年几乎没有提升专业能力，新的一年要再提升点关于系统并发和领域建模的知识，除此之外，要养成持续读书的好习惯&lt;ol&gt;
-&lt;li&gt;完善高并发场景热点系统的处理体系；12篇技术博客&lt;/li&gt;
-&lt;li&gt;学习IOS和Vision pro开发（待定）&lt;/li&gt;
-&lt;li&gt;对国内金融有基础的了解&lt;/li&gt;
-&lt;li&gt;阅读2本小说（待定）&lt;/li&gt;
-&lt;li&gt;学习基础的AI知识，能够利用大模型进行基础的数据建模&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/li&gt;
-&lt;li&gt;副业方面，建立以知识创作和个人思考的自媒体平台，本年度全平台粉丝1000人。知识创作的前提是个人/IP有知识才可以，所以核心还是在学习和思考上&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;2024年，一定是人生转折的一年。加油！&lt;/p&gt;
 </content></entry>
 </feed>

@@ -59,6 +59,26 @@ google_analytics: G-MJEDN7D89G
 # Microsoft Clarity (public pages only)
 clarity_project_id: ydyci83xyu
 
+# Umami Cloud: copy the public website ID and script URL from its tracking code.
+# No API key belongs in the theme or generated HTML.
+umami:
+  enable: true
+  website_id: 27d58970-f2c7-47fb-a0ea-380f8123c229
+  script_url: https://cloud.umami.is/script.js
+  domains: wxxlamp.cn
+
+# Replaced by Umami; historical Busuanzi totals are not imported.
+busuanzi:
+  enable: false
+
+# Verified against giscus on 2026-09-07 after enabling Discussions.
+giscus:
+  enable: true
+  repo: wxxlamp/wxxlamp.github.io
+  repo_id: MDEwOlJlcG9zaXRvcnkzMTM0ODIyMzc=
+  category: Announcements
+  category_id: DIC_kwDOEq9b_c4DFFLD
+
 # Duoshuo
 duoshuo_shortname:
 # Disqus
@@ -68,4 +88,4 @@ disqus_shortname:
 # ===========================================
 # Version
 # ===========================================
-version: 2.0
+version: '2.2'

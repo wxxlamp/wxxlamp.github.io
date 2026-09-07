@@ -32,7 +32,7 @@ code {
   }
 
   @each $sign, $text in $code-type-list {
-    &.#{$sign} > ::after {
+    &[class~="#{$sign}"] > table::after {
       content: $text;
     }
   }
@@ -80,12 +80,15 @@ code {
     }
 
     .number,
+    .literal {
+      color: map-get($code-highlight-color, number);
+    }
+
     .string,
     .meta .meta-string,
-    .literal,
     .doctag,
     .regexp {
-      color: map-get($code-highlight-color, number);
+      color: map-get($code-highlight-color, string);
     }
 
     .title,

@@ -1,24 +1,10 @@
-{# GitHub Comments using Giscus #}
-{% if not is_home() and not is_archive() %}
-<div class="github-comments">
-  <div class="comments-title">💬 Comments</div>
-  <p style="color: #666; font-size: 0.9em; margin-bottom: 1em;">
-    Comments require <a href="https://github.com/apps/giscus" target="_blank" rel="noopener">Giscus App</a> installed on your GitHub repository.
-  </p>
-  <script src="https://giscus.app/client.js"
-    data-repo="wxxlamp/wxxlamp.github.io"
-    data-repo-id="R_kgDOCiYteA"
-    data-category="General"
-    data-category-id="DIC_kwDOCiYteM4CelIo"
-    data-mapping="pathname"
-    data-strict="0"
-    data-reactions-enabled="1"
-    data-emit-metadata="0"
-    data-input-position="bottom"
-    data-theme="light"
-    data-lang="en"
-    crossorigin="anonymous"
-    async>
-  </script>
-</div>
+{% if theme.giscus.enable and not is_home() and not is_archive() %}
+<section class="github-comments" data-comments-repo="{{ theme.giscus.repo }}" data-comments-repo-id="{{ theme.giscus.repo_id }}" data-comments-category="{{ theme.giscus.category }}" data-comments-category-id="{{ theme.giscus.category_id }}" data-comments-lang="{{ content_language() }}">
+  <h2 class="comments-title" data-zh="评论" data-en="Comments">评论</h2>
+  <p class="comments-status" role="status" data-zh="正在加载评论…" data-en="Loading comments…">正在加载评论…</p>
+  <button class="comments-retry" type="button" hidden data-zh="重新加载评论" data-en="Reload comments">重新加载评论</button>
+  <div class="giscus"></div>
+  <noscript>请启用 JavaScript 查看评论。Please enable JavaScript to view comments.</noscript>
+</section>
+<script defer src="{{ url_for('js/src/comments.js') }}?v={{ theme.version }}"></script>
 {% endif %}

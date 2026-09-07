@@ -61,7 +61,13 @@ hexo.extend.generator.register('localized-content', async function (locals) {
     if (!original) throw new Error(`English translation has no original: ${name}`);
     if (document.lang !== 'en' || !document.title || !document._content.trim()) throw new Error(`Incomplete English translation: ${name}`);
     const route = 'en/' + original.path;
-    let content = await this.render.render({ text: document._content, engine: 'markdown', path: path.join(dir, name) });
+    // Use the same post pipeline as Chinese articles, including fenced-code
+    // highlighting and post filters. render.render() only parses Markdown.
+    const rendered = await this.post.render(path.join(dir, name), {
+      content: document._content, source: '_posts/en/' + name,
+      slug: original.slug, path: route, lang: 'en'
+    });
+    let content = rendered.content;
     // Keep source heading IDs so existing section links work in either language.
     let sourceHtml = load(original.content, null, false);
     const englishHtml = load(content, null, false);

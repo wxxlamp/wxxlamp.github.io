@@ -96,13 +96,14 @@ button { color: inherit; }
 .post-content blockquote p + p { margin-top: 1em; }
 .post-content img { display: block; height: auto; max-width: 100%; margin: 28px auto; border: 1px solid var(--line); border-radius: 4px; box-shadow: 0 2px 8px rgba(37, 44, 41, .08); }
 .post-content hr { border: 0; border-top: 1px solid var(--line); margin: 36px 0; }
-.post-content code, .post-content pre { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; font-size: .85em; }
+.post .post-content code, .post .post-content pre { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; font-size: .85em; }
 .post-content code { background: #edf0ea; border-radius: 3px; }
 .post-content pre { overflow: auto; line-height: 1.7; padding: 16px; }
 .post-content pre code { padding: 0; }
 .post-content .highlight { border: 1px solid var(--line); border-radius: 5px; box-shadow: none; margin: 24px 0; max-width: 100%; }
-.post-content .highlight pre { font-size: 13px; }
-.post-content .highlight .gutter { width: 1%; color: var(--muted); }
+.post .post-content .highlight pre { font-size: 13px; line-height: 1.7; }
+.post .post-content .highlight .gutter { width: 1%; color: var(--muted); user-select: none; }
+.post .post-content .highlight table::after { color: var(--muted); }
 .post-content > table { display: block; overflow-x: auto; width: 100%; border-collapse: collapse; font-size: 14px; }
 .post-content > table th { background: var(--soft); }
 .post-content > table td, .post-content > table th { padding: 10px 14px; border: 1px solid var(--line); }

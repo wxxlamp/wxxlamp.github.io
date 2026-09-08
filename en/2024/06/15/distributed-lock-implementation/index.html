@@ -33,18 +33,18 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2">
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.2">
 
-<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2.2">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2.2">
 <meta name="theme-color" content="#244f43">
 
 
-<link rel="stylesheet" type="text/css" href="/css/style.css?v=2">
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.2">
 
 
 
-<script defer="" src="/js/src/site.js?v=2"></script>
+<script defer="" src="/js/src/site.js?v=2.2"></script>
 
 
 
@@ -94,6 +94,10 @@
     y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
   })(window, document, "clarity", "script", "ydyci83xyu");
 </script>
+
+<script defer="" src="https://cloud.umami.is/script.js" data-website-id="27d58970-f2c7-47fb-a0ea-380f8123c229" data-domains="wxxlamp.cn" data-exclude-search="true" data-exclude-hash="true"></script>
+
+
 
 
 
@@ -146,326 +150,39 @@
 <h2 id="加锁业务逻辑"><a href="#加锁业务逻辑" class="headerlink" title="Business Logic Around Lock Acquisition"></a>Business Logic Around Lock Acquisition</h2><ol>
 <li>Include business-required retries and handling for Redis connection failures and unsuccessful lock acquisition.</li>
 </ol>
-<pre><code class="language-java">public static &lt;T, R&gt; R runWithLock(Function&lt;T, R&gt; function, T req, Class&lt;? extends AssuranceSyncHandler&lt;T,R&gt;&gt; clazz,
-                                       int expiredSec, String... factors) {
-    AssuranceSyncHandler&lt;T, R&gt; zedSynchronizedHandler = getSyncHandlerFromClazz(clazz);
-    ZedBody zedBody = buildBody(req, expiredSec, factors);
-    // 尝试加锁
-    boolean lockSuc = tryLock(zedBody, zedSynchronizedHandler);
-    // 如果没加锁成功，则按照配置策略进行重试
-    if (!lockSuc &amp;&amp; !retryLock(zedBody, zedSynchronizedHandler)) {
-        LOGGER.info("thread can not get lock, retry times is {}", zedSynchronizedHandler.getRetryTimes());
-        // 如果缓存不可用，则直接执行业务逻辑
-        if (SmartZedThreadLocal.isSynchronizedLockInvalid()) {
-            LOGGER.error("lock failed because of the system error, so func apply directly");
-            SmartZedThreadLocal.clear(zedBody.getRowKey());
-            return function.apply(req);
-        }
-        // 如果缓存可用，则执行自定义锁策略
-        return zedSynchronizedHandler.strategyWhenSync(req);
-    }
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T, R&gt; R <span class="title function_">runWithLock</span><span class="params">(Function&lt;T, R&gt; function, T req, Class&lt;? extends AssuranceSyncHandler&lt;T,R&gt;&gt; clazz,</span></span><br><span class="line"><span class="params">                                       <span class="type">int</span> expiredSec, String... factors)</span> {</span><br><span class="line">    AssuranceSyncHandler&lt;T, R&gt; zedSynchronizedHandler = getSyncHandlerFromClazz(clazz);</span><br><span class="line">    <span class="type">ZedBody</span> <span class="variable">zedBody</span> <span class="operator">=</span> buildBody(req, expiredSec, factors);</span><br><span class="line">    <span class="comment">// 尝试加锁</span></span><br><span class="line">    <span class="type">boolean</span> <span class="variable">lockSuc</span> <span class="operator">=</span> tryLock(zedBody, zedSynchronizedHandler);</span><br><span class="line">    <span class="comment">// 如果没加锁成功，则按照配置策略进行重试</span></span><br><span class="line">    <span class="keyword">if</span> (!lockSuc &amp;&amp; !retryLock(zedBody, zedSynchronizedHandler)) {</span><br><span class="line">        LOGGER.info(<span class="string">"thread can not get lock, retry times is {}"</span>, zedSynchronizedHandler.getRetryTimes());</span><br><span class="line">        <span class="comment">// 如果缓存不可用，则直接执行业务逻辑</span></span><br><span class="line">        <span class="keyword">if</span> (SmartZedThreadLocal.isSynchronizedLockInvalid()) {</span><br><span class="line">            LOGGER.error(<span class="string">"lock failed because of the system error, so func apply directly"</span>);</span><br><span class="line">            SmartZedThreadLocal.clear(zedBody.getRowKey());</span><br><span class="line">            <span class="keyword">return</span> function.apply(req);</span><br><span class="line">        }</span><br><span class="line">        <span class="comment">// 如果缓存可用，则执行自定义锁策略</span></span><br><span class="line">        <span class="keyword">return</span> zedSynchronizedHandler.strategyWhenSync(req);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    R result;</span><br><span class="line">    <span class="keyword">try</span> {</span><br><span class="line">        result = function.apply(req);</span><br><span class="line">    } <span class="keyword">catch</span> (Exception ex) {</span><br><span class="line">        LOGGER.error(<span class="string">"AssuranceLockUtils.runWithLock error when apply func"</span>, ex);</span><br><span class="line">        <span class="keyword">throw</span> ex;</span><br><span class="line">    } <span class="keyword">finally</span> {</span><br><span class="line">        tryUnLock(zedBody);</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="meta">@SuppressWarnings("unchecked")</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> &lt;T, R&gt; AssuranceSyncHandler&lt;T, R&gt; <span class="title function_">getSyncHandlerFromClazz</span><span class="params">(Class&lt;? extends AssuranceSyncHandler&lt;T,R&gt;&gt; clazz)</span> {</span><br><span class="line">    <span class="keyword">return</span> Optional.ofNullable(clazz)</span><br><span class="line">            .map(ApplicationContextUtil::getBean)</span><br><span class="line">            <span class="comment">// 此处加map是为了把子类转成父类</span></span><br><span class="line">            .map(e -&gt; (AssuranceSyncHandler&lt;T, R&gt;)e)</span><br><span class="line">            .orElse((AssuranceSyncHandler&lt;T, R&gt;)defaultHandler);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="type">boolean</span> <span class="title function_">retryLock</span><span class="params">(ZedBody zedBody, AssuranceSyncHandler&lt;?,?&gt; handler)</span> {</span><br><span class="line">    <span class="type">int</span> <span class="variable">retryTimes</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">    <span class="type">boolean</span> <span class="variable">lockSuc</span> <span class="operator">=</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">while</span>(!lockSuc &amp;&amp; handler.getRetryTimes() &gt; retryTimes++) {</span><br><span class="line">        lockSuc = tryLock(zedBody, handler);</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">return</span> lockSuc;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-    R result;
-    try {
-        result = function.apply(req);
-    } catch (Exception ex) {
-        LOGGER.error("AssuranceLockUtils.runWithLock error when apply func", ex);
-        throw ex;
-    } finally {
-        tryUnLock(zedBody);
-    }
-    return result;
-}
-
-@SuppressWarnings("unchecked")
-private static &lt;T, R&gt; AssuranceSyncHandler&lt;T, R&gt; getSyncHandlerFromClazz(Class&lt;? extends AssuranceSyncHandler&lt;T,R&gt;&gt; clazz) {
-    return Optional.ofNullable(clazz)
-            .map(ApplicationContextUtil::getBean)
-            // 此处加map是为了把子类转成父类
-            .map(e -&gt; (AssuranceSyncHandler&lt;T, R&gt;)e)
-            .orElse((AssuranceSyncHandler&lt;T, R&gt;)defaultHandler);
-}
-
-private static boolean retryLock(ZedBody zedBody, AssuranceSyncHandler&lt;?,?&gt; handler) {
-    int retryTimes = 0;
-    boolean lockSuc = false;
-    while(!lockSuc &amp;&amp; handler.getRetryTimes() &gt; retryTimes++) {
-        lockSuc = tryLock(zedBody, handler);
-    }
-    return lockSuc;
-}
-</code></pre>
 <h2 id="内部锁加锁逻辑"><a href="#内部锁加锁逻辑" class="headerlink" title="Internal Lock Acquisition"></a>Internal Lock Acquisition</h2><ol>
 <li>Control the granularity of the internal lock, and <strong>consider what happens if releasing either of the two locks fails</strong>.</li>
 <li>An internal lock may not be necessary. With low contention, each call can acquire the Redis lock anyway, so adding a local lock reduces performance. Consider an internal lock when contention on a single machine is high.</li>
 </ol>
-<pre><code class="language-java"> private static boolean tryLock(ZedBody zedBody, AssuranceSyncHandler&lt;?,?&gt; zedSynchronizedHandler) {
-    boolean ans = false;
-    boolean innerTryLock = false;
-    try {
-        innerTryLock = LocalLockHolder.tryLock(zedBody.getRowKey(), zedSynchronizedHandler.getRetryInterval());
-        if (innerTryLock) {
-            ans = assuranceSyncService.lock(zedBody);
-        }
-    } catch (Throwable e) {
-        LOGGER.error("AssuranceLockUtils.runWithLock error", e);
-    } finally {
-        // 如果外部锁没加成功，则释放内部锁
-        if (!ans &amp;&amp; innerTryLock) {
-            LocalLockHolder.unlock(zedBody.getRowKey());
-        }
-    }
-    return ans;
-}
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">boolean</span> <span class="title function_">tryLock</span><span class="params">(ZedBody zedBody, AssuranceSyncHandler&lt;?,?&gt; zedSynchronizedHandler)</span> {</span><br><span class="line">    <span class="type">boolean</span> <span class="variable">ans</span> <span class="operator">=</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="type">boolean</span> <span class="variable">innerTryLock</span> <span class="operator">=</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">try</span> {</span><br><span class="line">        innerTryLock = LocalLockHolder.tryLock(zedBody.getRowKey(), zedSynchronizedHandler.getRetryInterval());</span><br><span class="line">        <span class="keyword">if</span> (innerTryLock) {</span><br><span class="line">            ans = assuranceSyncService.lock(zedBody);</span><br><span class="line">        }</span><br><span class="line">    } <span class="keyword">catch</span> (Throwable e) {</span><br><span class="line">        LOGGER.error(<span class="string">"AssuranceLockUtils.runWithLock error"</span>, e);</span><br><span class="line">    } <span class="keyword">finally</span> {</span><br><span class="line">        <span class="comment">// 如果外部锁没加成功，则释放内部锁</span></span><br><span class="line">        <span class="keyword">if</span> (!ans &amp;&amp; innerTryLock) {</span><br><span class="line">            LocalLockHolder.unlock(zedBody.getRowKey());</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">tryUnLock</span><span class="params">(ZedBody zedBody)</span> {</span><br><span class="line">    <span class="keyword">try</span> {</span><br><span class="line">        LocalLockHolder.unlock(zedBody.getRowKey());</span><br><span class="line">        assuranceSyncService.unLock(zedBody);</span><br><span class="line">    } <span class="keyword">catch</span> (Throwable e) {</span><br><span class="line">        LOGGER.error(<span class="string">"AssuranceLockUtils.runWithUnLock error"</span>, e);</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">LocalLockHolder</span> {</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Map&lt;String, Lock&gt; LOCK_MAP = <span class="keyword">new</span> <span class="title class_">ConcurrentHashMap</span>&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">boolean</span> <span class="title function_">tryLock</span><span class="params">(String key, <span class="type">long</span> timeout)</span> <span class="keyword">throws</span> InterruptedException {</span><br><span class="line">        <span class="type">Lock</span> <span class="variable">lock</span> <span class="operator">=</span> LOCK_MAP.computeIfAbsent(key, k -&gt; <span class="keyword">new</span> <span class="title class_">ReentrantLock</span>());</span><br><span class="line">        <span class="keyword">return</span> lock.tryLock(timeout, TimeUnit.MILLISECONDS);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">unlock</span><span class="params">(String key)</span> {</span><br><span class="line">        <span class="type">Lock</span> <span class="variable">lock</span> <span class="operator">=</span> LOCK_MAP.get(key);</span><br><span class="line">        <span class="keyword">if</span> (lock != <span class="literal">null</span>) {</span><br><span class="line">            lock.unlock();</span><br><span class="line">        }</span><br><span class="line">        LOCK_MAP.remove(key);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-private static void tryUnLock(ZedBody zedBody) {
-    try {
-        LocalLockHolder.unlock(zedBody.getRowKey());
-        assuranceSyncService.unLock(zedBody);
-    } catch (Throwable e) {
-        LOGGER.error("AssuranceLockUtils.runWithUnLock error", e);
-    }
-}
-
-private static class LocalLockHolder {
-    private static final Map&lt;String, Lock&gt; LOCK_MAP = new ConcurrentHashMap&lt;&gt;();
-
-    public static boolean tryLock(String key, long timeout) throws InterruptedException {
-        Lock lock = LOCK_MAP.computeIfAbsent(key, k -&gt; new ReentrantLock());
-        return lock.tryLock(timeout, TimeUnit.MILLISECONDS);
-    }
-
-    public static void unlock(String key) {
-        Lock lock = LOCK_MAP.get(key);
-        if (lock != null) {
-            lock.unlock();
-        }
-        LOCK_MAP.remove(key);
-    }
-}
-</code></pre>
 <h2 id="核心加锁逻辑"><a href="#核心加锁逻辑" class="headerlink" title="Core Locking Logic"></a>Core Locking Logic</h2><ol>
 <li>Include support for reentrant locking.</li>
 </ol>
-<pre><code class="language-java">public Boolean lock(ZedBody zedBody) {
-    // 1. 竞争锁
-    boolean suc = syncService.set(zedBody.getRowKey(), getValue(), zedBody.getTimeout(), () -&gt; {
-        // 如果redis没有连接上，则不加锁
-        SmartZedThreadLocal.markSynchronizedLockInvalid(true);
-        return null;
-    });
-    if (suc || isOwnLock(zedBody)) {
-        // 增加引用次数
-        int count = increaseCount(zedBody.getRowKey());
-        LOGGER.info("lock suc key:{},threadId:{}, count {}", zedBody.getRowKey(), Thread.currentThread().getId(), count);
-        return true;
-    }
-    return false;
-}
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> Boolean <span class="title function_">lock</span><span class="params">(ZedBody zedBody)</span> {</span><br><span class="line">    <span class="comment">// 1. 竞争锁</span></span><br><span class="line">    <span class="type">boolean</span> <span class="variable">suc</span> <span class="operator">=</span> syncService.set(zedBody.getRowKey(), getValue(), zedBody.getTimeout(), () -&gt; {</span><br><span class="line">        <span class="comment">// 如果redis没有连接上，则不加锁</span></span><br><span class="line">        SmartZedThreadLocal.markSynchronizedLockInvalid(<span class="literal">true</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    });</span><br><span class="line">    <span class="keyword">if</span> (suc || isOwnLock(zedBody)) {</span><br><span class="line">        <span class="comment">// 增加引用次数</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">count</span> <span class="operator">=</span> increaseCount(zedBody.getRowKey());</span><br><span class="line">        LOGGER.info(<span class="string">"lock suc key:{},threadId:{}, count {}"</span>, zedBody.getRowKey(), Thread.currentThread().getId(), count);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> Boolean <span class="title function_">unLock</span><span class="params">(ZedBody zedBody)</span> {</span><br><span class="line">    <span class="type">int</span> <span class="variable">lockCount</span> <span class="operator">=</span> threadLocal.get().getByKeyWithDefault(zedBody.getRowKey()).count.get();</span><br><span class="line">    LOGGER.info(<span class="string">"un lock start key:{},threadId:{},count:{}"</span>, zedBody.getRowKey(),</span><br><span class="line">            Thread.currentThread().getId(), lockCount);</span><br><span class="line">    <span class="comment">// 1. 如果引用计数已经小于0，则失效缓存</span></span><br><span class="line">    <span class="keyword">if</span> (decreaseCount(zedBody.getRowKey()) &lt;= <span class="number">0</span>) {</span><br><span class="line">        <span class="keyword">return</span> syncService.del(zedBody.getRowKey());</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="type">int</span> <span class="title function_">increaseCount</span><span class="params">(String key)</span> {</span><br><span class="line">    <span class="type">LockCounterHolder</span> <span class="variable">counterHolder</span> <span class="operator">=</span> threadLocal.get();</span><br><span class="line">    <span class="keyword">return</span> counterHolder.increaseWithKey(key);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="type">int</span> <span class="title function_">decreaseCount</span><span class="params">(String key)</span> {</span><br><span class="line">    <span class="type">LockCounterHolder</span> <span class="variable">counterHolder</span> <span class="operator">=</span> threadLocal.get();</span><br><span class="line">    <span class="keyword">return</span> counterHolder.decreaseWithKey(key);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="type">boolean</span> <span class="title function_">isOwnLock</span><span class="params">(ZedBody zedBody)</span> {</span><br><span class="line">    <span class="type">String</span> <span class="variable">s</span> <span class="operator">=</span> syncService.get(zedBody.getRowKey());</span><br><span class="line">    <span class="keyword">return</span> StringUtils.equals(s, getValue());</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> String <span class="title function_">getValue</span><span class="params">()</span> {</span><br><span class="line">    <span class="keyword">return</span> LOCAL_HOSTNAME + <span class="string">":"</span> + Thread.currentThread().getId();</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> String <span class="title function_">getHostname</span><span class="params">()</span> {</span><br><span class="line">    <span class="keyword">try</span> {</span><br><span class="line">        <span class="keyword">return</span> InetAddress.getLocalHost().getHostName();</span><br><span class="line">    } <span class="keyword">catch</span> (UnknownHostException e) {</span><br><span class="line">        LOGGER.warn(<span class="string">"Failed to get hostname"</span>, e);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"[unknown]"</span>;</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">LockCounterHolder</span> {</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Map&lt;String, LockCounter&gt; counters = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> LockCounter <span class="title function_">getByKeyWithDefault</span><span class="params">(String key)</span> {</span><br><span class="line">        <span class="keyword">return</span> counters.computeIfAbsent(key, e -&gt; <span class="keyword">new</span> <span class="title class_">LockCounter</span>());</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">increaseWithKey</span><span class="params">(String key)</span> {</span><br><span class="line">        <span class="type">LockCounter</span> <span class="variable">counter</span> <span class="operator">=</span> getByKeyWithDefault(key);</span><br><span class="line">        <span class="keyword">return</span> counter.count.incrementAndGet();</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">decreaseWithKey</span><span class="params">(String key)</span> {</span><br><span class="line">        <span class="type">LockCounter</span> <span class="variable">counter</span> <span class="operator">=</span> counters.get(key);</span><br><span class="line">        <span class="comment">// 防止非持有锁的线程释放锁</span></span><br><span class="line">        <span class="keyword">if</span> (counter == <span class="literal">null</span>) {</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">ZedSynchronizedException</span>(<span class="string">"key is not found when release. key="</span> + key);</span><br><span class="line">        }</span><br><span class="line">        <span class="type">int</span> <span class="variable">count</span> <span class="operator">=</span> counter.count.decrementAndGet();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (count &lt;= <span class="number">0</span>) {</span><br><span class="line">            <span class="comment">//如果count 小于0，删除key，避免内存泄漏</span></span><br><span class="line">            counters.remove(key);</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">return</span> count;</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">LockCounter</span> {</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> AtomicInteger count;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">LockCounter</span><span class="params">()</span> {</span><br><span class="line">        <span class="built_in">this</span>.count = <span class="keyword">new</span> <span class="title class_">AtomicInteger</span>(<span class="number">0</span>);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-@Override
-public Boolean unLock(ZedBody zedBody) {
-    int lockCount = threadLocal.get().getByKeyWithDefault(zedBody.getRowKey()).count.get();
-    LOGGER.info("un lock start key:{},threadId:{},count:{}", zedBody.getRowKey(),
-            Thread.currentThread().getId(), lockCount);
-    // 1. 如果引用计数已经小于0，则失效缓存
-    if (decreaseCount(zedBody.getRowKey()) &lt;= 0) {
-        return syncService.del(zedBody.getRowKey());
-    }
-    return true;
-}
-
-private int increaseCount(String key) {
-    LockCounterHolder counterHolder = threadLocal.get();
-    return counterHolder.increaseWithKey(key);
-}
-
-private int decreaseCount(String key) {
-    LockCounterHolder counterHolder = threadLocal.get();
-    return counterHolder.decreaseWithKey(key);
-}
-
-private boolean isOwnLock(ZedBody zedBody) {
-    String s = syncService.get(zedBody.getRowKey());
-    return StringUtils.equals(s, getValue());
-}
-
-private String getValue() {
-    return LOCAL_HOSTNAME + ":" + Thread.currentThread().getId();
-}
-
-private static String getHostname() {
-    try {
-        return InetAddress.getLocalHost().getHostName();
-    } catch (UnknownHostException e) {
-        LOGGER.warn("Failed to get hostname", e);
-        return "[unknown]";
-    }
-}
-
-private static class LockCounterHolder {
-
-    private final Map&lt;String, LockCounter&gt; counters = new HashMap&lt;&gt;();
-
-    public LockCounter getByKeyWithDefault(String key) {
-        return counters.computeIfAbsent(key, e -&gt; new LockCounter());
-    }
-
-    public int increaseWithKey(String key) {
-        LockCounter counter = getByKeyWithDefault(key);
-        return counter.count.incrementAndGet();
-    }
-
-    public int decreaseWithKey(String key) {
-        LockCounter counter = counters.get(key);
-        // 防止非持有锁的线程释放锁
-        if (counter == null) {
-            throw new ZedSynchronizedException("key is not found when release. key=" + key);
-        }
-        int count = counter.count.decrementAndGet();
-
-        if (count &lt;= 0) {
-            //如果count 小于0，删除key，避免内存泄漏
-            counters.remove(key);
-        }
-        return count;
-    }
-}
-
-private static class LockCounter {
-
-    private final AtomicInteger count;
-
-    public LockCounter() {
-        this.count = new AtomicInteger(0);
-    }
-}
-</code></pre>
 <h2 id="Redis连接逻辑"><a href="#Redis连接逻辑" class="headerlink" title="Redis Connection Logic"></a>Redis Connection Logic</h2><ol>
 <li>Include retries when a Redis connection cannot be established.</li>
 </ol>
-<pre><code class="language-java">public boolean set(String key, String value, int expireTimeSec) {
-    int connectTime = 0;
-    String v = null;
-    SetParams setParams = new SetParams().nx().ex(expireTimeSec);
-    while (Objects.isNull(v)) {
-        try (Jedis jedis = jedisPool.getResource()) {
-            v = jedis.set(PREFIX + key, value, setParams);
-            return StringUtils.equals(SUCCESS, v);
-        } catch (Exception e) {
-            LOGGER.error("rdb3 setNx error key:{} value:{}", key, value, e);
-            if (connectTime++ &gt;= RECONNECT_TIMES) {
-                LOGGER.error("rdb3 retry {} times setNx error key:{} value:{}", RECONNECT_TIMES, key, value, e);
-                throw e;
-            }
-        }
-    }
-    return StringUtils.equals(SUCCESS, v);
-}
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">set</span><span class="params">(String key, String value, <span class="type">int</span> expireTimeSec)</span> {</span><br><span class="line">    <span class="type">int</span> <span class="variable">connectTime</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">    <span class="type">String</span> <span class="variable">v</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">    <span class="type">SetParams</span> <span class="variable">setParams</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SetParams</span>().nx().ex(expireTimeSec);</span><br><span class="line">    <span class="keyword">while</span> (Objects.isNull(v)) {</span><br><span class="line">        <span class="keyword">try</span> (<span class="type">Jedis</span> <span class="variable">jedis</span> <span class="operator">=</span> jedisPool.getResource()) {</span><br><span class="line">            v = jedis.set(PREFIX + key, value, setParams);</span><br><span class="line">            <span class="keyword">return</span> StringUtils.equals(SUCCESS, v);</span><br><span class="line">        } <span class="keyword">catch</span> (Exception e) {</span><br><span class="line">            LOGGER.error(<span class="string">"rdb3 setNx error key:{} value:{}"</span>, key, value, e);</span><br><span class="line">            <span class="keyword">if</span> (connectTime++ &gt;= RECONNECT_TIMES) {</span><br><span class="line">                LOGGER.error(<span class="string">"rdb3 retry {} times setNx error key:{} value:{}"</span>, RECONNECT_TIMES, key, value, e);</span><br><span class="line">                <span class="keyword">throw</span> e;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">return</span> StringUtils.equals(SUCCESS, v);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
 <h1 id="测试锁"><a href="#测试锁" class="headerlink" title="Testing the Lock"></a>Testing the Lock</h1><p>Given the distributed lock above, how should I write unit tests on one machine to verify its correctness?</p>
 <h2 id="第一版"><a href="#第一版" class="headerlink" title="First Version"></a>First Version</h2><p>My first test looked like this:</p>
-<pre><code class="language-java">@Test
-public void testLockSync() throws InterruptedException {
-    // 1. 第一个线程抢占到锁，睡眠
-    new Thread(() -&gt; {
-        String res = AssuranceLockUtils.runWithLock((req) -&gt; {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            return "test";
-        }, null, 10, "test");
-        Assert.assertEqual("test", res);
-    }).start();
-    // 2. 第二个线程尝试抢占锁，应该失败
-    new Thread(() -&gt; {
-        try {
-            AssuranceLockUtils.runWithLock((req) -&gt; "test", null, 10, "test");
-        } catch (Exception exception) {
-            Assert.assertTrue(exception instanceOf ZedSynchronizedException);
-        }
-    }).start();
-}
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testLockSync</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException {</span><br><span class="line">    <span class="comment">// 1. 第一个线程抢占到锁，睡眠</span></span><br><span class="line">    <span class="keyword">new</span> <span class="title class_">Thread</span>(() -&gt; {</span><br><span class="line">        <span class="type">String</span> <span class="variable">res</span> <span class="operator">=</span> AssuranceLockUtils.runWithLock((req) -&gt; {</span><br><span class="line">            <span class="keyword">try</span> {</span><br><span class="line">                Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">            } <span class="keyword">catch</span> (InterruptedException e) {</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            }</span><br><span class="line">            <span class="keyword">return</span> <span class="string">"test"</span>;</span><br><span class="line">        }, <span class="literal">null</span>, <span class="number">10</span>, <span class="string">"test"</span>);</span><br><span class="line">        Assert.assertEqual(<span class="string">"test"</span>, res);</span><br><span class="line">    }).start();</span><br><span class="line">    <span class="comment">// 2. 第二个线程尝试抢占锁，应该失败</span></span><br><span class="line">    <span class="keyword">new</span> <span class="title class_">Thread</span>(() -&gt; {</span><br><span class="line">        <span class="keyword">try</span> {</span><br><span class="line">            AssuranceLockUtils.runWithLock((req) -&gt; <span class="string">"test"</span>, <span class="literal">null</span>, <span class="number">10</span>, <span class="string">"test"</span>);</span><br><span class="line">        } <span class="keyword">catch</span> (Exception exception) {</span><br><span class="line">            Assert.assertTrue(exception instanceOf ZedSynchronizedException);</span><br><span class="line">        }</span><br><span class="line">    }).start();</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
 <p>Sharp-eyed readers may immediately spot the problem: the main thread cannot observe the test results. Two things are necessary to fix this. First, pass the worker threads’ results to the main thread. Second, ensure the main thread checks them after the worker threads have finished. Common approaches include <code>CountDownLatch</code>, <code>BlockingQueue</code>, and shared memory.</p>
 <h2 id="第二版"><a href="#第二版" class="headerlink" title="Second Version"></a>Second Version</h2><p>I therefore tried this second version:</p>
-<pre><code class="language-java">@Test
-public void testLockSync() throws InterruptedException {
-    CountDownLatch latch = new CountDownLatch(2);
-    AtomicReference&lt;String&gt; firstThreadAns = new AtomicReference&lt;&gt;();
-    AtomicReference&lt;Exception&gt; secondThreadAns = new AtomicReference&lt;&gt;();
-    // 1. 第一个线程抢占到锁，睡眠
-    new Thread(() -&gt; {
-        firstThreadAns.set(AssuranceLockUtils.runWithLock((req) -&gt; {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } finally {
-                latch.countDown();
-            }
-            return "test";
-        }, null, 10, "test"));
-    }).start();
-    // 2. 第二个线程尝试抢占锁，应该失败
-    new Thread(() -&gt; {
-        try {
-            AssuranceLockUtils.runWithLock((req) -&gt; "test", null, 10, "test");
-        } catch (Exception exception) {
-            secondThreadAns.set(exception);
-        } finally {
-            latch.countDown();
-        }
-    }).start();
-    // 3. 主线程check结果
-    latch.await();
-    Assert.assertEquals("test", firstThreadAns.get());
-    Assert.assertTrue(secondThreadAns.get() instanceof ZedSynchronizedException);
-}
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testLockSync</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException {</span><br><span class="line">    <span class="type">CountDownLatch</span> <span class="variable">latch</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">CountDownLatch</span>(<span class="number">2</span>);</span><br><span class="line">    AtomicReference&lt;String&gt; firstThreadAns = <span class="keyword">new</span> <span class="title class_">AtomicReference</span>&lt;&gt;();</span><br><span class="line">    AtomicReference&lt;Exception&gt; secondThreadAns = <span class="keyword">new</span> <span class="title class_">AtomicReference</span>&lt;&gt;();</span><br><span class="line">    <span class="comment">// 1. 第一个线程抢占到锁，睡眠</span></span><br><span class="line">    <span class="keyword">new</span> <span class="title class_">Thread</span>(() -&gt; {</span><br><span class="line">        firstThreadAns.set(AssuranceLockUtils.runWithLock((req) -&gt; {</span><br><span class="line">            <span class="keyword">try</span> {</span><br><span class="line">                Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">            } <span class="keyword">catch</span> (InterruptedException e) {</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            } <span class="keyword">finally</span> {</span><br><span class="line">                latch.countDown();</span><br><span class="line">            }</span><br><span class="line">            <span class="keyword">return</span> <span class="string">"test"</span>;</span><br><span class="line">        }, <span class="literal">null</span>, <span class="number">10</span>, <span class="string">"test"</span>));</span><br><span class="line">    }).start();</span><br><span class="line">    <span class="comment">// 2. 第二个线程尝试抢占锁，应该失败</span></span><br><span class="line">    <span class="keyword">new</span> <span class="title class_">Thread</span>(() -&gt; {</span><br><span class="line">        <span class="keyword">try</span> {</span><br><span class="line">            AssuranceLockUtils.runWithLock((req) -&gt; <span class="string">"test"</span>, <span class="literal">null</span>, <span class="number">10</span>, <span class="string">"test"</span>);</span><br><span class="line">        } <span class="keyword">catch</span> (Exception exception) {</span><br><span class="line">            secondThreadAns.set(exception);</span><br><span class="line">        } <span class="keyword">finally</span> {</span><br><span class="line">            latch.countDown();</span><br><span class="line">        }</span><br><span class="line">    }).start();</span><br><span class="line">    <span class="comment">// 3. 主线程check结果</span></span><br><span class="line">    latch.await();</span><br><span class="line">    Assert.assertEquals(<span class="string">"test"</span>, firstThreadAns.get());</span><br><span class="line">    Assert.assertTrue(secondThreadAns.get() <span class="keyword">instanceof</span> ZedSynchronizedException);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
 <p>Running this test exposes several failure cases:</p>
 <ol>
 <li>The assertion on line 31 fails because firstThreadAns.get() == null. <img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/dbcd4d8e_8e094577.png"> The worker calls <code>latch.countDown()</code> prematurely on line 14. The main thread starts checking before the worker has passed its result back.</li>
 <li>The main thread waits forever, preventing the program from finishing. <img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/f9929e9f_9b8f3bf1.png"> The second thread runs first, so the first thread fails to acquire the lock and throws an exception without calling <code>latch.countDown()</code>. The main thread remains pending. The solution is straightforward: ensure the first test thread reaches the required point before the second. A <code>Semaphore</code>, <code>CountDownLatch</code>, or lock can do this, but note that <code>Thread.join()</code> is unsuitable here.</li>
 </ol>
-<h2 id="第三版"><a href="#第三版" class="headerlink" title="Third Version"></a>Third Version</h2><pre><code class="language-java">@Test
-public void testLockSync() throws InterruptedException {
-    CountDownLatch latch = new CountDownLatch(2);
-    Semaphore semaphore = new Semaphore(0);
-    AtomicReference&lt;String&gt; firstThreadAns = new AtomicReference&lt;&gt;();
-    AtomicReference&lt;Exception&gt; secondThreadAns = new AtomicReference&lt;&gt;();
-    // 1. 第一个线程抢占到锁，睡眠
-    new Thread(() -&gt; {
-        firstThreadAns.set(AssuranceLockUtils.runWithLock((req) -&gt; {
-            req.release();
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            return "test";
-        }, semaphore, 10, "test"));
-        latch.countDown();
-    }).start();
-    // 2. 第二个线程尝试抢占锁，应该失败
-    new Thread(() -&gt; {
-        try {
-            semaphore.acquire();
-            AssuranceLockUtils.runWithLock((req) -&gt; "test", null, 10, "test");
-        } catch (Exception exception) {
-            secondThreadAns.set(exception);
-        } finally {
-            latch.countDown();
-        }
-    }).start();
-    // 3. 主线程check结果
-    latch.await();
-    Assert.assertEquals("test", firstThreadAns.get());
-    Assert.assertTrue(secondThreadAns.get() instanceof ZedSynchronizedException);
-}
-</code></pre>
+<h2 id="第三版"><a href="#第三版" class="headerlink" title="Third Version"></a>Third Version</h2><figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testLockSync</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException {</span><br><span class="line">    <span class="type">CountDownLatch</span> <span class="variable">latch</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">CountDownLatch</span>(<span class="number">2</span>);</span><br><span class="line">    <span class="type">Semaphore</span> <span class="variable">semaphore</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Semaphore</span>(<span class="number">0</span>);</span><br><span class="line">    AtomicReference&lt;String&gt; firstThreadAns = <span class="keyword">new</span> <span class="title class_">AtomicReference</span>&lt;&gt;();</span><br><span class="line">    AtomicReference&lt;Exception&gt; secondThreadAns = <span class="keyword">new</span> <span class="title class_">AtomicReference</span>&lt;&gt;();</span><br><span class="line">    <span class="comment">// 1. 第一个线程抢占到锁，睡眠</span></span><br><span class="line">    <span class="keyword">new</span> <span class="title class_">Thread</span>(() -&gt; {</span><br><span class="line">        firstThreadAns.set(AssuranceLockUtils.runWithLock((req) -&gt; {</span><br><span class="line">            req.release();</span><br><span class="line">            <span class="keyword">try</span> {</span><br><span class="line">                Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">            } <span class="keyword">catch</span> (InterruptedException e) {</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            }</span><br><span class="line">            <span class="keyword">return</span> <span class="string">"test"</span>;</span><br><span class="line">        }, semaphore, <span class="number">10</span>, <span class="string">"test"</span>));</span><br><span class="line">        latch.countDown();</span><br><span class="line">    }).start();</span><br><span class="line">    <span class="comment">// 2. 第二个线程尝试抢占锁，应该失败</span></span><br><span class="line">    <span class="keyword">new</span> <span class="title class_">Thread</span>(() -&gt; {</span><br><span class="line">        <span class="keyword">try</span> {</span><br><span class="line">            semaphore.acquire();</span><br><span class="line">            AssuranceLockUtils.runWithLock((req) -&gt; <span class="string">"test"</span>, <span class="literal">null</span>, <span class="number">10</span>, <span class="string">"test"</span>);</span><br><span class="line">        } <span class="keyword">catch</span> (Exception exception) {</span><br><span class="line">            secondThreadAns.set(exception);</span><br><span class="line">        } <span class="keyword">finally</span> {</span><br><span class="line">            latch.countDown();</span><br><span class="line">        }</span><br><span class="line">    }).start();</span><br><span class="line">    <span class="comment">// 3. 主线程check结果</span></span><br><span class="line">    latch.await();</span><br><span class="line">    Assert.assertEquals(<span class="string">"test"</span>, firstThreadAns.get());</span><br><span class="line">    Assert.assertTrue(secondThreadAns.get() <span class="keyword">instanceof</span> ZedSynchronizedException);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
 <p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/6cc2037a_ee446bac.png"></p>
 <p>Perfect.</p>
 </div>
@@ -493,15 +210,14 @@ public void testLockSync() throws InterruptedException {
   <div class="comments" id="comments">
     
     
-
-<div class="github-comments">
-  <div class="comments-title">💬 Comments</div>
-  <p style="color: #666; font-size: 0.9em; margin-bottom: 1em;">
-    Comments require <a href="https://github.com/apps/giscus" target="_blank" rel="noopener">Giscus App</a> installed on your GitHub repository.
-  </p>
-  <script src="https://giscus.app/client.js" data-repo="wxxlamp/wxxlamp.github.io" data-repo-id="R_kgDOCiYteA" data-category="General" data-category-id="DIC_kwDOCiYteM4CelIo" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
-  </script>
-</div>
+<section class="github-comments" data-comments-repo="wxxlamp/wxxlamp.github.io" data-comments-repo-id="MDEwOlJlcG9zaXRvcnkzMTM0ODIyMzc=" data-comments-category="Announcements" data-comments-category-id="DIC_kwDOEq9b_c4DFFLD" data-comments-lang="en">
+  <h2 class="comments-title" data-zh="评论" data-en="Comments">Comments</h2>
+  <p class="comments-status" role="status" data-zh="正在加载评论…" data-en="Loading comments…">Loading comments…</p>
+  <button class="comments-retry" type="button" hidden="" data-zh="重新加载评论" data-en="Reload comments">Reload comments</button>
+  <div class="giscus"></div>
+  <noscript>请启用 JavaScript 查看评论。Please enable JavaScript to view comments.</noscript>
+</section>
+<script defer="" src="/js/src/comments.js?v=2.2"></script>
 
 
 
@@ -523,8 +239,10 @@ public void testLockSync() throws InterruptedException {
       </main>
 
       <footer id="colophon"><div class="footer-inner"><span>© 2026 Sibo Wang <span class="footer-dot">·</span> <span data-zh="保持好奇，认真生活。" data-en="Stay curious. Live thoughtfully.">Stay curious. Live thoughtfully.</span></span><a href="/en/subscribe/"><svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 10a9 9 0 0 1 9 9M5 4a15 15 0 0 1 15 15"></path><circle cx="5" cy="19" r="1"></circle></svg> RSS</a></div>
-<div class="site-stats"><span data-zh="访问" data-en="Visits">Visits</span> <span id="busuanzi_value_site_pv">—</span> · <span data-zh="访客" data-en="Readers">Readers</span> <span id="busuanzi_value_site_uv">—</span> · Powered by <a target="_blank" href="https://hexo.io/" rel="noopener noopener">Hexo</a></div>
-<script async="" src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="site-stats">
+  
+  Powered by <a target="_blank" href="https://hexo.io/" rel="noopener noopener">Hexo</a>
+</div>
 
       </footer>
 
@@ -544,8 +262,8 @@ public void testLockSync() throws InterruptedException {
 
   
 
-    <script type="text/javascript" src="/js/src/theme.js?v=2"></script>
-<script type="text/javascript" src="/js/src/bootstrap.js?v=2"></script>
+    <script type="text/javascript" src="/js/src/theme.js?v=2.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.2"></script>
 
   
 

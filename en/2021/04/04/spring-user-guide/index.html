@@ -33,18 +33,18 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2">
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.2">
 
-<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2.2">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2.2">
 <meta name="theme-color" content="#244f43">
 
 
-<link rel="stylesheet" type="text/css" href="/css/style.css?v=2">
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.2">
 
 
 
-<script defer="" src="/js/src/site.js?v=2"></script>
+<script defer="" src="/js/src/site.js?v=2.2"></script>
 
 
 
@@ -94,6 +94,10 @@
     y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
   })(window, document, "clarity", "script", "ydyci83xyu");
 </script>
+
+<script defer="" src="https://cloud.umami.is/script.js" data-website-id="27d58970-f2c7-47fb-a0ea-380f8123c229" data-domains="wxxlamp.cn" data-exclude-search="true" data-exclude-hash="true"></script>
+
+
 
 
 
@@ -218,189 +222,37 @@
 <blockquote>
 <p>Implement <code>InitializingBean</code> and register the bean as a key-value pair in a factory’s map during initialization. When a request arrives, use its key to route it to the corresponding bean.</p>
 </blockquote>
-<pre><code class="language-java">@Component
-public class ARouter implements InitializingBean, Router {
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ARouter</span> <span class="keyword">implements</span> <span class="title class_">InitializingBean</span>, Router {</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">afterPropertiesSet</span><span class="params">()</span> <span class="keyword">throws</span> Exception {</span><br><span class="line">        <span class="comment">// 注册该路由</span></span><br><span class="line">        <span class="built_in">super</span>.MAP.put(<span class="string">"1"</span>,<span class="built_in">this</span>);</span><br><span class="line">    }</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">route</span><span class="params">()</span> {</span><br><span class="line">        <span class="comment">// doSomething</span></span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"><span class="meta">@RestController()</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestController</span> {</span><br><span class="line"></span><br><span class="line">    <span class="meta">@PostMapping("/test")</span></span><br><span class="line">    <span class="keyword">public</span> TestDomain <span class="title function_">test</span><span class="params">(<span class="meta">@RequestBody</span> TestDomain testDomain)</span> {</span><br><span class="line">        <span class="comment">// 使用该路由</span></span><br><span class="line">        TestA.MAP.get(testDomain.getRouteId()).route();</span><br><span class="line">        <span class="keyword">return</span> testDomain;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        // 注册该路由
-        super.MAP.put("1",this);
-    }
-    @Override
-    public void route() {
-        // doSomething
-    }
-}
-@RestController()
-public class TestController {
-
-    @PostMapping("/test")
-    public TestDomain test(@RequestBody TestDomain testDomain) {
-        // 使用该路由
-        TestA.MAP.get(testDomain.getRouteId()).route();
-        return testDomain;
-    }
-}
-</code></pre>
 <p>Approach 2:</p>
 <blockquote>
 <p>Use Spring’s automatic map injection. In this approach, the key cannot be customized directly; the notes describe it as the instance’s class name.</p>
 </blockquote>
-<pre><code class="language-java">@Component
-public class ARouter implements Router {
-    @Override
-    public void route() {
-        // doSomething
-    }
-}
-@Component
-public class Factory {
-    @Autowired
-    private Map&lt;String, Router&gt; routerMap;
-    
-    public getRouter(String key) {
-        return routerMap.get(key);
-    }
-}
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ARouter</span> <span class="keyword">implements</span> <span class="title class_">Router</span> {</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">route</span><span class="params">()</span> {</span><br><span class="line">        <span class="comment">// doSomething</span></span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Factory</span> {</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> Map&lt;String, Router&gt; routerMap;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">getRouter</span><span class="params">(String key)</span> {</span><br><span class="line">        <span class="keyword">return</span> routerMap.get(key);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
 <h5 id="策略模式"><a href="#策略模式" class="headerlink" title="* Strategy Pattern"></a>* Strategy Pattern</h5><p>The Strategy pattern is an extension of elegant routing: finding the appropriate strategy implementation is itself a routing operation.</p>
 <h5 id="特征发现"><a href="#特征发现" class="headerlink" title="* Feature Discovery"></a>* Feature Discovery</h5><p>Implement <code>BeanPostProcessor</code> to discover characteristics during bean initialization, such as whether the bean is a subclass of a particular class or carries an annotation, then process it accordingly.</p>
-<pre><code class="language-java">@Component
-public class Test implements BeanPostProcessor {
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span> <span class="keyword">implements</span> <span class="title class_">BeanPostProcessor</span> {</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">postProcessAfterInitialization</span><span class="params">(Object bean, String beanName)</span> <span class="keyword">throws</span> BeansException {</span><br><span class="line">        <span class="keyword">if</span> (bean.getClass().isAnnotationPresent(RestController.class)) {</span><br><span class="line">            <span class="comment">// 相应处理</span></span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">return</span> bean;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-    @Override
-    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-        if (bean.getClass().isAnnotationPresent(RestController.class)) {
-            // 相应处理
-        }
-        return bean;
-    }
-}
-</code></pre>
 <h5 id="获得Bean"><a href="#获得Bean" class="headerlink" title="* Retrieving Beans"></a>* Retrieving Beans</h5><p>Various Aware interfaces let us interact with the Spring context, for example to retrieve a bean from the container.</p>
-<pre><code class="language-java">@Component
-public class Bean implements ApplicationContextAware {
-    private ApplicationContext applicationContext;
- 
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        this.applicationContext = applicationContext;
-    }
- 
-    public void doSomething() {
-        Object bean = applicationContext.getBean(beanName);
-    }
-}
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Bean</span> <span class="keyword">implements</span> <span class="title class_">ApplicationContextAware</span> {</span><br><span class="line">    <span class="keyword">private</span> ApplicationContext applicationContext;</span><br><span class="line"> </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setApplicationContext</span><span class="params">(ApplicationContext applicationContext)</span> <span class="keyword">throws</span> BeansException {</span><br><span class="line">        <span class="built_in">this</span>.applicationContext = applicationContext;</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">doSomething</span><span class="params">()</span> {</span><br><span class="line">        <span class="type">Object</span> <span class="variable">bean</span> <span class="operator">=</span> applicationContext.getBean(beanName);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
 <h5 id="监听者模式"><a href="#监听者模式" class="headerlink" title="* Listener Pattern"></a>* Listener Pattern</h5><p>We can publish and listen for events through <code>ApplicationEventPublisher</code>.</p>
-<pre><code class="language-java">@Component
-public class DiyEventListener implements ApplicationListener&lt;DiyEventListener.DiyEvent&gt; {
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DiyEventListener</span> <span class="keyword">implements</span> <span class="title class_">ApplicationListener</span>&lt;DiyEventListener.DiyEvent&gt; {</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onApplicationEvent</span><span class="params">(DiyEvent event)</span> {</span><br><span class="line">        System.out.println(event + <span class="string">"触发成功"</span>);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">DiyEvent</span> <span class="keyword">extends</span> <span class="title class_">ApplicationEvent</span> {</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="title function_">DiyEvent</span><span class="params">(Object source)</span> {</span><br><span class="line">            <span class="built_in">super</span>(source);</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span> <span class="keyword">implements</span> <span class="title class_">ApplicationEventPublisherAware</span> {</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> ApplicationEventPublisher applicationEventPublisher;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setApplicationEventPublisher</span><span class="params">(ApplicationEventPublisher applicationEventPublisher)</span> {</span><br><span class="line">        <span class="built_in">this</span>.applicationEventPublisher = applicationEventPublisher;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">doSomething</span><span class="params">()</span> {</span><br><span class="line">        applicationEventPublisher.publishEvent(<span class="keyword">new</span> <span class="title class_">DiyEventListener</span>.DiyEvent(<span class="number">1</span>));</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-    @Override
-    public void onApplicationEvent(DiyEvent event) {
-        System.out.println(event + "触发成功");
-    }
-
-    static class DiyEvent extends ApplicationEvent {
-
-        public DiyEvent(Object source) {
-            super(source);
-        }
-    }
-}
-@Component
-public class Test implements ApplicationEventPublisherAware {
-
-    private ApplicationEventPublisher applicationEventPublisher;
-
-    @Override
-    public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
-        this.applicationEventPublisher = applicationEventPublisher;
-    }
-
-    public void doSomething() {
-        applicationEventPublisher.publishEvent(new DiyEventListener.DiyEvent(1));
-    }
-}
-</code></pre>
 <h3 id="AOP的使用"><a href="#AOP的使用" class="headerlink" title="Using AOP"></a>Using AOP</h3><p>The discussion above shows that Spring’s AOP capability is applied after bean initialization through postprocessing—the original notes refer to <code>BeanFactoryPostProcessor</code> here. What can aspect-oriented programming help us accomplish?</p>
 <p><strong>Spring IoC lets us perform work around bean initialization and destruction, but does not by itself extend behavior around every method invocation. That is the role of Spring AOP.</strong></p>
 <h4 id="1-Spring对AOP的利用"><a href="#1-Spring对AOP的利用" class="headerlink" title="1. How Spring Uses AOP"></a>1. How Spring Uses AOP</h4><p>Spring’s transaction handling uses AOP by default. Operations such as commit and rollback can be performed automatically through aspects.</p>
 <h4 id="2-AOP场景实践"><a href="#2-AOP场景实践" class="headerlink" title="2. Practical AOP Scenarios"></a>2. Practical AOP Scenarios</h4><h5 id="统一日志处理"><a href="#统一日志处理" class="headerlink" title="* Centralized Logging"></a>* Centralized Logging</h5><p>Logging is highly application-specific, so intercept the calls appropriate to your needs.</p>
-<pre><code class="language-java">@Component
-@Aspect
-public class SysLogAspect {
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SysLogAspect</span> {</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 后置通知</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@After("execution(* cn.wxxlamp.blog.controller.*.*(..))")</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">doAfter</span><span class="params">()</span>{</span><br><span class="line">        Log.log();</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-    /**
-     * 后置通知
-     */
-    @After("execution(* cn.wxxlamp.blog.controller.*.*(..))")
-    public void doAfter(){
-        Log.log();
-    }
-}
-</code></pre>
 <h5 id="统一异常拦截"><a href="#统一异常拦截" class="headerlink" title="* Centralized Exception Handling"></a>* Centralized Exception Handling</h5><p>Return exceptions to the frontend as responses to prevent backend failures.</p>
-<pre><code class="language-java">@Aspect
-@Component
-public class ExceptionAspect {
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ExceptionAspect</span> {</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * service 层切点</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Pointcut("execution(* cn.wxxlamp.demo.service.impl..*.*(..))")</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">servicePointcut</span><span class="params">()</span> {</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Around(value = "servicePointcut()")</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">ParamCheckAround</span><span class="params">(ProceedingJoinPoint joinPoint)</span> <span class="keyword">throws</span> Throwable {</span><br><span class="line">        <span class="keyword">try</span>{</span><br><span class="line">            joinPoint.process();</span><br><span class="line">        } <span class="keyword">catch</span>(Exception.class) {</span><br><span class="line">            <span class="comment">// 自定义处理</span></span><br><span class="line">            <span class="keyword">return</span> DiyResponse.create();</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-    /**
-     * service 层切点
-     */
-    @Pointcut("execution(* cn.wxxlamp.demo.service.impl..*.*(..))")
-    public void servicePointcut() {
-    }
-
-    @Around(value = "servicePointcut()")
-    public Object ParamCheckAround(ProceedingJoinPoint joinPoint) throws Throwable {
-        try{
-            joinPoint.process();
-        } catch(Exception.class) {
-            // 自定义处理
-            return DiyResponse.create();
-        }
-    }
-}
-</code></pre>
 <p>This AOP approach to centralized exception handling applies when Spring MVC is absent. Spring MVC provides built-in support; the original notes call the relevant annotation <code>ExceptionAdvice</code>. The approach shown here is intended for RPC calls.</p>
 <h5 id="统一参数校验"><a href="#统一参数校验" class="headerlink" title="* Centralized Parameter Validation"></a>* Centralized Parameter Validation</h5><p>We can validate parameters across selected classes in a consistent way.</p>
-<pre><code class="language-java">@Target({ ElementType.METHOD, ElementType.FIELD})
-@Retention(RetentionPolicy.RUNTIME)
-public @interface ParamsCheck {
-    boolean ignore() default false;
-}
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target({ ElementType.METHOD, ElementType.FIELD})</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> ParamsCheck {</span><br><span class="line">    <span class="type">boolean</span> <span class="title function_">ignore</span><span class="params">()</span> <span class="keyword">default</span> <span class="literal">false</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ValidateAspect</span> {</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * service 层切点</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Pointcut("execution(* cn.wxxlamp.demo.service.impl..*.*(..))")</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">servicePointcut</span><span class="params">()</span> {</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Before(value = "servicePointcut()")</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">ParamCheckAround</span><span class="params">(JoinPoint joinPoint)</span> <span class="keyword">throws</span> Throwable {</span><br><span class="line">        <span class="comment">// 判断是否需要校验</span></span><br><span class="line">        <span class="type">MethodSignature</span> <span class="variable">signature</span> <span class="operator">=</span> (MethodSignature) joinPoint.getSignature();</span><br><span class="line">        <span class="type">Method</span> <span class="variable">method</span> <span class="operator">=</span> signature.getMethod();</span><br><span class="line">        <span class="type">ParamsCheck</span> <span class="variable">paramsCheckAnnotation</span> <span class="operator">=</span> method.getAnnotation(ParamsCheck.class);</span><br><span class="line">        <span class="keyword">if</span> (paramsCheckAnnotation != <span class="literal">null</span> &amp;&amp; paramsCheckAnnotation.ignore()) {</span><br><span class="line">            <span class="keyword">return</span> joinPoint.proceed();</span><br><span class="line">        }</span><br><span class="line">        Object[] objects = joinPoint.getArgs();</span><br><span class="line">        <span class="keyword">for</span> (Object arg : objects) {</span><br><span class="line">            <span class="keyword">if</span> (arg == <span class="literal">null</span>) {</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            }</span><br><span class="line">           <span class="comment">// 校验参数，失败抛出异常</span></span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-@Aspect
-@Component
-public class ValidateAspect {
-
-    /**
-     * service 层切点
-     */
-    @Pointcut("execution(* cn.wxxlamp.demo.service.impl..*.*(..))")
-    public void servicePointcut() {
-    }
-
-    @Before(value = "servicePointcut()")
-    public void ParamCheckAround(JoinPoint joinPoint) throws Throwable {
-        // 判断是否需要校验
-        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-        Method method = signature.getMethod();
-        ParamsCheck paramsCheckAnnotation = method.getAnnotation(ParamsCheck.class);
-        if (paramsCheckAnnotation != null &amp;&amp; paramsCheckAnnotation.ignore()) {
-            return joinPoint.proceed();
-        }
-        Object[] objects = joinPoint.getArgs();
-        for (Object arg : objects) {
-            if (arg == null) {
-                break;
-            }
-           // 校验参数，失败抛出异常
-        }
-    }
-}
-</code></pre>
 <h3 id="后记"><a href="#后记" class="headerlink" title="Afterword"></a>Afterword</h3><p>IoC and AOP have given Spring a commanding place in the Java ecosystem and won over countless developers. Almost every Java beginner treats learning Spring as a stage in learning Java. For a beginner like me, Spring is both my everyday framework and another step in my Java education. Yet whenever I write <strong>“understand Spring’s internals and am familiar with using the framework”</strong> on my résumé, I feel a little embarrassed. I believe many Java developers share that feeling, which is why I wrote this article.</p>
 <p>As I learned more, I realized that much of the Spring ecosystem builds on Spring’s extension interfaces. Its commitment to the Open/Closed Principle is impressive. Many extension mechanisms rely on <code>BeanPostProcessor</code> and <code>BeanFactoryPostProcessor</code>. Spring organizes bean loading into a complete flow through <code>AbstractApplicationContext#refresh</code>, then <strong>customizes bean processors for different moments and scopes</strong> to extend beans. That is seriously impressive.</p>
 <p>Of course, although I have used Spring for over a year, I am still a beginner. This article surely contains omissions and mistakes. If you spot any, please leave a comment!</p>
@@ -430,15 +282,14 @@ public class ValidateAspect {
   <div class="comments" id="comments">
     
     
-
-<div class="github-comments">
-  <div class="comments-title">💬 Comments</div>
-  <p style="color: #666; font-size: 0.9em; margin-bottom: 1em;">
-    Comments require <a href="https://github.com/apps/giscus" target="_blank" rel="noopener">Giscus App</a> installed on your GitHub repository.
-  </p>
-  <script src="https://giscus.app/client.js" data-repo="wxxlamp/wxxlamp.github.io" data-repo-id="R_kgDOCiYteA" data-category="General" data-category-id="DIC_kwDOCiYteM4CelIo" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
-  </script>
-</div>
+<section class="github-comments" data-comments-repo="wxxlamp/wxxlamp.github.io" data-comments-repo-id="MDEwOlJlcG9zaXRvcnkzMTM0ODIyMzc=" data-comments-category="Announcements" data-comments-category-id="DIC_kwDOEq9b_c4DFFLD" data-comments-lang="en">
+  <h2 class="comments-title" data-zh="评论" data-en="Comments">Comments</h2>
+  <p class="comments-status" role="status" data-zh="正在加载评论…" data-en="Loading comments…">Loading comments…</p>
+  <button class="comments-retry" type="button" hidden="" data-zh="重新加载评论" data-en="Reload comments">Reload comments</button>
+  <div class="giscus"></div>
+  <noscript>请启用 JavaScript 查看评论。Please enable JavaScript to view comments.</noscript>
+</section>
+<script defer="" src="/js/src/comments.js?v=2.2"></script>
 
 
 
@@ -460,8 +311,10 @@ public class ValidateAspect {
       </main>
 
       <footer id="colophon"><div class="footer-inner"><span>© 2026 Sibo Wang <span class="footer-dot">·</span> <span data-zh="保持好奇，认真生活。" data-en="Stay curious. Live thoughtfully.">Stay curious. Live thoughtfully.</span></span><a href="/en/subscribe/"><svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 10a9 9 0 0 1 9 9M5 4a15 15 0 0 1 15 15"></path><circle cx="5" cy="19" r="1"></circle></svg> RSS</a></div>
-<div class="site-stats"><span data-zh="访问" data-en="Visits">Visits</span> <span id="busuanzi_value_site_pv">—</span> · <span data-zh="访客" data-en="Readers">Readers</span> <span id="busuanzi_value_site_uv">—</span> · Powered by <a target="_blank" href="https://hexo.io/" rel="noopener noopener">Hexo</a></div>
-<script async="" src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="site-stats">
+  
+  Powered by <a target="_blank" href="https://hexo.io/" rel="noopener noopener">Hexo</a>
+</div>
 
       </footer>
 
@@ -481,8 +334,8 @@ public class ValidateAspect {
 
   
 
-    <script type="text/javascript" src="/js/src/theme.js?v=2"></script>
-<script type="text/javascript" src="/js/src/bootstrap.js?v=2"></script>
+    <script type="text/javascript" src="/js/src/theme.js?v=2.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.2"></script>
 
   
 

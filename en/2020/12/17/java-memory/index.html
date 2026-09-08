@@ -33,18 +33,18 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2">
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.2">
 
-<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2.2">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2.2">
 <meta name="theme-color" content="#244f43">
 
 
-<link rel="stylesheet" type="text/css" href="/css/style.css?v=2">
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.2">
 
 
 
-<script defer="" src="/js/src/site.js?v=2"></script>
+<script defer="" src="/js/src/site.js?v=2.2"></script>
 
 
 
@@ -94,6 +94,10 @@
     y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
   })(window, document, "clarity", "script", "ydyci83xyu");
 </script>
+
+<script defer="" src="https://cloud.umami.is/script.js" data-website-id="27d58970-f2c7-47fb-a0ea-380f8123c229" data-domains="wxxlamp.cn" data-exclude-search="true" data-exclude-hash="true"></script>
+
+
 
 
 
@@ -166,14 +170,8 @@
 <blockquote>
 <p>The allocation scenario does not consider TLAB, JIT, escape analysis, and so on. It also does not consider regions such as Eden and Survivor</p>
 </blockquote>
-<pre><code class="language-java">class MemoryStructTest {
-    private static final String HELLO_WORLD = "hello world!";
-    public static void main(String... args) {
-        String helloWorld = HELLO_WORLD;
-        System.out.print(helloWorld);
-    }
-}
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MemoryStructTest</span> {</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">HELLO_WORLD</span> <span class="operator">=</span> <span class="string">"hello world!"</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String... args)</span> {</span><br><span class="line">        <span class="type">String</span> <span class="variable">helloWorld</span> <span class="operator">=</span> HELLO_WORLD;</span><br><span class="line">        System.out.print(helloWorld);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
 <p>When this program is compiled, class-loaded, initialized, and run, what does it look like in memory?</p>
 <ul>
 <li>After class loading, the information for the <code>MemoryStructTest</code> class is stored in the method area. This includes fields, methods, the constant pool, static variables, the class name, and so on</li>
@@ -185,151 +183,11 @@
 <p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/520f416a_java-memory-1.png"></p>
 <p>One thing to note is that for <code>String</code> and the basic types, if they are not explicitly created with <code>new</code>, they reside in the constant pool. If they are created with <code>new</code>, they are created in the heap.</p>
 <h3 id="3-具体类型的存储格式"><a href="#3-具体类型的存储格式" class="headerlink" title="3. Storage Formats of Specific Types"></a>3. Storage Formats of Specific Types</h3><h4 id="3-1-父类的存储格式"><a href="#3-1-父类的存储格式" class="headerlink" title="3.1 Storage Format of a Parent Class"></a>3.1 Storage Format of a Parent Class</h4><p>This is a memory diagram I drew in my sophomore year of college. Looking at it now, it still has some value, so I am sharing it again:</p>
-<pre><code class="language-java">class A {
-    //产生新的虚(virtual)方法MethodVirtual(),new slot
-    void  MethodVirtual() {
-        System.out.println("aV");
-    }
-    //产生新的虚(virtual)方法MethodVirtual1,new slot
-    void  MethodVirtual1(){
-        System.out.println("aV1");
-    }
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">A</span> {</span><br><span class="line">    <span class="comment">//产生新的虚(virtual)方法MethodVirtual(),new slot</span></span><br><span class="line">    <span class="keyword">void</span>  <span class="title function_">MethodVirtual</span><span class="params">()</span> {</span><br><span class="line">        System.out.println(<span class="string">"aV"</span>);</span><br><span class="line">    }</span><br><span class="line">    <span class="comment">//产生新的虚(virtual)方法MethodVirtual1,new slot</span></span><br><span class="line">    <span class="keyword">void</span>  <span class="title function_">MethodVirtual1</span><span class="params">()</span>{</span><br><span class="line">        System.out.println(<span class="string">"aV1"</span>);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">}</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">B</span> <span class="keyword">extends</span> <span class="title class_">A</span> {</span><br><span class="line">    <span class="comment">// 覆盖父类的MethodVirtual()方法，reuse slot</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">void</span>  <span class="title function_">MethodVirtual</span><span class="params">()</span> {</span><br><span class="line">        System.out.println(<span class="string">"bV"</span>);</span><br><span class="line">    }</span><br><span class="line">    <span class="comment">// 覆盖父类的MethodVirtual1()方法，reuse slot</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">void</span>  <span class="title function_">MethodVirtual1</span><span class="params">()</span>	{</span><br><span class="line">        System.out.println(<span class="string">"bV1"</span>);</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">C</span> <span class="keyword">extends</span> <span class="title class_">B</span> {</span><br><span class="line"></span><br><span class="line">}</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">D</span> <span class="keyword">extends</span> <span class="title class_">C</span> {</span><br><span class="line">    <span class="comment">// 覆盖MethodVirtual()方法</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">MethodVirtual</span><span class="params">()</span> {</span><br><span class="line">        System.out.println(<span class="string">"dV"</span>);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 覆盖MethodVirtual()1方法</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">void</span>  <span class="title function_">MethodVirtual1</span><span class="params">()</span> {</span><br><span class="line">        System.out.println(<span class="string">"dV1"</span>);</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">A_Polymorphism</span> {</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> {</span><br><span class="line"></span><br><span class="line">        A a;</span><br><span class="line">        B b;</span><br><span class="line">        C c;</span><br><span class="line">        D d;</span><br><span class="line"></span><br><span class="line">        a = <span class="keyword">new</span> <span class="title class_">A</span>();</span><br><span class="line">        b = <span class="keyword">new</span> <span class="title class_">B</span>();</span><br><span class="line">        c = <span class="keyword">new</span> <span class="title class_">C</span>();</span><br><span class="line">        d = <span class="keyword">new</span> <span class="title class_">D</span>();</span><br><span class="line"></span><br><span class="line">        <span class="type">A</span> <span class="variable">ab</span> <span class="operator">=</span> b;</span><br><span class="line">        <span class="type">A</span> <span class="variable">ac</span> <span class="operator">=</span> c;</span><br><span class="line">        <span class="type">A</span> <span class="variable">ad</span> <span class="operator">=</span> d;</span><br><span class="line"></span><br><span class="line">        <span class="type">B</span> <span class="variable">bc</span> <span class="operator">=</span> c;</span><br><span class="line">        <span class="type">B</span> <span class="variable">bd</span> <span class="operator">=</span> d;</span><br><span class="line"></span><br><span class="line">        <span class="type">C</span> <span class="variable">cd</span> <span class="operator">=</span> d;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"--------------------方法多态---------------------------"</span>);</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"--------------------a.MethodVirtual()---------------------------"</span>);</span><br><span class="line">        a.MethodVirtual();</span><br><span class="line">        ab.MethodVirtual();</span><br><span class="line">        ac.MethodVirtual();</span><br><span class="line">        ad.MethodVirtual();</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"--------------------a.MethodVirtual1()---------------------------"</span>);</span><br><span class="line">        a.MethodVirtual1();</span><br><span class="line">        ab.MethodVirtual1();</span><br><span class="line">        ac.MethodVirtual1();</span><br><span class="line">        ad.MethodVirtual1();</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"--------------------b.MethodVirtual()---------------------------"</span>);</span><br><span class="line">        b.MethodVirtual();</span><br><span class="line">        bc.MethodVirtual();</span><br><span class="line">        bd.MethodVirtual();</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"--------------------b.MethodVirtual1()---------------------------"</span>);</span><br><span class="line">        b.MethodVirtual1();</span><br><span class="line">        bc.MethodVirtual1();</span><br><span class="line">        bd.MethodVirtual1();</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"--------------------c.MethodVirtual()---------------------------"</span>);</span><br><span class="line">        c.MethodVirtual();</span><br><span class="line">        cd.MethodVirtual();</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"--------------------c.MethodVirtual1()---------------------------"</span>);</span><br><span class="line">        c.MethodVirtual1();</span><br><span class="line">        cd.MethodVirtual1();</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"--------------------d.MethodVirtual()---------------------------"</span>);</span><br><span class="line">        d.MethodVirtual();</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"--------------------d.MethodVirtual1()---------------------------"</span>);</span><br><span class="line">        <span class="comment">//d = null;</span></span><br><span class="line">        d.MethodVirtual1();</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-}
-class B extends A {
-    // 覆盖父类的MethodVirtual()方法，reuse slot
-    @Override
-    void  MethodVirtual() {
-        System.out.println("bV");
-    }
-    // 覆盖父类的MethodVirtual1()方法，reuse slot
-    @Override
-    void  MethodVirtual1()	{
-        System.out.println("bV1");
-    }
-}
-class C extends B {
-
-}
-class D extends C {
-    // 覆盖MethodVirtual()方法
-    @Override
-    void MethodVirtual() {
-        System.out.println("dV");
-    }
-
-    // 覆盖MethodVirtual()1方法
-    @Override
-    void  MethodVirtual1() {
-        System.out.println("dV1");
-    }
-}
-public class A_Polymorphism {
-    public static void main(String[] args) {
-
-        A a;
-        B b;
-        C c;
-        D d;
-
-        a = new A();
-        b = new B();
-        c = new C();
-        d = new D();
-
-        A ab = b;
-        A ac = c;
-        A ad = d;
-
-        B bc = c;
-        B bd = d;
-
-        C cd = d;
-
-
-        System.out.println("--------------------方法多态---------------------------");
-
-        System.out.println("--------------------a.MethodVirtual()---------------------------");
-        a.MethodVirtual();
-        ab.MethodVirtual();
-        ac.MethodVirtual();
-        ad.MethodVirtual();
-
-        System.out.println("--------------------a.MethodVirtual1()---------------------------");
-        a.MethodVirtual1();
-        ab.MethodVirtual1();
-        ac.MethodVirtual1();
-        ad.MethodVirtual1();
-
-        System.out.println("--------------------b.MethodVirtual()---------------------------");
-        b.MethodVirtual();
-        bc.MethodVirtual();
-        bd.MethodVirtual();
-
-        System.out.println("--------------------b.MethodVirtual1()---------------------------");
-        b.MethodVirtual1();
-        bc.MethodVirtual1();
-        bd.MethodVirtual1();
-
-        System.out.println("--------------------c.MethodVirtual()---------------------------");
-        c.MethodVirtual();
-        cd.MethodVirtual();
-
-        System.out.println("--------------------c.MethodVirtual1()---------------------------");
-        c.MethodVirtual1();
-        cd.MethodVirtual1();
-
-        System.out.println("--------------------d.MethodVirtual()---------------------------");
-        d.MethodVirtual();
-
-        System.out.println("--------------------d.MethodVirtual1()---------------------------");
-        //d = null;
-        d.MethodVirtual1();
-    }
-}
-</code></pre>
 <p><img src="https://img-blog.csdnimg.cn/20190815120936937.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NvZGVyX3doYXQ=,size_16,color_FFFFFF,t_70" alt="Memory layout diagram"></p>
-<h4 id="3-2-接口的存储格式"><a href="#3-2-接口的存储格式" class="headerlink" title="3.2 Storage Format of an Interface"></a>3.2 Storage Format of an Interface</h4><pre><code class="language-java">interface I {
-    void func1();
-}
-class o {
-    void func(){
-        System.out.println("you can hit me");
-    }
-}
-class c extends o implements I {
-    public void func1() {
-        System.out.println("Stonee is so handsome");
-    }
-    void func2(){
-        System.out.println("you can't hit me because the interface don't have me");
-    }
-}public class Test {
-    public static void main(String [] args){
-        //inerface
-        I ic = new c();
-        ic.func1(); //ok
-        //a.func2(); //no
-        ((c) ic).func2(); //ok
-        ((c) ic).func(); //ok
+<h4 id="3-2-接口的存储格式"><a href="#3-2-接口的存储格式" class="headerlink" title="3.2 Storage Format of an Interface"></a>3.2 Storage Format of an Interface</h4><figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">I</span> {</span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">func1</span><span class="params">()</span>;</span><br><span class="line">}</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">o</span> {</span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">func</span><span class="params">()</span>{</span><br><span class="line">        System.out.println(<span class="string">"you can hit me"</span>);</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">c</span> <span class="keyword">extends</span> <span class="title class_">o</span> <span class="keyword">implements</span> <span class="title class_">I</span> {</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">func1</span><span class="params">()</span> {</span><br><span class="line">        System.out.println(<span class="string">"Stonee is so handsome"</span>);</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">func2</span><span class="params">()</span>{</span><br><span class="line">        System.out.println(<span class="string">"you can't hit me because the interface don't have me"</span>);</span><br><span class="line">    }</span><br><span class="line">}<span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span> {</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String [] args)</span>{</span><br><span class="line">        <span class="comment">//inerface</span></span><br><span class="line">        <span class="type">I</span> <span class="variable">ic</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">c</span>();</span><br><span class="line">        ic.func1(); <span class="comment">//ok</span></span><br><span class="line">        <span class="comment">//a.func2(); //no</span></span><br><span class="line">        ((c) ic).func2(); <span class="comment">//ok</span></span><br><span class="line">        ((c) ic).func(); <span class="comment">//ok</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//class parents</span></span><br><span class="line">        <span class="type">o</span> <span class="variable">oc</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">c</span>();</span><br><span class="line">        oc.func();</span><br><span class="line">        ((c) oc).func1();</span><br><span class="line">        ((c) oc).func2();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//class son</span></span><br><span class="line">        <span class="type">c</span> <span class="variable">cc</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">c</span>();</span><br><span class="line">        cc.func1();</span><br><span class="line">        cc.func2();</span><br><span class="line">        cc.func();</span><br><span class="line"></span><br><span class="line">        <span class="type">o</span> <span class="variable">oo</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">o</span>();</span><br><span class="line">        oo.func();</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-        //class parents
-        o oc = new c();
-        oc.func();
-        ((c) oc).func1();
-        ((c) oc).func2();
-
-        //class son
-        c cc = new c();
-        cc.func1();
-        cc.func2();
-        cc.func();
-
-        o oo = new o();
-        oo.func();
-    }
-}
-</code></pre>
 <p><img src="https://img-blog.csdnimg.cn/20190411183056417.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NvZGVyX3doYXQ=,size_16,color_FFFFFF,t_70" alt="Object memory layout diagram"></p>
 <blockquote>
 <p>PS: The “heap · class” label above should be changed to “method area”.</p>
@@ -340,90 +198,7 @@ class c extends o implements I {
 <blockquote>
 <p><strong>Note: This program is entirely a demo for illustrating the memory logic model of interfaces, classes, and so on</strong><br><strong>Also: this program is somewhat redundant, but it can indeed illustrate inheritance relationships. The memory logic model was drawn by hand, and only some important parts were drawn, not as detailed as the previous program</strong></p>
 </blockquote>
-<pre><code class="language-java">package chapter06;
-/**
-* 关于接口和类的继承以及不规则数组的内存逻辑模型
-* @version 1.0 2019-4-8
-* @author Stonee(http://www.stonee.club)
-*/
-public class InterfaceTestCourse {
-    public static void main(String [] args){
-
-    healthPigeon [][] a = new healthPigeon[2][];
-    a[0] = new healthPigeon[1];
-    a[1] = new healthPigeon[2];
-
-    for (healthPigeon[] e:
-        a) {
-        for (healthPigeon es:
-            e) {
-            es = new healthPigeon();    //一定要先对数组赋值，不然会指向null，然后报错
-            System.out.println();
-            es.eat();
-            es.move();
-            es.breathe();
-            es.feather();
-            es.fly();
-            es.fxxk();
-            System.out.println();
-            }
-         }
-    }
- }
- // 定义接口
- // 定义父接口
-interface canEat {
-    void eat();     //默认修饰符为 public abstract
-    default void fxxk(){
-        System.out.println("I like eat");
-    }
-}
-interface canMove {
-    void move();
-    default void fxxk(){
-        System.out.println("I like move");
-    }
-}
-interface canFly{
-    void fly(); // 子类已经重载，为什么说此方法未被调用？
-}
-interface canBreathe{
-    void  breathe();
-}// 定义子接口
-interface bird extends canBreathe,canFly{
-    void feather();
- }
- // 定义类
- // 定义父类
- class pigeon implements bird{
-    @Override
-    public void feather() {
-        System.out.println("The pigeon have feather");
-    }
-    @Override
-    public void breathe() {
-        System.out.println("The pigeon can breathe");
-     }
-    @Override
-    public void fly() {
-        System.out.println("The pigeon can fly");
-    }
- }
- // 定义子类
-class healthPigeon extends pigeon implements canEat,canMove{
-    @Override
-    public void eat() {
-        System.out.println("The cute Pigeon can eat");
-    }
-    @Override
-    public void move() {
-        System.out.println("The cute pigeon can move");
-    }
-    public void fxxk(){
-        canEat.fxxk();  //此处必须声明调用接口的哪个默认方法
-    }
-}
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> chapter06;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 关于接口和类的继承以及不规则数组的内存逻辑模型</span></span><br><span class="line"><span class="comment">* <span class="doctag">@version</span> 1.0 2019-4-8</span></span><br><span class="line"><span class="comment">* <span class="doctag">@author</span> Stonee(http://www.stonee.club)</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">InterfaceTestCourse</span> {</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String [] args)</span>{</span><br><span class="line"></span><br><span class="line">    healthPigeon [][] a = <span class="keyword">new</span> <span class="title class_">healthPigeon</span>[<span class="number">2</span>][];</span><br><span class="line">    a[<span class="number">0</span>] = <span class="keyword">new</span> <span class="title class_">healthPigeon</span>[<span class="number">1</span>];</span><br><span class="line">    a[<span class="number">1</span>] = <span class="keyword">new</span> <span class="title class_">healthPigeon</span>[<span class="number">2</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (healthPigeon[] e:</span><br><span class="line">        a) {</span><br><span class="line">        <span class="keyword">for</span> (healthPigeon es:</span><br><span class="line">            e) {</span><br><span class="line">            es = <span class="keyword">new</span> <span class="title class_">healthPigeon</span>();    <span class="comment">//一定要先对数组赋值，不然会指向null，然后报错</span></span><br><span class="line">            System.out.println();</span><br><span class="line">            es.eat();</span><br><span class="line">            es.move();</span><br><span class="line">            es.breathe();</span><br><span class="line">            es.feather();</span><br><span class="line">            es.fly();</span><br><span class="line">            es.fxxk();</span><br><span class="line">            System.out.println();</span><br><span class="line">            }</span><br><span class="line">         }</span><br><span class="line">    }</span><br><span class="line"> }</span><br><span class="line"> <span class="comment">// 定义接口</span></span><br><span class="line"> <span class="comment">// 定义父接口</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">canEat</span> {</span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">eat</span><span class="params">()</span>;     <span class="comment">//默认修饰符为 public abstract</span></span><br><span class="line">    <span class="keyword">default</span> <span class="keyword">void</span> <span class="title function_">fxxk</span><span class="params">()</span>{</span><br><span class="line">        System.out.println(<span class="string">"I like eat"</span>);</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">canMove</span> {</span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">move</span><span class="params">()</span>;</span><br><span class="line">    <span class="keyword">default</span> <span class="keyword">void</span> <span class="title function_">fxxk</span><span class="params">()</span>{</span><br><span class="line">        System.out.println(<span class="string">"I like move"</span>);</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">canFly</span>{</span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">fly</span><span class="params">()</span>; <span class="comment">// 子类已经重载，为什么说此方法未被调用？</span></span><br><span class="line">}</span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">canBreathe</span>{</span><br><span class="line">    <span class="keyword">void</span>  <span class="title function_">breathe</span><span class="params">()</span>;</span><br><span class="line">}<span class="comment">// 定义子接口</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">bird</span> <span class="keyword">extends</span> <span class="title class_">canBreathe</span>,canFly{</span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">feather</span><span class="params">()</span>;</span><br><span class="line"> }</span><br><span class="line"> <span class="comment">// 定义类</span></span><br><span class="line"> <span class="comment">// 定义父类</span></span><br><span class="line"> <span class="keyword">class</span> <span class="title class_">pigeon</span> <span class="keyword">implements</span> <span class="title class_">bird</span>{</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">feather</span><span class="params">()</span> {</span><br><span class="line">        System.out.println(<span class="string">"The pigeon have feather"</span>);</span><br><span class="line">    }</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">breathe</span><span class="params">()</span> {</span><br><span class="line">        System.out.println(<span class="string">"The pigeon can breathe"</span>);</span><br><span class="line">     }</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">fly</span><span class="params">()</span> {</span><br><span class="line">        System.out.println(<span class="string">"The pigeon can fly"</span>);</span><br><span class="line">    }</span><br><span class="line"> }</span><br><span class="line"> <span class="comment">// 定义子类</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">healthPigeon</span> <span class="keyword">extends</span> <span class="title class_">pigeon</span> <span class="keyword">implements</span> <span class="title class_">canEat</span>,canMove{</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">eat</span><span class="params">()</span> {</span><br><span class="line">        System.out.println(<span class="string">"The cute Pigeon can eat"</span>);</span><br><span class="line">    }</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">move</span><span class="params">()</span> {</span><br><span class="line">        System.out.println(<span class="string">"The cute pigeon can move"</span>);</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">fxxk</span><span class="params">()</span>{</span><br><span class="line">        canEat.fxxk();  <span class="comment">//此处必须声明调用接口的哪个默认方法</span></span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <img src="https://img-blog.csdnimg.cn/2019041118341719.jpg" style="transform:rotate(270deg)">
 
 <h4 id="3-5-基本数据类型的存储格式"><a href="#3-5-基本数据类型的存储格式" class="headerlink" title="3.5 Storage Format of Basic Data Types"></a>3.5 Storage Format of Basic Data Types</h4><p>For basic data types, if they are local variables, they are directly allocated on the stack according to the byte specification. If they are global variables of a class, they are allocated in the heap along with the initialization of the instance.</p>
@@ -462,15 +237,14 @@ class healthPigeon extends pigeon implements canEat,canMove{
   <div class="comments" id="comments">
     
     
-
-<div class="github-comments">
-  <div class="comments-title">💬 Comments</div>
-  <p style="color: #666; font-size: 0.9em; margin-bottom: 1em;">
-    Comments require <a href="https://github.com/apps/giscus" target="_blank" rel="noopener">Giscus App</a> installed on your GitHub repository.
-  </p>
-  <script src="https://giscus.app/client.js" data-repo="wxxlamp/wxxlamp.github.io" data-repo-id="R_kgDOCiYteA" data-category="General" data-category-id="DIC_kwDOCiYteM4CelIo" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
-  </script>
-</div>
+<section class="github-comments" data-comments-repo="wxxlamp/wxxlamp.github.io" data-comments-repo-id="MDEwOlJlcG9zaXRvcnkzMTM0ODIyMzc=" data-comments-category="Announcements" data-comments-category-id="DIC_kwDOEq9b_c4DFFLD" data-comments-lang="en">
+  <h2 class="comments-title" data-zh="评论" data-en="Comments">Comments</h2>
+  <p class="comments-status" role="status" data-zh="正在加载评论…" data-en="Loading comments…">Loading comments…</p>
+  <button class="comments-retry" type="button" hidden="" data-zh="重新加载评论" data-en="Reload comments">Reload comments</button>
+  <div class="giscus"></div>
+  <noscript>请启用 JavaScript 查看评论。Please enable JavaScript to view comments.</noscript>
+</section>
+<script defer="" src="/js/src/comments.js?v=2.2"></script>
 
 
 
@@ -492,8 +266,10 @@ class healthPigeon extends pigeon implements canEat,canMove{
       </main>
 
       <footer id="colophon"><div class="footer-inner"><span>© 2026 Sibo Wang <span class="footer-dot">·</span> <span data-zh="保持好奇，认真生活。" data-en="Stay curious. Live thoughtfully.">Stay curious. Live thoughtfully.</span></span><a href="/en/subscribe/"><svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 10a9 9 0 0 1 9 9M5 4a15 15 0 0 1 15 15"></path><circle cx="5" cy="19" r="1"></circle></svg> RSS</a></div>
-<div class="site-stats"><span data-zh="访问" data-en="Visits">Visits</span> <span id="busuanzi_value_site_pv">—</span> · <span data-zh="访客" data-en="Readers">Readers</span> <span id="busuanzi_value_site_uv">—</span> · Powered by <a target="_blank" href="https://hexo.io/" rel="noopener noopener">Hexo</a></div>
-<script async="" src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="site-stats">
+  
+  Powered by <a target="_blank" href="https://hexo.io/" rel="noopener noopener">Hexo</a>
+</div>
 
       </footer>
 
@@ -513,8 +289,8 @@ class healthPigeon extends pigeon implements canEat,canMove{
 
   
 
-    <script type="text/javascript" src="/js/src/theme.js?v=2"></script>
-<script type="text/javascript" src="/js/src/bootstrap.js?v=2"></script>
+    <script type="text/javascript" src="/js/src/theme.js?v=2.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.2"></script>
 
   
 

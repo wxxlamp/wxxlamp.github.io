@@ -33,18 +33,18 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2">
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.2">
 
-<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2.2">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2.2">
 <meta name="theme-color" content="#244f43">
 
 
-<link rel="stylesheet" type="text/css" href="/css/style.css?v=2">
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.2">
 
 
 
-<script defer="" src="/js/src/site.js?v=2"></script>
+<script defer="" src="/js/src/site.js?v=2.2"></script>
 
 
 
@@ -94,6 +94,10 @@
     y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
   })(window, document, "clarity", "script", "ydyci83xyu");
 </script>
+
+<script defer="" src="https://cloud.umami.is/script.js" data-website-id="27d58970-f2c7-47fb-a0ea-380f8123c229" data-domains="wxxlamp.cn" data-exclude-search="true" data-exclude-hash="true"></script>
+
+
 
 
 
@@ -145,53 +149,12 @@
 </ol>
 <p>These calls are independent, so we can abandon the former serial approach for parallel calls. This article discusses and briefly analyzes several ways to do that.</p>
 <h2 id="1-线程池处理"><a href="#1-线程池处理" class="headerlink" title="1. Thread-pool handling"></a>1. Thread-pool handling</h2><p>Because return values are needed, an ordinary <code>Runnable</code> is insufficient; the <code>Callable</code> interface must be implemented. Put the remotely executed RPC tasks in a thread pool, poll each result, put results into a collection, and aggregate them once all asynchronous tasks finish before returning to the caller. For example:</p>
-<pre><code class="language-java">// 调用方法
-public static void testWithThread(List&lt;String&gt; ret) {
-    List&lt;CallableTask&gt; rpcs = ImmutableList.of(new CallableTask("1"), new CallableTask("2"),
-                new CallableTask("3"),new CallableTask("4"));
-    Queue&lt;Future&lt;String&gt;&gt; list = rpcs.stream()
-                .map(ThreadPoolConfig.EXECUTOR::submit)
-                .collect(Collectors.toCollection(Lists::newLinkedList));
-    while (!list.isEmpty()) {
-        String ans = null;
-        Future&lt;String&gt; poll = list.poll();
-        try {
-            ans = poll.get(100, TimeUnit.MILLISECONDS);
-        } catch (TimeoutException | InterruptedException | ExecutionException e) {
-            System.out.println("time out");
-            list.offer(poll);
-        }
-        if (ans != null) {
-            ret.add(ans);
-        }
-    }
-}
-// 模拟RPC任务
-public class CallableTask implements Callable&lt;String&gt; {
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 调用方法</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">testWithThread</span><span class="params">(List&lt;String&gt; ret)</span> {</span><br><span class="line">    List&lt;CallableTask&gt; rpcs = ImmutableList.of(<span class="keyword">new</span> <span class="title class_">CallableTask</span>(<span class="string">"1"</span>), <span class="keyword">new</span> <span class="title class_">CallableTask</span>(<span class="string">"2"</span>),</span><br><span class="line">                <span class="keyword">new</span> <span class="title class_">CallableTask</span>(<span class="string">"3"</span>),<span class="keyword">new</span> <span class="title class_">CallableTask</span>(<span class="string">"4"</span>));</span><br><span class="line">    Queue&lt;Future&lt;String&gt;&gt; list = rpcs.stream()</span><br><span class="line">                .map(ThreadPoolConfig.EXECUTOR::submit)</span><br><span class="line">                .collect(Collectors.toCollection(Lists::newLinkedList));</span><br><span class="line">    <span class="keyword">while</span> (!list.isEmpty()) {</span><br><span class="line">        <span class="type">String</span> <span class="variable">ans</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        Future&lt;String&gt; poll = list.poll();</span><br><span class="line">        <span class="keyword">try</span> {</span><br><span class="line">            ans = poll.get(<span class="number">100</span>, TimeUnit.MILLISECONDS);</span><br><span class="line">        } <span class="keyword">catch</span> (TimeoutException | InterruptedException | ExecutionException e) {</span><br><span class="line">            System.out.println(<span class="string">"time out"</span>);</span><br><span class="line">            list.offer(poll);</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">if</span> (ans != <span class="literal">null</span>) {</span><br><span class="line">            ret.add(ans);</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"><span class="comment">// 模拟RPC任务</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CallableTask</span> <span class="keyword">implements</span> <span class="title class_">Callable</span>&lt;String&gt; {</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String ans;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">CallableTask</span> <span class="params">(String ans)</span> {</span><br><span class="line">        <span class="built_in">this</span>.ans = ans;</span><br><span class="line">    }</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">call</span><span class="params">()</span> <span class="keyword">throws</span> Exception {</span><br><span class="line">        Thread.sleep(<span class="number">1000L</span>);</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-    private String ans;
-
-    public CallableTask (String ans) {
-        this.ans = ans;
-    }
-    @Override
-    public String call() throws Exception {
-        Thread.sleep(1000L);
-        return ans;
-    }
-}
-</code></pre>
 <p>However, making the caller poll and requeue unfinished <code>Future</code>s is clearly inelegant, so task orchestration needs further improvement.</p>
 <h2 id="2-CompletableFuture"><a href="#2-CompletableFuture" class="headerlink" title="2. CompletableFuture"></a>2. CompletableFuture</h2><p>Because thread orchestration and obtaining return values are cumbersome, Java 8 introduced <code>CompletableFuture</code> to help with orchestration.</p>
-<pre><code class="language-java">public static List&lt;String&gt; testWithCompleteFuture(List&lt;String&gt; ret) {
-    List&lt;CallableTask&gt; rpcs = ImmutableList.of(new CallableTask("1"), new CallableTask("2"),
-                new CallableTask("3"),new CallableTask("4"));
-    List&lt;CompletableFuture&lt;String&gt;&gt; collect = rpcs.stream()
-                .map(e -&gt; CompletableFuture.supplyAsync(e, ThreadPoolConfig.EXECUTOR).whenComplete(((s, throwable) -&gt; ret.add(s))))
-                .collect(Collectors.toList());
-    CompletableFuture.allOf(collect.toArray(new CompletableFuture[]{})).join();
-}
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;String&gt; <span class="title function_">testWithCompleteFuture</span><span class="params">(List&lt;String&gt; ret)</span> {</span><br><span class="line">    List&lt;CallableTask&gt; rpcs = ImmutableList.of(<span class="keyword">new</span> <span class="title class_">CallableTask</span>(<span class="string">"1"</span>), <span class="keyword">new</span> <span class="title class_">CallableTask</span>(<span class="string">"2"</span>),</span><br><span class="line">                <span class="keyword">new</span> <span class="title class_">CallableTask</span>(<span class="string">"3"</span>),<span class="keyword">new</span> <span class="title class_">CallableTask</span>(<span class="string">"4"</span>));</span><br><span class="line">    List&lt;CompletableFuture&lt;String&gt;&gt; collect = rpcs.stream()</span><br><span class="line">                .map(e -&gt; CompletableFuture.supplyAsync(e, ThreadPoolConfig.EXECUTOR).whenComplete(((s, throwable) -&gt; ret.add(s))))</span><br><span class="line">                .collect(Collectors.toList());</span><br><span class="line">    CompletableFuture.allOf(collect.toArray(<span class="keyword">new</span> <span class="title class_">CompletableFuture</span>[]{})).join();</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
 <p><code>CompletableFuture</code> is not most valuable simply for this sort of parallel scheduling. Its more powerful capability is composing task calls—for example, running tasks a, b, and c in parallel and then running d after they complete. This is only an introduction; its advanced functions are not covered here.</p>
 <h2 id="3-One-More-Thing"><a href="#3-One-More-Thing" class="headerlink" title="3. One More Thing"></a>3. One More Thing</h2><p>The discussion above concerns cases where results from parallel calls are needed. Another common case is a post-notification flow: the provider’s response is not needed upstream. For example, after a user enables a service, a service-management system needs to:</p>
 <ol>
@@ -203,63 +166,7 @@ public class CallableTask implements Callable&lt;String&gt; {
 <p>Note: the following discussion assumes these post-processing actions require eventual consistency with the primary business, not strong consistency. For example, a failure to store user information does not mean that enabling the service failed.</p>
 </blockquote>
 <p>The upstream caller need not be aware of these actions. There are usually two approaches: the local system sends a message that downstream systems subscribe to and process, or it directly calls downstream RPC services to process the flow. This section discusses the second approach.<br>For concurrent calls, use the thread pool above or <code>CompletableFuture</code> for task orchestration. Another option is Spring Event for post-notification, but Spring Event itself is synchronous and must be combined with Spring Async to become asynchronous.<br>Whichever method is used, failures (such as a missing service, timeout, or internal service exception) must be considered. To guarantee eventual consistency, persist the failed call’s context and let a scheduled task retry it.<br>It is also important not to use only Spring’s <code>Async</code> annotation. By default, Spring’s async capability opens a new thread per method; too many async listeners can cause thread OOM. Define a reusable thread pool instead, as in this simple example:</p>
-<pre><code class="language-java">// 调用
-@Component
-public class Client {
-    
-    @Autowired
-    private ApplicationEventPublisher publisher;
-
-    public void invoke() {
-        SpringEvent springEvent = new SpringEvent();
-        publisher.publishEvent(springEvent);
-    }
-
-}
-// 监听
-@Component
-public class Listener {
-
-    @EventListener
-    @Async
-    public void test1(SpringEvent event) {
-        String name = Thread.currentThread().getName();
-        System.out.println(event + name + " 111 " + System.currentTimeMillis());
-    }
-
-    @EventListener
-    @Async
-    public void test2(SpringEvent event) {
-        String name = Thread.currentThread().getName();
-        System.out.println(event + name + " 222 " + System.currentTimeMillis());
-    }
-}
-// 配置
-@EnableAsync
-@Configuration
-public class AsyncConfig implements AsyncConfigurer {
-
-    @Override
-    public Executor getAsyncExecutor() {
-        ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
-        taskExecutor.setCorePoolSize(2);
-        taskExecutor.setMaxPoolSize(10);
-        taskExecutor.setQueueCapacity(15);
-        taskExecutor.setThreadNamePrefix("async-thread-");
-        taskExecutor.initialize();
-        return taskExecutor;
-    }
-
-    @Override
-    public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
-        return this::processException;
-    }
-
-    private void processException(Throwable throwable, Method method, Object... objects) {
-        // 上下文落库，等待定时任务唤醒重试
-    }
-}
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 调用</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Client</span> {</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> ApplicationEventPublisher publisher;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">invoke</span><span class="params">()</span> {</span><br><span class="line">        <span class="type">SpringEvent</span> <span class="variable">springEvent</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SpringEvent</span>();</span><br><span class="line">        publisher.publishEvent(springEvent);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">}</span><br><span class="line"><span class="comment">// 监听</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Listener</span> {</span><br><span class="line"></span><br><span class="line">    <span class="meta">@EventListener</span></span><br><span class="line">    <span class="meta">@Async</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test1</span><span class="params">(SpringEvent event)</span> {</span><br><span class="line">        <span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> Thread.currentThread().getName();</span><br><span class="line">        System.out.println(event + name + <span class="string">" 111 "</span> + System.currentTimeMillis());</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="meta">@EventListener</span></span><br><span class="line">    <span class="meta">@Async</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test2</span><span class="params">(SpringEvent event)</span> {</span><br><span class="line">        <span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> Thread.currentThread().getName();</span><br><span class="line">        System.out.println(event + name + <span class="string">" 222 "</span> + System.currentTimeMillis());</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"><span class="comment">// 配置</span></span><br><span class="line"><span class="meta">@EnableAsync</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AsyncConfig</span> <span class="keyword">implements</span> <span class="title class_">AsyncConfigurer</span> {</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Executor <span class="title function_">getAsyncExecutor</span><span class="params">()</span> {</span><br><span class="line">        <span class="type">ThreadPoolTaskExecutor</span> <span class="variable">taskExecutor</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ThreadPoolTaskExecutor</span>();</span><br><span class="line">        taskExecutor.setCorePoolSize(<span class="number">2</span>);</span><br><span class="line">        taskExecutor.setMaxPoolSize(<span class="number">10</span>);</span><br><span class="line">        taskExecutor.setQueueCapacity(<span class="number">15</span>);</span><br><span class="line">        taskExecutor.setThreadNamePrefix(<span class="string">"async-thread-"</span>);</span><br><span class="line">        taskExecutor.initialize();</span><br><span class="line">        <span class="keyword">return</span> taskExecutor;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> AsyncUncaughtExceptionHandler <span class="title function_">getAsyncUncaughtExceptionHandler</span><span class="params">()</span> {</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>::processException;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">processException</span><span class="params">(Throwable throwable, Method method, Object... objects)</span> {</span><br><span class="line">        <span class="comment">// 上下文落库，等待定时任务唤醒重试</span></span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 </div>
       <footer class="post-footer">
         <div class="post-tags"><a href="/en/tags/Java/">Java</a><a href="/en/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/">Concurrency</a><a href="/en/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">Performance</a></div>
@@ -285,15 +192,14 @@ public class AsyncConfig implements AsyncConfigurer {
   <div class="comments" id="comments">
     
     
-
-<div class="github-comments">
-  <div class="comments-title">💬 Comments</div>
-  <p style="color: #666; font-size: 0.9em; margin-bottom: 1em;">
-    Comments require <a href="https://github.com/apps/giscus" target="_blank" rel="noopener">Giscus App</a> installed on your GitHub repository.
-  </p>
-  <script src="https://giscus.app/client.js" data-repo="wxxlamp/wxxlamp.github.io" data-repo-id="R_kgDOCiYteA" data-category="General" data-category-id="DIC_kwDOCiYteM4CelIo" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
-  </script>
-</div>
+<section class="github-comments" data-comments-repo="wxxlamp/wxxlamp.github.io" data-comments-repo-id="MDEwOlJlcG9zaXRvcnkzMTM0ODIyMzc=" data-comments-category="Announcements" data-comments-category-id="DIC_kwDOEq9b_c4DFFLD" data-comments-lang="en">
+  <h2 class="comments-title" data-zh="评论" data-en="Comments">Comments</h2>
+  <p class="comments-status" role="status" data-zh="正在加载评论…" data-en="Loading comments…">Loading comments…</p>
+  <button class="comments-retry" type="button" hidden="" data-zh="重新加载评论" data-en="Reload comments">Reload comments</button>
+  <div class="giscus"></div>
+  <noscript>请启用 JavaScript 查看评论。Please enable JavaScript to view comments.</noscript>
+</section>
+<script defer="" src="/js/src/comments.js?v=2.2"></script>
 
 
 
@@ -315,8 +221,10 @@ public class AsyncConfig implements AsyncConfigurer {
       </main>
 
       <footer id="colophon"><div class="footer-inner"><span>© 2026 Sibo Wang <span class="footer-dot">·</span> <span data-zh="保持好奇，认真生活。" data-en="Stay curious. Live thoughtfully.">Stay curious. Live thoughtfully.</span></span><a href="/en/subscribe/"><svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 10a9 9 0 0 1 9 9M5 4a15 15 0 0 1 15 15"></path><circle cx="5" cy="19" r="1"></circle></svg> RSS</a></div>
-<div class="site-stats"><span data-zh="访问" data-en="Visits">Visits</span> <span id="busuanzi_value_site_pv">—</span> · <span data-zh="访客" data-en="Readers">Readers</span> <span id="busuanzi_value_site_uv">—</span> · Powered by <a target="_blank" href="https://hexo.io/" rel="noopener noopener">Hexo</a></div>
-<script async="" src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="site-stats">
+  
+  Powered by <a target="_blank" href="https://hexo.io/" rel="noopener noopener">Hexo</a>
+</div>
 
       </footer>
 
@@ -336,8 +244,8 @@ public class AsyncConfig implements AsyncConfigurer {
 
   
 
-    <script type="text/javascript" src="/js/src/theme.js?v=2"></script>
-<script type="text/javascript" src="/js/src/bootstrap.js?v=2"></script>
+    <script type="text/javascript" src="/js/src/theme.js?v=2.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.2"></script>
 
   
 

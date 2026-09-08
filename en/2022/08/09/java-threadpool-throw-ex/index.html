@@ -33,18 +33,18 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2">
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.2">
 
-<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2.2">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2.2">
 <meta name="theme-color" content="#244f43">
 
 
-<link rel="stylesheet" type="text/css" href="/css/style.css?v=2">
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.2">
 
 
 
-<script defer="" src="/js/src/site.js?v=2"></script>
+<script defer="" src="/js/src/site.js?v=2.2"></script>
 
 
 
@@ -94,6 +94,10 @@
     y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
   })(window, document, "clarity", "script", "ydyci83xyu");
 </script>
+
+<script defer="" src="https://cloud.umami.is/script.js" data-website-id="27d58970-f2c7-47fb-a0ea-380f8123c229" data-domains="wxxlamp.cn" data-exclude-search="true" data-exclude-hash="true"></script>
+
+
 
 
 
@@ -161,149 +165,20 @@
 <img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/d41f4b8a_java-threadpool-throw-ex-3.png" align="middle">
 
 <h3 id="原因分析"><a href="#原因分析" class="headerlink" title="Cause analysis"></a>Cause analysis</h3><h4 id="execute-1"><a href="#execute-1" class="headerlink" title="#execute"></a>#execute</h4><p>For execute, this is easy to understand. The source code shows that when a thread-pool thread runs <code>runWorker</code>, if a task throws an exception, the thread throws it directly:</p>
-<pre><code class="language-java"> final void runWorker(Worker w) {
-     // ... 省略代码
-     try {
-         while (task != null || (task = getTask()) != null) {
-             // ... 省略代码
-             try {
-                 beforeExecute(wt, task);
-                 Throwable thrown = null;
-                 try {
-                     task.run();
-                 } catch (RuntimeException x) {
-                     thrown = x; throw x; // 这里抛出异常
-                 } catch (Error x) {
-                     thrown = x; throw x;
-                 } catch (Throwable x) {
-                     thrown = x; throw new Error(x);
-                 } finally {
-                     afterExecute(task, thrown);
-                 }
-             } finally {
-                 task = null;
-                 w.completedTasks++;
-                 w.unlock();
-             }
-         }
-         completedAbruptly = false;
-     } finally {
-         processWorkerExit(w, completedAbruptly); // 抛出异常后，执行这里
-     }
- }
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> <span class="keyword">void</span> <span class="title function_">runWorker</span><span class="params">(Worker w)</span> {</span><br><span class="line">    <span class="comment">// ... 省略代码</span></span><br><span class="line">    <span class="keyword">try</span> {</span><br><span class="line">        <span class="keyword">while</span> (task != <span class="literal">null</span> || (task = getTask()) != <span class="literal">null</span>) {</span><br><span class="line">            <span class="comment">// ... 省略代码</span></span><br><span class="line">            <span class="keyword">try</span> {</span><br><span class="line">                beforeExecute(wt, task);</span><br><span class="line">                <span class="type">Throwable</span> <span class="variable">thrown</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">                <span class="keyword">try</span> {</span><br><span class="line">                    task.run();</span><br><span class="line">                } <span class="keyword">catch</span> (RuntimeException x) {</span><br><span class="line">                    thrown = x; <span class="keyword">throw</span> x; <span class="comment">// 这里抛出异常</span></span><br><span class="line">                } <span class="keyword">catch</span> (Error x) {</span><br><span class="line">                    thrown = x; <span class="keyword">throw</span> x;</span><br><span class="line">                } <span class="keyword">catch</span> (Throwable x) {</span><br><span class="line">                    thrown = x; <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(x);</span><br><span class="line">                } <span class="keyword">finally</span> {</span><br><span class="line">                    afterExecute(task, thrown);</span><br><span class="line">                }</span><br><span class="line">            } <span class="keyword">finally</span> {</span><br><span class="line">                task = <span class="literal">null</span>;</span><br><span class="line">                w.completedTasks++;</span><br><span class="line">                w.unlock();</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        completedAbruptly = <span class="literal">false</span>;</span><br><span class="line">    } <span class="keyword">finally</span> {</span><br><span class="line">        processWorkerExit(w, completedAbruptly); <span class="comment">// 抛出异常后，执行这里</span></span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>After an exception, to prevent the exceptional task from contaminating its thread, the worker that executed it is destroyed and a new non-core worker with no initial task is created. Therefore, even if every task in the pool fails, as long as the core-pool size is nonzero, the program remains blocked in <code>workQueue#poll</code> and the JVM does not exit.</p>
-<pre><code class="language-java">private void processWorkerExit(Worker w, boolean completedAbruptly) {
-    if (completedAbruptly) // If abrupt, then workerCount wasn't adjusted
-        decrementWorkerCount();
-
-    final ReentrantLock mainLock = this.mainLock;
-    mainLock.lock();
-    try {
-        completedTaskCount += w.completedTasks;
-        workers.remove(w); // 移除当前异常Worker
-    } finally {
-        mainLock.unlock();
-    }
-
-    tryTerminate();
-
-    int c = ctl.get();
-    if (runStateLessThan(c, STOP)) { // 如果不是STOP状态
-        if (!completedAbruptly) {
-            int min = allowCoreThreadTimeOut ? 0 : corePoolSize;
-            if (min == 0 &amp;&amp; ! workQueue.isEmpty())
-                min = 1;
-            if (workerCountOf(c) &gt;= min) // 且线程数小于核心线程
-                return; 
-        }
-        addWorker(null, false); // 新增一个线程执行
-    }
-}
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">processWorkerExit</span><span class="params">(Worker w, <span class="type">boolean</span> completedAbruptly)</span> {</span><br><span class="line">    <span class="keyword">if</span> (completedAbruptly) <span class="comment">// If abrupt, then workerCount wasn't adjusted</span></span><br><span class="line">        decrementWorkerCount();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">final</span> <span class="type">ReentrantLock</span> <span class="variable">mainLock</span> <span class="operator">=</span> <span class="built_in">this</span>.mainLock;</span><br><span class="line">    mainLock.lock();</span><br><span class="line">    <span class="keyword">try</span> {</span><br><span class="line">        completedTaskCount += w.completedTasks;</span><br><span class="line">        workers.remove(w); <span class="comment">// 移除当前异常Worker</span></span><br><span class="line">    } <span class="keyword">finally</span> {</span><br><span class="line">        mainLock.unlock();</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    tryTerminate();</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> <span class="variable">c</span> <span class="operator">=</span> ctl.get();</span><br><span class="line">    <span class="keyword">if</span> (runStateLessThan(c, STOP)) { <span class="comment">// 如果不是STOP状态</span></span><br><span class="line">        <span class="keyword">if</span> (!completedAbruptly) {</span><br><span class="line">            <span class="type">int</span> <span class="variable">min</span> <span class="operator">=</span> allowCoreThreadTimeOut ? <span class="number">0</span> : corePoolSize;</span><br><span class="line">            <span class="keyword">if</span> (min == <span class="number">0</span> &amp;&amp; ! workQueue.isEmpty())</span><br><span class="line">                min = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">if</span> (workerCountOf(c) &gt;= min) <span class="comment">// 且线程数小于核心线程</span></span><br><span class="line">                <span class="keyword">return</span>; </span><br><span class="line">        }</span><br><span class="line">        addWorker(<span class="literal">null</span>, <span class="literal">false</span>); <span class="comment">// 新增一个线程执行</span></span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <h4 id="submit-1"><a href="#submit-1" class="headerlink" title="#submit"></a>#submit</h4><p><code>submit</code> is somewhat special because its task has a return value. When it is submitted, the pool wraps it in a <code>FutureTask</code>:</p>
-<pre><code class="language-java">public Future&lt;?&gt; submit(Runnable task) {
-    if (task == null) throw new NullPointerException();
-    RunnableFuture&lt;Void&gt; ftask = newTaskFor(task, null); // 封装该应用
-    execute(ftask);
-    return ftask;
-}
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> Future&lt;?&gt; submit(Runnable task) {</span><br><span class="line">    <span class="keyword">if</span> (task == <span class="literal">null</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">NullPointerException</span>();</span><br><span class="line">    RunnableFuture&lt;Void&gt; ftask = newTaskFor(task, <span class="literal">null</span>); <span class="comment">// 封装该应用</span></span><br><span class="line">    execute(ftask);</span><br><span class="line">    <span class="keyword">return</span> ftask;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>Thus, when the pool runs <code>runWorker</code>, it actually enters the following method:</p>
-<pre><code class="language-java">public void run() {
-    // ... 省略代码
-    try {
-        Callable&lt;V&gt; c = callable;
-        if (c != null &amp;&amp; state == NEW) {
-            V result;
-            boolean ran;
-            try {
-                result = c.call();
-                ran = true;
-            } catch (Throwable ex) {
-                result = null;
-                ran = false;
-                setException(ex); // FutureTask会catch异常
-            }
-            if (ran)
-                set(result);
-        }
-    } finally {
-        // ... 省略代码
-    }
-}
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> {</span><br><span class="line">    <span class="comment">// ... 省略代码</span></span><br><span class="line">    <span class="keyword">try</span> {</span><br><span class="line">        Callable&lt;V&gt; c = callable;</span><br><span class="line">        <span class="keyword">if</span> (c != <span class="literal">null</span> &amp;&amp; state == NEW) {</span><br><span class="line">            V result;</span><br><span class="line">            <span class="type">boolean</span> ran;</span><br><span class="line">            <span class="keyword">try</span> {</span><br><span class="line">                result = c.call();</span><br><span class="line">                ran = <span class="literal">true</span>;</span><br><span class="line">            } <span class="keyword">catch</span> (Throwable ex) {</span><br><span class="line">                result = <span class="literal">null</span>;</span><br><span class="line">                ran = <span class="literal">false</span>;</span><br><span class="line">                setException(ex); <span class="comment">// FutureTask会catch异常</span></span><br><span class="line">            }</span><br><span class="line">            <span class="keyword">if</span> (ran)</span><br><span class="line">                set(result);</span><br><span class="line">        }</span><br><span class="line">    } <span class="keyword">finally</span> {</span><br><span class="line">        <span class="comment">// ... 省略代码</span></span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>The explanation now becomes clear: <code>FutureTask</code> wraps the exception as the <code>outcome</code> Object. When <code>FuntureTask#get</code> calls <code>report</code>, it wraps and rethrows the exception as <code>ExecutionException</code>:</p>
-<pre><code class="language-java">public V get() throws InterruptedException, ExecutionException {
-    int s = state;
-    if (s &lt;= COMPLETING)
-        s = awaitDone(false, 0L);
-    return report(s);
-}
-private V report(int s) throws ExecutionException {
-    Object x = outcome;
-    if (s == NORMAL)
-        return (V)x;
-    if (s &gt;= CANCELLED)
-        throw new CancellationException();
-    throw new ExecutionException((Throwable)x); // 抛出该异常
-}
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> V <span class="title function_">get</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException, ExecutionException {</span><br><span class="line">    <span class="type">int</span> <span class="variable">s</span> <span class="operator">=</span> state;</span><br><span class="line">    <span class="keyword">if</span> (s &lt;= COMPLETING)</span><br><span class="line">        s = awaitDone(<span class="literal">false</span>, <span class="number">0L</span>);</span><br><span class="line">    <span class="keyword">return</span> report(s);</span><br><span class="line">}</span><br><span class="line"><span class="keyword">private</span> V <span class="title function_">report</span><span class="params">(<span class="type">int</span> s)</span> <span class="keyword">throws</span> ExecutionException {</span><br><span class="line">    <span class="type">Object</span> <span class="variable">x</span> <span class="operator">=</span> outcome;</span><br><span class="line">    <span class="keyword">if</span> (s == NORMAL)</span><br><span class="line">        <span class="keyword">return</span> (V)x;</span><br><span class="line">    <span class="keyword">if</span> (s &gt;= CANCELLED)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">CancellationException</span>();</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">ExecutionException</span>((Throwable)x); <span class="comment">// 抛出该异常</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>The pool thread is <code>WAITING</code> because after this task ends, <code>Worker</code> is blocked while calling <code>workQueue#poll</code>.</p>
 <h4 id="schedule-1"><a href="#schedule-1" class="headerlink" title="#schedule"></a>#schedule</h4><p><code>#schedule</code> executes in a scheduled thread pool. In theory, a task should still run periodically after throwing an exception, so why does it stop? Look at <code>ScheduledFutureTask</code>, a subclass of <code>FutureTask</code>: normally, after a scheduled task runs, its thread puts it back into the execution queue.</p>
-<pre><code class="language-java">public void run() {
-    boolean periodic = isPeriodic();
-    if (!canRunInCurrentRunState(periodic))
-        cancel(false);
-    else if (!periodic)
-        ScheduledFutureTask.super.run();
-    else if (ScheduledFutureTask.super.runAndReset()) { 
-        setNextRunTime();
-        reExecutePeriodic(outerTask);// 重新将任务放到队列中执行
-    }
-}
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> {</span><br><span class="line">    <span class="type">boolean</span> <span class="variable">periodic</span> <span class="operator">=</span> isPeriodic();</span><br><span class="line">    <span class="keyword">if</span> (!canRunInCurrentRunState(periodic))</span><br><span class="line">        cancel(<span class="literal">false</span>);</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (!periodic)</span><br><span class="line">        ScheduledFutureTask.<span class="built_in">super</span>.run();</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (ScheduledFutureTask.<span class="built_in">super</span>.runAndReset()) { </span><br><span class="line">        setNextRunTime();</span><br><span class="line">        reExecutePeriodic(outerTask);<span class="comment">// 重新将任务放到队列中执行</span></span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>But in <code>#runAndReset</code>, an exception makes <code>#runAndReset</code> return false. The periodic task is then not requeued, so a scheduled task that throws an exception is not run again.</p>
-<pre><code class="language-java">protected boolean runAndReset() {
-    // ...省略代码
-    boolean ran = false;
-    int s = state;
-    try {
-        Callable&lt;V&gt; c = callable;
-        if (c != null &amp;&amp; s == NEW) {
-            try {
-                c.call(); // don't set result
-                ran = true;
-            } catch (Throwable ex) {
-                setException(ex); // 抛出异常后，ran仍然是false
-            }
-        }
-    } finally {
-        // ...省略代码
-    }
-    return ran &amp;&amp; s == NEW; // 此处返回false
-}
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="type">boolean</span> <span class="title function_">runAndReset</span><span class="params">()</span> {</span><br><span class="line">    <span class="comment">// ...省略代码</span></span><br><span class="line">    <span class="type">boolean</span> <span class="variable">ran</span> <span class="operator">=</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="type">int</span> <span class="variable">s</span> <span class="operator">=</span> state;</span><br><span class="line">    <span class="keyword">try</span> {</span><br><span class="line">        Callable&lt;V&gt; c = callable;</span><br><span class="line">        <span class="keyword">if</span> (c != <span class="literal">null</span> &amp;&amp; s == NEW) {</span><br><span class="line">            <span class="keyword">try</span> {</span><br><span class="line">                c.call(); <span class="comment">// don't set result</span></span><br><span class="line">                ran = <span class="literal">true</span>;</span><br><span class="line">            } <span class="keyword">catch</span> (Throwable ex) {</span><br><span class="line">                setException(ex); <span class="comment">// 抛出异常后，ran仍然是false</span></span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    } <span class="keyword">finally</span> {</span><br><span class="line">        <span class="comment">// ...省略代码</span></span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">return</span> ran &amp;&amp; s == NEW; <span class="comment">// 此处返回false</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <h3 id="解决方案"><a href="#解决方案" class="headerlink" title="Solutions"></a>Solutions</h3><ol>
 <li>Catch and handle exceptions inside tasks so they do not interfere with thread-pool execution.</li>
 <li>With <code>#execute</code>, use <code>ThreadFactory</code> to set logic for uncaught exceptions.</li>
@@ -315,45 +190,15 @@ private V report(int s) throws ExecutionException {
 <li>Whether the queue is empty.</li>
 <li>Whether the current state is STOP (when <code>shutDownNow</code> is called).</li>
 </ol>
-<pre><code class="language-java">private Runnable getTask() {
-    boolean timedOut = false; // Did the last poll() time out?
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> Runnable <span class="title function_">getTask</span><span class="params">()</span> {</span><br><span class="line">    <span class="type">boolean</span> <span class="variable">timedOut</span> <span class="operator">=</span> <span class="literal">false</span>; <span class="comment">// Did the last poll() time out?</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (;;) {</span><br><span class="line">        <span class="type">int</span> <span class="variable">c</span> <span class="operator">=</span> ctl.get();</span><br><span class="line">        <span class="type">int</span> <span class="variable">rs</span> <span class="operator">=</span> runStateOf(c);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Check if queue empty only if necessary.</span></span><br><span class="line">        <span class="keyword">if</span> (rs &gt;= SHUTDOWN &amp;&amp; (rs &gt;= STOP || workQueue.isEmpty())) {</span><br><span class="line">            decrementWorkerCount();</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>; <span class="comment">// 如果是shutDown则退出</span></span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="comment">// ... 省略代码</span></span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-    for (;;) {
-        int c = ctl.get();
-        int rs = runStateOf(c);
-
-        // Check if queue empty only if necessary.
-        if (rs &gt;= SHUTDOWN &amp;&amp; (rs &gt;= STOP || workQueue.isEmpty())) {
-            decrementWorkerCount();
-            return null; // 如果是shutDown则退出
-        }
-
-        // ... 省略代码
-    }
-}
-</code></pre>
 <p>If these conditions apply, <code>#getTask</code> returns null. The worker enters <code>#processWorkerExit</code> and closes itself. Entering <code>#addWorker</code> then reveals two further conditions:</p>
 <ol>
 <li>STOP state.</li>
 <li>SHUTDOWN with an empty queue.</li>
 </ol>
-<pre><code class="language-java">private boolean addWorker(Runnable firstTask, boolean core) {
-    retry:
-    for (;;) {
-        int c = ctl.get();
-        int rs = runStateOf(c);
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="type">boolean</span> <span class="title function_">addWorker</span><span class="params">(Runnable firstTask, <span class="type">boolean</span> core)</span> {</span><br><span class="line">    retry:</span><br><span class="line">    <span class="keyword">for</span> (;;) {</span><br><span class="line">        <span class="type">int</span> <span class="variable">c</span> <span class="operator">=</span> ctl.get();</span><br><span class="line">        <span class="type">int</span> <span class="variable">rs</span> <span class="operator">=</span> runStateOf(c);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Check if queue empty only if necessary.</span></span><br><span class="line">        <span class="keyword">if</span> (rs &gt;= SHUTDOWN &amp;&amp;</span><br><span class="line">            ! (rs == SHUTDOWN &amp;&amp;</span><br><span class="line">               firstTask == <span class="literal">null</span> &amp;&amp;</span><br><span class="line">               ! workQueue.isEmpty()))</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>; <span class="comment">// 此时便不会新增worker</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// ... 省略代码</span></span><br><span class="line">    <span class="keyword">return</span> workerStarted;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-        // Check if queue empty only if necessary.
-        if (rs &gt;= SHUTDOWN &amp;&amp;
-            ! (rs == SHUTDOWN &amp;&amp;
-               firstTask == null &amp;&amp;
-               ! workQueue.isEmpty()))
-            return false; // 此时便不会新增worker
-
-    // ... 省略代码
-    return workerStarted;
-}
-</code></pre>
 <p>If they apply, no new thread is created.<br><strong>Core idea</strong>: <strong>Interrupt idle threads to release them from</strong> <code>**#poll**</code> <strong>and close them. In SHUTDOWN state, they can close only after tasks finish; in STOP state, they close without waiting for tasks to finish.</strong></p>
 <h4 id="线程池相关知识"><a href="#线程池相关知识" class="headerlink" title="Thread-pool knowledge"></a>Thread-pool knowledge</h4><p>After reading <code>ThreadPoolExecutor</code> code, I took time to draw a diagram to deepen my understanding:</p>
 <img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/5a6672af_java-threadpool-throw-ex-4.jpeg" align="middle">
@@ -384,15 +229,14 @@ private V report(int s) throws ExecutionException {
   <div class="comments" id="comments">
     
     
-
-<div class="github-comments">
-  <div class="comments-title">💬 Comments</div>
-  <p style="color: #666; font-size: 0.9em; margin-bottom: 1em;">
-    Comments require <a href="https://github.com/apps/giscus" target="_blank" rel="noopener">Giscus App</a> installed on your GitHub repository.
-  </p>
-  <script src="https://giscus.app/client.js" data-repo="wxxlamp/wxxlamp.github.io" data-repo-id="R_kgDOCiYteA" data-category="General" data-category-id="DIC_kwDOCiYteM4CelIo" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
-  </script>
-</div>
+<section class="github-comments" data-comments-repo="wxxlamp/wxxlamp.github.io" data-comments-repo-id="MDEwOlJlcG9zaXRvcnkzMTM0ODIyMzc=" data-comments-category="Announcements" data-comments-category-id="DIC_kwDOEq9b_c4DFFLD" data-comments-lang="en">
+  <h2 class="comments-title" data-zh="评论" data-en="Comments">Comments</h2>
+  <p class="comments-status" role="status" data-zh="正在加载评论…" data-en="Loading comments…">Loading comments…</p>
+  <button class="comments-retry" type="button" hidden="" data-zh="重新加载评论" data-en="Reload comments">Reload comments</button>
+  <div class="giscus"></div>
+  <noscript>请启用 JavaScript 查看评论。Please enable JavaScript to view comments.</noscript>
+</section>
+<script defer="" src="/js/src/comments.js?v=2.2"></script>
 
 
 
@@ -414,8 +258,10 @@ private V report(int s) throws ExecutionException {
       </main>
 
       <footer id="colophon"><div class="footer-inner"><span>© 2026 Sibo Wang <span class="footer-dot">·</span> <span data-zh="保持好奇，认真生活。" data-en="Stay curious. Live thoughtfully.">Stay curious. Live thoughtfully.</span></span><a href="/en/subscribe/"><svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 10a9 9 0 0 1 9 9M5 4a15 15 0 0 1 15 15"></path><circle cx="5" cy="19" r="1"></circle></svg> RSS</a></div>
-<div class="site-stats"><span data-zh="访问" data-en="Visits">Visits</span> <span id="busuanzi_value_site_pv">—</span> · <span data-zh="访客" data-en="Readers">Readers</span> <span id="busuanzi_value_site_uv">—</span> · Powered by <a target="_blank" href="https://hexo.io/" rel="noopener noopener">Hexo</a></div>
-<script async="" src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="site-stats">
+  
+  Powered by <a target="_blank" href="https://hexo.io/" rel="noopener noopener">Hexo</a>
+</div>
 
       </footer>
 
@@ -435,8 +281,8 @@ private V report(int s) throws ExecutionException {
 
   
 
-    <script type="text/javascript" src="/js/src/theme.js?v=2"></script>
-<script type="text/javascript" src="/js/src/bootstrap.js?v=2"></script>
+    <script type="text/javascript" src="/js/src/theme.js?v=2.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.2"></script>
 
   
 

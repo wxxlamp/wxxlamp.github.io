@@ -35,18 +35,18 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2" />
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.2" />
 
-<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2.2">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2.2">
 <meta name="theme-color" content="#244f43">
 
 
-<link rel="stylesheet" type="text/css" href="/css/style.css?v=2" />
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.2" />
 
 
 
-<script defer src="/js/src/site.js?v=2"></script>
+<script defer src="/js/src/site.js?v=2.2"></script>
 
 
 
@@ -96,6 +96,14 @@
     y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
   })(window, document, "clarity", "script", "ydyci83xyu");
 </script>
+
+<script defer src="https://cloud.umami.is/script.js"
+  data-website-id="27d58970-f2c7-47fb-a0ea-380f8123c229"
+  data-domains="wxxlamp.cn"
+  data-exclude-search="true"
+  data-exclude-hash="true"></script>
+
+
 
 
 
@@ -169,10 +177,10 @@
 <p>rule的本质也是一种记忆，cc在每次请求模型的时候都会把完整的rule带给LLM，我们可以通过 &#x2F;memory 命令进行check：</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/c09f471b_3f295084.png"></p>
 <p>rule最常见的使用就是限制claude做一些事情，譬如说最常见的代码规范，我们可以把一些规约性的内容编写成rule提供给CC作为参考。项目级别的rule的位置如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">your-project/</span><br><span class="line">├── .claude/</span><br><span class="line">│   ├── CLAUDE.md           # 主项目指令</span><br><span class="line">│   └── rules/</span><br><span class="line">│       ├── code-style.md   # 代码样式指南</span><br><span class="line">│       ├── testing.md      # 测试约定</span><br><span class="line">│       └── security.md     # 安全要求</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">your-project/</span><br><span class="line">├── .claude/</span><br><span class="line">│   ├── CLAUDE.md           <span class="comment"># 主项目指令</span></span><br><span class="line">│   └── rules/</span><br><span class="line">│       ├── code-style.md   <span class="comment"># 代码样式指南</span></span><br><span class="line">│       ├── testing.md      <span class="comment"># 测试约定</span></span><br><span class="line">│       └── security.md     <span class="comment"># 安全要求</span></span><br></pre></td></tr></table></figure>
 
 <p>值得注意的是，我们可以通过path属性选择rule对哪些文件生效，如下所示：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">paths:</span><br><span class="line">  - &quot;src/api/**/*.ts&quot;</span><br><span class="line">---</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">API 开发规则</span></span><br><span class="line"></span><br><span class="line">- 所有 API 端点必须包括输入验证</span><br><span class="line">- 使用标准错误响应格式</span><br><span class="line">- 包括 OpenAPI 文档注释</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">paths:</span><br><span class="line">  - <span class="string">&quot;src/api/**/*.ts&quot;</span></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"><span class="comment"># API 开发规则</span></span><br><span class="line"></span><br><span class="line">- 所有 API 端点必须包括输入验证</span><br><span class="line">- 使用标准错误响应格式</span><br><span class="line">- 包括 OpenAPI 文档注释</span><br></pre></td></tr></table></figure>
 
 <h2 id="Hooks"><a href="#Hooks" class="headerlink" title="Hooks"></a>Hooks</h2><blockquote>
 <p>相关内容参考：<a target="_blank" rel="noopener" href="https://code.claude.com/docs/zh-CN/hooks-guide">https://code.claude.com/docs/zh-CN/hooks-guide</a></p>
@@ -269,28 +277,14 @@
   <div class="comments" id="comments">
     
     
-
-<div class="github-comments">
-  <div class="comments-title">💬 Comments</div>
-  <p style="color: #666; font-size: 0.9em; margin-bottom: 1em;">
-    Comments require <a href="https://github.com/apps/giscus" target="_blank" rel="noopener">Giscus App</a> installed on your GitHub repository.
-  </p>
-  <script src="https://giscus.app/client.js"
-    data-repo="wxxlamp/wxxlamp.github.io"
-    data-repo-id="R_kgDOCiYteA"
-    data-category="General"
-    data-category-id="DIC_kwDOCiYteM4CelIo"
-    data-mapping="pathname"
-    data-strict="0"
-    data-reactions-enabled="1"
-    data-emit-metadata="0"
-    data-input-position="bottom"
-    data-theme="light"
-    data-lang="en"
-    crossorigin="anonymous"
-    async>
-  </script>
-</div>
+<section class="github-comments" data-comments-repo="wxxlamp/wxxlamp.github.io" data-comments-repo-id="MDEwOlJlcG9zaXRvcnkzMTM0ODIyMzc=" data-comments-category="Announcements" data-comments-category-id="DIC_kwDOEq9b_c4DFFLD" data-comments-lang="zh-CN">
+  <h2 class="comments-title" data-zh="评论" data-en="Comments">评论</h2>
+  <p class="comments-status" role="status" data-zh="正在加载评论…" data-en="Loading comments…">正在加载评论…</p>
+  <button class="comments-retry" type="button" hidden data-zh="重新加载评论" data-en="Reload comments">重新加载评论</button>
+  <div class="giscus"></div>
+  <noscript>请启用 JavaScript 查看评论。Please enable JavaScript to view comments.</noscript>
+</section>
+<script defer src="/js/src/comments.js?v=2.2"></script>
 
 
 
@@ -312,8 +306,10 @@
       </main>
 
       <footer id="colophon"><div class="footer-inner"><span>© 2026 王星星 <span class="footer-dot">·</span> <span data-zh="保持好奇，认真生活。" data-en="Stay curious. Live thoughtfully.">保持好奇，认真生活。</span></span><a href="/subscribe/"><svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 10a9 9 0 0 1 9 9M5 4a15 15 0 0 1 15 15"/><circle cx="5" cy="19" r="1"/></svg> RSS</a></div>
-<div class="site-stats"><span data-zh="访问" data-en="Visits">访问</span> <span id="busuanzi_value_site_pv">—</span> · <span data-zh="访客" data-en="Readers">访客</span> <span id="busuanzi_value_site_uv">—</span> · Powered by <a target="_blank" href="https://hexo.io/" rel="noopener noopener">Hexo</a></div>
-<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="site-stats">
+  
+  Powered by <a target="_blank" href="https://hexo.io/" rel="noopener noopener">Hexo</a>
+</div>
 
       </footer>
 
@@ -333,8 +329,8 @@
 
   
 
-    <script type="text/javascript" src="/js/src/theme.js?v=2"></script>
-<script type="text/javascript" src="/js/src/bootstrap.js?v=2"></script>
+    <script type="text/javascript" src="/js/src/theme.js?v=2.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.2"></script>
 
   </body>
 </html>

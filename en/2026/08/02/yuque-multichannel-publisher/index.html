@@ -33,18 +33,18 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2">
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.2">
 
-<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2.2">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2.2">
 <meta name="theme-color" content="#244f43">
 
 
-<link rel="stylesheet" type="text/css" href="/css/style.css?v=2">
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.2">
 
 
 
-<script defer="" src="/js/src/site.js?v=2"></script>
+<script defer="" src="/js/src/site.js?v=2.2"></script>
 
 
 
@@ -94,6 +94,10 @@
     y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
   })(window, document, "clarity", "script", "ydyci83xyu");
 </script>
+
+<script defer="" src="https://cloud.umami.is/script.js" data-website-id="27d58970-f2c7-47fb-a0ea-380f8123c229" data-domains="wxxlamp.cn" data-exclude-search="true" data-exclude-hash="true"></script>
+
+
 
 
 
@@ -169,76 +173,37 @@
 <p>Finally, I added contract tests to the pipeline. They check heading numbering, image ratios and briefs, author-voice fingerprints, WeChat/blog body similarity, RedNote card counts, cross-round references, final directories, and whether platforms were mistakenly recorded with the same publishing status. After this test article ran, draft validation, materialization validation, and the Hexo build all passed.</p>
 <h1 id="3-插件的结构、产物和优点"><a href="#3-插件的结构、产物和优点" class="headerlink" title="3. Plugin structure, artifacts, and benefits"></a>3. Plugin structure, artifacts, and benefits</h1><p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/2000d4ab_section-3.png" alt="A reviewed long article is persisted as publication packages for blog, WeChat, and RedNote"></p>
 <p>The plugin has one public Skill and roughly this directory structure:</p>
-<pre><code class="language-text">yuque-multichannel-publisher/
-├── .codex-plugin/
-│   └── plugin.json
-├── README.md
-└── skills/
-    └── yuque-multichannel-publisher/
-        ├── SKILL.md
-        ├── assets/
-        │   └── config.example.json
-        ├── references/
-        │   ├── voice-profile.md
-        │   ├── editorial-guide.md
-        │   ├── visual-direction.md
-        │   ├── artifact-contract.md
-        │   ├── style-profile-cache.md
-        │   └── publishing.md
-        ├── scripts/
-        │   ├── pipeline.py
-        │   ├── workspace.py
-        │   ├── yuque_fetcher.py
-        │   ├── image_uploader.py
-        │   └── style_profiles.py
-        └── tests/
-            └── test_pipeline.py
-</code></pre>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">yuque-multichannel-publisher/</span><br><span class="line">├── .codex-plugin/</span><br><span class="line">│   └── plugin.json</span><br><span class="line">├── README.md</span><br><span class="line">└── skills/</span><br><span class="line">    └── yuque-multichannel-publisher/</span><br><span class="line">        ├── SKILL.md</span><br><span class="line">        ├── assets/</span><br><span class="line">        │   └── config.example.json</span><br><span class="line">        ├── references/</span><br><span class="line">        │   ├── voice-profile.md</span><br><span class="line">        │   ├── editorial-guide.md</span><br><span class="line">        │   ├── visual-direction.md</span><br><span class="line">        │   ├── artifact-contract.md</span><br><span class="line">        │   ├── style-profile-cache.md</span><br><span class="line">        │   └── publishing.md</span><br><span class="line">        ├── scripts/</span><br><span class="line">        │   ├── pipeline.py</span><br><span class="line">        │   ├── workspace.py</span><br><span class="line">        │   ├── yuque_fetcher.py</span><br><span class="line">        │   ├── image_uploader.py</span><br><span class="line">        │   └── style_profiles.py</span><br><span class="line">        └── tests/</span><br><span class="line">            └── test_pipeline.py</span><br></pre></td></tr></tbody></table></figure>
+
 <p><code>plugin.json</code> defines plugin identity, version, and Codex display information. <code>SKILL.md</code> tells AI how to complete the workflow. <code>references/</code> holds general standards for voice learning, editing, images, artifacts, and publishing. <code>scripts/</code> performs deterministic work, and <code>tests/</code> prevents directory and validation rules from silently breaking after updates.</p>
 <p>Personal data lives separately in the workspace:</p>
-<pre><code class="language-text">&lt;workspace&gt;/.codex/yuque-multichannel-publisher/
-├── config.json
-├── browser-data/
-└── style-profiles/
-    ├── author-voice.md
-    ├── profile-index.json
-    └── style-*.json
-</code></pre>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;workspace&gt;/.codex/yuque-multichannel-publisher/</span><br><span class="line">├── config.json</span><br><span class="line">├── browser-data/</span><br><span class="line">└── style-profiles/</span><br><span class="line">    ├── author-voice.md</span><br><span class="line">    ├── profile-index.json</span><br><span class="line">    └── style-*.json</span><br></pre></td></tr></tbody></table></figure>
+
 <p>At runtime, personal voice, login state, image-host tokens, category cache, and task state are not written to the plugin directory. They live in <code>.codex/yuque-multichannel-publisher/</code> in the workspace or in a concrete content project. The plugin only checks whether credentials are configured; it does not generate keys or read browser passwords. The plugin can be updated or copied without overwriting personal configuration.</p>
 <h2 id="3-1-三个平台如何落盘"><a href="#3-1-三个平台如何落盘" class="headerlink" title="3.1. How the three platforms are persisted"></a>3.1. How the three platforms are persisted</h2><p>The blog retains full argument, code, citations, and table-of-contents structure, finally writing to:</p>
-<pre><code class="language-text">source/_posts/&lt;slug&gt;.md
-</code></pre>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source/_posts/&lt;slug&gt;.md</span><br></pre></td></tr></tbody></table></figure>
+
 <p>WeChat uses the same body as the blog with only light paragraph adaptation, generating both Markdown and HTML with inline styles:</p>
-<pre><code class="language-text">wechat/&lt;slug&gt;/article.md
-wechat/&lt;slug&gt;/article.html
-</code></pre>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wechat/&lt;slug&gt;/article.md</span><br><span class="line">wechat/&lt;slug&gt;/article.html</span><br></pre></td></tr></tbody></table></figure>
+
 <p>RedNote first determines how many independent notes the original supports. Every round must reintroduce its subject and core claim, then generate its body and card plan:</p>
-<pre><code class="language-text">rednote/&lt;slug&gt;/series-plan.json
-rednote/&lt;slug&gt;/round1/post.md
-rednote/&lt;slug&gt;/round1/cards.json
-</code></pre>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rednote/&lt;slug&gt;/series-plan.json</span><br><span class="line">rednote/&lt;slug&gt;/round1/post.md</span><br><span class="line">rednote/&lt;slug&gt;/round1/cards.json</span><br></pre></td></tr></tbody></table></figure>
+
 <p>This article ultimately creates only one round. Its motivation, production process, plugin structure, and benefits are one topic; splitting it into three rounds would leave the latter two without necessary context.</p>
 <h2 id="3-2-小红书如何决定拆成几轮"><a href="#3-2-小红书如何决定拆成几轮" class="headerlink" title="3.2. How RedNote decides the number of rounds"></a>3.2. How RedNote decides the number of rounds</h2><p>RedNote splitting considers themes first, then sections. AI extracts the article’s subject, target reader, core judgment, actionable information, and real material, then judges whether each candidate theme remains complete when separated.</p>
 <p>A round must answer three questions: what it discusses, why it is worth reading, and what readers can do. It also needs its own context, benefit, and visual material. A mere step in the long article, or content requiring “the previous round” to understand, remains in the same note.</p>
 <p>After deciding the count, each round writes its context in <code>series-plan.json</code> before writing <code>cards.json</code>. The first card states the topic and target reader; each middle card advances one point; the last closes the conclusion or asks a concrete question. Images prioritize real screenshots and materials, then redraws, text-and-image cards, and AI scenes. Finally, read each round’s body and cards separately as a “stranger-reader test.”</p>
 <p>This article includes motivation, process, plugin structure, and benefits, but all answer “How was this plugin made?” Separating them would remove the structure and benefits from their product context, so one round remains.</p>
 <h2 id="3-3-先检查，再决定怎样投递草稿"><a href="#3-3-先检查，再决定怎样投递草稿" class="headerlink" title="3.3. Inspect first, then decide how to deliver drafts"></a>3.3. Inspect first, then decide how to deliver drafts</h2><p>Following <a target="_blank" rel="noopener" href="https://github.com/geekjourneyx/md2wechat-skill">md2wechat</a> and <a target="_blank" rel="noopener" href="https://github.com/white0dew/XiaohongshuSkills">XiaohongshuSkills</a>, I separated “generate publication packages” from “operate external platforms.” The pipeline first produces a machine-readable readiness report:</p>
-<pre><code class="language-bash">python3 pipeline.py inspect --project &lt;slug&gt; --probe
-</code></pre>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 pipeline.py inspect --project &lt;slug&gt; --probe</span><br></pre></td></tr></tbody></table></figure>
+
 <p>It lists body character count, heading count, remote images, summary length, AI-cliché risk, missing artifacts on all three channels, and adapter status. Subsequent actions trust only blockers in this report rather than guessing publishability from “the file was generated.”</p>
 <p>WeChat can connect to a separately installed <code>md2wechat</code>. The plugin calls <code>inspect</code> to check account configuration, cover, and target status, then writes the draft. AppID, Secret, and API Key remain in the external tool’s own configuration; the plugin saves only an executable path and account alias.</p>
-<pre><code class="language-bash">python3 pipeline.py send-draft \
-  --project &lt;slug&gt; \
-  --channel wechat \
-  --confirm
-</code></pre>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">python3 pipeline.py send-draft \</span><br><span class="line">  --project &lt;slug&gt; \</span><br><span class="line">  --channel wechat \</span><br><span class="line">  --confirm</span><br></pre></td></tr></tbody></table></figure>
+
 <p>RedNote is handled more conservatively. The reference project operates its creator backend through Chrome DevTools Protocol and can upload images and fill title and body, but automation is affected by page changes, login checks, and account risk control. The plugin therefore always calls its <code>--preview</code> mode: it fills only the editor, never clicks Publish, and never records “the page was filled” as “the platform draft was saved.”</p>
-<pre><code class="language-bash">python3 pipeline.py send-draft \
-  --project &lt;slug&gt; \
-  --channel rednote \
-  --round round1 \
-  --confirm
-</code></pre>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">python3 pipeline.py send-draft \</span><br><span class="line">  --project &lt;slug&gt; \</span><br><span class="line">  --channel rednote \</span><br><span class="line">  --round round1 \</span><br><span class="line">  --confirm</span><br></pre></td></tr></tbody></table></figure>
+
 <p>Only after RedNote explicitly reports a successful save does it record <code>draft_saved</code>. WeChat, RedNote, and every RedNote round each have their own status; <code>filled_for_review</code>, <code>draft_saved</code>, and <code>published</code> are also completely separate. Thus, a failed round does not roll back content stages already finished on other platforms.</p>
 <p>Neither external project is packaged directly into the plugin. <code>md2wechat</code>‘s license has extra requirements for commercial use and redistribution, while <code>XiaohongshuSkills</code> browser selectors must follow platform updates. Keeping an adapter layer means the plugin maintains only content contracts, capability probing, and state records; external tools can be installed and upgraded independently.</p>
 <h2 id="3-4-我觉得它目前最有价值的地方"><a href="#3-4-我觉得它目前最有价值的地方" class="headerlink" title="3.4. What I think is most valuable now"></a>3.4. What I think is most valuable now</h2><p>First, the plugin is self-contained: copying the directory carries the main Skill, internal scripts, references, and tests, without reassembling multiple repository Skills.</p>
@@ -274,15 +239,14 @@ rednote/&lt;slug&gt;/round1/cards.json
   <div class="comments" id="comments">
     
     
-
-<div class="github-comments">
-  <div class="comments-title">💬 Comments</div>
-  <p style="color: #666; font-size: 0.9em; margin-bottom: 1em;">
-    Comments require <a href="https://github.com/apps/giscus" target="_blank" rel="noopener">Giscus App</a> installed on your GitHub repository.
-  </p>
-  <script src="https://giscus.app/client.js" data-repo="wxxlamp/wxxlamp.github.io" data-repo-id="R_kgDOCiYteA" data-category="General" data-category-id="DIC_kwDOCiYteM4CelIo" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
-  </script>
-</div>
+<section class="github-comments" data-comments-repo="wxxlamp/wxxlamp.github.io" data-comments-repo-id="MDEwOlJlcG9zaXRvcnkzMTM0ODIyMzc=" data-comments-category="Announcements" data-comments-category-id="DIC_kwDOEq9b_c4DFFLD" data-comments-lang="en">
+  <h2 class="comments-title" data-zh="评论" data-en="Comments">Comments</h2>
+  <p class="comments-status" role="status" data-zh="正在加载评论…" data-en="Loading comments…">Loading comments…</p>
+  <button class="comments-retry" type="button" hidden="" data-zh="重新加载评论" data-en="Reload comments">Reload comments</button>
+  <div class="giscus"></div>
+  <noscript>请启用 JavaScript 查看评论。Please enable JavaScript to view comments.</noscript>
+</section>
+<script defer="" src="/js/src/comments.js?v=2.2"></script>
 
 
 
@@ -304,8 +268,10 @@ rednote/&lt;slug&gt;/round1/cards.json
       </main>
 
       <footer id="colophon"><div class="footer-inner"><span>© 2026 Sibo Wang <span class="footer-dot">·</span> <span data-zh="保持好奇，认真生活。" data-en="Stay curious. Live thoughtfully.">Stay curious. Live thoughtfully.</span></span><a href="/en/subscribe/"><svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 10a9 9 0 0 1 9 9M5 4a15 15 0 0 1 15 15"></path><circle cx="5" cy="19" r="1"></circle></svg> RSS</a></div>
-<div class="site-stats"><span data-zh="访问" data-en="Visits">Visits</span> <span id="busuanzi_value_site_pv">—</span> · <span data-zh="访客" data-en="Readers">Readers</span> <span id="busuanzi_value_site_uv">—</span> · Powered by <a target="_blank" href="https://hexo.io/" rel="noopener noopener">Hexo</a></div>
-<script async="" src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="site-stats">
+  
+  Powered by <a target="_blank" href="https://hexo.io/" rel="noopener noopener">Hexo</a>
+</div>
 
       </footer>
 
@@ -325,8 +291,8 @@ rednote/&lt;slug&gt;/round1/cards.json
 
   
 
-    <script type="text/javascript" src="/js/src/theme.js?v=2"></script>
-<script type="text/javascript" src="/js/src/bootstrap.js?v=2"></script>
+    <script type="text/javascript" src="/js/src/theme.js?v=2.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.2"></script>
 
   
 

@@ -35,18 +35,18 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2" />
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.2" />
 
-<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2.2">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2.2">
 <meta name="theme-color" content="#244f43">
 
 
-<link rel="stylesheet" type="text/css" href="/css/style.css?v=2" />
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.2" />
 
 
 
-<script defer src="/js/src/site.js?v=2"></script>
+<script defer src="/js/src/site.js?v=2.2"></script>
 
 
 
@@ -96,6 +96,14 @@
     y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
   })(window, document, "clarity", "script", "ydyci83xyu");
 </script>
+
+<script defer src="https://cloud.umami.is/script.js"
+  data-website-id="27d58970-f2c7-47fb-a0ea-380f8123c229"
+  data-domains="wxxlamp.cn"
+  data-exclude-search="true"
+  data-exclude-hash="true"></script>
+
+
 
 
 
@@ -150,7 +158,7 @@
 </ol>
 <p>经过查看查看监控报表发现，jvm和os的表现一切正常，所以不存在系统没有消费能力的情况，case1排除。代码中也没有可能发生返回稍后消费的情况，case3排除，所以只能是case2。</p>
 <p>那么分析metaQ的日志可以发现下面的情况：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WARN RocketmqClient - consumeMessage exception: java.util.ConcurrentModificationException, java.util.ArrayList.forEach(ArrarayList.java:1260) </span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WARN RocketmqClient - consumeMessage exception: java.util.ConcurrentModificationException, java.util.ArrayList.forEach(ArrarayList.java:1260) </span><br></pre></td></tr></table></figure>
 
 <p>发现系统抛出了<code>ConcurrentModificationException</code>这样的并发修改异常，此时基本可以确定是因为多线程访问系统的原因所导致的。而这个异常基本上是和集合的并发修改异常有关的，所以几乎确定了问题的原因。</p>
 <p>问题代码如下：</p>
@@ -191,28 +199,14 @@
   <div class="comments" id="comments">
     
     
-
-<div class="github-comments">
-  <div class="comments-title">💬 Comments</div>
-  <p style="color: #666; font-size: 0.9em; margin-bottom: 1em;">
-    Comments require <a href="https://github.com/apps/giscus" target="_blank" rel="noopener">Giscus App</a> installed on your GitHub repository.
-  </p>
-  <script src="https://giscus.app/client.js"
-    data-repo="wxxlamp/wxxlamp.github.io"
-    data-repo-id="R_kgDOCiYteA"
-    data-category="General"
-    data-category-id="DIC_kwDOCiYteM4CelIo"
-    data-mapping="pathname"
-    data-strict="0"
-    data-reactions-enabled="1"
-    data-emit-metadata="0"
-    data-input-position="bottom"
-    data-theme="light"
-    data-lang="en"
-    crossorigin="anonymous"
-    async>
-  </script>
-</div>
+<section class="github-comments" data-comments-repo="wxxlamp/wxxlamp.github.io" data-comments-repo-id="MDEwOlJlcG9zaXRvcnkzMTM0ODIyMzc=" data-comments-category="Announcements" data-comments-category-id="DIC_kwDOEq9b_c4DFFLD" data-comments-lang="zh-CN">
+  <h2 class="comments-title" data-zh="评论" data-en="Comments">评论</h2>
+  <p class="comments-status" role="status" data-zh="正在加载评论…" data-en="Loading comments…">正在加载评论…</p>
+  <button class="comments-retry" type="button" hidden data-zh="重新加载评论" data-en="Reload comments">重新加载评论</button>
+  <div class="giscus"></div>
+  <noscript>请启用 JavaScript 查看评论。Please enable JavaScript to view comments.</noscript>
+</section>
+<script defer src="/js/src/comments.js?v=2.2"></script>
 
 
 
@@ -234,8 +228,10 @@
       </main>
 
       <footer id="colophon"><div class="footer-inner"><span>© 2026 王星星 <span class="footer-dot">·</span> <span data-zh="保持好奇，认真生活。" data-en="Stay curious. Live thoughtfully.">保持好奇，认真生活。</span></span><a href="/subscribe/"><svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 10a9 9 0 0 1 9 9M5 4a15 15 0 0 1 15 15"/><circle cx="5" cy="19" r="1"/></svg> RSS</a></div>
-<div class="site-stats"><span data-zh="访问" data-en="Visits">访问</span> <span id="busuanzi_value_site_pv">—</span> · <span data-zh="访客" data-en="Readers">访客</span> <span id="busuanzi_value_site_uv">—</span> · Powered by <a target="_blank" href="https://hexo.io/" rel="noopener noopener">Hexo</a></div>
-<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="site-stats">
+  
+  Powered by <a target="_blank" href="https://hexo.io/" rel="noopener noopener">Hexo</a>
+</div>
 
       </footer>
 
@@ -255,8 +251,8 @@
 
   
 
-    <script type="text/javascript" src="/js/src/theme.js?v=2"></script>
-<script type="text/javascript" src="/js/src/bootstrap.js?v=2"></script>
+    <script type="text/javascript" src="/js/src/theme.js?v=2.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.2"></script>
 
   </body>
 </html>

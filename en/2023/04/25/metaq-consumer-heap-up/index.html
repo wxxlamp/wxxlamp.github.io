@@ -33,18 +33,18 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2">
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.2">
 
-<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2.2">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2.2">
 <meta name="theme-color" content="#244f43">
 
 
-<link rel="stylesheet" type="text/css" href="/css/style.css?v=2">
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.2">
 
 
 
-<script defer="" src="/js/src/site.js?v=2"></script>
+<script defer="" src="/js/src/site.js?v=2.2"></script>
 
 
 
@@ -95,6 +95,10 @@
   })(window, document, "clarity", "script", "ydyci83xyu");
 </script>
 
+<script defer="" src="https://cloud.umami.is/script.js" data-website-id="27d58970-f2c7-47fb-a0ea-380f8123c229" data-domains="wxxlamp.cn" data-exclude-search="true" data-exclude-hash="true"></script>
+
+
+
 
 
   <meta name="generator" content="Hexo 8.1.1"></head>
@@ -142,36 +146,9 @@
 <p>Note: MetaQ is an internal Alibaba product whose open-source version is called RocketMQ.</p>
 </blockquote>
 <h2 id="问题现象"><a href="#问题现象" class="headerlink" title="Symptoms"></a>Symptoms</h2><p>For special reasons, one application in the business I owned needed its messaging configuration changed from Spring Cloud Stream to native MetaQ. The configurations before and after the change were:</p>
-<pre><code class="language-properties">spring.cloud.stream.bindings.consumerA.group=CID_CONSUMER_A
-spring.cloud.stream.bindings.consumerA.contentType=text/plain
-spring.cloud.stream.bindings.consumerA.destination=CONSUMER_A_TOPIC
-spring.cloud.stream.metaq.bindings.consumerA.consumer.tags=CONSUMER_A_TOPIC_TAG
+<figure class="highlight properties"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring.cloud.stream.bindings.consumerA.group</span>=<span class="string">CID_CONSUMER_A</span></span><br><span class="line"><span class="attr">spring.cloud.stream.bindings.consumerA.contentType</span>=<span class="string">text/plain</span></span><br><span class="line"><span class="attr">spring.cloud.stream.bindings.consumerA.destination</span>=<span class="string">CONSUMER_A_TOPIC</span></span><br><span class="line"><span class="attr">spring.cloud.stream.metaq.bindings.consumerA.consumer.tags</span>=<span class="string">CONSUMER_A_TOPIC_TAG</span></span><br><span class="line"></span><br><span class="line"><span class="attr">spring.cloud.stream.bindings.consumerB.group</span>=<span class="string">CID_CONSUMER_A</span></span><br><span class="line"><span class="attr">spring.cloud.stream.bindings.consumerB.contentType</span>=<span class="string">text/plain</span></span><br><span class="line"><span class="attr">spring.cloud.stream.bindings.consumerB.destination</span>=<span class="string">CONSUMER_B_TOPIC</span></span><br><span class="line"><span class="attr">spring.cloud.stream.metaq.bindings.consumerB.consumer.tags</span>=<span class="string">CONSUMER_B_TOPIC_TAG</span></span><br><span class="line"></span><br><span class="line"><span class="attr">spring.cloud.stream.bindings.consumerC.group</span>=<span class="string">CID_CONSUMER_A</span></span><br><span class="line"><span class="attr">spring.cloud.stream.bindings.consumerC.contentType</span>=<span class="string">text/plain</span></span><br><span class="line"><span class="attr">spring.cloud.stream.bindings.consumerC.destination</span>=<span class="string">CONSUMER_C_TOPIC</span></span><br><span class="line"><span class="attr">spring.cloud.stream.metaq.bindings.consumerC.consumer.tags</span>=<span class="string">CONSUMER_C_TOPIC_TAG</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight properties"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring.metaq.consumers[0].consumer-group</span>=<span class="string">CID_CONSUMER_A</span></span><br><span class="line"><span class="attr">spring.metaq.consumers[0].topic</span>=<span class="string">CONSUMER_A_TOPIC</span></span><br><span class="line"><span class="attr">spring.metaq.consumers[0].sub-expression</span>=<span class="string">CONSUMER_A_TOPIC_TAG</span></span><br><span class="line"><span class="attr">spring.metaq.consumers[0].message-listener-ref</span>=<span class="string">consumerAListener</span></span><br><span class="line"></span><br><span class="line"><span class="attr">spring.cloud.stream.bindings.consumerB.group</span>=<span class="string">CID_CONSUMER_A</span></span><br><span class="line"><span class="attr">spring.cloud.stream.bindings.consumerB.contentType</span>=<span class="string">text/plain</span></span><br><span class="line"><span class="attr">spring.cloud.stream.bindings.consumerB.destination</span>=<span class="string">CONSUMER_B_TOPIC</span></span><br><span class="line"><span class="attr">spring.cloud.stream.metaq.bindings.consumerB.consumer.tags</span>=<span class="string">CONSUMER_B_TOPIC_TAG</span></span><br><span class="line"></span><br><span class="line"><span class="attr">spring.cloud.stream.bindings.consumerC.group</span>=<span class="string">CID_CONSUMER_A</span></span><br><span class="line"><span class="attr">spring.cloud.stream.bindings.consumerC.contentType</span>=<span class="string">text/plain</span></span><br><span class="line"><span class="attr">spring.cloud.stream.bindings.consumerC.destination</span>=<span class="string">CONSUMER_C_TOPIC</span></span><br><span class="line"><span class="attr">spring.cloud.stream.metaq.bindings.consumerC.consumer.tags</span>=<span class="string">CONSUMER_C_TOPIC_TAG</span></span><br></pre></td></tr></tbody></table></figure>
 
-spring.cloud.stream.bindings.consumerB.group=CID_CONSUMER_A
-spring.cloud.stream.bindings.consumerB.contentType=text/plain
-spring.cloud.stream.bindings.consumerB.destination=CONSUMER_B_TOPIC
-spring.cloud.stream.metaq.bindings.consumerB.consumer.tags=CONSUMER_B_TOPIC_TAG
-
-spring.cloud.stream.bindings.consumerC.group=CID_CONSUMER_A
-spring.cloud.stream.bindings.consumerC.contentType=text/plain
-spring.cloud.stream.bindings.consumerC.destination=CONSUMER_C_TOPIC
-spring.cloud.stream.metaq.bindings.consumerC.consumer.tags=CONSUMER_C_TOPIC_TAG
-</code></pre>
-<pre><code class="language-properties">spring.metaq.consumers[0].consumer-group=CID_CONSUMER_A
-spring.metaq.consumers[0].topic=CONSUMER_A_TOPIC
-spring.metaq.consumers[0].sub-expression=CONSUMER_A_TOPIC_TAG
-spring.metaq.consumers[0].message-listener-ref=consumerAListener
-
-spring.cloud.stream.bindings.consumerB.group=CID_CONSUMER_A
-spring.cloud.stream.bindings.consumerB.contentType=text/plain
-spring.cloud.stream.bindings.consumerB.destination=CONSUMER_B_TOPIC
-spring.cloud.stream.metaq.bindings.consumerB.consumer.tags=CONSUMER_B_TOPIC_TAG
-
-spring.cloud.stream.bindings.consumerC.group=CID_CONSUMER_A
-spring.cloud.stream.bindings.consumerC.contentType=text/plain
-spring.cloud.stream.bindings.consumerC.destination=CONSUMER_C_TOPIC
-spring.cloud.stream.metaq.bindings.consumerC.consumer.tags=CONSUMER_C_TOPIC_TAG
-</code></pre>
 <p>When half the machines had been deployed and we began observing the canary rollout, messages started accumulating:</p>
 <img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/a563e111_metaq-consumer-heap-up-1.png" align="middle">
 
@@ -207,21 +184,8 @@ spring.cloud.stream.metaq.bindings.consumerC.consumer.tags=CONSUMER_C_TOPIC_TAG
 <h3 id="问题根因"><a href="#问题根因" class="headerlink" title="Root Cause"></a>Root Cause</h3><p>At this point, the cause is clear. During startup, Spring Cloud Stream creates its own <code>MetaPushConsumer</code>, which is effectively a new <code>MQConsumerInner</code>. One <code>ConsumerGroup</code> therefore has two <code>MQConsumerInner</code> instances, violating MetaQ’s required one-to-one mapping. By default, MetaQ replaces the old mapping with the new one. The native MetaQ consumer consequently replaces Spring Cloud Stream’s consumer.</p>
 <p>That is why, for <code>ConsumerA</code> on deployed machines, only the native MetaQ subscription remained.</p>
 <h2 id="解决思路"><a href="#解决思路" class="headerlink" title="Solution"></a>Solution</h2><p>Change the consumer ID:</p>
-<pre><code class="language-properties">spring.metaq.consumers[0].consumer-group=CID_CONSUMER_A
-spring.metaq.consumers[0].topic=CONSUMER_A_TOPIC
-spring.metaq.consumers[0].sub-expression=CONSUMER_A_TOPIC_TAG
-spring.metaq.consumers[0].message-listener-ref=consumerAListener
+<figure class="highlight properties"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring.metaq.consumers[0].consumer-group</span>=<span class="string">CID_CONSUMER_A</span></span><br><span class="line"><span class="attr">spring.metaq.consumers[0].topic</span>=<span class="string">CONSUMER_A_TOPIC</span></span><br><span class="line"><span class="attr">spring.metaq.consumers[0].sub-expression</span>=<span class="string">CONSUMER_A_TOPIC_TAG</span></span><br><span class="line"><span class="attr">spring.metaq.consumers[0].message-listener-ref</span>=<span class="string">consumerAListener</span></span><br><span class="line"></span><br><span class="line"><span class="attr">spring.cloud.stream.bindings.consumerB.group</span>=<span class="string">CID_CONSUMER_B</span></span><br><span class="line"><span class="attr">spring.cloud.stream.bindings.consumerB.contentType</span>=<span class="string">text/plain</span></span><br><span class="line"><span class="attr">spring.cloud.stream.bindings.consumerB.destination</span>=<span class="string">CONSUMER_B_TOPIC</span></span><br><span class="line"><span class="attr">spring.cloud.stream.metaq.bindings.consumerB.consumer.tags</span>=<span class="string">CONSUMER_B_TOPIC_TAG</span></span><br><span class="line"></span><br><span class="line"><span class="attr">spring.cloud.stream.bindings.consumerC.group</span>=<span class="string">CID_CONSUMER_B</span></span><br><span class="line"><span class="attr">spring.cloud.stream.bindings.consumerC.contentType</span>=<span class="string">text/plain</span></span><br><span class="line"><span class="attr">spring.cloud.stream.bindings.consumerC.destination</span>=<span class="string">CONSUMER_C_TOPIC</span></span><br><span class="line"><span class="attr">spring.cloud.stream.metaq.bindings.consumerC.consumer.tags</span>=<span class="string">CONSUMER_C_TOPIC_TAG</span></span><br></pre></td></tr></tbody></table></figure>
 
-spring.cloud.stream.bindings.consumerB.group=CID_CONSUMER_B
-spring.cloud.stream.bindings.consumerB.contentType=text/plain
-spring.cloud.stream.bindings.consumerB.destination=CONSUMER_B_TOPIC
-spring.cloud.stream.metaq.bindings.consumerB.consumer.tags=CONSUMER_B_TOPIC_TAG
-
-spring.cloud.stream.bindings.consumerC.group=CID_CONSUMER_B
-spring.cloud.stream.bindings.consumerC.contentType=text/plain
-spring.cloud.stream.bindings.consumerC.destination=CONSUMER_C_TOPIC
-spring.cloud.stream.metaq.bindings.consumerC.consumer.tags=CONSUMER_C_TOPIC_TAG
-</code></pre>
 <h2 id="思考和总结"><a href="#思考和总结" class="headerlink" title="Reflections and Summary"></a>Reflections and Summary</h2><ol>
 <li>The cause was not complicated, but many people might stop at the first layer—an inconsistent subscription relationship caused the backlog. We still need the curiosity to investigate more deeply.</li>
 <li>Avoid maintaining two sets of configuration in production wherever possible, because doing so adds cognitive overhead.</li>
@@ -251,15 +215,14 @@ spring.cloud.stream.metaq.bindings.consumerC.consumer.tags=CONSUMER_C_TOPIC_TAG
   <div class="comments" id="comments">
     
     
-
-<div class="github-comments">
-  <div class="comments-title">💬 Comments</div>
-  <p style="color: #666; font-size: 0.9em; margin-bottom: 1em;">
-    Comments require <a href="https://github.com/apps/giscus" target="_blank" rel="noopener">Giscus App</a> installed on your GitHub repository.
-  </p>
-  <script src="https://giscus.app/client.js" data-repo="wxxlamp/wxxlamp.github.io" data-repo-id="R_kgDOCiYteA" data-category="General" data-category-id="DIC_kwDOCiYteM4CelIo" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
-  </script>
-</div>
+<section class="github-comments" data-comments-repo="wxxlamp/wxxlamp.github.io" data-comments-repo-id="MDEwOlJlcG9zaXRvcnkzMTM0ODIyMzc=" data-comments-category="Announcements" data-comments-category-id="DIC_kwDOEq9b_c4DFFLD" data-comments-lang="en">
+  <h2 class="comments-title" data-zh="评论" data-en="Comments">Comments</h2>
+  <p class="comments-status" role="status" data-zh="正在加载评论…" data-en="Loading comments…">Loading comments…</p>
+  <button class="comments-retry" type="button" hidden="" data-zh="重新加载评论" data-en="Reload comments">Reload comments</button>
+  <div class="giscus"></div>
+  <noscript>请启用 JavaScript 查看评论。Please enable JavaScript to view comments.</noscript>
+</section>
+<script defer="" src="/js/src/comments.js?v=2.2"></script>
 
 
 
@@ -281,8 +244,10 @@ spring.cloud.stream.metaq.bindings.consumerC.consumer.tags=CONSUMER_C_TOPIC_TAG
       </main>
 
       <footer id="colophon"><div class="footer-inner"><span>© 2026 Sibo Wang <span class="footer-dot">·</span> <span data-zh="保持好奇，认真生活。" data-en="Stay curious. Live thoughtfully.">Stay curious. Live thoughtfully.</span></span><a href="/en/subscribe/"><svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 10a9 9 0 0 1 9 9M5 4a15 15 0 0 1 15 15"></path><circle cx="5" cy="19" r="1"></circle></svg> RSS</a></div>
-<div class="site-stats"><span data-zh="访问" data-en="Visits">Visits</span> <span id="busuanzi_value_site_pv">—</span> · <span data-zh="访客" data-en="Readers">Readers</span> <span id="busuanzi_value_site_uv">—</span> · Powered by <a target="_blank" href="https://hexo.io/" rel="noopener noopener">Hexo</a></div>
-<script async="" src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="site-stats">
+  
+  Powered by <a target="_blank" href="https://hexo.io/" rel="noopener noopener">Hexo</a>
+</div>
 
       </footer>
 
@@ -302,8 +267,8 @@ spring.cloud.stream.metaq.bindings.consumerC.consumer.tags=CONSUMER_C_TOPIC_TAG
 
   
 
-    <script type="text/javascript" src="/js/src/theme.js?v=2"></script>
-<script type="text/javascript" src="/js/src/bootstrap.js?v=2"></script>
+    <script type="text/javascript" src="/js/src/theme.js?v=2.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.2"></script>
 
   
 

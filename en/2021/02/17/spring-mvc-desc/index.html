@@ -33,18 +33,18 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2">
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.2">
 
-<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2.2">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2.2">
 <meta name="theme-color" content="#244f43">
 
 
-<link rel="stylesheet" type="text/css" href="/css/style.css?v=2">
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.2">
 
 
 
-<script defer="" src="/js/src/site.js?v=2"></script>
+<script defer="" src="/js/src/site.js?v=2.2"></script>
 
 
 
@@ -94,6 +94,10 @@
     y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
   })(window, document, "clarity", "script", "ydyci83xyu");
 </script>
+
+<script defer="" src="https://cloud.umami.is/script.js" data-website-id="27d58970-f2c7-47fb-a0ea-380f8123c229" data-domains="wxxlamp.cn" data-exclude-search="true" data-exclude-hash="true"></script>
+
+
 
 
 
@@ -162,158 +166,24 @@
 <p>After the target method completes, Spring invokes the chain’s interceptor <code>postHandle</code> methods.</p>
 <p>Spring MVC returns a <code>ModelAndView</code>, which must then be rendered: its view is written into the response.</p>
 <p>When an exception occurs, it is routed to the application’s exception handler, whose parameters and return value also require customization through the <code>HandlerExceptionResolver</code> family. Methods marked with <code>@ExceptionHandler</code> have already been found and registered by <code>ExceptionHandlerMethodResolver</code>, mapping each exception to its method. Calling that method handles the exception, and the invocation is nearly identical to an ordinary handler call.</p>
-<pre><code class="language-java">// DispatherServlet#doDispath关于异常处理的部分源码
-protected void doDispatch(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    ...
-    try {
-        ...
-        try {  
-            ...  
-        }
-        catch (Exception ex) {
-            dispatchException = ex;
-        }
-        catch (Throwable err) {
-            // As of 4.3, we're processing Errors thrown from handler methods as well,
-            // making them available for @ExceptionHandler methods and other scenarios.
-            dispatchException = new NestedServletException("Handler dispatch failed", err);
-        }
-        // 处理异常和渲染modelAndView的方法
-        processDispatchResult(processedRequest, response, mappedHandler, mv, dispatchException);
-    }
-    ...
-}
-private void processDispatchResult(HttpServletRequest request, HttpServletResponse response,
-			@Nullable HandlerExecutionChain mappedHandler, @Nullable ModelAndView mv,
-			@Nullable Exception exception) throws Exception {
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// DispatherServlet#doDispath关于异常处理的部分源码</span></span><br><span class="line"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">doDispatch</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> Exception {</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">try</span> {</span><br><span class="line">        ...</span><br><span class="line">        <span class="keyword">try</span> {  </span><br><span class="line">            ...  </span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">catch</span> (Exception ex) {</span><br><span class="line">            dispatchException = ex;</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">catch</span> (Throwable err) {</span><br><span class="line">            <span class="comment">// As of 4.3, we're processing Errors thrown from handler methods as well,</span></span><br><span class="line">            <span class="comment">// making them available for @ExceptionHandler methods and other scenarios.</span></span><br><span class="line">            dispatchException = <span class="keyword">new</span> <span class="title class_">NestedServletException</span>(<span class="string">"Handler dispatch failed"</span>, err);</span><br><span class="line">        }</span><br><span class="line">        <span class="comment">// 处理异常和渲染modelAndView的方法</span></span><br><span class="line">        processDispatchResult(processedRequest, response, mappedHandler, mv, dispatchException);</span><br><span class="line">    }</span><br><span class="line">    ...</span><br><span class="line">}</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">processDispatchResult</span><span class="params">(HttpServletRequest request, HttpServletResponse response,</span></span><br><span class="line"><span class="params">			<span class="meta">@Nullable</span> HandlerExecutionChain mappedHandler, <span class="meta">@Nullable</span> ModelAndView mv,</span></span><br><span class="line"><span class="params">			<span class="meta">@Nullable</span> Exception exception)</span> <span class="keyword">throws</span> Exception {</span><br><span class="line"></span><br><span class="line">    <span class="type">boolean</span> <span class="variable">errorView</span> <span class="operator">=</span> <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (exception != <span class="literal">null</span>) {</span><br><span class="line">        <span class="keyword">if</span> (exception <span class="keyword">instanceof</span> ModelAndViewDefiningException) {</span><br><span class="line">            logger.debug(<span class="string">"ModelAndViewDefiningException encountered"</span>, exception);</span><br><span class="line">            mv = ((ModelAndViewDefiningException) exception).getModelAndView();</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">else</span> {</span><br><span class="line">            <span class="type">Object</span> <span class="variable">handler</span> <span class="operator">=</span> (mappedHandler != <span class="literal">null</span> ? mappedHandler.getHandler() : <span class="literal">null</span>);</span><br><span class="line">            <span class="comment">// 真正处理异常的方法</span></span><br><span class="line">            mv = processHandlerException(request, response, handler, exception);</span><br><span class="line">            errorView = (mv != <span class="literal">null</span>);</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    ...</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-    boolean errorView = false;
 
-    if (exception != null) {
-        if (exception instanceof ModelAndViewDefiningException) {
-            logger.debug("ModelAndViewDefiningException encountered", exception);
-            mv = ((ModelAndViewDefiningException) exception).getModelAndView();
-        }
-        else {
-            Object handler = (mappedHandler != null ? mappedHandler.getHandler() : null);
-            // 真正处理异常的方法
-            mv = processHandlerException(request, response, handler, exception);
-            errorView = (mv != null);
-        }
-    }
-    ...
-}
-</code></pre>
+
 <h3 id="启动流程"><a href="#启动流程" class="headerlink" title="Startup Flow"></a>Startup Flow</h3><blockquote>
 <p>This discussion assumes Spring Boot’s default auto-configuration.</p>
 </blockquote>
 <p>After clicking Spring Boot’s Run button, what exactly happens?</p>
 <p>Before answering, remember that Spring MVC startup must use Spring IoC while also conforming to the Servlet specification by initializing a servlet.</p>
 <p>Spring Boot first obtains an <code>AnnotationConfigServletWebServerApplicationContext</code>, then enters its superclass method <code>AbstractApplicationContext#finishBeanFactoryInitialization</code>, which traverses every bean and performs post-processing. <code>RequestMappingHandlerMapping</code> participates in that processing. It finds classes annotated with <code>@Controller</code> or <code>@RequestMapping</code> and associates their <code>RequestMappingInfo</code>, containing URL mappings, with <code>HandlerMethod</code> objects. It registers both application controllers and Spring MVC’s built-in default error handler, <code>BasicErrorController</code>.</p>
-<pre><code class="language-java">// 附：AbstractHandlerMethodMapping.java 部分源码
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 附：AbstractHandlerMethodMapping.java 部分源码</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Detects handler methods at initialization.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">afterPropertiesSet</span><span class="params">()</span> {</span><br><span class="line">   initHandlerMethods();</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Scan beans in the ApplicationContext, detect and register handler methods.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">initHandlerMethods</span><span class="params">()</span> {</span><br><span class="line">   </span><br><span class="line">   ... </span><br><span class="line">       </span><br><span class="line">   <span class="keyword">for</span> (String beanName : beanNames) {</span><br><span class="line">      <span class="keyword">if</span> (!beanName.startsWith(SCOPED_TARGET_NAME_PREFIX)) {</span><br><span class="line">         Class&lt;?&gt; beanType = <span class="literal">null</span>;</span><br><span class="line">         <span class="keyword">try</span> {</span><br><span class="line">            beanType = obtainApplicationContext().getType(beanName);</span><br><span class="line">         }</span><br><span class="line">         <span class="keyword">catch</span> (Throwable ex) {</span><br><span class="line">            <span class="comment">// An unresolvable bean type, probably from a lazy bean - let's ignore it.</span></span><br><span class="line">            <span class="keyword">if</span> (logger.isDebugEnabled()) {</span><br><span class="line">               logger.debug(<span class="string">"Could not resolve target class for bean with name '"</span> + beanName + <span class="string">"'"</span>, ex);</span><br><span class="line">            }</span><br><span class="line">         }</span><br><span class="line">         <span class="comment">// 如果该bean有@Controller或者@RequestMapping注解，则获取它的方法</span></span><br><span class="line">         <span class="keyword">if</span> (beanType != <span class="literal">null</span> &amp;&amp; isHandler(beanType)) {</span><br><span class="line">            detectHandlerMethods(beanName);</span><br><span class="line">         }</span><br><span class="line">      }</span><br><span class="line">   }</span><br><span class="line">   <span class="comment">// 后置处理，由子类实现，目前为空</span></span><br><span class="line">   handlerMethodsInitialized(getHandlerMethods());</span><br><span class="line">}</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * Look for handler methods in a handler.</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@param</span> handler the bean name of a handler or a handler instance</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">detectHandlerMethods</span><span class="params">(<span class="keyword">final</span> Object handler)</span> {</span><br><span class="line">    Class&lt;?&gt; handlerType = (handler <span class="keyword">instanceof</span> String ?</span><br><span class="line">			obtainApplicationContext().getType((String) handler) : handler.getClass());</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (handlerType != <span class="literal">null</span>) {</span><br><span class="line">		<span class="keyword">final</span> Class&lt;?&gt; userType = ClassUtils.getUserClass(handlerType);</span><br><span class="line">        <span class="comment">// 将该类中的method和对应的RequestMappingInfo装入map中</span></span><br><span class="line">        Map&lt;Method, T&gt; methods = MethodIntrospector.selectMethods(userType,</span><br><span class="line">				(MethodIntrospector.MetadataLookup&lt;T&gt;) method -&gt; {</span><br><span class="line">                    <span class="keyword">try</span> {</span><br><span class="line">						<span class="keyword">return</span> getMappingForMethod(method, userType);</span><br><span class="line">					}</span><br><span class="line">					<span class="keyword">catch</span> (Throwable ex) {</span><br><span class="line">						<span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalStateException</span>(<span class="string">"Invalid mapping on handler class ["</span> +</span><br><span class="line">								userType.getName() + <span class="string">"]: "</span> + method, ex);</span><br><span class="line">                    }</span><br><span class="line">				});</span><br><span class="line">		<span class="keyword">if</span> (logger.isDebugEnabled()) {</span><br><span class="line">			logger.debug(methods.size() + <span class="string">" request handler methods found on "</span> + userType + <span class="string">": "</span> + methods);</span><br><span class="line">		}</span><br><span class="line">		methods.forEach((method, mapping) -&gt; {</span><br><span class="line">			<span class="type">Method</span> <span class="variable">invocableMethod</span> <span class="operator">=</span> AopUtils.selectInvocableMethod(method, userType);</span><br><span class="line">            <span class="comment">// 形成HandlerMethod类，并将该类与mapping进行映射</span></span><br><span class="line">			registerHandlerMethod(handler, invocableMethod, mapping);</span><br><span class="line">		});</span><br><span class="line">	}</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-/**
- * Detects handler methods at initialization.
- */
-@Override
-public void afterPropertiesSet() {
-   initHandlerMethods();
-}
-
-/**
- * Scan beans in the ApplicationContext, detect and register handler methods.
- */
-protected void initHandlerMethods() {
-   
-   ... 
-       
-   for (String beanName : beanNames) {
-      if (!beanName.startsWith(SCOPED_TARGET_NAME_PREFIX)) {
-         Class&lt;?&gt; beanType = null;
-         try {
-            beanType = obtainApplicationContext().getType(beanName);
-         }
-         catch (Throwable ex) {
-            // An unresolvable bean type, probably from a lazy bean - let's ignore it.
-            if (logger.isDebugEnabled()) {
-               logger.debug("Could not resolve target class for bean with name '" + beanName + "'", ex);
-            }
-         }
-         // 如果该bean有@Controller或者@RequestMapping注解，则获取它的方法
-         if (beanType != null &amp;&amp; isHandler(beanType)) {
-            detectHandlerMethods(beanName);
-         }
-      }
-   }
-   // 后置处理，由子类实现，目前为空
-   handlerMethodsInitialized(getHandlerMethods());
-}
-/**
-  * Look for handler methods in a handler.
-  * @param handler the bean name of a handler or a handler instance
-  */
-protected void detectHandlerMethods(final Object handler) {
-    Class&lt;?&gt; handlerType = (handler instanceof String ?
-			obtainApplicationContext().getType((String) handler) : handler.getClass());
-
-	if (handlerType != null) {
-		final Class&lt;?&gt; userType = ClassUtils.getUserClass(handlerType);
-        // 将该类中的method和对应的RequestMappingInfo装入map中
-        Map&lt;Method, T&gt; methods = MethodIntrospector.selectMethods(userType,
-				(MethodIntrospector.MetadataLookup&lt;T&gt;) method -&gt; {
-                    try {
-						return getMappingForMethod(method, userType);
-					}
-					catch (Throwable ex) {
-						throw new IllegalStateException("Invalid mapping on handler class [" +
-								userType.getName() + "]: " + method, ex);
-                    }
-				});
-		if (logger.isDebugEnabled()) {
-			logger.debug(methods.size() + " request handler methods found on " + userType + ": " + methods);
-		}
-		methods.forEach((method, mapping) -&gt; {
-			Method invocableMethod = AopUtils.selectInvocableMethod(method, userType);
-            // 形成HandlerMethod类，并将该类与mapping进行映射
-			registerHandlerMethod(handler, invocableMethod, mapping);
-		});
-	}
-}
-</code></pre>
 <p>Servlets are initialized through their <code>init</code> method, so the Spring MVC servlet must also initialize there.</p>
 <p>After <code>AbstractApplicationContext#finishBeanFactoryInitialization</code>, Spring executes <code>AbstractApplicationContext#finishRefresh</code>. During this stage it starts Tomcat. Tomcat startup calls <code>StandardWrapper#loadServlet</code>, which initializes <code>DefaultServlet</code> and sets its default properties.</p>
 <h3 id="初始化流程"><a href="#初始化流程" class="headerlink" title="Initialization Flow"></a>Initialization Flow</h3><p>After the service starts and a request enters the server, it passes through valves and filters before <code>StandardWrapper#allocate</code> allocates a servlet and initializes <code>DispatherServlet</code>. The servlet chiefly runs <code>DispatherServlet#initStrategies</code>, which initializes <code>HandlerMapping</code>, <code>HandlerAdapter</code>, <code>HandlerExceptionResolver</code>, <code>ViewResolver</code>, and related strategies. If corresponding beans exist, it uses them; otherwise it loads defaults from <code>dispatcherServlet.properties</code>.</p>
 <h3 id="设计思路"><a href="#设计思路" class="headerlink" title="Design Ideas"></a>Design Ideas</h3><ol>
 <li><p>Spring MVC makes extensive use of factory, composite, strategy, filter-chain, and other patterns. They appear in exception handling, argument resolution, return-value rendering, and method adapters, which also use the proxy pattern. A typical form is:</p>
-<pre><code class="language-java">interface Handler{
-    public boolean supports(Object obj);
-    public Object resolve(Object obj);
-}
-class Composite implements Handler{
-    List&lt;Handler&gt; handlerList;
-    
-    @Override
-       public boolean supports(Object obj){
-        for(Handler handler: handlerList) {
-            if(handler.supports(obj)) {
-                return true;
-            }
-        }
-        return false;
-    }
-    @Override
-    public Object resolve(Object obj){
-         for(Handler handler: handlerList) {
-            if(handler.supports(obj)) {
-                return handler.resolve(obj);
-            }
-        }
-    }
-}
-class DiyHandler implements Handler{
-    ...
-}
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">Handler</span>{</span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">supports</span><span class="params">(Object obj)</span>;</span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">resolve</span><span class="params">(Object obj)</span>;</span><br><span class="line">}</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Composite</span> <span class="keyword">implements</span> <span class="title class_">Handler</span>{</span><br><span class="line">    List&lt;Handler&gt; handlerList;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">   	<span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">supports</span><span class="params">(Object obj)</span>{</span><br><span class="line">        <span class="keyword">for</span>(Handler handler: handlerList) {</span><br><span class="line">            <span class="keyword">if</span>(handler.supports(obj)) {</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    }</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">resolve</span><span class="params">(Object obj)</span>{</span><br><span class="line">         <span class="keyword">for</span>(Handler handler: handlerList) {</span><br><span class="line">            <span class="keyword">if</span>(handler.supports(obj)) {</span><br><span class="line">                <span class="keyword">return</span> handler.resolve(obj);</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">DiyHandler</span> <span class="keyword">implements</span> <span class="title class_">Handler</span>{</span><br><span class="line">    ...</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li><p>While examining chains of responsibility, I found that Spring MVC’s chain differs from Tomcat’s. Tomcat implements the conventional pattern, while Spring MVC’s chain acts primarily as an interceptor and needs only <code>HandlerInterceptor</code> and <code>HandlerExecutionChain</code>. The former has multiple implementations representing different interceptors. Tomcat implements the pattern in two ways: pipeline/valve, whose valve implementations represent different valves, and filterChain/filter/filterConfig, where the chain schedules and executes filters while each filterConfig aggregates a filter and its configuration.</p>
 </li>
@@ -352,15 +222,14 @@ class DiyHandler implements Handler{
   <div class="comments" id="comments">
     
     
-
-<div class="github-comments">
-  <div class="comments-title">💬 Comments</div>
-  <p style="color: #666; font-size: 0.9em; margin-bottom: 1em;">
-    Comments require <a href="https://github.com/apps/giscus" target="_blank" rel="noopener">Giscus App</a> installed on your GitHub repository.
-  </p>
-  <script src="https://giscus.app/client.js" data-repo="wxxlamp/wxxlamp.github.io" data-repo-id="R_kgDOCiYteA" data-category="General" data-category-id="DIC_kwDOCiYteM4CelIo" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
-  </script>
-</div>
+<section class="github-comments" data-comments-repo="wxxlamp/wxxlamp.github.io" data-comments-repo-id="MDEwOlJlcG9zaXRvcnkzMTM0ODIyMzc=" data-comments-category="Announcements" data-comments-category-id="DIC_kwDOEq9b_c4DFFLD" data-comments-lang="en">
+  <h2 class="comments-title" data-zh="评论" data-en="Comments">Comments</h2>
+  <p class="comments-status" role="status" data-zh="正在加载评论…" data-en="Loading comments…">Loading comments…</p>
+  <button class="comments-retry" type="button" hidden="" data-zh="重新加载评论" data-en="Reload comments">Reload comments</button>
+  <div class="giscus"></div>
+  <noscript>请启用 JavaScript 查看评论。Please enable JavaScript to view comments.</noscript>
+</section>
+<script defer="" src="/js/src/comments.js?v=2.2"></script>
 
 
 
@@ -382,8 +251,10 @@ class DiyHandler implements Handler{
       </main>
 
       <footer id="colophon"><div class="footer-inner"><span>© 2026 Sibo Wang <span class="footer-dot">·</span> <span data-zh="保持好奇，认真生活。" data-en="Stay curious. Live thoughtfully.">Stay curious. Live thoughtfully.</span></span><a href="/en/subscribe/"><svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 10a9 9 0 0 1 9 9M5 4a15 15 0 0 1 15 15"></path><circle cx="5" cy="19" r="1"></circle></svg> RSS</a></div>
-<div class="site-stats"><span data-zh="访问" data-en="Visits">Visits</span> <span id="busuanzi_value_site_pv">—</span> · <span data-zh="访客" data-en="Readers">Readers</span> <span id="busuanzi_value_site_uv">—</span> · Powered by <a target="_blank" href="https://hexo.io/" rel="noopener noopener">Hexo</a></div>
-<script async="" src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="site-stats">
+  
+  Powered by <a target="_blank" href="https://hexo.io/" rel="noopener noopener">Hexo</a>
+</div>
 
       </footer>
 
@@ -403,8 +274,8 @@ class DiyHandler implements Handler{
 
   
 
-    <script type="text/javascript" src="/js/src/theme.js?v=2"></script>
-<script type="text/javascript" src="/js/src/bootstrap.js?v=2"></script>
+    <script type="text/javascript" src="/js/src/theme.js?v=2.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.2"></script>
 
   
 

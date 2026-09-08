@@ -33,18 +33,18 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2">
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.2">
 
-<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2.2">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2.2">
 <meta name="theme-color" content="#244f43">
 
 
-<link rel="stylesheet" type="text/css" href="/css/style.css?v=2">
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.2">
 
 
 
-<script defer="" src="/js/src/site.js?v=2"></script>
+<script defer="" src="/js/src/site.js?v=2.2"></script>
 
 
 
@@ -95,6 +95,10 @@
   })(window, document, "clarity", "script", "ydyci83xyu");
 </script>
 
+<script defer="" src="https://cloud.umami.is/script.js" data-website-id="27d58970-f2c7-47fb-a0ea-380f8123c229" data-domains="wxxlamp.cn" data-exclude-search="true" data-exclude-hash="true"></script>
+
+
+
 
 
   <meta name="generator" content="Hexo 8.1.1"></head>
@@ -140,114 +144,40 @@
 
       <div class="post-content" lang="en"><p>During my internship, most of the company’s RESTful requests were GET and POST requests. For parameters carried in a URL, we use <code>@PathVariable</code> and <code>@RequestParam</code> to parse and map them. For a POST body, we use <code>@RequestBody</code> to map the body to parameters. Spring deserializes with Jackson by default, though we can change this with a converter.</p>
 <h3 id="1-从一个实验开始"><a href="#1-从一个实验开始" class="headerlink" title="1. Start with an experiment"></a>1. Start with an experiment</h3><p>For a POST request, the frontend often serializes parameters as JSON in the body. The backend then parses the JSON string with <code>@RequestBody</code> and maps it to method parameters. <code>@RequestBody</code> has a limitation, as we can see from this example:</p>
-<pre><code class="language-java">@PostMapping("/1")
-public String test(@RequestBody String a, @RequestBody String b) {
-    return a + b;
-}
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@PostMapping("/1")</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">test</span><span class="params">(<span class="meta">@RequestBody</span> String a, <span class="meta">@RequestBody</span> String b)</span> {</span><br><span class="line">    <span class="keyword">return</span> a + b;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
 <p>In the HTTP request, set the method to POST and the body to:</p>
-<pre><code class="language-json">{
-    "a":"a",
-    "b":"b"
-}
-</code></pre>
+<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">{</span></span><br><span class="line">    <span class="attr">"a"</span><span class="punctuation">:</span><span class="string">"a"</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">"b"</span><span class="punctuation">:</span><span class="string">"b"</span></span><br><span class="line"><span class="punctuation">}</span></span><br></pre></td></tr></tbody></table></figure>
+
 <p>We naturally expect the program to parse a as <code>a</code>, b as <code>b</code>, and return “ab”. After running it, however, the program returns “abab”. Debugging shows that <code>@RequestBody</code> parses a as “ab” and b as “ab” as well.</p>
 <p>The experiment reveals the problem: after parsing the body, <code>@RequestBody</code> can map the result to only one parameter. When there are two parameters, it reaches its limits.</p>
 <h3 id="2-解决方案"><a href="#2-解决方案" class="headerlink" title="2. Solution"></a>2. Solution</h3><p>To solve this problem, we must turn the parameters into one. There are two ways:</p>
 <ol>
 <li><p>Wrap both parameters in an entity class.</p>
-<pre><code class="language-java">@PostMapping("/1")
-public String test(@RequestBody Ab ab) {
-    return ab.getA() + ab.getB();
-}
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@PostMapping("/1")</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">test</span><span class="params">(<span class="meta">@RequestBody</span> Ab ab)</span> {</span><br><span class="line">    <span class="keyword">return</span> ab.getA() + ab.getB();</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li><p>Wrap them in a Map and parse it.</p>
-<pre><code class="language-java">@PostMapping("/1")
-public String test(@RequestBody Map&lt;String, Object&gt; map) {
-    return map.get("a") + map.get("b");
-}
-</code></pre>
-</li>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@PostMapping("/1")</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">test</span><span class="params">(<span class="meta">@RequestBody</span> Map&lt;String, Object&gt; map)</span> {</span><br><span class="line">    <span class="keyword">return</span> map.get(<span class="string">"a"</span>) + map.get(<span class="string">"b"</span>);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure></li>
 </ol>
 <p>Both approaches have problems. With the first, we must create a new Bean to aggregate the two parameters, increasing development cost. With the second, we must parse the Map, increasing the cost of understanding the code.</p>
 <p>Could we map the body to two or more parameters? That is the core of this article: DIY a parameter parser to replace <code>@RequestBody</code> and map the body to multiple parameters.</p>
 <h3 id="3-DIY参数解析器"><a href="#3-DIY参数解析器" class="headerlink" title="3. DIY the parameter parser"></a>3. DIY the parameter parser</h3><p>Looking at the parsing source code for <code>@RequestBody</code>, we can see that <code>RequestResponseBodyMethodProcessor</code> performs body parsing and mapping. Looking further up, it implements the <code>HandlerMethodArgumentResolver</code> interface, which Spring exposes to help users customize parameter parsing. So our first step is:</p>
-<pre><code class="language-java">// 接口的第一个方法，如果返回为true，则使用该解析器，第二个方法则是具体的解析流程
-@Component
-public class RequestBodyParamProcessor implements HandlerMethodArgumentResolver{
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 接口的第一个方法，如果返回为true，则使用该解析器，第二个方法则是具体的解析流程</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RequestBodyParamProcessor</span> <span class="keyword">implements</span> <span class="title class_">HandlerMethodArgumentResolver</span>{</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">supportsParameter</span><span class="params">(MethodParameter parameter)</span> {</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">resolveArgument</span><span class="params">(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory)</span> <span class="keyword">throws</span> Exception {</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-    @Override
-    public boolean supportsParameter(MethodParameter parameter) {
-        return false;
-    }
-
-    @Override
-    public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
-        return null;
-    }
-}
-</code></pre>
 <p>Second, add this parser to the parsing chain:</p>
-<pre><code class="language-java">@Configuration
-public class Config implements WebMvcConfigurer {
-    @Autowired
-    private RequestBodyParamProcessor paramProcessor;
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Config</span> <span class="keyword">implements</span> <span class="title class_">WebMvcConfigurer</span> {</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> RequestBodyParamProcessor paramProcessor;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addArgumentResolvers</span><span class="params">(List&lt;HandlerMethodArgumentResolver&gt; resolvers)</span> {</span><br><span class="line">        resolvers.add(<span class="built_in">this</span>.paramProcessor);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-    @Override
-    public void addArgumentResolvers(List&lt;HandlerMethodArgumentResolver&gt; resolvers) {
-        resolvers.add(this.paramProcessor);
-    }
-}
-</code></pre>
 <p>These two steps give us the basic framework.</p>
 <p>Third, define a custom annotation. If the user marks a method with it, the parameters should be parsed using our custom approach.</p>
-<pre><code class="language-java">@Target(ElementType.METHOD)
-@Retention(RetentionPolicy.RUNTIME)
-public @interface RequestBodyParam {
-}
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target(ElementType.METHOD)</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> RequestBodyParam {</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
 <p>Fourth, implement the parsing logic. By reading <code>RequestResponseBodyMethodProcessor</code>, I found that it parses the body through <code>AbstractMessageConverterMethodArgumentResolver#readWithMessageConverters</code>. We can therefore write the following:</p>
-<pre><code class="language-java">@Component
-public class RequestBodyParamProcessor
-        extends AbstractMessageConverterMethodArgumentResolver implements HandlerMethodArgumentResolver{
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RequestBodyParamProcessor</span></span><br><span class="line">        <span class="keyword">extends</span> <span class="title class_">AbstractMessageConverterMethodArgumentResolver</span> <span class="keyword">implements</span> <span class="title class_">HandlerMethodArgumentResolver</span>{</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">RequestBodyParamProcessor</span><span class="params">(List&lt;HttpMessageConverter&lt;?&gt;&gt; converters)</span> {</span><br><span class="line">        <span class="built_in">super</span>(converters);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 如果有该注解，且方法为String类型则使用该Processor</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> parameter 方法参数</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> true/false</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">supportsParameter</span><span class="params">(MethodParameter parameter)</span> {</span><br><span class="line">        <span class="keyword">return</span> parameter.hasMethodAnnotation(RequestBodyParam.class) &amp;&amp;</span><br><span class="line">                parameter.getParameterType() == String.class;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">resolveArgument</span><span class="params">(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory)</span> <span class="keyword">throws</span> Exception {</span><br><span class="line">        <span class="type">HttpServletRequest</span> <span class="variable">servletRequest</span> <span class="operator">=</span> webRequest.getNativeRequest(HttpServletRequest.class);</span><br><span class="line">        <span class="keyword">assert</span> servletRequest != <span class="literal">null</span>;</span><br><span class="line">        <span class="type">ServletServerHttpRequest</span> <span class="variable">inputMsg</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ServletServerHttpRequest</span>(servletRequest);</span><br><span class="line"></span><br><span class="line">        <span class="type">Object</span> <span class="variable">body</span> <span class="operator">=</span> readWithMessageConverters(inputMsg, parameter, Map.class);</span><br><span class="line">        <span class="type">ObjectMapper</span> <span class="variable">mapper</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectMapper</span>();</span><br><span class="line">        Map&lt;String, String&gt; kv = mapper.readValue((String) body, <span class="keyword">new</span> <span class="title class_">TypeReference</span>&lt;Map&lt;String,String&gt;&gt;() {});</span><br><span class="line">        <span class="keyword">return</span> kv.get(parameter.getParameterName());</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-    public RequestBodyParamProcessor(List&lt;HttpMessageConverter&lt;?&gt;&gt; converters) {
-        super(converters);
-    }
-
-    /**
-     * 如果有该注解，且方法为String类型则使用该Processor
-     * @param parameter 方法参数
-     * @return true/false
-     */
-    @Override
-    public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.hasMethodAnnotation(RequestBodyParam.class) &amp;&amp;
-                parameter.getParameterType() == String.class;
-    }
-
-    @Override
-    public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
-        HttpServletRequest servletRequest = webRequest.getNativeRequest(HttpServletRequest.class);
-        assert servletRequest != null;
-        ServletServerHttpRequest inputMsg = new ServletServerHttpRequest(servletRequest);
-
-        Object body = readWithMessageConverters(inputMsg, parameter, Map.class);
-        ObjectMapper mapper = new ObjectMapper();
-        Map&lt;String, String&gt; kv = mapper.readValue((String) body, new TypeReference&lt;Map&lt;String,String&gt;&gt;() {});
-        return kv.get(parameter.getParameterName());
-    }
-}
-</code></pre>
 <p>At this point, our custom parameter parser is complete.</p>
 <p>Fifth, test it:</p>
-<pre><code class="language-java">@PostMapping("/1")
-@RequestBodyParam
-public String test(String a, String b) {
-    return a + b;
-}
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@PostMapping("/1")</span></span><br><span class="line"><span class="meta">@RequestBodyParam</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">test</span><span class="params">(String a, String b)</span> {</span><br><span class="line">    <span class="keyword">return</span> a + b;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
 <p>Passing the same parameters as in the earlier experiment returns “ab”. Debugging shows a=“a” and b=“b”, as required.</p>
 <h3 id="4-后记"><a href="#4-后记" class="headerlink" title="4. Afterword"></a>4. Afterword</h3><p>While developing at my internship company, I found that, because of an earlier company convention, everyone used POST requests for everything: idempotent information retrieval, updates, and even deletion. This clearly did not follow the standard, but that is another story…. The result was that when the frontend needed to retrieve information, it often sent only a few parameters wrapped in JSON in the body. If I used <code>@RequestBody</code>, I could use only the two approaches above, which led me to DIY a parameter parser. That is where this article came from.</p>
 <p>Note, however, that this parser is still toy-level. It can parse only JSON strings whose body values are String, and it is still a long way from being truly practical…..</p>
@@ -278,15 +208,14 @@ public String test(String a, String b) {
   <div class="comments" id="comments">
     
     
-
-<div class="github-comments">
-  <div class="comments-title">💬 Comments</div>
-  <p style="color: #666; font-size: 0.9em; margin-bottom: 1em;">
-    Comments require <a href="https://github.com/apps/giscus" target="_blank" rel="noopener">Giscus App</a> installed on your GitHub repository.
-  </p>
-  <script src="https://giscus.app/client.js" data-repo="wxxlamp/wxxlamp.github.io" data-repo-id="R_kgDOCiYteA" data-category="General" data-category-id="DIC_kwDOCiYteM4CelIo" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
-  </script>
-</div>
+<section class="github-comments" data-comments-repo="wxxlamp/wxxlamp.github.io" data-comments-repo-id="MDEwOlJlcG9zaXRvcnkzMTM0ODIyMzc=" data-comments-category="Announcements" data-comments-category-id="DIC_kwDOEq9b_c4DFFLD" data-comments-lang="en">
+  <h2 class="comments-title" data-zh="评论" data-en="Comments">Comments</h2>
+  <p class="comments-status" role="status" data-zh="正在加载评论…" data-en="Loading comments…">Loading comments…</p>
+  <button class="comments-retry" type="button" hidden="" data-zh="重新加载评论" data-en="Reload comments">Reload comments</button>
+  <div class="giscus"></div>
+  <noscript>请启用 JavaScript 查看评论。Please enable JavaScript to view comments.</noscript>
+</section>
+<script defer="" src="/js/src/comments.js?v=2.2"></script>
 
 
 
@@ -308,8 +237,10 @@ public String test(String a, String b) {
       </main>
 
       <footer id="colophon"><div class="footer-inner"><span>© 2026 Sibo Wang <span class="footer-dot">·</span> <span data-zh="保持好奇，认真生活。" data-en="Stay curious. Live thoughtfully.">Stay curious. Live thoughtfully.</span></span><a href="/en/subscribe/"><svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 10a9 9 0 0 1 9 9M5 4a15 15 0 0 1 15 15"></path><circle cx="5" cy="19" r="1"></circle></svg> RSS</a></div>
-<div class="site-stats"><span data-zh="访问" data-en="Visits">Visits</span> <span id="busuanzi_value_site_pv">—</span> · <span data-zh="访客" data-en="Readers">Readers</span> <span id="busuanzi_value_site_uv">—</span> · Powered by <a target="_blank" href="https://hexo.io/" rel="noopener noopener">Hexo</a></div>
-<script async="" src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="site-stats">
+  
+  Powered by <a target="_blank" href="https://hexo.io/" rel="noopener noopener">Hexo</a>
+</div>
 
       </footer>
 
@@ -329,8 +260,8 @@ public String test(String a, String b) {
 
   
 
-    <script type="text/javascript" src="/js/src/theme.js?v=2"></script>
-<script type="text/javascript" src="/js/src/bootstrap.js?v=2"></script>
+    <script type="text/javascript" src="/js/src/theme.js?v=2.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.2"></script>
 
   
 

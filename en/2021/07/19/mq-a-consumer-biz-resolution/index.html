@@ -33,18 +33,18 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2">
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.2">
 
-<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2.2">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2.2">
 <meta name="theme-color" content="#244f43">
 
 
-<link rel="stylesheet" type="text/css" href="/css/style.css?v=2">
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.2">
 
 
 
-<script defer="" src="/js/src/site.js?v=2"></script>
+<script defer="" src="/js/src/site.js?v=2.2"></script>
 
 
 
@@ -95,6 +95,10 @@
   })(window, document, "clarity", "script", "ydyci83xyu");
 </script>
 
+<script defer="" src="https://cloud.umami.is/script.js" data-website-id="27d58970-f2c7-47fb-a0ea-380f8123c229" data-domains="wxxlamp.cn" data-exclude-search="true" data-exclude-hash="true"></script>
+
+
+
 
 
   <meta name="generator" content="Hexo 8.1.1"></head>
@@ -140,249 +144,44 @@
 
       <div class="post-content" lang="en"><p>At heart, these are several ways to handle too many peer-level business branches in one scenario.</p>
 <h3 id="引言"><a href="#引言" class="headerlink" title="Introduction"></a>Introduction</h3><p>Many projects use message queues for asynchronous processing, which necessarily creates a consumer side. A listener may receive several topics or several <code>bizCode</code> values, each requiring different processing logic. The ordinary solution is a series of <code>if-else</code> branches:</p>
-<pre><code class="language-java">@Service
-public class Subscriber implements MessageListenerConcurrently {
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Subscriber</span> <span class="keyword">implements</span> <span class="title class_">MessageListenerConcurrently</span> {</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> ConsumeConcurrentlyStatus <span class="title function_">consumeMessage</span><span class="params">(<span class="keyword">final</span> List&lt;MessageExt&gt; msgs,</span></span><br><span class="line"><span class="params">                                                    <span class="keyword">final</span> ConsumeConcurrentlyContext context)</span> {</span><br><span class="line">        <span class="keyword">for</span> (MessageExt msg : msgs) {</span><br><span class="line">            <span class="keyword">try</span> {</span><br><span class="line">                <span class="type">String</span> <span class="variable">messageBody</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">String</span>(msg.getBody(), <span class="string">"UTF-8"</span>);</span><br><span class="line">                <span class="type">Param</span> <span class="variable">param</span> <span class="operator">=</span> JSON.parseObject(messageBody, Param.class);</span><br><span class="line">              	<span class="type">BizCode</span> <span class="variable">code</span> <span class="operator">=</span> param.getBizCode();</span><br><span class="line">                <span class="keyword">if</span>(BizCode.CODE_A.equals(code)) {</span><br><span class="line">                  <span class="comment">// doSomething</span></span><br><span class="line">                } <span class="keyword">else</span> <span class="keyword">if</span>(BizCode.CODE_B.equals(code)) {</span><br><span class="line">                  <span class="comment">// doSomething</span></span><br><span class="line">                } <span class="keyword">else</span> {</span><br><span class="line">                  <span class="comment">// doSomething</span></span><br><span class="line">                }</span><br><span class="line">            } <span class="keyword">catch</span> (UnsupportedEncodingException e) {</span><br><span class="line">                <span class="keyword">return</span> ConsumeConcurrentlyStatus.RECONSUME_LATER;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">return</span> ConsumeConcurrentlyStatus.CONSUME_SUCCESS;</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Param</span> {</span><br><span class="line">  <span class="keyword">private</span> Object bean;</span><br><span class="line">  <span class="keyword">private</span> BizCode code;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-    @Override
-    public ConsumeConcurrentlyStatus consumeMessage(final List&lt;MessageExt&gt; msgs,
-                                                    final ConsumeConcurrentlyContext context) {
-        for (MessageExt msg : msgs) {
-            try {
-                String messageBody = new String(msg.getBody(), "UTF-8");
-                Param param = JSON.parseObject(messageBody, Param.class);
-              	BizCode code = param.getBizCode();
-                if(BizCode.CODE_A.equals(code)) {
-                  // doSomething
-                } else if(BizCode.CODE_B.equals(code)) {
-                  // doSomething
-                } else {
-                  // doSomething
-                }
-            } catch (UnsupportedEncodingException e) {
-                return ConsumeConcurrentlyStatus.RECONSUME_LATER;
-            }
-        }
-        return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
-    }
-}
-class Param {
-  private Object bean;
-  private BizCode code;
-}
-</code></pre>
 <p>This approach violates the open-closed principle: every additional business scenario requires another branch. It is fundamentally a case of <strong>too many branches</strong>. I came up with several alternatives.</p>
 <h3 id="策略模式"><a href="#策略模式" class="headerlink" title="Strategy Pattern"></a>Strategy Pattern</h3><p>When <strong>one consumer listener</strong> handles several <code>bizCode</code> values and each value corresponds to a different strategy, we can implement the strategy pattern through a table-driven design. A map routes topics to their handlers.</p>
 <ol>
 <li><p>First, define a strategy interface.</p>
-<pre><code class="language-java">public interface StrategyHandler {
-
-    /**
-     * 监控处理器
-     * @param bean
-     */
-    void handle(StrategyParam param);
-
-    /**
-     * 支持的业务码
-     * @return bizCode
-     */
-    BizCode supportBiz();
-}
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">StrategyHandler</span> {</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 监控处理器</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> bean</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">handle</span><span class="params">(StrategyParam param)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 支持的业务码</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> bizCode</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    BizCode <span class="title function_">supportBiz</span><span class="params">()</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li><p>Next, define a factory that loads strategies through a map.</p>
-<pre><code class="language-java">@Component
-public class HandlerFactory implements BeanPostProcessor {
-
-    private static Map&lt;BizCode, StrategyHandler&gt; HANDLER_CACHE = new HashMap&lt;&gt;(16);
-
-    public static StrategyHandler getHandler(BizCode code){
-        return HANDLER_CACHE.getOrDefault(code, DefaultHandler.INSTANCE);
-    }
-
-    @Override
-    public Object postProcessBeforeInitialization(Object o, String s) throws BeansException {
-        return o;
-    }
-
-    @Override
-    public Object postProcessAfterInitialization(Object o, String s) throws BeansException {
-        if(o instanceof StategyHandler){
-            StategyHandler handler = (StategyHandler)o;
-            HANDLER_CACHE.put(handler.supportBiz(),handler);
-        }
-        return o;
-    }
-}
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HandlerFactory</span> <span class="keyword">implements</span> <span class="title class_">BeanPostProcessor</span> {</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Map&lt;BizCode, StrategyHandler&gt; HANDLER_CACHE = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;(<span class="number">16</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> StrategyHandler <span class="title function_">getHandler</span><span class="params">(BizCode code)</span>{</span><br><span class="line">        <span class="keyword">return</span> HANDLER_CACHE.getOrDefault(code, DefaultHandler.INSTANCE);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">postProcessBeforeInitialization</span><span class="params">(Object o, String s)</span> <span class="keyword">throws</span> BeansException {</span><br><span class="line">        <span class="keyword">return</span> o;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">postProcessAfterInitialization</span><span class="params">(Object o, String s)</span> <span class="keyword">throws</span> BeansException {</span><br><span class="line">        <span class="keyword">if</span>(o <span class="keyword">instanceof</span> StategyHandler){</span><br><span class="line">            <span class="type">StategyHandler</span> <span class="variable">handler</span> <span class="operator">=</span> (StategyHandler)o;</span><br><span class="line">            HANDLER_CACHE.put(handler.supportBiz(),handler);</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">return</span> o;</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li><p>Define the concrete default strategy.</p>
-<pre><code class="language-java">@Service
-public class DefaultHandler implements StategyHandler {
-
-      /**
-       * singleton
-       */
-    public static final DefaultHandler INSTANCE = new DefaultHandler();
-
-    @Override
-    public void handle(Param bean) {
-        //do nothing.
-    }
-
-    @Override
-    public BizCode supportBiz() {
-        return BizCode.CODE_DEFAULT;
-    }
-}
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DefaultHandler</span> <span class="keyword">implements</span> <span class="title class_">StategyHandler</span> {</span><br><span class="line"></span><br><span class="line">  	<span class="comment">/**</span></span><br><span class="line"><span class="comment">  	 * singleton</span></span><br><span class="line"><span class="comment">  	 */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">DefaultHandler</span> <span class="variable">INSTANCE</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DefaultHandler</span>();</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">handle</span><span class="params">(Param bean)</span> {</span><br><span class="line">        <span class="comment">//do nothing.</span></span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> BizCode <span class="title function_">supportBiz</span><span class="params">()</span> {</span><br><span class="line">        <span class="keyword">return</span> BizCode.CODE_DEFAULT;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li><p>The consumer can now use the factory directly.</p>
-<pre><code class="language-java">@Service
-public class Subscriber implements MessageListenerConcurrently {
-
-    @Override
-    public ConsumeConcurrentlyStatus consumeMessage(final List&lt;MessageExt&gt; msgs,
-                                                    final ConsumeConcurrentlyContext context) {
-      // ...
-      Param param = JSON.parseObject(messageBody, Param.class);
-      HandlerFactory.getHandler(param.getBizCode()).handle(param);
-      // ...
-    }
-}
-</code></pre>
-</li>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Subscriber</span> <span class="keyword">implements</span> <span class="title class_">MessageListenerConcurrently</span> {</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> ConsumeConcurrentlyStatus <span class="title function_">consumeMessage</span><span class="params">(<span class="keyword">final</span> List&lt;MessageExt&gt; msgs,</span></span><br><span class="line"><span class="params">                                                    <span class="keyword">final</span> ConsumeConcurrentlyContext context)</span> {</span><br><span class="line">      <span class="comment">// ...</span></span><br><span class="line">      <span class="type">Param</span> <span class="variable">param</span> <span class="operator">=</span> JSON.parseObject(messageBody, Param.class);</span><br><span class="line">      HandlerFactory.getHandler(param.getBizCode()).handle(param);</span><br><span class="line">      <span class="comment">// ...</span></span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure></li>
 </ol>
 <h3 id="责任链模式"><a href="#责任链模式" class="headerlink" title="Chain of Responsibility"></a>Chain of Responsibility</h3><p>When <strong>one consumer listener</strong> handles several <code>bizCode</code> values, we can combine the chain-of-responsibility and template-method patterns to build a general consumer for multiple business scenarios.</p>
 <p>Compared with the strategy pattern, this lets users <strong>define the degree to which each handler supports different businesses</strong>. A handler can support multiple businesses or none, return early, and so forth.</p>
 <ol>
 <li><p>First, define the chain executor. It supports Spring’s <code>@Order</code> annotation.</p>
-<pre><code class="language-java">@Component
-public class ChainExecutor {
-
-    @Autowired
-    List&lt;ChainHandler&gt; handlerList;
-    
-    @PostConstruct
-    public void init() {
-        handlerList.sort(AnnotationAwareOrderComparator.INSTANCE);
-    }
-
-    public void process(Chain param) {
-        // 按照@Order顺序排序
-        if (CollectionUtils.isEmpty(handlerList)) {
-            handlerList.forEach(e -&gt; {
-                if (e.supports(param)) {
-                    e.process(param);
-                }
-            });
-        }
-    }
-}
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ChainExecutor</span> {</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    List&lt;ChainHandler&gt; handlerList;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@PostConstruct</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">init</span><span class="params">()</span> {</span><br><span class="line">        handlerList.sort(AnnotationAwareOrderComparator.INSTANCE);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">process</span><span class="params">(Chain param)</span> {</span><br><span class="line">        <span class="comment">// 按照@Order顺序排序</span></span><br><span class="line">        <span class="keyword">if</span> (CollectionUtils.isEmpty(handlerList)) {</span><br><span class="line">            handlerList.forEach(e -&gt; {</span><br><span class="line">                <span class="keyword">if</span> (e.supports(param)) {</span><br><span class="line">                    e.process(param);</span><br><span class="line">                }</span><br><span class="line">            });</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li><p>I want each handler to decide whether it terminates the chain, so the parameter includes an <code>over</code> flag.</p>
-<pre><code class="language-java">public class ChainParam {
-  /**
-   * 责任链是否终结
-   */
-  boolean over = false;
-  
-  /**
-   * Meta传递来的业务bean
-   */
-  Object bean;
-  
-  /**
-   * 业务码
-   */ 
-  BizCode bizCode;
-}
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ChainParam</span> {</span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 责任链是否终结</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="type">boolean</span> <span class="variable">over</span> <span class="operator">=</span> <span class="literal">false</span>;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * Meta传递来的业务bean</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  Object bean;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 业务码</span></span><br><span class="line"><span class="comment">   */</span> </span><br><span class="line">  BizCode bizCode;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li><p>Next, define the node-handler interface. Common processing is abstracted here using the template-method pattern.</p>
-<pre><code class="language-java">public interface ChainHandler {
-
-    void process(ChainParam param);
-
-    boolean supports(ChainParam param);
-
-    default boolean supports(BizCode code, ChainParam param) {
-        return code.equals(param.getBizCode) &amp;&amp; !param.isOver();
-    }
-}
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">ChainHandler</span> {</span><br><span class="line"></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">process</span><span class="params">(ChainParam param)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="type">boolean</span> <span class="title function_">supports</span><span class="params">(ChainParam param)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">default</span> <span class="type">boolean</span> <span class="title function_">supports</span><span class="params">(BizCode code, ChainParam param)</span> {</span><br><span class="line">        <span class="keyword">return</span> code.equals(param.getBizCode) &amp;&amp; !param.isOver();</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li><p>Finally, define a handler for a particular business.</p>
-<pre><code class="language-java">@Service
-public class SampleHandler implements ChainHandler {
-
-    @Override
-    public void process(ChainParam param) {
-        // do some thing
-    }
-
-    @Override
-    public boolean supports(ChainParam param) {
-        return supports(BizCode.CODE_A, param);
-    }
-}
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SampleHandler</span> <span class="keyword">implements</span> <span class="title class_">ChainHandler</span> {</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">process</span><span class="params">(ChainParam param)</span> {</span><br><span class="line">        <span class="comment">// do some thing</span></span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">supports</span><span class="params">(ChainParam param)</span> {</span><br><span class="line">        <span class="keyword">return</span> supports(BizCode.CODE_A, param);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li><p>To use the chain, the consumer only needs to inject <code>ChainExecutor</code>.</p>
-<pre><code class="language-java">@Service
-public class Subscriber implements MessageListenerConcurrently {
-
-    @Autowired
-    private ChainExecutor executor;
-
-    @Override
-    public ConsumeConcurrentlyStatus consumeMessage(final List&lt;MessageExt&gt; msgs,
-                                                    final ConsumeConcurrentlyContext context) {
-      // ...
-      ChainParam param = JSON.parseObject(messageBody, ChainParam.class);
-      executor.process(param);
-      // ...
-    }
-}
-</code></pre>
-</li>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Subscriber</span> <span class="keyword">implements</span> <span class="title class_">MessageListenerConcurrently</span> {</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> ChainExecutor executor;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> ConsumeConcurrentlyStatus <span class="title function_">consumeMessage</span><span class="params">(<span class="keyword">final</span> List&lt;MessageExt&gt; msgs,</span></span><br><span class="line"><span class="params">                                                    <span class="keyword">final</span> ConsumeConcurrentlyContext context)</span> {</span><br><span class="line">      <span class="comment">// ...</span></span><br><span class="line">      <span class="type">ChainParam</span> <span class="variable">param</span> <span class="operator">=</span> JSON.parseObject(messageBody, ChainParam.class);</span><br><span class="line">      executor.process(param);</span><br><span class="line">      <span class="comment">// ...</span></span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure></li>
 </ol>
 <h3 id="模版方法模式"><a href="#模版方法模式" class="headerlink" title="Template Method Pattern"></a>Template Method Pattern</h3><p>The first two approaches address one consumer processing several businesses. When several consumers process different topics, polymorphism can likewise extract the common parts of those topic consumers. This is where the template-method pattern applies:</p>
-<pre><code class="language-java">public abstract class AbstractSubscriber&lt;Bean&gt; implements MessageListenerConcurrently {
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">AbstractSubscriber</span>&lt;Bean&gt; <span class="keyword">implements</span> <span class="title class_">MessageListenerConcurrently</span> {</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> ConsumeConcurrentlyStatus <span class="title function_">consumeMessage</span><span class="params">(<span class="keyword">final</span> List&lt;MessageExt&gt; msgs,</span></span><br><span class="line"><span class="params">        <span class="keyword">final</span> ConsumeConcurrentlyContext context)</span> {</span><br><span class="line">        <span class="keyword">for</span> (MessageExt msg : msgs) {;</span><br><span class="line">            <span class="type">Bean</span> <span class="variable">bean</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">            <span class="keyword">try</span> {</span><br><span class="line">              bean = convertBean(<span class="keyword">new</span> <span class="title class_">String</span>(msg.getBody(), <span class="string">"UTF-8"</span>));</span><br><span class="line">              process(bean);</span><br><span class="line">            } <span class="keyword">catch</span> (Exception e) {</span><br><span class="line">                <span class="keyword">return</span> ConsumeConcurrentlyStatus.RECONSUME_LATER;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">return</span> ConsumeConcurrentlyStatus.CONSUME_SUCCESS;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 业务处理逻辑</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> Bean</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 成功或失败</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="type">boolean</span> <span class="title function_">process</span><span class="params">(Bean bean)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 将消息转换为实体类</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> message</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> bean</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">abstract</span> Bean <span class="title function_">convertBean</span><span class="params">(String message)</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-    @Override
-    public ConsumeConcurrentlyStatus consumeMessage(final List&lt;MessageExt&gt; msgs,
-        final ConsumeConcurrentlyContext context) {
-        for (MessageExt msg : msgs) {;
-            Bean bean = null;
-            try {
-              bean = convertBean(new String(msg.getBody(), "UTF-8"));
-              process(bean);
-            } catch (Exception e) {
-                return ConsumeConcurrentlyStatus.RECONSUME_LATER;
-            }
-        }
-        return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
-    }
-
-    /**
-     * 业务处理逻辑
-     *
-     * @param Bean
-     * @return 成功或失败
-     */
-    protected abstract boolean process(Bean bean);
-
-    /**
-     * 将消息转换为实体类
-     *
-     * @param message
-     * @return bean
-     */
-    protected abstract Bean convertBean(String message);
-}
-</code></pre>
 <p>For each topic, simply add a consumer subclass that implements this abstract class.</p>
 <h3 id="后续"><a href="#后续" class="headerlink" title="Follow-up Thoughts"></a>Follow-up Thoughts</h3><ol>
 <li>The chain-of-responsibility and strategy patterns can also be combined, giving each chain node several corresponding strategy handlers.</li>
@@ -413,15 +212,14 @@ public class Subscriber implements MessageListenerConcurrently {
   <div class="comments" id="comments">
     
     
-
-<div class="github-comments">
-  <div class="comments-title">💬 Comments</div>
-  <p style="color: #666; font-size: 0.9em; margin-bottom: 1em;">
-    Comments require <a href="https://github.com/apps/giscus" target="_blank" rel="noopener">Giscus App</a> installed on your GitHub repository.
-  </p>
-  <script src="https://giscus.app/client.js" data-repo="wxxlamp/wxxlamp.github.io" data-repo-id="R_kgDOCiYteA" data-category="General" data-category-id="DIC_kwDOCiYteM4CelIo" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
-  </script>
-</div>
+<section class="github-comments" data-comments-repo="wxxlamp/wxxlamp.github.io" data-comments-repo-id="MDEwOlJlcG9zaXRvcnkzMTM0ODIyMzc=" data-comments-category="Announcements" data-comments-category-id="DIC_kwDOEq9b_c4DFFLD" data-comments-lang="en">
+  <h2 class="comments-title" data-zh="评论" data-en="Comments">Comments</h2>
+  <p class="comments-status" role="status" data-zh="正在加载评论…" data-en="Loading comments…">Loading comments…</p>
+  <button class="comments-retry" type="button" hidden="" data-zh="重新加载评论" data-en="Reload comments">Reload comments</button>
+  <div class="giscus"></div>
+  <noscript>请启用 JavaScript 查看评论。Please enable JavaScript to view comments.</noscript>
+</section>
+<script defer="" src="/js/src/comments.js?v=2.2"></script>
 
 
 
@@ -443,8 +241,10 @@ public class Subscriber implements MessageListenerConcurrently {
       </main>
 
       <footer id="colophon"><div class="footer-inner"><span>© 2026 Sibo Wang <span class="footer-dot">·</span> <span data-zh="保持好奇，认真生活。" data-en="Stay curious. Live thoughtfully.">Stay curious. Live thoughtfully.</span></span><a href="/en/subscribe/"><svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 10a9 9 0 0 1 9 9M5 4a15 15 0 0 1 15 15"></path><circle cx="5" cy="19" r="1"></circle></svg> RSS</a></div>
-<div class="site-stats"><span data-zh="访问" data-en="Visits">Visits</span> <span id="busuanzi_value_site_pv">—</span> · <span data-zh="访客" data-en="Readers">Readers</span> <span id="busuanzi_value_site_uv">—</span> · Powered by <a target="_blank" href="https://hexo.io/" rel="noopener noopener">Hexo</a></div>
-<script async="" src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="site-stats">
+  
+  Powered by <a target="_blank" href="https://hexo.io/" rel="noopener noopener">Hexo</a>
+</div>
 
       </footer>
 
@@ -464,8 +264,8 @@ public class Subscriber implements MessageListenerConcurrently {
 
   
 
-    <script type="text/javascript" src="/js/src/theme.js?v=2"></script>
-<script type="text/javascript" src="/js/src/bootstrap.js?v=2"></script>
+    <script type="text/javascript" src="/js/src/theme.js?v=2.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.2"></script>
 
   
 

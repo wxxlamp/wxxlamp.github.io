@@ -33,18 +33,18 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2">
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.2">
 
-<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2.2">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2.2">
 <meta name="theme-color" content="#244f43">
 
 
-<link rel="stylesheet" type="text/css" href="/css/style.css?v=2">
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.2">
 
 
 
-<script defer="" src="/js/src/site.js?v=2"></script>
+<script defer="" src="/js/src/site.js?v=2.2"></script>
 
 
 
@@ -95,6 +95,10 @@
   })(window, document, "clarity", "script", "ydyci83xyu");
 </script>
 
+<script defer="" src="https://cloud.umami.is/script.js" data-website-id="27d58970-f2c7-47fb-a0ea-380f8123c229" data-domains="wxxlamp.cn" data-exclude-search="true" data-exclude-hash="true"></script>
+
+
+
 
 
   <meta name="generator" content="Hexo 8.1.1"></head>
@@ -140,52 +144,28 @@
 
       <div class="post-content" lang="en"><p>I recently used Hexo to build a blog and ran into many issues, so I want to summarize them in one article. It covers each step, the possible pitfalls, and how to handle them.</p>
 <p>You can refer to this guide: <a target="_blank" rel="noopener" href="https://easyhexo.com/1-Hexo-install-and-config/1-3-config-hexo.html#%E9%85%8D%E7%BD%AE-hexo-2">easyhexo (in Chinese)</a></p>
-<!--more-->
+<span id="more"></span>
 
 <h3 id="1-环境准备"><a href="#1-环境准备" class="headerlink" title="1. Environment Setup"></a>1. Environment Setup</h3><p>Before using HEXO, we need to install node.js and npm (because node.js already includes npm, so we only need to update npm). At the same time, because npm uses a foreign registry, we usually set the Taobao mirror, or use cnpm</p>
 <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/jianguo221/p/11487532.html">Download node.js and npm (in Chinese)</a>, I followed this tutorial, and we can skip the Vue installation part.</p>
 <h3 id="2-下载HEXO"><a href="#2-下载HEXO" class="headerlink" title="2. Download HEXO"></a>2. Download HEXO</h3><p>Then we need to download Hexo. This is quite simple; the following three commands are enough</p>
-<pre><code class="language-js">    npm install hexo-cli // 下载hexo
-    hexo -v // 查看是否安装成功
-    hexo init // 初始化hexo文件夹
-    npm install // 下载模块依赖
-</code></pre>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-cli <span class="comment">// 下载hexo</span></span><br><span class="line">hexo -v <span class="comment">// 查看是否安装成功</span></span><br><span class="line">hexo init <span class="comment">// 初始化hexo文件夹</span></span><br><span class="line">npm install <span class="comment">// 下载模块依赖</span></span><br></pre></td></tr></tbody></table></figure>
 <p>You can also read this link: <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/343934573342">Installing Hexo (in Chinese)</a></p>
 <h4 id="可能出现的问题"><a href="#可能出现的问题" class="headerlink" title="Possible Issues"></a>Possible Issues</h4><ol>
 <li><p>EJS installation fails, with the detailed error shown below:</p>
-<pre><code class="language-js">npm ERR! code ELIFECYCLE
-npm ERR! errno 1
-npm ERR! ejs@2.7.4 postinstall: `node scripts/build.js`
-npm ERR! Exit status 1
-npm ERR!
-npm ERR! Failed at the ejs@2.7.4 postinstall script.
-npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
-</code></pre>
+ <figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="variable constant_">ERR</span>! code <span class="variable constant_">ELIFECYCLE</span></span><br><span class="line">npm <span class="variable constant_">ERR</span>! errno <span class="number">1</span></span><br><span class="line">npm <span class="variable constant_">ERR</span>! ejs@<span class="number">2.7</span><span class="number">.4</span> <span class="attr">postinstall</span>: <span class="string">`node scripts/build.js`</span></span><br><span class="line">npm <span class="variable constant_">ERR</span>! <span class="title class_">Exit</span> status <span class="number">1</span></span><br><span class="line">npm <span class="variable constant_">ERR</span>!</span><br><span class="line">npm <span class="variable constant_">ERR</span>! <span class="title class_">Failed</span> at the ejs@<span class="number">2.7</span><span class="number">.4</span> postinstall script.</span><br><span class="line">npm <span class="variable constant_">ERR</span>! <span class="title class_">This</span> is probably not a problem <span class="keyword">with</span> npm. <span class="title class_">There</span> is likely additional logging output above.</span><br></pre></td></tr></tbody></table></figure>
 <p> This is mostly due to network issues. There are two solutions: switch networks, or use the following command</p>
 <p> <code>npm install ejs@2.7.4 --ignore-scripts</code></p>
 <p> PS <code>--ignore-scripts</code> can solve many such problems. The principle is that this command can skip the package we specify, but I still do not fully understand why, after skipping it, the program can run normally even though no error is reported.</p>
 </li>
 <li><p>The <code>fsevents</code> warn appears</p>
-<pre><code class="language-js">npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.9 (node_modules\fsevents):
-
-npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.9: wanted {"os":"darwin","arch":"any"} (current: {"os":"win32","arch":"x64"})
-</code></pre>
+ <figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="variable constant_">WARN</span> optional <span class="variable constant_">SKIPPING</span> <span class="variable constant_">OPTIONAL</span> <span class="attr">DEPENDENCY</span>: fsevents@<span class="number">1.2</span><span class="number">.9</span> (node_modules\fsevents):</span><br><span class="line"></span><br><span class="line">npm <span class="variable constant_">WARN</span> notsup <span class="variable constant_">SKIPPING</span> <span class="variable constant_">OPTIONAL</span> <span class="attr">DEPENDENCY</span>: <span class="title class_">Unsupported</span> platform <span class="keyword">for</span> fsevents@<span class="number">1.2</span><span class="number">.9</span>: wanted {<span class="string">"os"</span>:<span class="string">"darwin"</span>,<span class="string">"arch"</span>:<span class="string">"any"</span>} (<span class="attr">current</span>: {<span class="string">"os"</span>:<span class="string">"win32"</span>,<span class="string">"arch"</span>:<span class="string">"x64"</span>})</span><br></pre></td></tr></tbody></table></figure>
 <p> This happens because we are using Windows, while Hexo by default downloads the <code>fsevents</code> package, which is only useful on Mac, so this warning appears. We can safely ignore it</p>
 </li>
 </ol>
 <h3 id="3-配置HEXO"><a href="#3-配置HEXO" class="headerlink" title="3. Configure HEXO"></a>3. Configure HEXO</h3><p>Once everything is installed, we need to configure Hexo through the <code>_config.yml</code> file</p>
-<h4 id="Hexo结构"><a href="#Hexo结构" class="headerlink" title="Hexo Structure"></a>Hexo Structure</h4><pre><code class="language-js">    .deploy_git 
-    node_modules //包所需要的依赖
-    public // 静态网页存储的目录
-    scaffolds // 样本
-    source // 我们自己的md文件
-    themes // 主题文件
-    .gitignore
-    _config.yml // 配置
-    db.json
-    package.json
-    package-lock.json
-</code></pre>
+<h4 id="Hexo结构"><a href="#Hexo结构" class="headerlink" title="Hexo Structure"></a>Hexo Structure</h4><figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">.<span class="property">deploy_git</span> </span><br><span class="line">node_modules <span class="comment">//包所需要的依赖</span></span><br><span class="line">public <span class="comment">// 静态网页存储的目录</span></span><br><span class="line">scaffolds <span class="comment">// 样本</span></span><br><span class="line">source <span class="comment">// 我们自己的md文件</span></span><br><span class="line">themes <span class="comment">// 主题文件</span></span><br><span class="line">.<span class="property">gitignore</span></span><br><span class="line">_config.<span class="property">yml</span> <span class="comment">// 配置</span></span><br><span class="line">db.<span class="property">json</span></span><br><span class="line">package.<span class="property">json</span></span><br><span class="line">package-lock.<span class="property">json</span></span><br></pre></td></tr></tbody></table></figure>
+
 <h3 id="4-发布hexo"><a href="#4-发布hexo" class="headerlink" title="4. Publish Hexo"></a>4. Publish Hexo</h3><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/60578464">Hexo deployment (in Chinese)</a><br>There are two ways to publish Hexo: one is to use the <code>hexo d</code> command, and the other is to directly git push all files in the <code>public</code> directory to GitHub or Gitee</p>
 <h4 id="可能出现的问题-1"><a href="#可能出现的问题-1" class="headerlink" title="Possible Issues"></a>Possible Issues</h4><p>After deployment, there is no CSS styling. This can happen for several reasons:</p>
 <ol>
@@ -198,37 +178,14 @@ npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@
 <h3 id="5-更换主题"><a href="#5-更换主题" class="headerlink" title="5. Change the Theme"></a>5. Change the Theme</h3><p>You can choose a theme through <a target="_blank" rel="noopener" href="https://hexo.io/themes/">Themes</a></p>
 <p>Before Hexo 5.1, we usually downloaded themes into the theme folder with <code>git clone</code>. But in version 5.1+, we need to use <code>npm install</code> to download themes. <em>If you have just run <code>hexo init</code>, you will find that the <code>themes</code> folder is empty, because Hexo’s default theme is also installed through npm.</em></p>
 <h4 id="可能出现的问题-2"><a href="#可能出现的问题-2" class="headerlink" title="Possible Issues"></a>Possible Issues</h4><ol>
-<li>During theme changes, because the npm packages are different, package downloads may also fail, for example:<pre><code class="language-js"> npm ERR! code ELIFECYCLE
- npm ERR! errno 1
- npm ERR! node-sass@4.13.1 postinstall: `node scripts/build.js`
- npm ERR! Exit status 1
- npm ERR!
- npm ERR! Failed at the node-sass@4.13.1 postinstall script.
- npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
-</code></pre>
- At this point, we need to set the sass source, namely<pre><code class="language-js">npm config set sass_binary_site=https://npm.taobao.org/mirrors/node-
-</code></pre>
-</li>
-<li>For Hexo 5.1+, theme files are downloaded by default with npm instead of git, which leads to the following warn<pre><code class="language-js">ERROR {
-  err: [Error: EISDIR: illegal operation on a directory, read] {
-    errno: -4068,
-    code: 'EISDIR',
-    syscall: 'read'
-  }
-} Plugin load failed: %s hexo-theme-landscape
-</code></pre>
+<li>During theme changes, because the npm packages are different, package downloads may also fail, for example:  <figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="variable constant_">ERR</span>! code <span class="variable constant_">ELIFECYCLE</span></span><br><span class="line">npm <span class="variable constant_">ERR</span>! errno <span class="number">1</span></span><br><span class="line">npm <span class="variable constant_">ERR</span>! node-sass@<span class="number">4.13</span><span class="number">.1</span> <span class="attr">postinstall</span>: <span class="string">`node scripts/build.js`</span></span><br><span class="line">npm <span class="variable constant_">ERR</span>! <span class="title class_">Exit</span> status <span class="number">1</span></span><br><span class="line">npm <span class="variable constant_">ERR</span>!</span><br><span class="line">npm <span class="variable constant_">ERR</span>! <span class="title class_">Failed</span> at the node-sass@<span class="number">4.13</span><span class="number">.1</span> postinstall script.</span><br><span class="line">npm <span class="variable constant_">ERR</span>! <span class="title class_">This</span> is probably not a problem <span class="keyword">with</span> npm. <span class="title class_">There</span> is likely additional logging output above.</span><br></pre></td></tr></tbody></table></figure>
+ At this point, we need to set the sass source, namely <figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm config set sass_binary_site=<span class="attr">https</span>:<span class="comment">//npm.taobao.org/mirrors/node-</span></span><br></pre></td></tr></tbody></table></figure></li>
+<li>For Hexo 5.1+, theme files are downloaded by default with npm instead of git, which leads to the following warn <figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable constant_">ERROR</span> {</span><br><span class="line">  <span class="attr">err</span>: [<span class="title class_">Error</span>: <span class="attr">EISDIR</span>: illegal operation on a directory, read] {</span><br><span class="line">    <span class="attr">errno</span>: -<span class="number">4068</span>,</span><br><span class="line">    <span class="attr">code</span>: <span class="string">'EISDIR'</span>,</span><br><span class="line">    <span class="attr">syscall</span>: <span class="string">'read'</span></span><br><span class="line">  }</span><br><span class="line">} <span class="title class_">Plugin</span> load <span class="attr">failed</span>: %s hexo-theme-landscape</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
  This is not a big problem. Just keep going</li>
 </ol>
-<h3 id="6-常见命令汇总"><a href="#6-常见命令汇总" class="headerlink" title="6. Common Commands Summary"></a>6. Common Commands Summary</h3><h4 id="npm"><a href="#npm" class="headerlink" title="npm"></a>npm</h4><pre><code class="language-js">    npm install // 根据当前目录下的package.json安装所需依赖
-    npm config list // 列出当前npm的配置
-    npm install -g // 全局安装包
-    npm install -save //不仅会安装，而且会把模块依赖写入package.json中的dependencies 节点 
-</code></pre>
-<h4 id="hexo"><a href="#hexo" class="headerlink" title="hexo"></a>hexo</h4><pre><code>    hexo clean // 删除public文件的内容
-    hexo g // 生成静态文件到public
-    hexo s // 本地运行
-    hexo d // 发布静态文件
-</code></pre>
+<h3 id="6-常见命令汇总"><a href="#6-常见命令汇总" class="headerlink" title="6. Common Commands Summary"></a>6. Common Commands Summary</h3><h4 id="npm"><a href="#npm" class="headerlink" title="npm"></a>npm</h4><figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">npm install <span class="comment">// 根据当前目录下的package.json安装所需依赖</span></span><br><span class="line">npm config list <span class="comment">// 列出当前npm的配置</span></span><br><span class="line">npm install -g <span class="comment">// 全局安装包</span></span><br><span class="line">npm install -save <span class="comment">//不仅会安装，而且会把模块依赖写入package.json中的dependencies 节点 </span></span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="hexo"><a href="#hexo" class="headerlink" title="hexo"></a>hexo</h4><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hexo clean // 删除public文件的内容</span><br><span class="line">hexo g // 生成静态文件到public</span><br><span class="line">hexo s // 本地运行</span><br><span class="line">hexo d // 发布静态文件</span><br></pre></td></tr></tbody></table></figure>
 </div>
       <footer class="post-footer">
         <div class="post-tags"><a href="/en/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">Developer Tools</a><a href="/en/tags/%E5%8D%9A%E5%AE%A2%E4%B8%8E%E5%86%99%E4%BD%9C/">Blogging &amp; Writing</a></div>
@@ -254,15 +211,14 @@ npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@
   <div class="comments" id="comments">
     
     
-
-<div class="github-comments">
-  <div class="comments-title">💬 Comments</div>
-  <p style="color: #666; font-size: 0.9em; margin-bottom: 1em;">
-    Comments require <a href="https://github.com/apps/giscus" target="_blank" rel="noopener">Giscus App</a> installed on your GitHub repository.
-  </p>
-  <script src="https://giscus.app/client.js" data-repo="wxxlamp/wxxlamp.github.io" data-repo-id="R_kgDOCiYteA" data-category="General" data-category-id="DIC_kwDOCiYteM4CelIo" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
-  </script>
-</div>
+<section class="github-comments" data-comments-repo="wxxlamp/wxxlamp.github.io" data-comments-repo-id="MDEwOlJlcG9zaXRvcnkzMTM0ODIyMzc=" data-comments-category="Announcements" data-comments-category-id="DIC_kwDOEq9b_c4DFFLD" data-comments-lang="en">
+  <h2 class="comments-title" data-zh="评论" data-en="Comments">Comments</h2>
+  <p class="comments-status" role="status" data-zh="正在加载评论…" data-en="Loading comments…">Loading comments…</p>
+  <button class="comments-retry" type="button" hidden="" data-zh="重新加载评论" data-en="Reload comments">Reload comments</button>
+  <div class="giscus"></div>
+  <noscript>请启用 JavaScript 查看评论。Please enable JavaScript to view comments.</noscript>
+</section>
+<script defer="" src="/js/src/comments.js?v=2.2"></script>
 
 
 
@@ -284,8 +240,10 @@ npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@
       </main>
 
       <footer id="colophon"><div class="footer-inner"><span>© 2026 Sibo Wang <span class="footer-dot">·</span> <span data-zh="保持好奇，认真生活。" data-en="Stay curious. Live thoughtfully.">Stay curious. Live thoughtfully.</span></span><a href="/en/subscribe/"><svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 10a9 9 0 0 1 9 9M5 4a15 15 0 0 1 15 15"></path><circle cx="5" cy="19" r="1"></circle></svg> RSS</a></div>
-<div class="site-stats"><span data-zh="访问" data-en="Visits">Visits</span> <span id="busuanzi_value_site_pv">—</span> · <span data-zh="访客" data-en="Readers">Readers</span> <span id="busuanzi_value_site_uv">—</span> · Powered by <a target="_blank" href="https://hexo.io/" rel="noopener noopener">Hexo</a></div>
-<script async="" src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="site-stats">
+  
+  Powered by <a target="_blank" href="https://hexo.io/" rel="noopener noopener">Hexo</a>
+</div>
 
       </footer>
 
@@ -305,8 +263,8 @@ npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@
 
   
 
-    <script type="text/javascript" src="/js/src/theme.js?v=2"></script>
-<script type="text/javascript" src="/js/src/bootstrap.js?v=2"></script>
+    <script type="text/javascript" src="/js/src/theme.js?v=2.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.2"></script>
 
   
 

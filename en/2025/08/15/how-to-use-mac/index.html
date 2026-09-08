@@ -33,18 +33,18 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2">
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.2">
 
-<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2.2">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2.2">
 <meta name="theme-color" content="#244f43">
 
 
-<link rel="stylesheet" type="text/css" href="/css/style.css?v=2">
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.2">
 
 
 
-<script defer="" src="/js/src/site.js?v=2"></script>
+<script defer="" src="/js/src/site.js?v=2.2"></script>
 
 
 
@@ -94,6 +94,10 @@
     y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
   })(window, document, "clarity", "script", "ydyci83xyu");
 </script>
+
+<script defer="" src="https://cloud.umami.is/script.js" data-website-id="27d58970-f2c7-47fb-a0ea-380f8123c229" data-domains="wxxlamp.cn" data-exclude-search="true" data-exclude-hash="true"></script>
+
+
 
 
 
@@ -366,8 +370,8 @@
 </tr>
 </tbody></table>
 <p>To apply updated shell configuration, run:</p>
-<pre><code class="language-bash">source ~/.zshrc
-</code></pre>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></tbody></table></figure>
+
 <h2 id="1-4-隐秘的文件夹"><a href="#1-4-隐秘的文件夹" class="headerlink" title="1.4 Hidden Folders"></a>1.4 Hidden Folders</h2><p>The Mac user home contains many configuration folders beginning with <code>.</code>, generally storing settings for programs such as pyenv, Git, nvm, and VS Code:</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/b7b51d7e_mac_folders.png" alt="Mac hidden-folder structure"></p>
 <h1 id="如何下载常用的工具"><a href="#如何下载常用的工具" class="headerlink" title="Downloading Common Tools"></a>Downloading Common Tools</h1><p>As on Windows, Mac software can be installed through the App Store or packages downloaded in a browser. As a Unix-like system, macOS also offers more efficient methods.</p>
@@ -406,40 +410,8 @@
 <td>/opt/homebrew/</td>
 </tr>
 </tbody></table>
-<h2 id="常见的homebrew命令"><a href="#常见的homebrew命令" class="headerlink" title="Common Homebrew Commands"></a>Common Homebrew Commands</h2><pre><code class="language-bash"># 查看Homebrew安装路径
-brew --prefix
+<h2 id="常见的homebrew命令"><a href="#常见的homebrew命令" class="headerlink" title="Common Homebrew Commands"></a>Common Homebrew Commands</h2><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看Homebrew安装路径</span></span><br><span class="line">brew --prefix</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看某个包的安装位置</span></span><br><span class="line">brew --prefix &lt;package-name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 清理缓存</span></span><br><span class="line">brew cleanup</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看Homebrew占用空间</span></span><br><span class="line"><span class="built_in">du</span> -sh $(brew --prefix)</span><br><span class="line"></span><br><span class="line"><span class="comment">#删除缓存文件</span></span><br><span class="line"><span class="built_in">rm</span> -rf <span class="string">"<span class="subst">$(brew --cache)</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#重新安装损坏的软件</span></span><br><span class="line">brew reinstall git</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看安装的软件及版本</span></span><br><span class="line">brew list --versions</span><br><span class="line"></span><br><span class="line"><span class="comment">#每日维护例程</span></span><br><span class="line">brew update &amp;&amp; brew upgrade &amp;&amp; brew cleanup</span><br><span class="line"></span><br><span class="line"><span class="comment">#搜索并安装软件</span></span><br><span class="line">brew search python</span><br><span class="line">brew info python@3.11</span><br><span class="line">brew install python@3.11</span><br><span class="line"></span><br><span class="line"><span class="comment"># 服务管理</span></span><br><span class="line">brew install mysql</span><br><span class="line">brew services start mysql</span><br><span class="line">brew services list</span><br></pre></td></tr></tbody></table></figure>
 
-# 查看某个包的安装位置
-brew --prefix &lt;package-name&gt;
-
-# 清理缓存
-brew cleanup
-
-# 查看Homebrew占用空间
-du -sh $(brew --prefix)
-
-#删除缓存文件
-rm -rf "$(brew --cache)"
-
-#重新安装损坏的软件
-brew reinstall git
-
-# 查看安装的软件及版本
-brew list --versions
-
-#每日维护例程
-brew update &amp;&amp; brew upgrade &amp;&amp; brew cleanup
-
-#搜索并安装软件
-brew search python
-brew info python@3.11
-brew install python@3.11
-
-# 服务管理
-brew install mysql
-brew services start mysql
-brew services list
-</code></pre>
 <p>When using Homebrew in mainland China, configure a domestic mirror.</p>
 <h1 id="常用的Mac-App"><a href="#常用的Mac-App" class="headerlink" title="Common Mac Applications"></a>Common Mac Applications</h1><p>Here are useful applications and ways to install them.</p>
 <h2 id="日常"><a href="#日常" class="headerlink" title="Daily Use"></a>Daily Use</h2><table>
@@ -559,45 +531,20 @@ brew services list
 <h2 id="开发环境"><a href="#开发环境" class="headerlink" title="Development Environment"></a>Development Environment</h2><h3 id="git支持多仓库"><a href="#git支持多仓库" class="headerlink" title="Git with Multiple Repositories"></a>Git with Multiple Repositories</h3><ol>
 <li>Use SSH tools to generate two private/public key pairs and copy the public keys into the corresponding repository settings.</li>
 </ol>
-<pre><code class="language-shell">ssh-keygen -t rsa -b 4096 -C "wxxlamp@foxmail.com" -f ~/.ssh/id_rsa_person
-ssh-keygen -t rsa -b 4096 -C "wxxlamp@work.com" -f ~/.ssh/id_rsa_work
-</code></pre>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -b 4096 -C <span class="string">"wxxlamp@foxmail.com"</span> -f ~/.ssh/id_rsa_person</span><br><span class="line">ssh-keygen -t rsa -b 4096 -C <span class="string">"wxxlamp@work.com"</span> -f ~/.ssh/id_rsa_work</span><br></pre></td></tr></tbody></table></figure>
+
 <ol start="2">
 <li>Configure the keys in GitHub and the GitLab repository, then configure <code>.ssh/config</code>:</li>
 </ol>
-<pre><code class="language-bash"># GitHub
-Host github.com
-    HostName github.com
-    User wxx
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># GitHub</span></span><br><span class="line">Host github.com</span><br><span class="line">    HostName github.com</span><br><span class="line">    User wxx</span><br><span class="line"></span><br><span class="line"><span class="comment"># 对应工作仓库</span></span><br><span class="line">Host gitlab.work.com</span><br><span class="line">    HostName gitlab.work.com</span><br><span class="line">    User work</span><br><span class="line">    IdentityFile ~/.ssh/id_rsa_work</span><br></pre></td></tr></tbody></table></figure>
 
-# 对应工作仓库
-Host gitlab.work.com
-    HostName gitlab.work.com
-    User work
-    IdentityFile ~/.ssh/id_rsa_work
-</code></pre>
 <ol start="3">
 <li>Test connectivity with <code>ssh -T@github.com</code>.</li>
 </ol>
 <h3 id="Java-Maven-Runtime"><a href="#Java-Maven-Runtime" class="headerlink" title="Java and Maven Runtimes"></a>Java and Maven Runtimes</h3><p>Because Homebrew does not manage multiple versions of one application conveniently, Java, Python, and Node need specialized tools.</p>
 <p>For the JVM ecosystem, SDKMAN can manage Java and Maven versions globally:</p>
-<pre><code class="language-bash"># 1. 安装 SDKMAN
-curl -s "https://get.sdkman.io" | bash
-source "$HOME/.sdkman/bin/sdkman-init.sh"
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 安装 SDKMAN</span></span><br><span class="line">curl -s <span class="string">"https://get.sdkman.io"</span> | bash</span><br><span class="line"><span class="built_in">source</span> <span class="string">"<span class="variable">$HOME</span>/.sdkman/bin/sdkman-init.sh"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 查询并安装 Java 21</span></span><br><span class="line">sdk list java</span><br><span class="line">sdk install java 21.0.4-tem</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 设为默认</span></span><br><span class="line">sdk default java 21.0.4-tem</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 安装 Maven 最新版</span></span><br><span class="line">sdk install maven</span><br><span class="line"></span><br><span class="line"><span class="comment"># 5. 查看结果</span></span><br><span class="line">sdk current</span><br></pre></td></tr></tbody></table></figure>
 
-# 2. 查询并安装 Java 21
-sdk list java
-sdk install java 21.0.4-tem
-
-# 3. 设为默认
-sdk default java 21.0.4-tem
-
-# 4. 安装 Maven 最新版
-sdk install maven
-
-# 5. 查看结果
-sdk current
-</code></pre>
 <p>Common SDKMAN commands:</p>
 <table>
 <thead>
@@ -702,49 +649,14 @@ sdk current
 <p>Activating conda creates an environment directory beneath the conda installation, copies a Python interpreter there, and stores later dependencies in that directory. A new shell must reactivate it.</p>
 </blockquote>
 <p>Common commands:</p>
-<pre><code class="language-shell"># 确认当前python的路径
-which python3
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 确认当前python的路径</span></span><br><span class="line"><span class="built_in">which</span> python3</span><br><span class="line"></span><br><span class="line"><span class="comment">#======= pyenv command</span></span><br><span class="line"><span class="comment"># List all installed Python versions in pyenv</span></span><br><span class="line">pyenv versions</span><br><span class="line"></span><br><span class="line"><span class="comment"># Install a specific Python version (if not already installed):</span></span><br><span class="line">pyenv install 3.11.4</span><br><span class="line"></span><br><span class="line"><span class="comment"># set the python system or current versions</span></span><br><span class="line">pyenv global 3.11.4  </span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> /path/to/your/project</span><br><span class="line">pyenv <span class="built_in">local</span> 3.10.8  <span class="comment"># Creates a .python-version file in the project</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#======= conda command</span></span><br><span class="line"><span class="comment"># 通过pyenv管理conda环境</span></span><br><span class="line">pyenv install miniconda3-latest</span><br><span class="line"></span><br><span class="line"><span class="comment"># shell级别切换python版本</span></span><br><span class="line">pyenv shell miniconda3-latest</span><br><span class="line"></span><br><span class="line"><span class="comment"># List all conda environments:</span></span><br><span class="line">conda <span class="built_in">env</span> list</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create a new environment with a specific Python version</span></span><br><span class="line">conda create --name myenv python=3.9 </span><br><span class="line"></span><br><span class="line"><span class="comment"># Activate an environment </span></span><br><span class="line">conda activate myenv</span><br></pre></td></tr></tbody></table></figure>
 
-#======= pyenv command
-# List all installed Python versions in pyenv
-pyenv versions
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看当前pip安装的依赖地址</span></span><br><span class="line">pip show pip | grep Location</span><br></pre></td></tr></tbody></table></figure>
 
-# Install a specific Python version (if not already installed):
-pyenv install 3.11.4
-
-# set the python system or current versions
-pyenv global 3.11.4  
-
-cd /path/to/your/project
-pyenv local 3.10.8  # Creates a .python-version file in the project
-
-#======= conda command
-# 通过pyenv管理conda环境
-pyenv install miniconda3-latest
-
-# shell级别切换python版本
-pyenv shell miniconda3-latest
-
-# List all conda environments:
-conda env list
-
-# Create a new environment with a specific Python version
-conda create --name myenv python=3.9 
-
-# Activate an environment 
-conda activate myenv
-</code></pre>
-<pre><code class="language-shell"># 查看当前pip安装的依赖地址
-pip show pip | grep Location
-</code></pre>
 <h3 id="Node-runtime"><a href="#Node-runtime" class="headerlink" title="Node Runtime"></a>Node Runtime</h3><p>Use nvm to manage Node versions. Installing nvm directly with <code>curl</code> is recommended.</p>
-<pre><code class="language-shell">curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
-nvm install --lts     # 安装最新的 LTS 版本
-nvm install 20.12.2   # 安装指定版本
-nvm use 20.12.2       # 切换到指定版本
-nvm current
-nvm list
-</code></pre>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash</span><br><span class="line">nvm install --lts     <span class="comment"># 安装最新的 LTS 版本</span></span><br><span class="line">nvm install 20.12.2   <span class="comment"># 安装指定版本</span></span><br><span class="line">nvm use 20.12.2       <span class="comment"># 切换到指定版本</span></span><br><span class="line">nvm current</span><br><span class="line">nvm list</span><br></pre></td></tr></tbody></table></figure>
+
+
 </div>
       <footer class="post-footer">
         <div class="post-tags"><a href="/en/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">Developer Tools</a><a href="/en/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/">Computer Systems</a></div>
@@ -770,15 +682,14 @@ nvm list
   <div class="comments" id="comments">
     
     
-
-<div class="github-comments">
-  <div class="comments-title">💬 Comments</div>
-  <p style="color: #666; font-size: 0.9em; margin-bottom: 1em;">
-    Comments require <a href="https://github.com/apps/giscus" target="_blank" rel="noopener">Giscus App</a> installed on your GitHub repository.
-  </p>
-  <script src="https://giscus.app/client.js" data-repo="wxxlamp/wxxlamp.github.io" data-repo-id="R_kgDOCiYteA" data-category="General" data-category-id="DIC_kwDOCiYteM4CelIo" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
-  </script>
-</div>
+<section class="github-comments" data-comments-repo="wxxlamp/wxxlamp.github.io" data-comments-repo-id="MDEwOlJlcG9zaXRvcnkzMTM0ODIyMzc=" data-comments-category="Announcements" data-comments-category-id="DIC_kwDOEq9b_c4DFFLD" data-comments-lang="en">
+  <h2 class="comments-title" data-zh="评论" data-en="Comments">Comments</h2>
+  <p class="comments-status" role="status" data-zh="正在加载评论…" data-en="Loading comments…">Loading comments…</p>
+  <button class="comments-retry" type="button" hidden="" data-zh="重新加载评论" data-en="Reload comments">Reload comments</button>
+  <div class="giscus"></div>
+  <noscript>请启用 JavaScript 查看评论。Please enable JavaScript to view comments.</noscript>
+</section>
+<script defer="" src="/js/src/comments.js?v=2.2"></script>
 
 
 
@@ -800,8 +711,10 @@ nvm list
       </main>
 
       <footer id="colophon"><div class="footer-inner"><span>© 2026 Sibo Wang <span class="footer-dot">·</span> <span data-zh="保持好奇，认真生活。" data-en="Stay curious. Live thoughtfully.">Stay curious. Live thoughtfully.</span></span><a href="/en/subscribe/"><svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 10a9 9 0 0 1 9 9M5 4a15 15 0 0 1 15 15"></path><circle cx="5" cy="19" r="1"></circle></svg> RSS</a></div>
-<div class="site-stats"><span data-zh="访问" data-en="Visits">Visits</span> <span id="busuanzi_value_site_pv">—</span> · <span data-zh="访客" data-en="Readers">Readers</span> <span id="busuanzi_value_site_uv">—</span> · Powered by <a target="_blank" href="https://hexo.io/" rel="noopener noopener">Hexo</a></div>
-<script async="" src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="site-stats">
+  
+  Powered by <a target="_blank" href="https://hexo.io/" rel="noopener noopener">Hexo</a>
+</div>
 
       </footer>
 
@@ -821,8 +734,8 @@ nvm list
 
   
 
-    <script type="text/javascript" src="/js/src/theme.js?v=2"></script>
-<script type="text/javascript" src="/js/src/bootstrap.js?v=2"></script>
+    <script type="text/javascript" src="/js/src/theme.js?v=2.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.2"></script>
 
   
 

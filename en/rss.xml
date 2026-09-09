@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel>
-<title>Sibo&apos;s Blog</title><description>Engineering, reading, and life.</description><link>https://wxxlamp.cn/en/</link><language>en</language><lastBuildDate>Tue, 08 Sep 2026 15:34:08 GMT</lastBuildDate>
+<title>Sibo&apos;s Blog</title><description>Engineering, reading, and life.</description><link>https://wxxlamp.cn/en/</link><language>en</language><lastBuildDate>Wed, 09 Sep 2026 15:38:03 GMT</lastBuildDate>
 <atom:link href="https://wxxlamp.cn/en/rss.xml" rel="self" type="application/rss+xml"/>
 <item><title>My First Day with GPT-6 Astra</title><link>https://wxxlamp.cn/en/2026/09/06/gpt6-astra-first-impressions/</link><guid isPermaLink="true">https://wxxlamp.cn/en/2026/09/06/gpt6-astra-first-impressions/</guid><pubDate>Sun, 06 Sep 2026 15:49:03 GMT</pubDate><description>A day using Astra to redesign my blog, discuss code, review changes, and spend fifteen hours trying to make a cycling video.</description><content:encoded>&lt;p&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@e553be4c58969c0b47a33016c3624ae0d967d210/images/f2ca3c53_cover.png&quot; alt=&quot;An engineer checking a website and cycling storyboards by the window&quot;&gt;&lt;/p&gt;
 &lt;p&gt;After GPT-6 Astra launched, the PR was everywhere. I happened to be using Codex for development, so I wanted to see whether it was really as good as people said.&lt;/p&gt;

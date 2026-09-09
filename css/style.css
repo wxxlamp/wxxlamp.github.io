@@ -1515,6 +1515,13 @@ button {
   color: var(--accent);
 }
 
+.post-stats {
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
 .post-title {
   font-size: clamp(26px, 3vw, 36px);
   font-weight: 650;

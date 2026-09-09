@@ -67,9 +67,9 @@ umami:
   script_url: https://cloud.umami.is/script.js
   domains: wxxlamp.cn
 
-# Replaced by Umami; historical Busuanzi totals are not imported.
+# Public counters: busuanzi.cc; Umami remains an independent dashboard.
 busuanzi:
-  enable: false
+  enable: true
 
 # Verified against giscus on 2026-09-07 after enabling Discussions.
 giscus:
@@ -88,4 +88,4 @@ disqus_shortname:
 # ===========================================
 # Version
 # ===========================================
-version: '2.2'
+version: '2.3'

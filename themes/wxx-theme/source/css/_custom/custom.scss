@@ -56,6 +56,7 @@ button { color: inherit; }
 .home .post-header { margin: 0 0 12px; }
 .post-meta { display: flex; flex-wrap: wrap; gap: 8px 16px; color: var(--muted); font-size: 12px; margin-bottom: 12px; font-variant-numeric: tabular-nums; }
 .post-meta a { color: var(--accent); }
+.post-stats { margin-top: 12px; color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
 .post-title { font-size: clamp(26px, 3vw, 36px); font-weight: 650; line-height: 1.5; margin: 0; overflow-wrap: anywhere; }
 .view-post .post-title { text-align: center; }
 .home .post-title { font-size: clamp(19px, 1.8vw, 23px); line-height: 1.6; margin: 0; }

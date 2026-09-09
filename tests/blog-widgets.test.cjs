@@ -51,20 +51,37 @@ test('Production loads the counter once and only displays valid results', () => 
   const w = widget('counter.js');
   w.run();
   assert.equal(w.appended.length, 1);
+  assert.equal(w.appended[0].src, 'https://cdn.busuanzi.cc/busuanzi/3.6.9/busuanzi.min.js');
   assert.equal(w.node('.site-stats__counts').hidden, true);
-  w.node('busuanzi_value_site_pv').textContent = '125';
-  w.node('busuanzi_value_site_uv').textContent = '50';
+  w.node('busuanzi_site_pv').textContent = '125';
+  w.node('busuanzi_site_uv').textContent = '50';
   w.update();
   assert.equal(w.node('.site-stats__counts').hidden, false);
   assert.equal(w.node('.site-stats__status').hidden, true);
+  w.node('busuanzi_page_pv').innerText = '20';
+  w.node('busuanzi_page_uv').innerText = '8';
+  w.update();
+  assert.equal(w.node('.page-stats__counts').hidden, false);
+  assert.equal(w.node('.page-stats__status').hidden, true);
+});
+
+test('An article timeout does not hide already loaded site counts', () => {
+  const w = widget('counter.js');
+  w.node('busuanzi_site_pv').textContent = '12';
+  w.node('busuanzi_site_uv').textContent = '3';
+  w.update();
+  w.timeout();
+  assert.equal(w.node('.site-stats__counts').hidden, false);
+  assert.equal(w.node('.page-stats__counts').hidden, true);
+  assert.match(w.node('.page-stats__status').textContent, /暂不可用/);
 });
 
 test('Invalid results, network errors, and timeouts never display false counts', () => {
   for (const failure of ['invalid', 'network', 'timeout']) {
     const w = widget('counter.js');
     if (failure === 'invalid') {
-      w.node('busuanzi_value_site_pv').textContent = '1';
-      w.node('busuanzi_value_site_uv').textContent = '2';
+      w.node('busuanzi_site_pv').textContent = '1';
+      w.node('busuanzi_site_uv').textContent = '2';
       w.update();
     } else if (failure === 'network') w.appended[0].onerror();
     else w.timeout();

@@ -62,3 +62,13 @@ test('Clarity is excluded from protected, private, and opted-out pages', () => {
     assert.equal(enabled.call({ page }), false, JSON.stringify(page));
   }
 });
+
+
+test('Cloud and self-hosted trackers coexist without leaking onto private pages', () => {
+  const cloud = {enable:true,website_id:'cloud-id',script_url:'https://cloud.umami.is/script.js'};
+  const html = renderUmami({path:'index.html'}, {script_url:'https://self.example/script.js',cloud});
+  assert.equal((html.match(/<script /g) || []).length, 2);
+  assert.match(html, /self.example/);
+  assert.match(html, /cloud-id/);
+  assert.equal(renderUmami({password:'private'}, {cloud}).trim(), '');
+});

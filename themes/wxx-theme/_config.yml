@@ -59,15 +59,20 @@ google_analytics: G-MJEDN7D89G
 # Microsoft Clarity (public pages only)
 clarity_project_id: ydyci83xyu
 
-# Umami Cloud: copy the public website ID and script URL from its tracking code.
+# Self-hosted Umami: public website ID and tracking script from our Vercel instance.
 # No API key belongs in the theme or generated HTML.
 umami:
   enable: true
-  website_id: 27d58970-f2c7-47fb-a0ea-380f8123c229
-  script_url: https://cloud.umami.is/script.js
+  website_id: 7ae63952-76fc-4a90-a5b7-aedd93fb56c9
+  script_url: https://wxxlamp-umami.vercel.app/script.js
   domains: wxxlamp.cn
+  counters_url: https://wxxlamp-umami.vercel.app/api/public/blog-stats
+  cloud:
+    enable: true
+    website_id: 27d58970-f2c7-47fb-a0ea-380f8123c229
+    script_url: https://cloud.umami.is/script.js
 
-# Public counters: busuanzi.cc; Umami remains an independent dashboard.
+# Busuanzi collection stays enabled independently; visible counters use self-hosted Umami.
 busuanzi:
   enable: true
 
@@ -88,4 +93,4 @@ disqus_shortname:
 # ===========================================
 # Version
 # ===========================================
-version: '2.3'
+version: '2.4'

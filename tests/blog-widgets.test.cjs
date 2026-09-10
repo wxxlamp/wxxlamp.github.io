@@ -10,15 +10,19 @@ function widget(file, origin = 'https://wxxlamp.cn', response = {}) {
   const appended = [];
   const timers = new Set();
   let observed;
+  const requests = [];
+  let created = 0;
   const node = key => nodes[key] ||= {
     hidden: true, textContent: '', dataset: {}, attributes: {},
     querySelector: node,
     addEventListener(name, handler) { this[name] = handler; },
     setAttribute(name, value) { this.attributes[name] = value; },
-    appendChild(el) { appended.push(el); if (el.onload) el.onload(); },
+    appendChild(el) { if (el.src) appended.push(el); if (el.onload) el.onload(); },
     remove() {}
   };
   node('[data-counter-origin]').dataset.counterOrigin = 'https://wxxlamp.cn';
+  node('[data-counter-origin]').dataset.countersUrl = 'https://stats.example/api/public/blog-stats';
+  node('[data-counter-origin]').dataset.busuanzi = 'true';
   node('[data-comments-repo]').dataset = {
     commentsRepo: 'wxxlamp/wxxlamp.github.io', commentsCategory: 'Announcements', commentsLang: 'zh-CN',
     commentsRepoId: response.repositoryId,
@@ -26,17 +30,17 @@ function widget(file, origin = 'https://wxxlamp.cn', response = {}) {
   };
   const context = vm.createContext({
     URL, AbortController, console: { warn() {} },
-    window: { location: { origin } },
-    document: { querySelector: node, getElementById: node, createElement: () => node('script-' + appended.length),
-      head: node('head'), documentElement: { lang: 'zh-CN' } },
-    fetch: () => { throw new Error('The categories API must not be called from the browser'); },
+    window: { location: { origin, pathname: "/2025/08/15/how-to-use-mac/" } },
+    document: { querySelector: node, getElementById: node, createElement: () => node('created-' + created++),
+      head: node('head'), body: node('body'), documentElement: { lang: 'zh-CN' } },
+    fetch: (url) => { requests.push(url); return response.fetch ? response.fetch(url) : Promise.resolve({ok:true, json:async () => response.stats || {source:'umami-self-hosted',site:{pv:125,uv:50},page:{pv:20,uv:8}}}); },
     MutationObserver: class { constructor(fn) { observed = fn; } observe() {} disconnect() {} },
     setTimeout(fn) { timers.add(fn); return fn; }, clearTimeout(fn) { timers.delete(fn); }
   });
   const source = fs.readFileSync(path.join(__dirname, '../themes/wxx-theme/source/js/src/', file), 'utf8');
   const run = () => vm.runInContext(source, context);
   run();
-  return { node, appended, run, update: () => observed(), timeout: () => [...timers].forEach(fn => fn()) };
+  return { node, appended, requests, run, update: () => observed(), timeout: () => [...timers].forEach(fn => fn()) };
 }
 
 test('Preview and alternate origins never send a counting request', () => {
@@ -47,47 +51,49 @@ test('Preview and alternate origins never send a counting request', () => {
   }
 });
 
-test('Production loads the counter once and only displays valid results', () => {
+test('Three-way collection keeps Busuanzi hidden and renders only self-hosted counts', async () => {
   const w = widget('counter.js');
   w.run();
+  await flush();
   assert.equal(w.appended.length, 1);
-  assert.equal(w.appended[0].src, 'https://cdn.busuanzi.cc/busuanzi/3.6.9/busuanzi.min.js');
-  assert.equal(w.node('.site-stats__counts').hidden, true);
-  w.node('busuanzi_site_pv').textContent = '125';
-  w.node('busuanzi_site_uv').textContent = '50';
-  w.update();
+  assert.match(w.appended[0].src, /cdn.busuanzi.cc/);
+  assert.equal(w.requests.length, 1);
+  assert.equal(new URL(w.requests[0]).searchParams.get('path'), '/2025/08/15/how-to-use-mac/');
+  assert.equal(w.node('umami_site_pv').textContent, '125');
+  assert.equal(w.node('umami_page_uv').textContent, '8');
   assert.equal(w.node('.site-stats__counts').hidden, false);
-  assert.equal(w.node('.site-stats__status').hidden, true);
-  w.node('busuanzi_page_pv').innerText = '20';
-  w.node('busuanzi_page_uv').innerText = '8';
-  w.update();
-  assert.equal(w.node('.page-stats__counts').hidden, false);
-  assert.equal(w.node('.page-stats__status').hidden, true);
 });
 
-test('An article timeout does not hide already loaded site counts', () => {
-  const w = widget('counter.js');
-  w.node('busuanzi_site_pv').textContent = '12';
-  w.node('busuanzi_site_uv').textContent = '3';
-  w.update();
-  w.timeout();
+test('Valid zero counts display and invalid page counts leave site counts intact', async () => {
+  const w = widget('counter.js', undefined, {stats:{source:'umami-self-hosted',site:{pv:0,uv:0},page:{pv:1,uv:2}}});
+  await flush();
+  assert.equal(w.node('umami_site_pv').textContent, '0');
   assert.equal(w.node('.site-stats__counts').hidden, false);
   assert.equal(w.node('.page-stats__counts').hidden, true);
-  assert.match(w.node('.page-stats__status').textContent, /暂不可用/);
 });
 
-test('Invalid results, network errors, and timeouts never display false counts', () => {
-  for (const failure of ['invalid', 'network', 'timeout']) {
-    const w = widget('counter.js');
-    if (failure === 'invalid') {
-      w.node('busuanzi_site_pv').textContent = '1';
-      w.node('busuanzi_site_uv').textContent = '2';
-      w.update();
-    } else if (failure === 'network') w.appended[0].onerror();
-    else w.timeout();
+test('API failures never substitute Busuanzi numbers', async () => {
+  for (const fetch of [async () => {throw Error('network');}, async () => ({ok:false}),
+    async () => ({ok:true,json:async()=>({source:'busuanzi',site:{pv:99,uv:9}})}),
+    async () => ({ok:true,json:async()=>({source:'umami-self-hosted',site:{pv:'1',uv:1}})})]) {
+    const w = widget('counter.js', undefined, {fetch});
+    w.node('busuanzi_site_pv').textContent = '999';
+    await flush();
     assert.equal(w.node('.site-stats__counts').hidden, true);
     assert.match(w.node('.site-stats__status').textContent, /暂不可用/);
+    assert.equal(w.node('umami_site_pv').textContent, '');
   }
+});
+
+test('Late responses after timeout do not overwrite unavailable state', async () => {
+  let resolve;
+  const w = widget('counter.js', undefined, {fetch:()=>new Promise(r=>{resolve=r;})});
+  await flush();
+  w.timeout();
+  resolve({ok:true,json:async()=>({source:'umami-self-hosted',site:{pv:1,uv:1}})});
+  await flush();
+  assert.equal(w.node('.site-stats__counts').hidden, true);
+  assert.match(w.node('.site-stats__status').textContent, /暂不可用/);
 });
 
 const flush = () => new Promise(resolve => setImmediate(resolve));

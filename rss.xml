@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel>
-<title>王星星的魔灯</title><description>记录技术成长与生活感悟</description><link>https://wxxlamp.cn/</link><language>zh-CN</language><lastBuildDate>Wed, 09 Sep 2026 15:38:03 GMT</lastBuildDate>
+<title>王星星的魔灯</title><description>记录技术成长与生活感悟</description><link>https://wxxlamp.cn/</link><language>zh-CN</language><lastBuildDate>Thu, 10 Sep 2026 16:32:54 GMT</lastBuildDate>
 <atom:link href="https://wxxlamp.cn/rss.xml" rel="self" type="application/rss+xml"/>
 <item><title>GPT6 Astra使用初体验</title><link>https://wxxlamp.cn/2026/09/06/gpt6-astra-first-impressions/</link><guid isPermaLink="true">https://wxxlamp.cn/2026/09/06/gpt6-astra-first-impressions/</guid><pubDate>Sun, 06 Sep 2026 15:49:03 GMT</pubDate><description>花周六一天用Astra改博客、讨论问题、做代码CR，也折腾了15小时视频，聊聊让我惊喜和踩坑的地方。</description><content:encoded>&lt;p&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@e553be4c58969c0b47a33016c3624ae0d967d210/images/f2ca3c53_cover.png&quot; alt=&quot;周末工程师在窗边检查网页和骑行分镜&quot;&gt;&lt;/p&gt;
 &lt;p&gt;GPT6 Astra发布后，PR满天飞，恰好笔者最近在用Codex做代码开发，来看看是不是真的如传言般厉害。&lt;/p&gt;

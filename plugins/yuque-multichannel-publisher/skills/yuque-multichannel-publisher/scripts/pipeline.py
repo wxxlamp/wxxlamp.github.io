@@ -118,15 +118,19 @@ def atomic_json(path: Path, payload: dict[str, Any]) -> None:
             os.unlink(temp_name)
 
 
+class AdapterRejected(SystemExit):
+    """The adapter returned a structured, explicit failure (not an unknown timeout)."""
+
+
 def redact_adapter_secrets(text: str) -> str:
     """Keep adapter diagnostics useful without echoing credentials or tokens."""
     text = re.sub(
-        r"(?i)((?:app_?secret|secret|access_token|token)=)[^&\s\"']+",
+        r"(?i)((?:[a-z_]*(?:secret|token)|api[_-]?key|password)=)[^&\s\"']+",
         r"\1<redacted>",
         text,
     )
     return re.sub(
-        r'(?i)(["\'](?:app_?secret|secret|access_token|token)["\']\s*:\s*["\'])[^"\']+(["\'])',
+        r'(?i)(["\'](?:[a-z_]*(?:secret|token)|[a-z_]*api[_-]?key|password|cookie|authorization)["\']\s*:\s*["\'])[^"\']+(["\'])',
         r"\1<redacted>\2",
         text,
     )
@@ -172,7 +176,9 @@ def run_adapter_json(command: list[str], *, cwd: Path, timeout: int = 180) -> di
     except json.JSONDecodeError:
         message = redact_adapter_secrets(result.stderr.strip() or result.stdout.strip())
         raise SystemExit(f"外部适配器没有返回有效 JSON：{message or '空响应'}") from None
-    if result.returncode or not isinstance(payload, dict) or payload.get("success") is False:
+    if isinstance(payload, dict) and payload.get("success") is False:
+        raise AdapterRejected(f"外部适配器执行失败：{adapter_error_message(payload, result.stderr)}")
+    if result.returncode or not isinstance(payload, dict):
         raise SystemExit(f"外部适配器执行失败：{adapter_error_message(payload, result.stderr)}")
     return payload
 
@@ -341,6 +347,8 @@ def command_resume(args: argparse.Namespace) -> None:
         "current_stage": current,
         "next_stage": next_stage,
         "title": metadata.get("title", ""),
+        "edit_mode": metadata.get("edit_mode", "correction-only"),
+        "user_preferences": metadata.get("user_preferences", {}),
         "yuque_url": metadata.get("yuque_url", ""),
         "paths": {
             "raw": str(project / "raw" / "source.md"),
@@ -1385,6 +1393,7 @@ def command_send_draft(args: argparse.Namespace) -> None:
             "scope": cache_scope,
             "html": file_digest(outputs["wechat_html"]),
             "cover": file_digest(cover_path),
+            "local_images": {url: file_digest(path) for url, path in metadata_image_sources(repo, project, metadata).items()},
             "title": title_for(project, metadata, "wechat"),
             "digest": metadata.get("description", ""),
             "author": metadata.get("author", ""),
@@ -1452,10 +1461,15 @@ def command_send_draft(args: argparse.Namespace) -> None:
             record_delivery(project, state, channel="wechat", item="article", status="unknown",
                             account=account, artifact_sha256=fingerprint,
                             note="create_draft 已开始，尚未获得平台结果；若中断先核对草稿箱")
-            result = run_adapter_json(
-                [executable, "create_draft", str(draft_file), *adapter_account_flags(account), "--json"],
-                cwd=repo,
-            )
+            try:
+                result = run_adapter_json(
+                    [executable, "create_draft", str(draft_file), *adapter_account_flags(account), "--json"],
+                    cwd=repo,
+                )
+            except AdapterRejected as exc:
+                record_delivery(project, state, channel="wechat", item="article", status="failed",
+                                account=account, artifact_sha256=fingerprint, note=str(exc))
+                raise
         result_data = result.get("data") if isinstance(result.get("data"), dict) else {}
         media_id = str(result_data.get("media_id") or "").strip()
         if not media_id:

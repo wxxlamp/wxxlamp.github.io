@@ -393,9 +393,14 @@ class PipelineContractTest(unittest.TestCase):
                 json.dumps({"md2wechat_executable": str(adapter)}), encoding="utf-8"
             )
             captured_draft: dict = {}
+            actions = []
+            creation_error = [None]
 
             def fake_adapter(command: list[str], *, cwd: Path, timeout: int = 180):
                 action = command[1]
+                actions.append(action)
+                if action == "config":
+                    return {"success": True, "data": {"config": {"wechat_appid": "wx-test", "config_file": "config.yaml"}}}
                 if action == "doctor":
                     return {"success": True, "data": {"readiness": {"draft": True, "format_api": False}}}
                 if action == "inspect":
@@ -412,6 +417,10 @@ class PipelineContractTest(unittest.TestCase):
                         },
                     }
                 if action == "create_draft":
+                    pending = json.loads((project / ".codex/state.json").read_text())
+                    self.assertEqual("unknown", pending["deliveries"]["wechat"]["article"]["status"])
+                    if creation_error[0]:
+                        raise creation_error[0]
                     captured_draft.update(json.loads(Path(command[2]).read_text(encoding="utf-8")))
                     return {"success": True, "data": {"media_id": "draft-media-id"}}
                 self.fail(f"unexpected adapter action: {action}")
@@ -422,6 +431,11 @@ class PipelineContractTest(unittest.TestCase):
                 pipeline.command_send_draft(
                     SimpleNamespace(project="demo", channel="wechat", round=None, account=None, confirm=True)
                 )
+                pipeline.command_send_draft(
+                    SimpleNamespace(project="demo", channel="wechat", round=None, account=None, confirm=True)
+                )
+            self.assertEqual(1, actions.count("create_draft"))
+            self.assertEqual(2, actions.count("upload_image"))
             article = captured_draft["articles"][0]
             self.assertEqual("cover-media", article["thumb_media_id"])
             self.assertIn("http://mmbiz.qpic.cn/body.png", article["content"])
@@ -430,6 +444,20 @@ class PipelineContractTest(unittest.TestCase):
             delivery = saved["deliveries"]["wechat"]["article"]
             self.assertEqual("draft_saved", delivery["status"])
             self.assertEqual("draft-media-id", delivery["identifier"])
+            args = SimpleNamespace(project="demo", channel="wechat", round=None, account=None, confirm=True, new_draft=True)
+            with patch.dict(os.environ, {"YMP_WORKSPACE_ROOT": str(root)}), patch.object(pipeline, "run_adapter_json", side_effect=fake_adapter):
+                creation_error[0] = SystemExit("adapter timeout; outcome unknown")
+                with self.assertRaises(SystemExit): pipeline.command_send_draft(args)
+                unknown = json.loads((project / ".codex/state.json").read_text())
+                self.assertEqual("unknown", unknown["deliveries"]["wechat"]["article"]["status"])
+                count = actions.count("create_draft")
+                with self.assertRaises(SystemExit): pipeline.command_send_draft(args)
+                self.assertEqual(count, actions.count("create_draft"))
+                pipeline.record_delivery(project, unknown, channel="wechat", item="article", status="failed", note="test fixture: platform verified absent")
+                creation_error[0] = pipeline.AdapterRejected("explicit API rejection")
+                with self.assertRaises(pipeline.AdapterRejected): pipeline.command_send_draft(args)
+                failed = json.loads((project / ".codex/state.json").read_text())
+                self.assertEqual("failed", failed["deliveries"]["wechat"]["article"]["status"])
 
     def test_resume_actions_do_not_collapse_channel_delivery_state(self) -> None:
         metadata = {"channels": ["blog", "wechat", "rednote"]}

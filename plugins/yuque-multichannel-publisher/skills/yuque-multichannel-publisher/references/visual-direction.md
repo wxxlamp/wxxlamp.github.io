@@ -76,3 +76,26 @@
 ## 平台标题与可选英文版
 
 新项目还必须遵守 [publishing-plan.md](publishing-plan.md)。发布计划单独记录专业博客标题、吸引读者的社交标题、规范分类话题和 AI 英文取舍理由。英文正文与英文图片实际复审后才可分发；editorial-review 的 artifacts 同时绑定 publishing-plan.json 与可选 english.md，内容变化后重新复审。
+
+
+## 原图的显示版本
+
+语雀页面的图片 URL 可能是上传的完整文件；作者在页面设置的裁剪、位移、遮罩和标注才是发布时的可见内容。导出 Markdown 后逐张对照页面；保留完整文件只供归档，正文、封面参考、小红书和译图均使用显示版本。不要为了“恢复清晰度”或适配比例恢复裁剪外内容，也不要让生成模型重构原始证据。
+
+存在裁剪时，将已核验的显示文件保存到项目 images/，用 `raw/image-display.json` 记录：
+
+```json
+{
+  "images": [{
+    "source_url": "https://cdn.example/original.png",
+    "display": "images/cropped/figure.png",
+    "display_sha256": "<对显示文件计算的完整 SHA-256>",
+    "review_status": "passed",
+    "review_note": "对照语雀可见范围检查，底部被裁掉的内容没有恢复，原红框仍在"
+  }]
+}
+```
+
+`display` 相对于清单上一级（清单放在项目 raw/ 下）；也支持绝对路径。将清单传给 `ingest --migrate-images --image-manifest <path>` 或兼容 `fetch --image-manifest <path>`。迁移前会核验全部列出的文件和指纹，上传显示文件而不下载完整原图；未列出的图片继续按原 URL 迁移，所以 AI 仍须确认所有特殊处理图都已列出。保留 URL 查询参数，不去掉图片处理参数。脚本不从一段 Markdown 猜出语雀 CSS 的裁剪范围。
+
+用户在发布页删图或调整顺序时，以其选择为准；记录最终顺序并同步本地 post.md、cards.json、metadata 和最终图片目录。旧稿归档，不为了恢复计划张数把图片重新加回去。图片数量变化不自动授权改写其余内容或重发已提交笔记。

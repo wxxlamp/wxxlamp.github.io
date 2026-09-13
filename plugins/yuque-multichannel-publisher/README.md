@@ -116,3 +116,16 @@ codex plugin add yuque-multichannel-publisher@<marketplace-name>
 润色优先保留当前原稿通顺的句子、人称、情绪和自嘲，历史语气档案只作补充。polish-expand 允许填补内容缺口，不要求重写完整段落。事实错误就地订正，改动过程与依据保留在内部复审，正文只留必要的事实口径，不插入编辑旁白或反复自证。
 
 小红书正文与末卡不再强制互动问题，也不自动追加评论、收藏或关注请求；按原稿自然结束即可。公众号正文图片默认浅灰 1px 行内边框，保留原图比例，用 border-box 避免手机横向溢出；wechat_layout.py 支持 --image-frame none 关闭。
+
+
+## 发布恢复与保真改进
+
+- 新项目默认只纠错，用户明确要求才扩写；恢复会展示项目偏好。
+- 语雀裁剪图支持已审阅的显示版本清单；GitHub 相同内容复用、图片链接固定提交版本。
+- `materialize --channels wechat` 可优先生成公众号；排版支持 `--heading-style prominent`、`--image-frame shadow` 和已审 HTML 的 `--preserve-html`。
+- `diagnose-wechat` 只读核对有效配置，白名单报错不再一律归因于用户漏配。
+- 微信素材缓存区分账号；相同草稿重试复用已有 media_id，创建中断标记 unknown 并先核对。
+- 小红书审核中使用 submitted，与 published 分开；保留用户最后选择的图片与顺序。
+- 站内首页、关于等译版可在 references.json 的 page_pairs 中登记真实对应路由。
+
+具体边界与操作见 [发布与恢复](skills/yuque-multichannel-publisher/references/publishing.md)、[原图显示版本](skills/yuque-multichannel-publisher/references/visual-direction.md#原图的显示版本)。

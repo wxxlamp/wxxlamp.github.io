@@ -47,3 +47,7 @@ __pycache__/
 */yuque-multichannel-publisher/**/config.json
 .codex/yuque-multichannel-publisher/
 content-projects/
+
+# Local multichannel publishing outputs
+/wechat/
+/rednote/

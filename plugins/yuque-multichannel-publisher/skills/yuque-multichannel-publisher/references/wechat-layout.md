@@ -36,7 +36,9 @@ python3 <skill>/scripts/wechat_layout.py --input <project>/draft/wechat.md --out
 python3 <skill>/scripts/wechat_preview.py --project-dir <project>
 ```
 
-渲染器只负责排版，不改句子。支持标题、列表、引用、链接、图片、表格、行内与块代码。原始 HTML 先保真转成 Markdown；复杂数学、嵌套组件等由 AI 单独排版、预览和复核。也可以直接由 AI 编写行内 HTML，最后走同样验证，不以脚本主题限制设计。
+`--heading-style prominent` 使用 24px 粗体一级标题、左色条和浅底，适合用户要求章节更明显时使用；默认 `plain`。`--image-frame shadow` 在细框外加轻阴影，默认仍为 `subtle`，不改图片像素。年份经历需要强调时直接保留原句，用行内 HTML 突出年份和原有数字，不重写成营销文案或强制转成图片。
+
+渲染器只负责排版，不改句子。支持标题、列表、引用、链接、图片、表格、行内与块代码。默认拒绝原始 HTML，避免静默丢失内容。用户已经审阅的时间线、强调块等行内样式组件可用 `--preserve-html` 原样保留；该选项不是 HTML 清洗器，只用于可信的已审稿件。复杂数学、嵌套组件等由 AI 单独排版、预览和复核。也可以直接由 AI 编写行内 HTML，最后走同样验证，不以脚本主题限制设计。
 
 预览器使用 Playwright Chromium（首次 `python3 -m playwright install chromium`），生成 375px、430px 截图与 `draft/preview/layout-evidence.json`。AI 必须打开实际截图检查：首屏是否进入主题、层级与留白是否清晰、图中文字是否可读、浅底图边界是否清楚、边框是否撑出屏幕或遮住图边文字、代码和表格是否越界、底部是否完整。`overflow` 或 `brokenImages` 非空时先修复。截图生成不会自动把复审记为 passed。
 

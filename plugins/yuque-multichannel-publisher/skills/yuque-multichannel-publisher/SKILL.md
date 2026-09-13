@@ -44,6 +44,7 @@ python3 <pipeline.py> init \
   --channels <blog wechat rednote>
 ```
 
+- 未指定编辑强度时默认 `correction-only`；用户明确要求扩写或将提纲写成文章时才选 `polish-expand`。
 - `correction-only`：AI 只修正错别字、病句、标点、明显格式问题及有依据的知识错误，不扩展观点。
 - `polish-expand`：AI 在相同事实边界内补充背景、转场、例子和限制条件。
 - `--channels` 可只选一个或两个平台；未选择的平台不生成、不校验，也不发布。
@@ -53,6 +54,8 @@ python3 <pipeline.py> init \
 ```bash
 python3 <pipeline.py> resume --project <english-slug>
 ```
+
+恢复时同时读取 `metadata.user_preferences` 和最近投递事件。将用户明确选择的语气、图床、优先渠道、小红书篇数及选图顺序记录在项目 metadata 的 `user_preferences`，保留原话和适用范围；不要把个人偏好写成插件通用硬规则。用户的暂停、纠正和已给出的授权跨轮保留；缺少文件时先定位当前安装版本和工作区，不重做已完成发布。
 
 每完成一个需要 AI 判断的阶段，都执行：
 
@@ -69,7 +72,7 @@ python3 <pipeline.py> checkpoint \
 首选当前 Codex 环境提供的 Browser Controller，因为非语雀会员、私有文档或接口策略变化时，内部接口可能不可用：
 
 1. 在用户已登录语雀的浏览器中打开文档，确认页面标题与 URL。
-2. 优先使用页面“复制为 Markdown”能力；如果浏览器无法读取复制结果，则从可见文章容器提取标题层级、段落、列表、引用、代码、链接和图片，AI 保真转换为 Markdown。
+2. 先对照页面可见范围检查裁剪、遮挡、标注及变换；Markdown 的图片 URL 可能指向未裁剪原文件。按 [显示版本清单](references/visual-direction.md#原图的显示版本) 保留作者处理，然后优先使用页面“复制为 Markdown”能力；如果浏览器无法读取复制结果，则从可见文章容器提取标题层级、段落、列表、引用、代码、链接和图片，AI 保真转换为 Markdown。
 3. 把浏览器导出的内容写入临时 Markdown，再交给插件记录状态：
 
 ```bash
@@ -164,7 +167,7 @@ python3 <pipeline.py> validate --project <english-slug> --phase materialized
 python3 <pipeline.py> inspect --project <english-slug>
 ```
 
-`content-projects/<slug>/` 只是可恢复的工作草稿区，不是最终发布目录。只有 `reviewed` 后执行 `materialize`，才算完成持久化。命令默认生成以下最终文件；实际根目录以工作区配置为准：
+`content-projects/<slug>/` 只是可恢复的工作草稿区，不是最终发布目录。只有 `reviewed` 后执行 `materialize`，才算完成持久化。用户要求优先公众号时可用 `materialize --channels wechat` 单独校验并物化，再投递；不以其他渠道或英文图尚未完成为由延后已就绪的公众号。渠道是否完成仍以 `inspect.targets` 和 `deliveries` 为准。命令默认生成以下最终文件；实际根目录以工作区配置为准：
 
 - `source/_posts/<slug>.md`
 - `source/_posts/en/<slug>.md`（仅 AI 决策生成英文时）
@@ -183,8 +186,8 @@ python3 <pipeline.py> inspect --project <english-slug>
 1. 博客可在用户明确要求时执行 Git commit；是否 push 必须遵守目标仓库规则。本仓库禁止 Codex push，因此只能交给用户手工 push。
 2. 微信可选用 `md2wechat`：必须先 `inspect --probe`，再执行带 `--confirm` 的 `send-draft --channel wechat`。默认复用已物化的 `article.html`，上传既有封面与正文图片并调用 `create_draft`；不因缺少转换 API Key 重新生成正文。只有返回草稿 `media_id` 后才记录 `draft_saved`。
 3. 小红书发布必须优先复用当前已打开、已登录且可控制的浏览器与现有标签页；不得为了发布默认启动新的 Chrome、创建新 Profile 或切换用户会话。只有当前浏览器无法控制、且用户明确同意新开浏览器时，才回退到 `XiaohongshuSkills`。`send-draft --channel rednote --round roundN` 固定使用 `--preview --reuse-existing-tab`，默认在没有现成 CDP 会话时停止，不静默拉起 Chrome；平台明确提示保存成功后，再用 `record-delivery` 记录 `draft_saved`。
-4. `filled_for_review`、`draft_saved` 与 `published` 是三个不同状态，禁止互相替代。公众号、小红书及每个小红书轮次都独立记录。
-5. 在最终“发布/群发”动作前展示标题、账号、可见范围和计划时间；只有用户明确确认后才能点击。
+4. `filled_for_review`、`draft_saved`、`submitted`（审核中）、`published` 与 `unknown`（结果不明）是不同状态，禁止互相替代。公众号、小红书及每个小红书轮次都独立记录。
+5. 在最终“发布/群发”动作前展示标题、账号、可见范围和计划时间；已有覆盖这些具体信息的用户授权就继续，不重复索要授权。缺少必要授权时先准备可审阅结果，再询问。
 6. 每个平台独立记录成功或失败，失败不得回滚本地产物，也不得把整个项目的内容阶段倒退。
 
 ## 质量闸门

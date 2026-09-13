@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>三次并发问题排查：重复消费、锁竞争与查询超时 | 王星星的魔灯</title>
+<link rel="canonical" href="https://wxxlamp.cn/2026/09/13/three-concurrency-incidents/">
+<meta name="description" content="记录三次后端并发问题排查：消息重复消费、主单锁竞争与串行查询超时，结合伪代码分析校验边界和吞吐瓶颈。">
+<meta name="author" content="王星星">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:title" content="三次并发问题排查：重复消费、锁竞争与查询超时 | 王星星的魔灯">
+<meta property="og:description" content="记录三次后端并发问题排查：消息重复消费、主单锁竞争与串行查询超时，结合伪代码分析校验边界和吞吐瓶颈。">
+<meta property="og:url" content="https://wxxlamp.cn/2026/09/13/three-concurrency-incidents/">
+<meta property="og:site_name" content="王星星的魔灯">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@43650cdcfd729e5bd3e43618ea27e7590179b7dc/images/d15431dc_cover.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="三次并发问题排查：重复消费、锁竞争与查询超时 | 王星星的魔灯">
+<meta name="twitter:description" content="记录三次后端并发问题排查：消息重复消费、主单锁竞争与串行查询超时，结合伪代码分析校验边界和吞吐瓶颈。">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@43650cdcfd729e5bd3e43618ea27e7590179b7dc/images/d15431dc_cover.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://wxxlamp.cn/#website","name":"王星星的魔灯","url":"https://wxxlamp.cn/","inLanguage":"zh-CN"},{"@type":"BlogPosting","@id":"https://wxxlamp.cn/2026/09/13/three-concurrency-incidents/#page","url":"https://wxxlamp.cn/2026/09/13/three-concurrency-incidents/","name":"三次并发问题排查：重复消费、锁竞争与查询超时 | 王星星的魔灯","description":"记录三次后端并发问题排查：消息重复消费、主单锁竞争与串行查询超时，结合伪代码分析校验边界和吞吐瓶颈。","inLanguage":"zh-CN","isPartOf":{"@id":"https://wxxlamp.cn/#website"},"headline":"三次并发问题排查：重复消费、锁竞争与查询超时","author":{"@type":"Person","@id":"https://wxxlamp.cn/about/#person","name":"王星星","url":"https://wxxlamp.cn/about/"},"mainEntityOfPage":"https://wxxlamp.cn/2026/09/13/three-concurrency-incidents/","image":["https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@43650cdcfd729e5bd3e43618ea27e7590179b7dc/images/d15431dc_cover.png"],"datePublished":"2026-09-13T15:11:20.000Z","articleSection":["采坑记录"]}]}</script>
+
+
+
+<link rel="alternate" href="/atom.xml" title="Atom" type="application/atom+xml">
+<link rel="alternate" href="/rss.xml" title="RSS 2.0" type="application/rss+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.4" />
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2.4">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2.4">
+<meta name="theme-color" content="#244f43">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.4" />
+
+
+
+<script defer src="/js/src/site.js?v=2.4"></script>
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  };
+</script>
+<script id="MathJax-script" async src="/lib/mathjax/tex-chtml.js"></script>
+
+
+
+
+  
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MJEDN7D89G"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-MJEDN7D89G');
+</script>
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "ydyci83xyu");
+</script>
+
+<script async src="https://wxxlamp-umami.vercel.app/script.js"
+  data-website-id="7ae63952-76fc-4a90-a5b7-aedd93fb56c9"
+  data-domains="wxxlamp.cn"
+  data-exclude-search="true"
+  data-exclude-hash="true"></script>
+
+
+<script async src="https://cloud.umami.is/script.js"
+  data-website-id="27d58970-f2c7-47fb-a0ea-380f8123c229"
+  data-domains="wxxlamp.cn"
+  data-exclude-search="true"
+  data-exclude-hash="true"></script>
+
+
+
+
+
+  <meta name="generator" content="Hexo 8.1.1"></head>
+
+  <body data-content-language="zh-CN" class="view-post">
+    <a class="skip-link" href="#content" data-zh="跳至正文" data-en="Skip to content">跳至正文</a>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+  <a href="/" class="site-brand" aria-label="王星星的魔灯 · 首页" data-zh-label="王星星的魔灯 · 首页" data-en-label="Sibo's Blog · Home">
+    <img class="brand-mark" src="/favicon.svg" width="36" height="36" alt="" aria-hidden="true">
+    <span class="brand-name" data-zh="王星星的魔灯" data-en="Sibo's Blog">王星星的魔灯</span>
+  </a>
+  <nav id="nav-top" aria-label="主导航" data-zh-label="主导航" data-en-label="Main navigation">
+    <ul class="nav-top-items">
+      <li><a href="/" data-nav="home" data-zh="文章" data-en="Writing">文章</a></li>
+      <li><a href="/archives/" data-nav="archives" data-zh="归档" data-en="Archive">归档</a></li>
+      <li><a href="/about/" data-nav="about" data-zh="关于" data-en="About">关于</a></li>
+      <li><a href="/resume/" data-nav="resume" data-resume-link data-zh="简历" data-en="Résumé">简历</a></li>
+    </ul>
+  </nav>
+  <div class="language-switch" aria-label="Language">
+    <a href="/2026/09/13/three-concurrency-incidents/" data-language="zh" lang="zh-CN" aria-label="阅读中文版">中</a>
+    
+  </div>
+</div>
+
+      </header>
+      <main id="content" tabindex="-1">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <div class="post-meta"><time datetime="2026-09-13">2026.09.13</time><a href="/categories/%E9%87%87%E5%9D%91%E8%AE%B0%E5%BD%95/">采坑记录</a></div>
+      <h1 class="post-title">三次并发问题排查：重复消费、锁竞争与查询超时</h1>
+      
+      <div class="post-stats" data-page-counter>
+        <span class="page-stats__counts" hidden title="自建 Umami 累计统计 / Self-hosted Umami cumulative statistics">
+          <span data-zh="本文阅读（PV）" data-en="Article views (PV)">本文阅读（PV）</span> <span id="umami_page_pv"></span> ·
+          <span data-zh="本文访客（UV）" data-en="Article visitors (UV)">本文访客（UV）</span> <span id="umami_page_uv"></span>
+        </span>
+        <span class="page-stats__status" role="status" data-zh="统计加载中…" data-en="Loading stats…">统计加载中…</span>
+      </div>
+      
+    </header>
+    
+      
+
+      <div class="post-content" lang="zh-CN"><p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@43650cdcfd729e5bd3e43618ea27e7590179b7dc/images/d15431dc_cover.png" alt="信封传送带汇入窄闸门，表现消息处理中的竞争与排队"></p>
+<p>笔者目前除了做 Agent 开发之外，日常的工作还涉及到淘宝天猫场景金融服务的后端开发。</p>
+<p>最近三个月在 Codex 的协助下处理了很多日常的工单，其中涉及到一些并发场景导致的问题，在此和大家分享一下。</p>
+<h1 id="1-消息重投递导致重复消费问题"><a href="#1-消息重投递导致重复消费问题" class="headerlink" title="1. 消息重投递导致重复消费问题"></a>1. 消息重投递导致重复消费问题</h1><p>大概在两个月前，我们通过核对发现一个客户的授信超时了。</p>
+<p>问了下下游的核身服务，发现用户已经核身通过了，那为什么我们这边还没收到消息呢？</p>
+<p>首先想到的就是上游消息没有发出来，但是通过日志，发现消息的确发到了我们这边。</p>
+<p>那为什么会出问题呢？</p>
+<p>原因就在于上游不仅发消息了，而且 MQ 还同时发了两条同样的消息过来。</p>
+<blockquote>
+<p>这里使用的 MQ 中间件是 RocketMQ，按 at-least-once 语义处理，没办法保证不重复投递。</p>
+</blockquote>
+<p>我们的机器在收到消息之后，会首先从数据库 load 数据，然后 check 状态，如果状态合法，则进入下一步的流程。伪代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">listener</span><span class="params">(Msg msg)</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="type">String</span> <span class="variable">bizId</span> <span class="operator">=</span> msg.getId();</span><br><span class="line">    <span class="type">CreditDO</span> <span class="variable">creditDO</span> <span class="operator">=</span> mysqlDB.getData(bizId);</span><br><span class="line">    <span class="keyword">if</span>(!creditDO.canDoNext()) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    doNext(creditDO, msg);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RedisLock(key = creditDo.id)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">doNext</span><span class="params">(CreditDO creditDo, Msg msg)</span> &#123;</span><br><span class="line">    <span class="comment">// update</span></span><br><span class="line">    update(creditDo, msg);</span><br><span class="line">    <span class="comment">// do next process</span></span><br><span class="line">    <span class="comment">// 如果幂等则直接返回</span></span><br><span class="line">    signal(creditDo);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个代码乍一看没有问题，但是如果两条消息同时来的话，就会出现两条数据都通过校验，然后串行执行 <code>doNext</code> 方法。对于第一个线程来说，它正常顺利执行没有问题。当第二个线程进入后，它又重新 update 了数据，但是要执行 signal 的时候，被下游服务的幂等逻辑拦住了，没办法继续执行。这样就会导致单据不一致的情况。</p>
+<p><strong>正常的处理逻辑，应该严格 follow <a href="https://wxxlamp.cn/2023/05/07/how-to-deal-msg-reconsume/">“一锁二判三更新”</a>的原则，即 query 和 check 逻辑也应该放到同一把有效的锁里面，避免两个线程都基于旧状态通过校验；跨服务一致性还需要事务与幂等机制配合。</strong></p>
+<h1 id="2-锁粒度过大导致消息堆积问题"><a href="#2-锁粒度过大导致消息堆积问题" class="headerlink" title="2. 锁粒度过大导致消息堆积问题"></a>2. 锁粒度过大导致消息堆积问题</h1><p>我们在特殊场景下，会有主子单的情况。</p>
+<p>即把客户的一次申请，映射到该客户的符合条件的订单上进行处理。当所有订单处理完成之后，再更新主单的状态，将其置为完成。伪代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// step1: 处理子单</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">payOrderItems</span><span class="params">(Order order)</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(OrderItem orderItem : order.getItems()) &#123;</span><br><span class="line">        payOrderItem(orderItem);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Step2：子单处理成功消息，通过消息投递</span></span><br><span class="line"><span class="meta">@RedisLock(key = orderItem.mainOrderNo)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onOrderItemPaySuccess</span><span class="params">(OrderItem orderItem)</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 校验主单状态</span></span><br><span class="line">    queryDbCheckMainOrderStatus(orderItem);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 Redis 扣减剩余子单计数</span></span><br><span class="line">    redis.decrease(orderItem.getMainOrderNo());</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果缓存记录子单数 为 0，则处理后续流程</span></span><br><span class="line">    <span class="keyword">if</span> (redis.get(orderItem.getMainOrderNo())  == <span class="number">0</span>) &#123;</span><br><span class="line">        doNextStep(orderItem.getMainOrderNo());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在一个大客户的场景，客户的一次申请，同时触发了上万单的子单支付操作，然后在我们消费支付成功消息的时候，系统频繁抛出加锁阻塞异常，同时 MQ 的消费失败率显著提高。</p>
+<p>仔细看了下当时的数据，同一笔主单，子单支付成功消息的 QPS 峰值在 700 左右。如果每条消息都直接更新数据库中的同一笔主单，就会集中竞争这一行的锁。所以代码在更新子单计数的时候，没有使用 MySQL，而是使用了 Redis，目的是避免主单的热点更新。</p>
+<p>但是它加锁的维度是按照主单处理的，我们线上是 4C8G 的机器，Redis 锁内执行的一次数据库查询和 Redis 扣减大概花费 5ms，按同一把锁串行处理估算，理论上限约为 200 QPS，实际还要扣除加解锁等开销。这远小于 700 的峰值，就会导致大量的子单请求因为抢不到锁而消费失败，交给 MQ 做重投。重投的任务越多，短时间内堆积的消息就越多，那么系统接收到的消息也会越来越多（一共 2 万笔子单，因为失败重投，最后导致了将近 30 万次抢锁，流量放大了 15 倍），抢锁的失败率也会越来越高，这就是系统报警的原因。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@82edec8b77e149d2fbd07a05f99c4556b509554b/images/317838f8_main-order-lock.png" alt="主单锁竞争与重投反馈：约700QPS消息争抢约200QPS临界区，2万子单触发近30万次抢锁"></p>
+<p>所以，在这种主子单的场景，让每条子单消息都抢同一把主单锁，不是一个特别好的选择。</p>
+<p>其实，如果这里的 decrease 封装的是 Redis DECR，单次扣减就已经是原子操作了，不必仅为扣减额外加一把悲观锁。但重复消息仍可能重复扣减，缓存计数只能用来触发检查，完成条件仍要在锁内查库确认，并校验主单状态、幂等推进。伪代码可以这么写：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Step2：子单处理成功消息，通过消息投递</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onOrderItemPaySuccess</span><span class="params">(OrderItem orderItem)</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 校验主单状态</span></span><br><span class="line">    queryDbCheckMainOrderStatus(orderItem);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 Redis 扣减剩余子单计数</span></span><br><span class="line">    redis.decrease(orderItem.getMainOrderNo());</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 缓存记录子单数小于等于 20 时，才进入锁内查库</span></span><br><span class="line">    <span class="keyword">if</span> (redis.get(orderItem.getMainOrderNo())  &lt;= <span class="number">20</span>) &#123;</span><br><span class="line"></span><br><span class="line">        redisLock.execute(key=orderItem.getMainOrderNo(), lockedOrder -&gt; &#123;</span><br><span class="line">            <span class="comment">// 1. 重新校验主单状态，并查库确认所有子单是否支付完成</span></span><br><span class="line">            <span class="comment">// 2. 如果全部支付完成，则幂等推进后续流程</span></span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="3-单线程查询导致任务超时问题"><a href="#3-单线程查询导致任务超时问题" class="headerlink" title="3. 单线程查询导致任务超时问题"></a>3. 单线程查询导致任务超时问题</h1><p>同样是一个大客户导致的问题。</p>
+<p>这个客户有将近 4 万笔订单，需要同时处理，在调一个查询接口的时候，竟然因为历史原因使用了单线程，可以想象，即使每次 RPC 的时间只有 15ms，4 万笔串行调用也需要约 10 分钟，还没算其他处理开销。</p>
+<p>刚好上游设置了这个任务超时时间是五分钟，在五分钟后来 check 的时候，发现部分单据还没有完成，补偿的时候就发生了报错。</p>
+<p>这个问题太简单了，就不贴代码了。</p>
+</div>
+      <footer class="post-footer">
+        <div class="post-tags"><a href="/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/">并发编程</a><a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/">消息队列</a><a href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">性能优化</a></div>
+        
+  <nav class="post-nav">
+    
+    
+      <a class="next" href="/2026/09/06/gpt6-astra-first-impressions/">
+        <span class="next-text nav-default">GPT6 Astra使用初体验</span>
+        <span class="prev-text nav-mobile"><span data-zh="下一篇" data-en="Next entry">下一篇</span></span>
+        <svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 5 7 7-7 7M5 12h14"/></svg>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    
+<section class="github-comments" data-comments-repo="wxxlamp/wxxlamp.github.io" data-comments-repo-id="MDEwOlJlcG9zaXRvcnkzMTM0ODIyMzc=" data-comments-category="Announcements" data-comments-category-id="DIC_kwDOEq9b_c4DFFLD" data-comments-lang="zh-CN">
+  <h2 class="comments-title" data-zh="评论" data-en="Comments">评论</h2>
+  <p class="comments-status" role="status" data-zh="正在加载评论…" data-en="Loading comments…">正在加载评论…</p>
+  <button class="comments-retry" type="button" hidden data-zh="重新加载评论" data-en="Reload comments">重新加载评论</button>
+  <div class="giscus"></div>
+  <noscript>请启用 JavaScript 查看评论。Please enable JavaScript to view comments.</noscript>
+</section>
+<script defer src="/js/src/comments.js?v=2.4"></script>
+
+
+
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+    
+<aside class="toc-container" id="toc-container"><details open><summary data-zh="本篇目录" data-en="On this page">本篇目录</summary><ol class="toc-list" id="toc-list"></ol></details></aside>
+<div class="reading-progress" aria-hidden="true"></div>
+
+
+
+      </main>
+
+      <footer id="colophon"><div class="footer-inner"><span>© 2026 王星星 <span class="footer-dot">·</span> <span data-zh="保持好奇，认真生活。" data-en="Stay curious. Live thoughtfully.">保持好奇，认真生活。</span></span><a href="/subscribe/"><svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 10a9 9 0 0 1 9 9M5 4a15 15 0 0 1 15 15"/><circle cx="5" cy="19" r="1"/></svg> RSS</a></div>
+<div class="site-stats">
+  
+  <span class="site-stats__counter" data-counter-origin="https://wxxlamp.cn" data-counters-url="https://wxxlamp-umami.vercel.app/api/public/blog-stats" data-busuanzi="true">
+    <span class="site-stats__counts" hidden title="自建 Umami 累计统计 / Self-hosted Umami cumulative statistics">
+      <span data-zh="全站访问（PV）" data-en="Site views (PV)">全站访问（PV）</span> <span id="umami_site_pv"></span> ·
+      <span data-zh="全站访客（UV）" data-en="Site visitors (UV)">全站访客（UV）</span> <span id="umami_site_uv"></span>
+    </span>
+    <span class="site-stats__status" role="status" data-zh="统计加载中…" data-en="Loading stats…">统计加载中…</span> ·
+  </span>
+  <script defer src="/js/src/counter.js?v=2.4"></script>
+  
+  Powered by <a target="_blank" href="https://hexo.io/" rel="noopener noopener">Hexo</a>
+</div>
+
+      </footer>
+
+      <button class="back-to-top" id="back-to-top" aria-label="回到顶部" data-zh-label="回到顶部" data-en-label="Back to top"><svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m5 12 7-7 7 7M12 5v14"/></svg></button>
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=2.4"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.4"></script>
+
+  </body>
+</html>

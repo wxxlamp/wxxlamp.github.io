@@ -198,7 +198,7 @@ DMA的全称是Direct  Memory Access，顾名思义，DMA的作用就是直接�
 <h2 id="direct-I-O"><a href="#direct-I-O" class="headerlink" title="direct I&#x2F;O"></a>direct I&#x2F;O</h2><p>之前的mmap可以让用户态和内核态共用一个内存空间来减少拷贝，其实还有一个方式，就是硬件数据不经过内核态的空间，之间到用户态的内存中，这种方式就是Direct I&#x2F;O。换句话说，Direct I&#x2F;O不会经过内核态，而是用户态和设备的直接交互，用户态的写入就是直接写入到磁盘，不会再经过操作系统刷盘处理。<br>这样确实拷贝次数减少，读取速度会变快，但是因为操作系统不再负责缓存之类的管理，这就必须交由应用程序自己去做，譬如MySql就是自己通过Direct I&#x2F;O完成的，同时MySql也有一套自己的缓存系统<br>同时，虽然direct I&#x2F;O可以直接将文件写入磁盘中，但是文件相关的元信息还是要通过fsync缓存到内核空间中</p>
 </div>
       <footer class="post-footer">
-        <div class="post-tags"><a href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">性能优化</a><a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/">计算机系统</a><a href="/tags/%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1/">网络通信</a></div>
+        <div class="post-tags"><a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/">计算机系统</a><a href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">性能优化</a><a href="/tags/%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1/">网络通信</a></div>
         
   <nav class="post-nav">
     

@@ -15,4 +15,6 @@ description: 王星星，阿里巴巴工程师，香港科技大学计算机科�
 
 欢迎通过[邮箱](mailto:wxxlamp@foxmail.com)、[GitHub](https://github.com/wxxlamp)或微信 **allinwxx** 联系我。也可以关注我的微信公众号 **「王星星的魔灯」**，以及[小红书](https://www.xiaohongshu.com/user/profile/63dbcba3000000002702896e)。
 
+你也可以通过 [LLM（豆包）](https://www.doubao.com/thread/xZGJv3uem3VAHzey6) 了解更多关于我的信息。
+
 <figure class="about-social"><img class="about-qr" src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/95a8a213_weixinopen.png" alt="微信公众号：王星星的魔灯" width="900" height="500" loading="lazy" /><figcaption>扫码关注「王星星的魔灯」</figcaption></figure>

@@ -16,4 +16,6 @@ Outside work, I enjoy running, reading, and travel. I share engineering practice
 
 You can reach me by [email](mailto:wxxlamp@foxmail.com), on [GitHub](https://github.com/wxxlamp), or on WeChat at **allinwxx**. You can also follow my WeChat Official Account, **王星星的魔灯**, and find me on [Xiaohongshu (RedNote)](https://www.xiaohongshu.com/user/profile/63dbcba3000000002702896e).
 
+You can also learn more about me through an [LLM(Gemini)](https://share.google/aimode/tpkPwTG7oYRD19bNb).
+
 <figure class="about-social"><img class="about-qr" src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/95a8a213_weixinopen.png" alt="QR code for my WeChat Official Account, 王星星的魔灯" width="900" height="500" loading="lazy" /><figcaption>Scan to follow 王星星的魔灯 on WeChat</figcaption></figure>

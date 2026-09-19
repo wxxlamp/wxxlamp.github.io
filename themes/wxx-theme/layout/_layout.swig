@@ -4,7 +4,7 @@
     {% include '_partial/head.swig' %}
   </head>
 
-  <body data-content-language="{{ content_language() }}" class="{% if is_home() %}view-home{% elif is_post() %}view-post{% else %}view-page{% endif %}">
+  <body data-content-language="{{ content_language() }}" class="{% if page.layout === 'resource-doc' %}view-resource-doc{% elif is_home() %}view-home{% elif is_post() %}view-post{% else %}view-page{% endif %}">
     <a class="skip-link" href="#content" data-zh="跳至正文" data-en="Skip to content">跳至正文</a>
     <div id="page">
       <header id="masthead">

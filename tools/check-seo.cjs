@@ -54,6 +54,24 @@ assert.equal(urls.length,new Set(urls).size);
 assert.deepEqual(new Set(urls),new Set([...pages].filter(([,p])=>!p.noindex).map(([u])=>u)));
 assert.equal(sitemap('lastmod').length,0);
 assert.match(fs.readFileSync(path.join(root,'robots.txt'),'utf8'),/Sitemap: https:\/\/wxxlamp.cn\/sitemap.xml/);
+for(const [relative,type] of [
+ ['resources/hkust-exam-papers/index.html','CollectionPage'],
+ ['resources/hkust-exam-papers/software-testing/review-note/index.html','LearningResource'],
+ ['resources/hkust-exam-papers/blockchain/blockchain-basics/index.html','LearningResource']
+]){
+ const $=load(fs.readFileSync(path.join(root,relative),'utf8'));
+ const graph=JSON.parse($('script[type="application/ld+json"]').text())['@graph'];
+ assert.equal(graph[1]['@type'],type,relative);
+ assert.ok(graph.some(item=>item['@type']==='BreadcrumbList'),relative);
+ assert.ok($('link[rel="canonical"]').length,relative);
+}
+{
+ const relative='resources/hkust-exam-papers/software-testing/review-note/index.html';
+ const $=load(fs.readFileSync(path.join(root,relative),'utf8'));
+ const entity=JSON.parse($('script[type="application/ld+json"]').text())['@graph'][1];
+ assert.equal(entity.encodingFormat,'application/pdf');assert.equal(entity.numberOfPages,3);
+ assert.ok($('[data-page-counter]').length);assert.ok($('link[rel="next"]').length);
+}
 for(const relative of ['about/index.html','en/about/index.html']){
  const $=load(fs.readFileSync(path.join(root,relative),'utf8'));
  assert.equal($('.post-content h1,.post-content h2,.post-content h3').length,0);

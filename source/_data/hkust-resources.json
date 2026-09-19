@@ -1,0 +1,71 @@
+{
+  "title": "香港科技大学信息技术历史资料整理",
+  "description": "信息技术课程历史卷、练习、答案与延伸阅读。",
+  "sections": [
+    {
+      "id": "software-testing",
+      "title": "软件测试（5100）",
+      "items": [
+        { "id": "software-review-note", "title": "复习提纲", "kind": "pdf", "pages": 3, "href": "/resources/hkust-exam-papers/software-testing/review-note/", "file": "/resources/hkust-exam-papers/files/software-testing/review-note.pdf" },
+        { "id": "software-exercise-collection", "title": "软件测试练习汇编", "kind": "pdf", "pages": 22, "href": "/resources/hkust-exam-papers/software-testing/exercise-collection/", "file": "/resources/hkust-exam-papers/files/software-testing/exercise-collection.pdf" },
+        { "id": "software-student-solutions", "title": "教材习题解答（学生版）", "kind": "pdf", "pages": 85, "href": "/resources/hkust-exam-papers/software-testing/student-solutions/", "file": "/resources/hkust-exam-papers/files/software-testing/exercise-solutions-student.pdf" },
+        { "id": "software-data-flow", "title": "数据流测试练习", "kind": "pdf", "pages": 5, "href": "/resources/hkust-exam-papers/software-testing/data-flow-exercises/", "file": "/resources/hkust-exam-papers/files/software-testing/data-flow-exercises.pdf" },
+        { "id": "software-faulty-programs-questions", "title": "Faulty Programs 练习题", "kind": "pdf", "pages": 1, "href": "/resources/hkust-exam-papers/software-testing/faulty-programs-questions/", "file": "/resources/hkust-exam-papers/files/software-testing/faulty-programs-questions.pdf" },
+        { "id": "software-faulty-programs-answers", "title": "Faulty Programs 参考答案", "kind": "pdf", "pages": 4, "href": "/resources/hkust-exam-papers/software-testing/faulty-programs-answers/", "file": "/resources/hkust-exam-papers/files/software-testing/faulty-programs-answers.pdf" },
+        { "id": "software-graph-coverage", "title": "图覆盖练习与答案", "kind": "pdf", "pages": 1, "href": "/resources/hkust-exam-papers/software-testing/graph-coverage-solution/", "file": "/resources/hkust-exam-papers/files/software-testing/graph-coverage-solution.pdf" },
+        { "id": "software-workshop", "title": "Workshop 1 参考答案", "kind": "pdf", "pages": 6, "href": "/resources/hkust-exam-papers/software-testing/workshop-1-solution/", "file": "/resources/hkust-exam-papers/files/software-testing/workshop-1-solution.pdf" }
+      ]
+    },
+    {
+      "id": "computer-networks",
+      "title": "计算机网络（CSIT5610）",
+      "items": [
+        { "id": "network-midterm-5621", "title": "COMP5621 秋季期中卷（年份未注明）", "kind": "pdf", "pages": 5, "href": "/resources/hkust-exam-papers/computer-networks/midterm-comp5621/", "file": "/resources/hkust-exam-papers/files/computer-networks/midterm-comp5621-unknown-fall.pdf" },
+        { "id": "network-final-4621-2012", "title": "COMP4621 2012 春季期末卷", "kind": "pdf", "pages": 13, "href": "/resources/hkust-exam-papers/computer-networks/final-comp4621-2012/", "file": "/resources/hkust-exam-papers/files/computer-networks/final-comp4621-2012-spring.pdf" },
+        { "id": "network-final-4621-2014", "title": "COMP4621 2014 春季期末卷", "kind": "pdf", "pages": 9, "href": "/resources/hkust-exam-papers/computer-networks/final-comp4621-2014/", "file": "/resources/hkust-exam-papers/files/computer-networks/final-comp4621-2014-spring.pdf" },
+        { "id": "network-final-5621-2016", "title": "COMP5621 2016 秋季期末卷", "kind": "pdf", "pages": 7, "href": "/resources/hkust-exam-papers/computer-networks/final-comp5621-2016/", "file": "/resources/hkust-exam-papers/files/computer-networks/final-comp5621-2016-fall.pdf" },
+        { "id": "network-final-561-2010", "title": "COMP561 2010 秋季期末卷", "kind": "pdf", "pages": 7, "href": "/resources/hkust-exam-papers/computer-networks/final-comp561-2010/", "file": "/resources/hkust-exam-papers/files/computer-networks/final-comp561-2010-fall.pdf" },
+        { "id": "network-final-361-2003", "title": "COMP361 2003 秋季期末卷（含答案）", "kind": "pdf", "pages": 14, "href": "/resources/hkust-exam-papers/computer-networks/final-comp361-2003/", "file": "/resources/hkust-exam-papers/files/computer-networks/final-comp361-2003-fall.pdf" }
+      ]
+    },
+    {
+      "id": "cloud-computing",
+      "title": "高级云计算（CSIT5970）",
+      "items": [
+        { "id": "cloud-midterm-sample", "title": "期中考试样题", "kind": "pdf", "pages": 2, "href": "/resources/hkust-exam-papers/cloud-computing/midterm-sample/", "file": "/resources/hkust-exam-papers/files/cloud-computing/midterm-sample.pdf" }
+      ]
+    },
+    {
+      "id": "blockchain",
+      "title": "区块链与智能合约（CSIT6000Q）",
+      "groups": [
+        {
+          "title": "入门阅读",
+          "items": [
+            { "id": "blockchain-basics", "title": "比特币与区块链基础", "kind": "markdown", "href": "/resources/hkust-exam-papers/blockchain/blockchain-basics/", "post": "what-is-bitcion-and-blockchain" },
+            { "id": "digital-rmb", "title": "从在线支付理解数字人民币", "kind": "markdown", "href": "/resources/hkust-exam-papers/blockchain/digital-rmb/", "post": "what-is-digtal-rmb" }
+          ]
+        },
+        {
+          "title": "试卷与样题",
+          "items": [
+            { "id": "blockchain-final-2023", "title": "2023 秋季期末试卷", "kind": "pdf", "pages": 24, "href": "/resources/hkust-exam-papers/blockchain/final-exam-2023/", "file": "/resources/hkust-exam-papers/files/blockchain/final-exam-2023.pdf" },
+            { "id": "blockchain-model-paper", "title": "模拟试卷", "kind": "pdf", "pages": 17, "href": "/resources/hkust-exam-papers/blockchain/model-question-paper/", "file": "/resources/hkust-exam-papers/files/blockchain/model-question-paper.pdf" }
+          ]
+        },
+        {
+          "title": "练习与答案",
+          "items": [
+            { "id": "blockchain-answers", "title": "问答与参考答案", "kind": "pdf", "pages": 26, "href": "/resources/hkust-exam-papers/blockchain/question-answers/", "file": "/resources/hkust-exam-papers/files/blockchain/question-answers.pdf" }
+          ]
+        },
+        {
+          "title": "旧版资料",
+          "items": [
+            { "id": "blockchain-question-bank-legacy", "title": "旧版 Solidity 题库", "kind": "pdf", "pages": 11, "href": "/resources/hkust-exam-papers/blockchain/question-bank-legacy/", "file": "/resources/hkust-exam-papers/files/blockchain/question-bank-legacy.pdf" }
+          ]
+        }
+      ]
+    }
+  ]
+}

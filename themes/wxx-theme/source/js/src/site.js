@@ -36,6 +36,44 @@
       }
     });
   });
+  var resourceMenu = document.querySelector('.resource-menu-button');
+  var resourceSidebar = document.getElementById('resource-sidebar');
+  var resourceBackdrop = document.querySelector('.resource-drawer-backdrop');
+  if (resourceMenu && resourceSidebar && resourceBackdrop) {
+    var resourceClose = resourceSidebar.querySelector('.resource-drawer-close');
+    function setResourceDrawer(open) {
+      document.body.classList.toggle('resource-drawer-open', open);
+      resourceMenu.setAttribute('aria-expanded', String(open));
+      resourceBackdrop.hidden = !open;
+      if (open) resourceClose.focus();
+      else resourceMenu.focus();
+    }
+    resourceMenu.addEventListener('click', function () { setResourceDrawer(true); });
+    resourceClose.addEventListener('click', function () { setResourceDrawer(false); });
+    resourceBackdrop.addEventListener('click', function () { setResourceDrawer(false); });
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && document.body.classList.contains('resource-drawer-open')) setResourceDrawer(false);
+    });
+    var activeResource = resourceSidebar.querySelector('[aria-current="page"]');
+    if (activeResource) resourceSidebar.scrollTop = Math.max(0, activeResource.offsetTop - resourceSidebar.clientHeight / 2);
+  }
+  var resourceSidebarToggle = document.querySelector('.resource-sidebar-toggle');
+  if (resourceSidebarToggle) {
+    function setResourceSidebarCollapsed(collapsed) {
+      var label = collapsed ? '展开目录' : '收起目录';
+      document.body.classList.toggle('resource-sidebar-collapsed', collapsed);
+      resourceSidebarToggle.setAttribute('aria-expanded', String(!collapsed));
+      resourceSidebarToggle.setAttribute('aria-label', label);
+      resourceSidebarToggle.setAttribute('title', label);
+      try { localStorage.setItem('resource_sidebar_collapsed', String(collapsed)); } catch (_) {}
+    }
+    var sidebarCollapsed = false;
+    try { sidebarCollapsed = localStorage.getItem('resource_sidebar_collapsed') === 'true'; } catch (_) {}
+    setResourceSidebarCollapsed(sidebarCollapsed);
+    resourceSidebarToggle.addEventListener('click', function () {
+      setResourceSidebarCollapsed(!document.body.classList.contains('resource-sidebar-collapsed'));
+    });
+  }
   var content = document.querySelector('.view-post .post-content');
   var toc = document.getElementById('toc-list');
   if (!content || !toc) return;

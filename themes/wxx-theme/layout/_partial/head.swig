@@ -9,6 +9,8 @@
 <link rel="alternate" hreflang="en" href="{{ config.url }}{{ language_url('en') }}">
 <link rel="alternate" hreflang="x-default" href="{{ config.url }}{{ language_url('zh') }}">
 {% endif %}
+{% if page.resource_previous %}<link rel="prev" href="{{ full_url_for(page.resource_previous.href) }}">{% endif %}
+{% if page.resource_next %}<link rel="next" href="{{ full_url_for(page.resource_next.href) }}">{% endif %}
 
 {# Website favicon #}
 {% if theme.favicon %}

@@ -51,3 +51,6 @@ content-projects/
 # Local multichannel publishing outputs
 /wechat/
 /rednote/
+
+# Local plugin artifacts
+/plugins/

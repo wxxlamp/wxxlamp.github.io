@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel>
-<title>王星星的魔灯</title><description>记录技术成长与生活感悟</description><link>https://wxxlamp.cn/</link><language>zh-CN</language><lastBuildDate>Sun, 13 Sep 2026 15:41:39 GMT</lastBuildDate>
+<title>王星星的魔灯</title><description>记录技术成长与生活感悟</description><link>https://wxxlamp.cn/</link><language>zh-CN</language><lastBuildDate>Sat, 19 Sep 2026 15:23:56 GMT</lastBuildDate>
 <atom:link href="https://wxxlamp.cn/rss.xml" rel="self" type="application/rss+xml"/>
 <item><title>三次并发问题排查：重复消费、锁竞争与查询超时</title><link>https://wxxlamp.cn/2026/09/13/three-concurrency-incidents/</link><guid isPermaLink="true">https://wxxlamp.cn/2026/09/13/three-concurrency-incidents/</guid><pubDate>Sun, 13 Sep 2026 15:11:20 GMT</pubDate><description>记录三次后端并发问题排查：消息重复消费、主单锁竞争与串行查询超时，结合伪代码分析校验边界和吞吐瓶颈。</description><content:encoded>&lt;p&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@43650cdcfd729e5bd3e43618ea27e7590179b7dc/images/d15431dc_cover.png&quot; alt=&quot;信封传送带汇入窄闸门，表现消息处理中的竞争与排队&quot;&gt;&lt;/p&gt;
 &lt;p&gt;笔者目前除了做 Agent 开发之外，日常的工作还涉及到淘宝天猫场景金融服务的后端开发。&lt;/p&gt;

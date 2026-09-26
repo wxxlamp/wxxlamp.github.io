@@ -14,6 +14,7 @@
       <li><a href="{{ url_for('/resume/') }}" data-nav="resume" data-resume-link data-zh="简历" data-en="Résumé">简历</a></li>
     </ul>
   </nav>
+  {% include "search.swig" %}
   <div class="language-switch" aria-label="Language">
     <a href="{{ language_url('zh') }}" data-language="zh" lang="zh-CN" aria-label="阅读中文版">中</a>
     {% if language_url("en") %}<a href="{{ language_url('en') }}" data-language="en" lang="en" aria-label="Read in English">EN</a>{% endif %}

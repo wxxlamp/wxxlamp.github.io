@@ -7,7 +7,9 @@
     <ul class="nav-top-items">
       <li><a href="{{ localized_path('/') }}" data-nav="home" data-zh="文章" data-en="Writing">文章</a></li>
       <li><a href="{{ localized_path('/archives/') }}" data-nav="archives" data-zh="归档" data-en="Archive">归档</a></li>
+      {% if content_language() !== 'en' %}
       <li><a href="{{ localized_path('/resources/') }}" data-nav="resources" data-zh="资料" data-en="Resources">资料</a></li>
+      {% endif %}
       <li><a href="{{ localized_path('/about/') }}" data-nav="about" data-zh="关于" data-en="About">关于</a></li>
       <li><a href="{{ url_for('/resume/') }}" data-nav="resume" data-resume-link data-zh="简历" data-en="Résumé">简历</a></li>
     </ul>

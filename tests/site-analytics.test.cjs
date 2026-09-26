@@ -23,7 +23,8 @@ function renderUmami(page, overrides = {}) {
   return swig.render(template, { locals: {
     theme: { umami: { enable: true, website_id: 'test-website-id',
       script_url: 'https://cloud.umami.is/script.js', domains: 'wxxlamp.cn', ...overrides } },
-    public_analytics_enabled: () => helpers.public_analytics_enabled.call({ page })
+    public_analytics_enabled: () => helpers.public_analytics_enabled.call({ page }),
+    resume_analytics_page: () => helpers.resume_analytics_page.call({ page })
   } });
 }
 
@@ -33,6 +34,23 @@ test('Umami renders once, restricted to production, grouping query strings and a
   assert.match(html, /data-domains="wxxlamp.cn"/);
   assert.match(html, /data-exclude-search="true"/);
   assert.match(html, /data-exclude-hash="true"/);
+});
+
+test('Resume opt-in loads only the self-hosted manual tracker on the exact layouts', () => {
+  const options = { resume: { enable: true }, script_url: 'https://self.example/script.js',
+    cloud: { enable: true, website_id: 'cloud-id', script_url: 'https://cloud.umami.is/script.js' } };
+  for (const layout of ['resume', 'resume-en']) {
+    const page = { path: layout + '/index.html', layout, password: 'dynamic' };
+    const html = renderUmami(page, options);
+    assert.equal((html.match(/<script /g) || []).length, 1);
+    assert.match(html, /id="resume-analytics"/);
+    assert.match(html, /data-auto-track="false"/);
+    assert.match(html, /self.example/);
+    assert.doesNotMatch(html, /cloud-id/);
+    assert.equal(renderUmami(page, { ...options, resume: { enable: false } }).trim(), '');
+    assert.equal(renderUmami(page, { ...options, enable: false }).trim(), '');
+  }
+  assert.equal(renderUmami({ path: 'private/index.html', layout: 'resume', password: 'x' }, options).trim(), '');
 });
 
 test('Umami stays absent when unconfigured, disabled or on private pages', () => {

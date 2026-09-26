@@ -67,6 +67,8 @@ umami:
   script_url: https://wxxlamp-umami.vercel.app/script.js
   domains: wxxlamp.cn
   counters_url: https://wxxlamp-umami.vercel.app/api/public/blog-stats
+  resume:
+    enable: true # Self-hosted only; manual entry/locked/content pageviews.
   cloud:
     enable: true
     website_id: 27d58970-f2c7-47fb-a0ea-380f8123c229

@@ -1,3 +1,11 @@
+{% if theme.umami.enable and theme.umami.website_id and theme.umami.resume.enable and resume_analytics_page() %}
+<script async id="resume-analytics" src="{{ theme.umami.script_url }}"
+  data-website-id="{{ theme.umami.website_id }}"
+  data-domains="{{ theme.umami.domains }}"
+  data-auto-track="false"
+  data-exclude-search="true"
+  data-exclude-hash="true"></script>
+{% endif %}
 {% if theme.umami.enable and theme.umami.website_id and public_analytics_enabled() %}
 <script async src="{{ theme.umami.script_url }}"
   data-website-id="{{ theme.umami.website_id }}"

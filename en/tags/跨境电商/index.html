@@ -110,6 +110,19 @@
       <li><a href="/resume/" data-nav="resume" data-resume-link="" data-zh="简历" data-en="Résumé">Résumé</a></li>
     </ul>
   </nav>
+  <button class="search-open" type="button" aria-haspopup="dialog" aria-controls="site-search" aria-label="Search" data-zh-label="搜索" data-en-label="Search"><svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="m16 16 4 4"></path></svg></button>
+<dialog id="site-search" class="search-dialog" aria-labelledby="search-title" data-index="/search/en.json">
+  <div class="search-heading"><h2 id="search-title" data-zh="站内搜索" data-en="Search this site">Search this site</h2><button type="button" class="search-close" data-zh="关闭" data-en="Close">Close</button></div>
+  <label for="search-query" data-zh="关键词、标题、代码、分类或标签" data-en="Keywords, titles, code, categories or tags">Keywords, titles, code, categories or tags</label>
+  <input id="search-query" type="search" autocomplete="off" maxlength="160">
+  <p id="search-status" role="status" aria-live="polite"></p>
+  <button type="button" id="search-retry" hidden="" data-zh="重新加载" data-en="Try again">Try again</button>
+  <ol id="search-results"></ol>
+  <button type="button" id="search-more" hidden="" data-zh="加载更多" data-en="Show more">Show more</button>
+</dialog>
+<script defer="" src="/js/src/search-engine.js?v=1"></script>
+<script defer="" src="/js/src/search.js?v=2"></script>
+
   <div class="language-switch" aria-label="Language">
     <a href="/tags/%E8%B7%A8%E5%A2%83%E7%94%B5%E5%95%86/" data-language="zh" lang="zh-CN" aria-label="阅读中文版">中</a>
     <a href="/en/tags/%E8%B7%A8%E5%A2%83%E7%94%B5%E5%95%86/" data-language="en" lang="en" aria-label="Read in English">EN</a>

@@ -137,6 +137,19 @@
       <li><a href="/resume/" data-nav="resume" data-resume-link data-zh="简历" data-en="Résumé">简历</a></li>
     </ul>
   </nav>
+  <button class="search-open" type="button" aria-haspopup="dialog" aria-controls="site-search" aria-label="搜索" data-zh-label="搜索" data-en-label="Search"><svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4 4"/></svg></button>
+<dialog id="site-search" class="search-dialog" aria-labelledby="search-title" data-index="/search/zh.json">
+  <div class="search-heading"><h2 id="search-title" data-zh="站内搜索" data-en="Search this site">站内搜索</h2><button type="button" class="search-close" data-zh="关闭" data-en="Close">关闭</button></div>
+  <label for="search-query" data-zh="关键词、标题、代码、分类或标签" data-en="Keywords, titles, code, categories or tags">关键词、标题、代码、分类或标签</label>
+  <input id="search-query" type="search" autocomplete="off" maxlength="160">
+  <p id="search-status" role="status" aria-live="polite"></p>
+  <button type="button" id="search-retry" hidden data-zh="重新加载" data-en="Try again">重新加载</button>
+  <ol id="search-results"></ol>
+  <button type="button" id="search-more" hidden data-zh="加载更多" data-en="Show more">加载更多</button>
+</dialog>
+<script defer src="/js/src/search-engine.js?v=1"></script>
+<script defer src="/js/src/search.js?v=2"></script>
+
   <div class="language-switch" aria-label="Language">
     <a href="/2023/02/18/test-in-spring-project/" data-language="zh" lang="zh-CN" aria-label="阅读中文版">中</a>
     <a href="/en/2023/02/18/test-in-spring-project/" data-language="en" lang="en" aria-label="Read in English">EN</a>
@@ -232,7 +245,7 @@
 <h3 id="Bean的排除和引入"><a href="#Bean的排除和引入" class="headerlink" title="Bean的排除和引入"></a>Bean的排除和引入</h3><p>上文我们引入了很多mock的Bean，容器很有可能会启动不起来，因为可能此时容器中既有真实的Bean，又有mock的Bean，这个时候，我们就需要将那些冲突的真实的Bean从测试容器中排除。<br>除此之外，有些Bean因为加载了非常恶心的东西（导致我们测试容器启动不起来），我们也需要排除。如下所示：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ComponentScan(basePackages = &#123;</span></span><br><span class="line"><span class="meta">    &quot;扫描我们希望引入的包和类&quot;</span></span><br><span class="line"><span class="meta">&#125;, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE,</span></span><br><span class="line"><span class="meta">        classes = &#123;要排除的包和类&#125;))</span></span><br><span class="line"><span class="meta">@Import(&#123;</span></span><br><span class="line"><span class="meta">        希望引入的bean</span></span><br><span class="line"><span class="meta">&#125;)</span></span><br><span class="line"><span class="meta">@TestConfiguration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ServiceMockConfig</span> &#123;&#125;</span><br></pre></td></tr></table></figure></div>
       <footer class="post-footer">
-        <div class="post-tags"><a href="/tags/Spring-%E6%A1%86%E6%9E%B6/">Spring 框架</a><a href="/tags/%E6%B5%8B%E8%AF%95%E4%B8%8E%E8%B4%A8%E9%87%8F/">测试与质量</a></div>
+        <div class="post-tags"><a href="/tags/%E6%B5%8B%E8%AF%95%E4%B8%8E%E8%B4%A8%E9%87%8F/">测试与质量</a><a href="/tags/Spring-%E6%A1%86%E6%9E%B6/">Spring 框架</a></div>
         
   <nav class="post-nav">
     

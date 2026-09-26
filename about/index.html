@@ -122,6 +122,19 @@
       <li><a href="/resume/" data-nav="resume" data-resume-link data-zh="简历" data-en="Résumé">简历</a></li>
     </ul>
   </nav>
+  <button class="search-open" type="button" aria-haspopup="dialog" aria-controls="site-search" aria-label="搜索" data-zh-label="搜索" data-en-label="Search"><svg class="site-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4 4"/></svg></button>
+<dialog id="site-search" class="search-dialog" aria-labelledby="search-title" data-index="/search/zh.json">
+  <div class="search-heading"><h2 id="search-title" data-zh="站内搜索" data-en="Search this site">站内搜索</h2><button type="button" class="search-close" data-zh="关闭" data-en="Close">关闭</button></div>
+  <label for="search-query" data-zh="关键词、标题、代码、分类或标签" data-en="Keywords, titles, code, categories or tags">关键词、标题、代码、分类或标签</label>
+  <input id="search-query" type="search" autocomplete="off" maxlength="160">
+  <p id="search-status" role="status" aria-live="polite"></p>
+  <button type="button" id="search-retry" hidden data-zh="重新加载" data-en="Try again">重新加载</button>
+  <ol id="search-results"></ol>
+  <button type="button" id="search-more" hidden data-zh="加载更多" data-en="Show more">加载更多</button>
+</dialog>
+<script defer src="/js/src/search-engine.js?v=1"></script>
+<script defer src="/js/src/search.js?v=2"></script>
+
   <div class="language-switch" aria-label="Language">
     <a href="/about/" data-language="zh" lang="zh-CN" aria-label="阅读中文版">中</a>
     <a href="/en/about/" data-language="en" lang="en" aria-label="Read in English">EN</a>
@@ -135,7 +148,7 @@
 <p>我于 2025 年获得<a target="_blank" rel="noopener" href="https://hkust.edu.hk/zh-hans">香港科技大学</a>计算机科学与技术硕士学位（全日制，2024—2025），此前于 2021 年毕业于<a target="_blank" rel="noopener" href="https://www.zzu.edu.cn/">郑州大学</a>软件工程专业（2017—2021）。</p>
 <p>我于 2021 年 7 月本科毕业后加入阿里巴巴并工作至今，有过三年国际化交易保障和资金结算经验，目前的工作重心是金融与 AI Agent。此前，我于 2020 年 9 月至 2021 年 3 月在<a target="_blank" rel="noopener" href="https://www.zybank.com.cn/">中原银行</a>实习，2020 年 5—8 月在阿里巴巴实习。</p>
 <p>工作之外，我喜欢跑步、阅读和旅行，也通过这个博客记录技术实践与生活。</p>
-<p>欢迎通过<a href="mailto:&#x77;&#120;&#x78;&#108;&#97;&#109;&#x70;&#x40;&#x66;&#x6f;&#120;&#x6d;&#97;&#x69;&#108;&#46;&#x63;&#111;&#x6d;">邮箱</a>、<a target="_blank" rel="noopener" href="https://github.com/wxxlamp">GitHub</a>或微信 <strong>allinwxx</strong> 联系我。也可以关注我的微信公众号 <strong>「王星星的魔灯」</strong>，以及<a target="_blank" rel="noopener" href="https://www.xiaohongshu.com/user/profile/63dbcba3000000002702896e">小红书</a>。</p>
+<p>欢迎通过<a href="mailto:&#119;&#120;&#x78;&#x6c;&#x61;&#109;&#112;&#64;&#102;&#x6f;&#120;&#x6d;&#97;&#x69;&#x6c;&#x2e;&#99;&#x6f;&#109;">邮箱</a>、<a target="_blank" rel="noopener" href="https://github.com/wxxlamp">GitHub</a>或微信 <strong>allinwxx</strong> 联系我。也可以关注我的微信公众号 <strong>「王星星的魔灯」</strong>，以及<a target="_blank" rel="noopener" href="https://www.xiaohongshu.com/user/profile/63dbcba3000000002702896e">小红书</a>。</p>
 <p>你也可以通过 <a target="_blank" rel="noopener" href="https://www.doubao.com/thread/xZGJv3uem3VAHzey6">LLM（豆包）</a> 了解更多关于我的信息。</p>
 <figure class="about-social"><img class="about-qr" src="https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@main/images/95a8a213_weixinopen.png" alt="微信公众号：王星星的魔灯" width="900" height="500" loading="lazy" /><figcaption>扫码关注「王星星的魔灯」</figcaption></figure>
 </div></article></div>

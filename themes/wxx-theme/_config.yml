@@ -64,9 +64,9 @@ clarity_project_id: ydyci83xyu
 umami:
   enable: true
   website_id: 7ae63952-76fc-4a90-a5b7-aedd93fb56c9
-  script_url: https://wxxlamp-umami.vercel.app/script.js
+  script_url: https://analytics.wxxlamp.cn/script.js
   domains: wxxlamp.cn
-  counters_url: https://wxxlamp-umami.vercel.app/api/public/blog-stats
+  counters_url: https://analytics.wxxlamp.cn/api/public/blog-stats
   resume:
     enable: true # Self-hosted only; manual entry/locked/content pageviews.
   cloud:

@@ -1,5 +1,15 @@
 # 阿里云 ESA 与 Umami 接入
 
+## 统计自定义域名（2026-10-04，服务端已接入，博客待发布）
+
+- Vercel 项目 `Light Tech / wxxlamp-umami` 已添加生产域名 `analytics.wxxlamp.cn`。
+- 阿里云 DNS 已新增：`CNAME`，主机记录 `analytics`，记录值 `9f8c73b7f1e770da.vercel-dns-017.com`，默认线路、TTL 10 分钟。权威 DNS 已确认生效，Vercel 显示 `Valid Configuration`。
+- 博客配置已将自建脚本与公开计数接口改到该域名，站点 ID 与 Cloud 配置保持不变，尚未提交发布。
+- HTTPS 证书校验通过，`/script.js` 返回 200，`/api/public/blog-stats` 返回原站点累计统计。验证时本机 DNS 仍有负缓存，使用查询获得的 Vercel IP 配合 `curl --resolve` 校验新域名，未跳过证书验证。
+- 16 项统计相关测试、Hexo 构建和本地服务页面检查通过；首页输出新脚本与计数接口地址，并保留 Cloud 脚本。发布后仍需验证真实浏览器上报与公开计数。
+- 自定义域名用于改善默认 `vercel.app` 域名的网络可达性；用户已反馈访问验证通过并同意发布。发布后仍需核验实际访问上报及地区识别结果。
+- 回退时将 `script_url`、`counters_url` 的主机名改回 `wxxlamp-umami.vercel.app`；无需迁移或修改历史统计。
+
 ## 自建 Umami 与三路采集（2026-09-10，待发布）
 
 - 自建 Umami 3.3.1 已部署：<https://wxxlamp-umami.vercel.app>；仓库为 <https://github.com/wxxlamp/umami>。

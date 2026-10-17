@@ -1,0 +1,153 @@
+---
+title: "AI改变命运，与大模型共同度过2030"
+date: 2026-10-17 23:54:29
+tags:
+  - "大模型应用"
+  - "职业成长"
+  - "智能体工程"
+categories:
+  - "生活感悟"
+description: "结合个人使用大模型的经历与 Anthropic 的情景分析，思考 AI 对工作、经济分配及个人成长的影响与现实瓶颈。"
+---
+![人与AI协作规划，窗外的人们继续建设城市](https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@cb83b84114cf36e1002c5efe86c3ce2e8bb15b5b/images/5db11ef4_cover.png)
+
+国庆长假在家窝了几天，顺道看了下 Anthropic的两篇文章：[Scenarios for our Economic Future](https://www.anthropic.com/institute/econ-scenarios)、[When AI builds itself](https://www.anthropic.com/institute/recursive-self-improvement)，结合这几年我个人高强度使用大语言模型的经历，想和大家一起展望下四年后，在AI的参与下，未来会变成什么样子。
+
+本文标题之所以叫做“AI改变命运”，是因为国庆期间和我弟去大学玩的时候，看到了“知识改变命运”的标语。由此我突然想到，在过去，人们刻苦学习，掌握各种专业理论知识和技术。做到顶尖后，自然会得到命运的馈赠。但是在AI时代，任何人，都可以毫不费力地获得任何行业的顶尖知识。知识变得唾手可得后，还可以改变命运吗？——还是说，AI会代替知识，来改变命运。
+
+# 1. 大语言模型时代的时间轴
+
+在2022年11月OpenAI发布ChatGPT应用，彻底引爆全球大模型浪潮之前，最著名的两个里程碑是2017年Google提出的Transformer架构，和2020年OpenAI发布的GPT-3模型（175B参数）。
+
+到了2023年，互联网公司开始基于Transformer通过疯狂增加参数的形式来训练模型，大部分人已经开始使用类似于ChatGPT的大语言模型进行对话。<u><strong style="font-weight:750;font-synthesis:weight;">笔者在23年9月备考雅思的时候，就开始使用ChatGPT改作文、记单词了</strong>。</u>
+
+2024年，国内的对话型大模型应用开始发力，像字节发布的豆包，网易有道也引入了大模型来做论文的翻译和问答功能。同时，Cursor在23年就引入了文件编辑功能，成为了全球AI编程的明星产品。<u><strong style="font-weight:750;font-synthesis:weight;">我在24年主要用AI做两件事，一件事就是理解论文、第二件事就是通过对话来学习代码。本质上还是把大模型当做NLP工具来使用</strong>。</u>
+
+2025年1月，DeepSeek发布R1推理模型，在全球走红，让国内大部分人都开始了解和使用AI。同时，Anthropic提出的MCP概念，也在25年爆火，这标志着大语言模型有了统一调用工具的方法。之后在25年10月，Anthropic又推出了Agent Skills，让普通人用大语言模型更加方便。可以说，25年是大语言模型从对话到工作的“元年”。<u><strong style="font-weight:750;font-synthesis:weight;">笔者也在25年正式小范围地通过AI编程工具来提高代码的开发效率</strong>。</u>
+
+到了2026年，龙虾爆火后，进一步让人们看到了大语言模型的提效潜力。Claude Code、Codex被越来越多的人提及和使用。基于龙虾的理念和ReAct范式，各种商业Agent如雨后春笋般冒出。国内的豆包办公、千问办公（包含电商版）、workbuddy、qoder都在这一时期持续发展。大模型发展之快，超乎所有人的意料，<u><strong style="font-weight:750;font-synthesis:weight;">现在笔者的代码编写工作几乎100%交付给AI来完成，同时AI也几乎解决了笔者40%的运维事项，这在25年是笔者完全不敢想的事实</strong>。</u>
+
+
+---
+对于Anthropic来说，他们在开发Claude过程中，基本和笔者的开发经历类似。从23-25年通过chat的方式稍微提高开发效率。而在25-26这两年，则通过Coding Agent显著提高了编码效率。到现在，他们甚至让Agent自行运行、测试代码和委派任务——可以发现，大语言模型，越来越能干“人干的活”了。
+
+![Anthropic构建Claude的方式：从人编程到自主代理](https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@6079172ec7156c70f6fb4b5b11aac8e6f2aabf6d/images/ff3b0e01_a0a9fb093b298e06.png)
+
+<span class="article-figure-caption" style="display:block;font-size:12px;line-height:1.6;text-align:center;color:#777;margin:8px 0 24px;">图 1. Anthropic 构建 Claude 的方式（来源：[When AI builds itself](https://www.anthropic.com/institute/recursive-self-improvement)）</span>
+
+# 2. 智能时代的工作和经济
+
+由于大语言模型可以理解自然语言，并且基于内建的知识储备，对各种问题进行回复。同时大语言模型作为原生电脑居民，在权限允许、且接入相应工具的范围内，它可以操作计算机工具（如GUI界面、接口等）。
+
+![用户通过自然语言向模型提出目标，模型调用已授权工具并接收执行结果](https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@6b7aa642e30a2d27c6fdec27f37b48bf4402e168/images/8e5cd9a2_agent-tools.png)
+
+<span class="article-figure-caption" style="display:block;font-size:12px;line-height:1.6;text-align:center;color:#777;margin:8px 0 24px;">图 2. 大语言模型的工具调用流程（示意图）</span>
+
+在这个前提下，Anthropic把未来工作中的任务分成了以下几类：
+
+1. <strong style="font-weight:750;font-synthesis:weight;">Tasks unchanged by AI</strong>（人工智能未改变的工作）：如修家电、搓澡、抽血等；
+1. <strong style="font-weight:750;font-synthesis:weight;">Tasks augmented</strong>（因人工智能而变得更高效的工作）：如制定规划、构建MVP等；
+1. <strong style="font-weight:750;font-synthesis:weight;">Tasks automated</strong>（因人工智能而自动化的工作）：如部分软件编写、报告生成任务等
+1. <strong style="font-weight:750;font-synthesis:weight;">New tasks created by AI</strong>（由人工智能的参与而创建出来的工作）：检查人工智能自动任务的效果
+
+其实可以发现，在理想情况下，只要是电脑能完成的知识工作，AI未来可能完成其中很多任务。如果给AI足够多的上下文，并接入相应工具，它可以自己思考、然后操作计算机上的任务。而在这之中，人类能做的则包括三件事：<strong style="font-weight:750;font-synthesis:weight;">1）从宏观上指导AI完成任务；2）审核AI完成的任务是否顺利；3）完成物理世界的、和计算机无关的任务。</strong>
+
+Anthropic估计，在“实质性变化”情景下，如果到2030年AI能完成一半知识工作、其中大部分可自主完成，即便多数知识工作仍未采用AI，经济增长的速度也可能达到正常水平的两倍。
+
+![Anthropic实质性变化情景下美国GDP变化路径](https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@dfa7859e9a279b8a260fa1628ffe5b776a0252be/images/6b4fcbfd_34e0362b5a684cd5.png)
+
+<span class="article-figure-caption" style="display:block;font-size:12px;line-height:1.6;text-align:center;color:#777;margin:8px 0 24px;">图 3. Anthropic“实质性变化”情景下，美国GDP增速可能翻倍（来源：[Scenarios for our Economic Future](https://www.anthropic.com/institute/econ-scenarios)）</span>
+
+
+---
+虽然GDP在AI的参与下会大幅增长，但是分配和就业问题，可能会不容乐观。
+
+由于AI已经参与了大量知识工作，所以知识工作者（如程序员、客服、律师、基金经理等）可能不得不转行去做其他受人工智能影响比较小的职业（如电工或者护士）。转行往往是痛苦的，所以在AI快速替代知识工作的极端情景下，知识工作者的失业率可能会在2030年显著增高，呈现更加明显两极分化趋势。
+
+同时，GDP上涨不必然意味着平均工资的增加，但是AI的存在让社会对知识性岗位的诉求减少，知识性岗位的工资就可能停滞，甚至变得更低。更通俗的来讲，程序员们将来不仅可能会面临失业，也会面临降薪的风险。而由于AI助力知识型工作生产力的提升，社会对配套的劳动型生产力的诉求就会提高，进而劳动型工作的薪酬就会增高（如建筑工人）。
+
+
+---
+简单而言，在智能时代，我们结合AI，可以大幅提高知识性工作的生产效率，对应着知识性工作者（白领）的生存空间就会因为AI而遭到挤压。而较少受AI直接影响的工作者（如建筑工人等）的生存空间则可能得到提升。
+
+# 3. 对未来生产关系的思考
+
+在26年初，AI Agent进入到大众的视野，OPC（One Person Company）和OPT（One Person Team）也开始变得广为人知。它本质上因为AI 可以做很多知识性的工作（知识获取、思考和执行），所以人们可以把很多事情（如编程、报税、收集热点词等）交给AI Agent完成，此时团队只需要一个人来设计和决策即可，这就是“一人公司”爆火的原因。
+
+所以笔者认为，未来的团队协作方式、生产关系可能都会因为AI的存在，而变得和现在大不相同。具体而言：
+
+1. 对于知识型业务来说，小团队会越来越多，更多常规事务性的工作会交给AI完成，团队中的主要成员只负责制定计划、策略，以及review AI完成的任务；换句话讲，团队中需要的角色不是执行者，而是<strong style="font-weight:750;font-synthesis:weight;">决策者、组织者和管理者</strong>。不过对于劳动型业务来说，人力的诉求会进一步扩大。
+1. 对于教育而言，改变可能更甚。现在大量的知识性授课，在AI的参与下都会变得十分简单。讲题、改作业、写教案等内容可以由AI辅助完成，并由教师审核。教师资源得到释放、贫困地区的学生也能享受到顶尖的教学。老师们不用再绞尽脑汁地向学生讲各种晦涩难懂的知识，还需要教会学生如何提问，如何使用AI。知识型课堂变少，老师们需要花费更多的精力在学生的德育、体育和思想教育上。把孩子们教育成为一个真正的人。
+1. 对于资本而言，社会的经济蛋糕变大后，资金获得的盈利也在变多。Anthropic指出，在美国，当前资本收入约占40%的经济产出。如果AI自动化程度增加，则会有更多的收益流向资本。原因很简单，目前AI的生产要素（电力、卡、应用层）都掌握在资本手中。这也意味着，在极端情景下，社会增长的财富，大部分并没有流向劳动者，而是流向了资本家。所以，<strong style="font-weight:750;font-synthesis:weight;">在未来的一个重要挑战，不是实现经济增长，而是确保广泛分享收益，提高分配的合理性和公平性。从这个角度来看，这会对于中国这种社会主义国家来说其实是一个机会，因为在中国，政府的力量是远强于资本的，只有一个强有力的政府，才能保证在AI时代，经济红利得到尽可能的分享。</strong>
+
+![实质性变化情景下劳动收入56.1%、资本收入43.9%](https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@ed90e7500f0fac6b9bce83b21b83eead304580fe/images/f4390dd2_c3192d7a338b5427.png)
+
+<span class="article-figure-caption" style="display:block;font-size:12px;line-height:1.6;text-align:center;color:#777;margin:8px 0 24px;">图 4. Anthropic “实质性变化”情景下，2030年资本收入份额上升3.9个百分点（来源：[Scenarios for our Economic Future](https://www.anthropic.com/institute/econ-scenarios)）</span>
+
+
+---
+不过值得一提的是，目前中国基本养老金的资金来源包括社保缴费、财政补助等，以后因为公司规模降低，失业人数增多，社保缴纳金额变少；人口老龄化增强，领取社保的人数增加，财政补贴压力可能会持续增加。<strong style="font-weight:750;font-synthesis:weight;">如何在AI时代解决社保这个大难题，对于政府来说，可能是一个比发展AI还难的困境。（结合最近的社保新规有感）</strong>
+
+# 4. Agent的瓶颈在哪里
+
+不过上面的内容，都是一些乐观的估计。要想在2030年实现上面乐观的预计，笔者认为最少还要解决下面四个问题。
+
+![Agent的四个瓶颈：上下文、工具调用、基础设施和物理执行](https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@4390e58f772ba13caf4c57412a86f76a600ea038/images/7e3a6aa0_agent-bottlenecks.png)
+
+<span class="article-figure-caption" style="display:block;font-size:12px;line-height:1.6;text-align:center;color:#777;margin:8px 0 24px;">图 5. Agent的四个瓶颈（示意图）</span>
+
+## 4.1. AI的上下文限制
+
+虽然现在各大AI厂商几乎以月为单位来发布最新的模型（如Claude Opus 5.5和Gemini 4），但是这些模型的智力水平还是有很大的提升空间，离RSI（递归自我改进）就不用说了。
+
+前段时间在阿里云栖大会上，千问办公CEO陈宇森说“Context Is All You Need”，这句话其实也表达了上下文的重要性。可是，现在大模型的上下文窗口仍然有限，例如Gemini 4 Argon支持最多1M token，且还存在注意力干扰等各种问题，这就会导致当背景过于复杂的时候，模型并不能一次性获取所有的信息，进而导致决策因为上下文不足而产生各种问题。
+
+## 4.2. Agent的工具调用并不成熟
+
+从实操上来看，AI现在只有“脑子”，它的工具并不完备。从ENIAC（世界上第一台通用电子数字计算机）问世到现在，一共经历了80年。AI想要对这80年间产生的无数计算机工具如臂指使，可以说难如登天。
+
+其实深度使用AI Agent的人可能都会发现，即使有RAG和知识库的协助，AI也不过是有了一个聪明的“大脑”，但是它能调用的工具是有限的。人类在使用计算机时，习惯了使用鼠标和键盘，所以各种计算机应用也都是通过鼠标和键盘交互的。而AI通常更容易调用结构化接口或CLI，<strong style="font-weight:750;font-synthesis:weight;">但是要想将这些GUI工具全部开放为AI可调用的接口，何其困难</strong>。
+
+虽然现在各种主流软件都出了AI可以操作的MCP工具，但是这些工具只是覆盖了高频使用的场景，更多长尾工具的接口建设，还是任重道远的。
+
+同时，即使AI能够调用所有工具，它也很难知道自己调用的工具是正确的，所以工具描述的澄清、工具调用的监控、拦截和审查，也是一个亟需解决的卡点。
+
+## 4.3. 基础设施并不完备
+
+同时，除了工具不成熟之外，大模型推理所需的各种物理资源也供不应求。
+
+目前NVIDIA高端AI芯片的需求持续旺盛，且中国大陆几乎难以买到这些高端的显卡用于模型的推理和训练。同时，大洋彼岸的美利坚则面临着电力不足的严峻问题。
+
+从中美竞争的角度讲，人是可以流动的，而基础设施不会。所以这些基础设施的完备与否，也会成为中美两国AI竞赛的一个重要因素。
+
+## 4.4. 物理世界的执行速度难以match
+
+当AI能够快速产生insight，做出决策之后，它对物理世界的执行速度要求就会变高。
+
+举个例子：<strong style="font-weight:750;font-synthesis:weight;">当AI代替白领做出决策后（譬如AI能够快速画出房地产的图纸），还是需要物理世界的执行（建筑工人、建筑原料供应）。所以当AI画图纸的速度变快后，要想生产力得到加倍的提升，就要求建筑工人的执行变快、建筑原料的供应也变快。</strong>
+
+物理世界的执行，一方面可以通过增加人力来解决（譬如把知识型工人群体转移到劳动型工人群体），而另外一方面，则受限于自然界的物理规律。
+
+所以在未来，当AI发展得足够快的时候，物理世界则可能成为瓶颈。借用阿姆达尔定律（类似木桶效应）的思路，由于物质生产力的限制，社会GDP的增速并不会随着AI能力的提升同比例增长。
+
+# 5. AI时代的赢家
+
+说了4000字之后，回到一个最核心的话题：<strong style="font-weight:750;font-synthesis:weight;">AI不会缩小人与人之间的差距，反而会放大差距</strong>。在AI时代，社会需要哪种人？
+
+——可能不再是那种每天都低头走路，刻苦学习的人。
+
+知识仍然会很重要，但是AI时代，可能需要的是能把所有知识融会贯通，并且学以致用的人。而掌握单一专业知识的人，则可能出现两极分化的态势——最资深的那批人训练AI，半吊子的那群人则会被AI淘汰。
+
+当AI成为一个强有力的执行者之后，我们要掌握的就是如何提问，如何尽可能地发挥AI的最大能力，让AI提高我们的效率。<strong style="font-weight:750;font-synthesis:weight;">在AI时代，当执行变得无比廉价，社会将奖励那些更具有创新思维、能组织AI协作</strong>、结合AI快速迭代拿到结果的那群人。
+
+![AI时代的赢家：提问、组织协作、审核结果与实践迭代](https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@c05a0ee2f84e7adc0183efc2d8f73c95b7e13815/images/748aa313_human-judgment.png)
+
+<span class="article-figure-caption" style="display:block;font-size:12px;line-height:1.6;text-align:center;color:#777;margin:8px 0 24px;">图 6. 提问、协作、审核与实践（示意图）</span>
+
+<strong style="font-weight:750;font-synthesis:weight;">深度思考将会无比重要，当一切知识在AI的帮助下变得唾手可得，思考就会成为一种奢侈</strong>。而人只有在深度思考下，才可以产生新的想法，让自己不断地自洽，能更加平稳的迎接更加多变的社会。
+
+“实践出真知”也会被反复谈起。AI可以给人结论，但是很多事情，只有自己真的做了，真正经历过，才会有更加深刻的理解。
+
+资本和资源链接，仍然不会因为AI的存在而动摇它们原始的地位。作为资源的分配者，他们并不care执行者是人还是AI，所以在AI时代，普通人仍然需要奋力链接各种资源，让AI作为自己的筹码，<strong style="font-weight:750;font-synthesis:weight;">先借助资本，最后再成为资本；先成为资源，最后再掌控资源。</strong>
+
+最后，笔者想说，从理论上讲，在政府的干预下，AI的普及会让普通人享受到更多的财富。所以，人类的预期寿命有望延长，而普通人要做的，就是在见上帝之前，少生几年病。所以，最重要的，还是要保持规律的作息、适当的运动，以及愉悦的心态。

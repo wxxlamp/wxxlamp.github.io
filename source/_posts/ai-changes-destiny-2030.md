@@ -27,13 +27,19 @@ description: "结合个人使用大模型的经历与 Anthropic 的情景分析�
 
 到了2026年，龙虾爆火后，进一步让人们看到了大语言模型的提效潜力。Claude Code、Codex被越来越多的人提及和使用。基于龙虾的理念和ReAct范式，各种商业Agent如雨后春笋般冒出。国内的豆包办公、千问办公（包含电商版）、workbuddy、qoder都在这一时期持续发展。大模型发展之快，超乎所有人的意料，<u><strong style="font-weight:750;font-synthesis:weight;">现在笔者的代码编写工作几乎100%交付给AI来完成，同时AI也几乎解决了笔者40%的运维事项，这在25年是笔者完全不敢想的事实</strong>。</u>
 
+![我与AI的四年：2023至2026个人使用时间轴](https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@a37ce5c1b59276cba9289b8648f2e96217ae5896/images/fffff53e_ai-usage-timeline.png)
+
+<span class="article-figure-caption" style="display:block;font-size:12px;line-height:1.6;text-align:center;color:#777;margin:8px 0 24px;">图 1. 我与AI的四年：从对话学习到协作执行（个人经历示意图）</span>
+
+
+
 
 ---
 对于Anthropic来说，他们在开发Claude过程中，基本和笔者的开发经历类似。从23-25年通过chat的方式稍微提高开发效率。而在25-26这两年，则通过Coding Agent显著提高了编码效率。到现在，他们甚至让Agent自行运行、测试代码和委派任务——可以发现，大语言模型，越来越能干“人干的活”了。
 
 ![Anthropic构建Claude的方式：从人编程到自主代理](https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@6079172ec7156c70f6fb4b5b11aac8e6f2aabf6d/images/ff3b0e01_a0a9fb093b298e06.png)
 
-<span class="article-figure-caption" style="display:block;font-size:12px;line-height:1.6;text-align:center;color:#777;margin:8px 0 24px;">图 1. Anthropic 构建 Claude 的方式（来源：[When AI builds itself](https://www.anthropic.com/institute/recursive-self-improvement)）</span>
+<span class="article-figure-caption" style="display:block;font-size:12px;line-height:1.6;text-align:center;color:#777;margin:8px 0 24px;">图 2. Anthropic 构建 Claude 的方式（来源：[When AI builds itself](https://www.anthropic.com/institute/recursive-self-improvement)）</span>
 
 # 2. 智能时代的工作和经济
 
@@ -41,7 +47,7 @@ description: "结合个人使用大模型的经历与 Anthropic 的情景分析�
 
 ![用户通过自然语言向模型提出目标，模型调用已授权工具并接收执行结果](https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@6b7aa642e30a2d27c6fdec27f37b48bf4402e168/images/8e5cd9a2_agent-tools.png)
 
-<span class="article-figure-caption" style="display:block;font-size:12px;line-height:1.6;text-align:center;color:#777;margin:8px 0 24px;">图 2. 大语言模型的工具调用流程（示意图）</span>
+<span class="article-figure-caption" style="display:block;font-size:12px;line-height:1.6;text-align:center;color:#777;margin:8px 0 24px;">图 3. 大语言模型的工具调用流程（示意图）</span>
 
 在这个前提下，Anthropic把未来工作中的任务分成了以下几类：
 
@@ -56,7 +62,7 @@ Anthropic估计，在“实质性变化”情景下，如果到2030年AI能完�
 
 ![Anthropic实质性变化情景下美国GDP变化路径](https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@dfa7859e9a279b8a260fa1628ffe5b776a0252be/images/6b4fcbfd_34e0362b5a684cd5.png)
 
-<span class="article-figure-caption" style="display:block;font-size:12px;line-height:1.6;text-align:center;color:#777;margin:8px 0 24px;">图 3. Anthropic“实质性变化”情景下，美国GDP增速可能翻倍（来源：[Scenarios for our Economic Future](https://www.anthropic.com/institute/econ-scenarios)）</span>
+<span class="article-figure-caption" style="display:block;font-size:12px;line-height:1.6;text-align:center;color:#777;margin:8px 0 24px;">图 4. Anthropic“实质性变化”情景下，美国GDP增速可能翻倍（来源：[Scenarios for our Economic Future](https://www.anthropic.com/institute/econ-scenarios)）</span>
 
 
 ---
@@ -76,13 +82,21 @@ Anthropic估计，在“实质性变化”情景下，如果到2030年AI能完�
 
 所以笔者认为，未来的团队协作方式、生产关系可能都会因为AI的存在，而变得和现在大不相同。具体而言：
 
+![AI与生产关系：团队协作、教育分工、收益分配](https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@eee83f3e871f2d56bdfe9e4a3de0dfc5b3a8133b/images/3b36e1b5_production-relations.png)
+
+<span class="article-figure-caption" style="display:block;font-size:12px;line-height:1.6;text-align:center;color:#777;margin:8px 0 24px;">图 5. 对未来生产关系的三点思考（观点示意图）</span>
+
 1. 对于知识型业务来说，小团队会越来越多，更多常规事务性的工作会交给AI完成，团队中的主要成员只负责制定计划、策略，以及review AI完成的任务；换句话讲，团队中需要的角色不是执行者，而是<strong style="font-weight:750;font-synthesis:weight;">决策者、组织者和管理者</strong>。不过对于劳动型业务来说，人力的诉求会进一步扩大。
 1. 对于教育而言，改变可能更甚。现在大量的知识性授课，在AI的参与下都会变得十分简单。讲题、改作业、写教案等内容可以由AI辅助完成，并由教师审核。教师资源得到释放、贫困地区的学生也能享受到顶尖的教学。老师们不用再绞尽脑汁地向学生讲各种晦涩难懂的知识，还需要教会学生如何提问，如何使用AI。知识型课堂变少，老师们需要花费更多的精力在学生的德育、体育和思想教育上。把孩子们教育成为一个真正的人。
 1. 对于资本而言，社会的经济蛋糕变大后，资金获得的盈利也在变多。Anthropic指出，在美国，当前资本收入约占40%的经济产出。如果AI自动化程度增加，则会有更多的收益流向资本。原因很简单，目前AI的生产要素（电力、卡、应用层）都掌握在资本手中。这也意味着，在极端情景下，社会增长的财富，大部分并没有流向劳动者，而是流向了资本家。所以，<strong style="font-weight:750;font-synthesis:weight;">在未来的一个重要挑战，不是实现经济增长，而是确保广泛分享收益，提高分配的合理性和公平性。从这个角度来看，这会对于中国这种社会主义国家来说其实是一个机会，因为在中国，政府的力量是远强于资本的，只有一个强有力的政府，才能保证在AI时代，经济红利得到尽可能的分享。</strong>
 
+
+
+
+
 ![实质性变化情景下劳动收入56.1%、资本收入43.9%](https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@ed90e7500f0fac6b9bce83b21b83eead304580fe/images/f4390dd2_c3192d7a338b5427.png)
 
-<span class="article-figure-caption" style="display:block;font-size:12px;line-height:1.6;text-align:center;color:#777;margin:8px 0 24px;">图 4. Anthropic “实质性变化”情景下，2030年资本收入份额上升3.9个百分点（来源：[Scenarios for our Economic Future](https://www.anthropic.com/institute/econ-scenarios)）</span>
+<span class="article-figure-caption" style="display:block;font-size:12px;line-height:1.6;text-align:center;color:#777;margin:8px 0 24px;">图 6. Anthropic “实质性变化”情景下，2030年资本收入份额上升3.9个百分点（来源：[Scenarios for our Economic Future](https://www.anthropic.com/institute/econ-scenarios)）</span>
 
 
 ---
@@ -94,7 +108,7 @@ Anthropic估计，在“实质性变化”情景下，如果到2030年AI能完�
 
 ![Agent的四个瓶颈：上下文、工具调用、基础设施和物理执行](https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@4390e58f772ba13caf4c57412a86f76a600ea038/images/7e3a6aa0_agent-bottlenecks.png)
 
-<span class="article-figure-caption" style="display:block;font-size:12px;line-height:1.6;text-align:center;color:#777;margin:8px 0 24px;">图 5. Agent的四个瓶颈（示意图）</span>
+<span class="article-figure-caption" style="display:block;font-size:12px;line-height:1.6;text-align:center;color:#777;margin:8px 0 24px;">图 7. Agent的四个瓶颈（示意图）</span>
 
 ## 4.1. AI的上下文限制
 
@@ -142,7 +156,7 @@ Anthropic估计，在“实质性变化”情景下，如果到2030年AI能完�
 
 ![AI时代的赢家：提问、组织协作、审核结果与实践迭代](https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@c05a0ee2f84e7adc0183efc2d8f73c95b7e13815/images/748aa313_human-judgment.png)
 
-<span class="article-figure-caption" style="display:block;font-size:12px;line-height:1.6;text-align:center;color:#777;margin:8px 0 24px;">图 6. 提问、协作、审核与实践（示意图）</span>
+<span class="article-figure-caption" style="display:block;font-size:12px;line-height:1.6;text-align:center;color:#777;margin:8px 0 24px;">图 8. 提问、协作、审核与实践（示意图）</span>
 
 <strong style="font-weight:750;font-synthesis:weight;">深度思考将会无比重要，当一切知识在AI的帮助下变得唾手可得，思考就会成为一种奢侈</strong>。而人只有在深度思考下，才可以产生新的想法，让自己不断地自洽，能更加平稳的迎接更加多变的社会。
 

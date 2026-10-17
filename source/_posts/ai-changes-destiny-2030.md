@@ -9,7 +9,7 @@ categories:
   - "生活感悟"
 description: "结合个人使用大模型的经历与 Anthropic 的情景分析，思考 AI 对工作、经济分配及个人成长的影响与现实瓶颈。"
 ---
-![人与AI协作规划，窗外的人们继续建设城市](https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@cb83b84114cf36e1002c5efe86c3ce2e8bb15b5b/images/5db11ef4_cover.png)
+![AI改变命运：学校黑板上的知识被划掉并换成AI](https://cdn.jsdelivr.net/gh/wxxlamp/blog-img-repo@34653973c764210d5170f79bad54dcfc915a76b9/images/51b2b507_wechat-cover-school.png)
 
 国庆长假在家窝了几天，顺道看了下 Anthropic的两篇文章：[Scenarios for our Economic Future](https://www.anthropic.com/institute/econ-scenarios)、[When AI builds itself](https://www.anthropic.com/institute/recursive-self-improvement)，结合这几年我个人高强度使用大语言模型的经历，想和大家一起展望下四年后，在AI的参与下，未来会变成什么样子。
 
